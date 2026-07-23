@@ -1,6 +1,9 @@
 class_name Player
 extends CharacterBody3D
 
+signal jump
+signal landed
+
 @export_category("Movement")
 @export var move_speed: float = 7.0
 @export var acceleration: float = 30.0
@@ -9,6 +12,7 @@ extends CharacterBody3D
 @export var rotation_speed: float = 12.0
 
 @export_category("Jumping")
+@export var gravity: float = 20.0
 @export var jump_velocity: float = 8.0
 @export var fall_gravity_multiplier: float = 1.5
 @export var coyote_time: float = 0.15
@@ -18,21 +22,22 @@ extends CharacterBody3D
 @onready var camera: Camera3D = \
 	$CameraController/SpringArm3D/Camera3D
 
-var gravity: float = ProjectSettings.get_setting(
-	"physics/3d/default_gravity"
-)
 
 var coyote_timer: float = 0.0
 var jump_buffer_timer: float = 0.0
 
-
 func _physics_process(delta: float) -> void:
+	var was_on_floor: bool = is_on_floor()
+
 	update_jump_timers(delta)
 	handle_jump()
 	apply_gravity(delta)
 	handle_movement(delta)
 
 	move_and_slide()
+
+	if not was_on_floor and is_on_floor():
+		landed.emit()
 
 
 func update_jump_timers(delta: float) -> void:
@@ -55,6 +60,8 @@ func handle_jump() -> void:
 
 	if has_buffered_jump and can_jump:
 		velocity.y = jump_velocity
+
+		jump.emit()
 
 		# Consume both timers so the same input cannot jump twice.
 		jump_buffer_timer = 0.0

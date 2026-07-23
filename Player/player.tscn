@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://dmc36oojdry5d"]
 
 [ext_resource type="Script" uid="uid://c4xmpgw1x36jy" path="res://Player/player.gd" id="1_4ntmi"]
-[ext_resource type="PackedScene" uid="uid://dxf0kpitdmo6e" path="res://Player/Pip.fbx" id="1_l8h54"]
+[ext_resource type="PackedScene" uid="uid://bqwau4w6nankd" path="res://Player/pip_model.tscn" id="2_btcbx"]
 [ext_resource type="Script" uid="uid://dl3pxtcg0n102" path="res://Player/camera_controller.gd" id="3_btcbx"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_xrivr"]
@@ -9,8 +9,8 @@
 [node name="Player" type="CharacterBody3D" unique_id=67220391]
 script = ExtResource("1_4ntmi")
 
-[node name="Model" parent="." unique_id=1840481375 instance=ExtResource("1_l8h54")]
-transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 0, 0, 0)
+[node name="Model" parent="." unique_id=1483251585 node_paths=PackedStringArray("player") instance=ExtResource("2_btcbx")]
+player = NodePath("..")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1893745616]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
