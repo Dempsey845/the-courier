@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://bj3ripvo7qsjp"]
 
 [ext_resource type="PackedScene" uid="uid://dmc36oojdry5d" path="res://Player/player.tscn" id="1_62w18"]
-[ext_resource type="PackedScene" uid="uid://cw0c08lvfvyfs" path="res://Enemies/Golem/golem_model.tscn" id="2_8a836"]
+[ext_resource type="PackedScene" uid="uid://bp6pkgigbquhx" path="res://Enemies/Golem/golem_enemy.tscn" id="2_8a836"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_62w18"]
 sky_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
@@ -15,6 +15,10 @@ background_mode = 2
 sky = SubResource("Sky_8a836")
 glow_enabled = true
 
+[sub_resource type="NavigationMesh" id="NavigationMesh_13qdw"]
+vertices = PackedVector3Array(-49.5, 0.5, -49.5, -49.5, 0.5, 49.5, 49.5, 0.5, 49.5, 49.5, 0.5, -49.5)
+polygons = [PackedInt32Array(3, 2, 0), PackedInt32Array(0, 2, 1)]
+
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_xrivr"]
 albedo_color = Color(0, 0.36078432, 0, 1)
 
@@ -27,15 +31,20 @@ environment = SubResource("Environment_j8job")
 transform = Transform3D(-0.8660254, -0.43301278, 0.25, 0, 0.49999997, 0.86602545, -0.50000006, 0.75, -0.43301266, 0, 0, 0)
 shadow_enabled = true
 
-[node name="CSGCombiner3D" type="CSGCombiner3D" parent="." unique_id=1963645968]
+[node name="NavigationRegion3D" type="NavigationRegion3D" parent="." unique_id=44607026]
+navigation_mesh = SubResource("NavigationMesh_13qdw")
+
+[node name="CSGCombiner3D" type="CSGCombiner3D" parent="NavigationRegion3D" unique_id=1963645968]
 use_collision = true
 
-[node name="CSGBox3D" type="CSGBox3D" parent="CSGCombiner3D" unique_id=2127783126]
+[node name="CSGBox3D" type="CSGBox3D" parent="NavigationRegion3D/CSGCombiner3D" unique_id=2127783126]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.25, 0)
 size = Vector3(100, 0.5, 100)
 material = SubResource("StandardMaterial3D_xrivr")
 
 [node name="Player" parent="." unique_id=67220391 instance=ExtResource("1_62w18")]
 
-[node name="GolemModel" parent="." unique_id=1931516077 instance=ExtResource("2_8a836")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 5)
+[node name="GolemEnemy" parent="." unique_id=1009641960 node_paths=PackedStringArray("target") instance=ExtResource("2_8a836")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 9)
+target = NodePath("../Player")
+detection_distance = 20.0

@@ -1,0 +1,19 @@
+[gd_scene format=3 uid="uid://bp6pkgigbquhx"]
+
+[ext_resource type="PackedScene" uid="uid://cs7wkqeik4n74" path="res://Enemies/enemy.tscn" id="1_1pwku"]
+[ext_resource type="PackedScene" uid="uid://cw0c08lvfvyfs" path="res://Enemies/Golem/golem_model.tscn" id="2_r03q7"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_xrivr"]
+radius = 1.0
+height = 3.5
+
+[node name="GolemEnemy" unique_id=1009641960 instance=ExtResource("1_1pwku")]
+
+[node name="NavigationAgent3D" parent="." index="0" unique_id=1961274634]
+debug_enabled = true
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." index="1" unique_id=1334450505]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.75, 0)
+shape = SubResource("CapsuleShape3D_xrivr")
+
+[node name="GolemModel" parent="." index="2" unique_id=1931516077 instance=ExtResource("2_r03q7")]
