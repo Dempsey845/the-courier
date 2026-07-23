@@ -1,0 +1,8 @@
+[gd_scene format=3 uid="uid://cw0c08lvfvyfs"]
+
+[ext_resource type="PackedScene" uid="uid://bd0br5f0bqd8w" path="res://Enemies/Golem/Imp.fbx" id="1_njp1w"]
+
+[node name="GolemModel" unique_id=1931516077 instance=ExtResource("1_njp1w")]
+
+[node name="AnimationPlayer" parent="." index="1" unique_id=378681915]
+autoplay = &"Armature|Idle"

@@ -4,12 +4,12 @@ importer="scene"
 importer_version=1
 type="PackedScene"
 uid="uid://bd0br5f0bqd8w"
-path="res://.godot/imported/Imp.fbx-fee8cd60fac65ee4c93ee75941d1a6c0.scn"
+path="res://.godot/imported/Imp.fbx-b4007106832e1424acb37149f97cfaff.scn"
 
 [deps]
 
-source_file="res://Enemies/Imp/Imp.fbx"
-dest_files=["res://.godot/imported/Imp.fbx-fee8cd60fac65ee4c93ee75941d1a6c0.scn"]
+source_file="res://Enemies/Golem/Imp.fbx"
+dest_files=["res://.godot/imported/Imp.fbx-b4007106832e1424acb37149f97cfaff.scn"]
 
 [params]
 
