@@ -12,8 +12,10 @@ signal landed
 @export var rotation_speed: float = 12.0
 
 @export_category("Jumping")
-@export var gravity: float = 20.0
-@export var jump_velocity: float = 8.0
+@export var gravity: float = 18.0
+@export var jump_velocity: float = 10.0
+## Applied while rising after releasing the jump button.
+@export var jump_cut_gravity_multiplier: float = 3.0
 @export var fall_gravity_multiplier: float = 1.5
 @export var coyote_time: float = 0.15
 @export var jump_buffer_time: float = 0.15
@@ -51,7 +53,10 @@ func update_jump_timers(delta: float) -> void:
 	if Input.is_action_just_pressed("jump"):
 		jump_buffer_timer = jump_buffer_time
 	else:
-		jump_buffer_timer = maxf(jump_buffer_timer - delta, 0.0)
+		jump_buffer_timer = maxf(
+			jump_buffer_timer - delta,
+			0.0
+		)
 
 
 func handle_jump() -> void:
@@ -61,11 +66,11 @@ func handle_jump() -> void:
 	if has_buffered_jump and can_jump:
 		velocity.y = jump_velocity
 
-		jump.emit()
-
 		# Consume both timers so the same input cannot jump twice.
 		jump_buffer_timer = 0.0
 		coyote_timer = 0.0
+
+		jump.emit()
 
 
 func handle_movement(delta: float) -> void:
@@ -140,6 +145,10 @@ func apply_gravity(delta: float) -> void:
 	var gravity_multiplier: float = 1.0
 
 	if velocity.y < 0.0:
+		# Make falling faster and less floaty.
 		gravity_multiplier = fall_gravity_multiplier
+	elif not Input.is_action_pressed("jump"):
+		# Cut the jump short when the button is released.
+		gravity_multiplier = jump_cut_gravity_multiplier
 
 	velocity.y -= gravity * gravity_multiplier * delta
