@@ -3,8 +3,21 @@
 [ext_resource type="Script" uid="uid://c4xmpgw1x36jy" path="res://Player/player.gd" id="1_4ntmi"]
 [ext_resource type="PackedScene" uid="uid://bqwau4w6nankd" path="res://Player/pip_model.tscn" id="2_btcbx"]
 [ext_resource type="Script" uid="uid://dl3pxtcg0n102" path="res://Player/camera_controller.gd" id="3_btcbx"]
+[ext_resource type="Script" uid="uid://ysgrvrrrwkp0" path="res://Player/landing_shadow.gd" id="4_gwnis"]
+[ext_resource type="Texture2D" uid="uid://ddk2jwnyxf2iu" path="res://Player/platformer_circle_shadow.png" id="4_k53q1"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_xrivr"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_13qdw"]
+transparency = 1
+shading_mode = 0
+albedo_texture = ExtResource("4_k53q1")
+disable_receive_shadows = true
+
+[sub_resource type="QuadMesh" id="QuadMesh_xrivr"]
+flip_faces = true
+size = Vector2(1.5, 1.5)
+orientation = 1
 
 [node name="Player" type="CharacterBody3D" unique_id=67220391]
 script = ExtResource("1_4ntmi")
@@ -24,3 +37,16 @@ script = ExtResource("3_btcbx")
 spring_length = 5.0
 
 [node name="Camera3D" type="Camera3D" parent="CameraController/SpringArm3D" unique_id=612801696]
+
+[node name="LandingShadowRay" type="RayCast3D" parent="." unique_id=1160867193]
+target_position = Vector3(0, -20, 0)
+
+[node name="LandingShadow" type="MeshInstance3D" parent="." unique_id=863603361 node_paths=PackedStringArray("player", "raycast")]
+top_level = true
+material_override = SubResource("StandardMaterial3D_13qdw")
+transparency = 0.5
+cast_shadow = 0
+mesh = SubResource("QuadMesh_xrivr")
+script = ExtResource("4_gwnis")
+player = NodePath("..")
+raycast = NodePath("../LandingShadowRay")
