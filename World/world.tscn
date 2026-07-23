@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://bj3ripvo7qsjp"]
 
 [ext_resource type="PackedScene" uid="uid://dmc36oojdry5d" path="res://Player/player.tscn" id="1_62w18"]
+[ext_resource type="PackedScene" uid="uid://cw0c08lvfvyfs" path="res://Enemies/Imp/imp_model.tscn" id="2_8a836"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_62w18"]
 sky_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
@@ -35,3 +36,6 @@ size = Vector3(100, 0.5, 100)
 material = SubResource("StandardMaterial3D_xrivr")
 
 [node name="Player" parent="." unique_id=67220391 instance=ExtResource("1_62w18")]
+
+[node name="ImpModel" parent="." unique_id=1931516077 instance=ExtResource("2_8a836")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 6.209051)
