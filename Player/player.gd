@@ -2,6 +2,7 @@ class_name Player
 extends CharacterBody3D
 
 signal jump
+signal jump_cut
 signal landed
 
 @export_category("Movement")
@@ -147,6 +148,9 @@ func apply_gravity(delta: float) -> void:
 	if velocity.y < 0.0:
 		# Make falling faster and less floaty.
 		gravity_multiplier = fall_gravity_multiplier
+	elif Input.is_action_just_released("jump"):
+		gravity_multiplier = jump_cut_gravity_multiplier
+		jump_cut.emit()
 	elif not Input.is_action_pressed("jump"):
 		# Cut the jump short when the button is released.
 		gravity_multiplier = jump_cut_gravity_multiplier

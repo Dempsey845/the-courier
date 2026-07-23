@@ -1,6 +1,6 @@
 extends MeshInstance3D
 
-@export var player: CharacterBody3D
+@export var player: Player
 @export var raycast: RayCast3D
 
 @export_category("Appearance")
@@ -15,12 +15,19 @@ extends MeshInstance3D
 var starting_transparency: float
 var current_transparency: float
 
+var jump_is_active: bool = false
+var jump_was_cut: bool = false
+
 
 func _ready() -> void:
 	top_level = true
 
 	starting_transparency = transparency
 	current_transparency = starting_transparency
+
+	player.jump.connect(_on_player_jump)
+	player.jump_cut.connect(_on_player_jump_cut)
+	player.landed.connect(_on_player_landed)
 
 
 func _process(delta: float) -> void:
@@ -32,7 +39,11 @@ func _process(delta: float) -> void:
 
 	var target_transparency: float = 1.0
 
-	if is_colliding and not player.is_on_floor():
+	if (
+		is_colliding
+		and jump_is_active
+		and not jump_was_cut
+	):
 		target_transparency = get_distance_transparency()
 
 	current_transparency = lerpf(
@@ -42,9 +53,21 @@ func _process(delta: float) -> void:
 	)
 
 	transparency = current_transparency
-
-	# Stop rendering once completely faded and no ground was detected.
 	visible = is_colliding or current_transparency < 0.999
+
+
+func _on_player_jump() -> void:
+	jump_is_active = true
+	jump_was_cut = false
+
+
+func _on_player_jump_cut() -> void:
+	jump_was_cut = true
+
+
+func _on_player_landed() -> void:
+	jump_is_active = false
+	jump_was_cut = false
 
 
 func update_shadow_position(delta: float) -> void:
