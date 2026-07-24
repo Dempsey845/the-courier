@@ -1,0 +1,110 @@
+[gd_scene format=3 uid="uid://mo7gk0o8p4t"]
+
+[ext_resource type="Texture2D" uid="uid://b8n15tan8grhi" path="res://Enemies/Golem/RockTexture.png" id="1_5sick"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_13qdw"]
+transparency = 1
+shading_mode = 0
+vertex_color_use_as_albedo = true
+albedo_texture = ExtResource("1_5sick")
+uv1_triplanar = true
+texture_filter = 0
+disable_receive_shadows = true
+
+[sub_resource type="SphereMesh" id="SphereMesh_xrivr"]
+material = SubResource("StandardMaterial3D_13qdw")
+radial_segments = 7
+rings = 3
+
+[sub_resource type="Curve" id="Curve_njqwk"]
+_limits = [0.0, 1.5, 0.0, 1.0]
+_data = [Vector2(0.016483516, 0.09722221), 0.0, 0.0, 0, 0, Vector2(0.12912089, 1), 0.0, 0.0, 0, 0, Vector2(0.24725273, 1.3020834), 0.0, 0.0, 0, 0, Vector2(0.46153843, 1.03125), 0.0, 0.0, 0, 0, Vector2(0.74725276, 1), 0.0, 0.0, 0, 0, Vector2(1, 0.020833254), 0.0, 0.0, 0, 0]
+point_count = 6
+
+[sub_resource type="Gradient" id="Gradient_7f2x3"]
+offsets = PackedFloat32Array(0, 0.8106509, 1)
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0)
+
+[sub_resource type="Gradient" id="Gradient_wi6ju"]
+colors = PackedColorArray(0.27752772, 0.27752775, 0.27752766, 1, 1, 1, 1, 1)
+
+[sub_resource type="Animation" id="Animation_5sick"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:emitting")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+
+[sub_resource type="Animation" id="Animation_wstjj"]
+resource_name = "start"
+length = 1.5999999999999999
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:emitting")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0.05),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(1.6),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"queue_free"
+}]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_33pep"]
+_data = {
+&"RESET": SubResource("Animation_5sick"),
+&"start": SubResource("Animation_wstjj")
+}
+
+[node name="RockHitParticles" type="CPUParticles3D" unique_id=742354940]
+emitting = false
+amount = 4
+lifetime = 1.5
+one_shot = true
+explosiveness = 1.0
+randomness = 1.0
+mesh = SubResource("SphereMesh_xrivr")
+emission_shape = 1
+emission_sphere_radius = 0.5
+particle_flag_align_y = true
+direction = Vector3(0, 1, 0)
+spread = 75.0
+initial_velocity_min = 7.5
+initial_velocity_max = 11.0
+angular_velocity_min = 378.1
+angular_velocity_max = 545.72
+damping_min = 2.0
+damping_max = 2.0
+angle_min = -180.0
+angle_max = 180.0
+scale_amount_min = 0.5
+scale_amount_curve = SubResource("Curve_njqwk")
+color_ramp = SubResource("Gradient_7f2x3")
+color_initial_ramp = SubResource("Gradient_wi6ju")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1033366939]
+libraries/ = SubResource("AnimationLibrary_33pep")
+autoplay = &"start"

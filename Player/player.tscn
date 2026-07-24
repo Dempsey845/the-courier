@@ -55,7 +55,6 @@ radius = 0.4
 
 [node name="Player" type="CharacterBody3D" unique_id=67220391]
 script = ExtResource("1_4ntmi")
-jump_velocity = 15.0
 
 [node name="PlayerHitManager" type="Node" parent="." unique_id=233237877 node_paths=PackedStringArray("player")]
 script = ExtResource("2_00tjw")

@@ -1,6 +1,7 @@
 extends Node
 
 @export var player: Player
+@export var upward_force: float = 22.0
 
 @onready var feet_hitbox: Hitbox = $"../FeetHitbox"
 
@@ -18,4 +19,4 @@ func _physics_process(_delta: float) -> void:
 
 
 func _hit_hurtbox(_hurtbox: Hurtbox) -> void:
-	player.apply_upward_force(17.0)
+	player.apply_upward_force(upward_force)

@@ -42,8 +42,8 @@ var scatter_position: Vector3
 
 
 func _ready() -> void:
-	navigation_agent.path_desired_distance = 1.5
-	navigation_agent.target_desired_distance = 1.5
+	navigation_agent.path_desired_distance = 1.2
+	navigation_agent.target_desired_distance = 1.2
 
 	hurtbox.hit.connect(
 		func(_hitbox: Hitbox):
@@ -265,9 +265,17 @@ func rotate_towards(direction: Vector3, delta: float) -> void:
 
 
 func distance_to_target() -> float:
-	return global_position.distance_to(
-		target.global_position
+	var enemy_position: Vector2 = Vector2(
+		global_position.x,
+		global_position.z
 	)
+
+	var target_position: Vector2 = Vector2(
+		target.global_position.x,
+		target.global_position.z
+	)
+
+	return enemy_position.distance_to(target_position)
 
 
 func change_state(new_state: State) -> void:
