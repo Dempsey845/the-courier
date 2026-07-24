@@ -25,9 +25,13 @@ enum State {
 @export var acceleration: float = 12.0
 @export var rotation_speed: float = 8.0
 
+@export_category("Chase")
+@export var can_chase: bool = true
+
 @export_category("Wandering")
 ## Maximum distance from the enemy's starting position.
 @export var wander_radius: float = 8.0
+@export var can_wander: bool = true
 @export var min_idle_time: float = 1.0
 @export var max_idle_time: float = 3.0
 
@@ -35,6 +39,8 @@ enum State {
 @export var attack_cooldown: float = 1.5
 @export var wait_after_attack: bool = false
 @export var wait_time: float = 5.0
+## Allows the enemy to attack while idle. But only if they cannot chase (can_chase)
+@export var can_attack_idle: bool
 
 @export_category("Hit")
 @export var stun_time: float = 0.75
@@ -161,12 +167,15 @@ func update_idle(delta: float) -> void:
 		return
 
 	if can_detect_target():
-		change_state(State.CHASE)
+		if can_chase:
+			change_state(State.CHASE)
+		elif can_attack_idle:
+			change_state(State.ATTACK)
 		return
 
 	idle_remaining = maxf(idle_remaining - delta, 0.0)
 
-	if idle_remaining <= 0.0:
+	if can_wander and idle_remaining <= 0.0:
 		begin_wander()
 
 
@@ -194,7 +203,7 @@ func begin_wander() -> void:
 
 
 func update_wander(delta: float) -> void:
-	if can_detect_target():
+	if can_detect_target() and can_chase:
 		change_state(State.CHASE)
 		return
 
@@ -247,7 +256,10 @@ func update_attack(delta: float) -> void:
 	var distance: float = distance_to_target()
 
 	if distance > attack_distance:
-		change_state(State.CHASE)
+		if can_chase:
+			change_state(State.CHASE)
+		else:
+			change_state(State.IDLE)
 		return
 
 	if cooldown_remaining <= 0.0:
@@ -362,8 +374,10 @@ func return_to_normal_state() -> void:
 		enter_idle()
 	elif distance <= attack_distance:
 		change_state(State.ATTACK)
-	else:
+	elif can_chase:
 		change_state(State.CHASE)
+	else:
+		enter_idle()
 
 
 func take_hit() -> void:

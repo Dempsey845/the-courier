@@ -1,0 +1,35 @@
+[gd_scene format=3 uid="uid://cniwu7eyr0832"]
+
+[ext_resource type="PackedScene" uid="uid://cs7wkqeik4n74" path="res://Enemies/enemy.tscn" id="1_ku1ci"]
+[ext_resource type="PackedScene" uid="uid://bsxs2nhnotd34" path="res://Enemies/Snapper/snapper_model.tscn" id="2_ims0m"]
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_xrivr"]
+height = 0.29999995
+radius = 0.30273438
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_xrivr"]
+height = 1.9000001
+
+[node name="SnapperEnemy" unique_id=1009641960 instance=ExtResource("1_ku1ci")]
+attack_distance = 15.0
+move_speed = 0.0
+acceleration = 0.0
+can_chase = false
+can_wander = false
+attack_cooldown = 3.0
+can_attack_idle = true
+scatter_on_hit = false
+death_duration = 0.5
+
+[node name="Hurtbox" parent="." index="2" unique_id=1172596633]
+collision_mask = 64
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Hurtbox" index="0" unique_id=2112950921]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.85, 0)
+shape = SubResource("CylinderShape3D_xrivr")
+
+[node name="SnapperModel" parent="." index="3" unique_id=1247999917 instance=ExtResource("2_ims0m")]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." index="4" unique_id=250171872]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.95000005, 0)
+shape = SubResource("CapsuleShape3D_xrivr")
