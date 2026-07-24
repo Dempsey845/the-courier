@@ -1,0 +1,15 @@
+[gd_resource type="SphereMesh" format=3 uid="uid://bepyntechnux6"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_omeqd"]
+transparency = 1
+shading_mode = 0
+vertex_color_use_as_albedo = true
+albedo_color = Color(1, 1, 1, 0.73333335)
+texture_filter = 0
+
+[resource]
+material = SubResource("StandardMaterial3D_omeqd")
+radius = 0.25
+height = 0.5
+radial_segments = 8
+rings = 4

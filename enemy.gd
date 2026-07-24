@@ -7,6 +7,7 @@ signal hit
 
 enum State {
 	IDLE,
+	WANDER,
 	CHASE,
 	ATTACK,
 	HIT,
@@ -23,8 +24,16 @@ enum State {
 @export var acceleration: float = 12.0
 @export var rotation_speed: float = 8.0
 
+@export_category("Wandering")
+## Maximum distance from the enemy's starting position.
+@export var wander_radius: float = 8.0
+@export var min_idle_time: float = 1.0
+@export var max_idle_time: float = 3.0
+
 @export_category("Attack")
 @export var attack_cooldown: float = 1.5
+@export var wait_after_attack: bool = false
+@export var wait_time: float = 5.0
 
 @export_category("Hit")
 @export var stun_time: float = 0.75
@@ -35,15 +44,24 @@ enum State {
 @onready var hurtbox: Hurtbox = $Hurtbox
 
 var current_state: State = State.IDLE
+
 var cooldown_remaining: float = 0.0
 var stun_remaining: float = 0.0
+var idle_remaining: float = 0.0
 
+var spawn_position: Vector3
+var wander_position: Vector3
 var scatter_position: Vector3
+
+var wait_remaining: float = 0.0
 
 
 func _ready() -> void:
 	navigation_agent.path_desired_distance = 1.2
 	navigation_agent.target_desired_distance = 1.2
+
+	spawn_position = global_position
+	reset_idle_timer()
 
 	hurtbox.hit.connect(
 		func(_hitbox: Hitbox):
@@ -57,15 +75,12 @@ func _physics_process(delta: float) -> void:
 		0.0
 	)
 
-	if not is_instance_valid(target):
-		change_state(State.IDLE)
-		stop_moving(delta)
-		move_and_slide()
-		return
-
 	match current_state:
 		State.IDLE:
 			update_idle(delta)
+
+		State.WANDER:
+			update_wander(delta)
 
 		State.CHASE:
 			update_chase(delta)
@@ -85,15 +100,83 @@ func _physics_process(delta: float) -> void:
 func update_idle(delta: float) -> void:
 	stop_moving(delta)
 
-	if distance_to_target() <= detection_distance:
+	if wait_remaining > 0.0:
+		wait_remaining = maxf(
+			wait_remaining - delta,
+			0.0
+		)
+
+		if wait_remaining <= 0.0:
+			reset_idle_timer()
+
+		return
+
+	if can_detect_target():
 		change_state(State.CHASE)
+		return
+
+	idle_remaining = maxf(idle_remaining - delta, 0.0)
+
+	if idle_remaining <= 0.0:
+		begin_wander()
+
+
+func begin_wander() -> void:
+	var navigation_map: RID = navigation_agent.get_navigation_map()
+
+	var angle: float = randf_range(0.0, TAU)
+	var distance: float = sqrt(randf()) * wander_radius
+
+	var random_offset := Vector3(
+		cos(angle) * distance,
+		0.0,
+		sin(angle) * distance
+	)
+
+	var desired_position: Vector3 = spawn_position + random_offset
+
+	wander_position = NavigationServer3D.map_get_closest_point(
+		navigation_map,
+		desired_position
+	)
+
+	navigation_agent.target_position = wander_position
+	change_state(State.WANDER)
+
+
+func update_wander(delta: float) -> void:
+	if can_detect_target():
+		change_state(State.CHASE)
+		return
+
+	if navigation_agent.is_navigation_finished():
+		enter_idle()
+		return
+
+	follow_navigation_path(delta)
+
+
+func enter_idle() -> void:
+	reset_idle_timer()
+	change_state(State.IDLE)
+
+
+func reset_idle_timer() -> void:
+	idle_remaining = randf_range(
+		min_idle_time,
+		max_idle_time
+	)
 
 
 func update_chase(delta: float) -> void:
+	if not is_instance_valid(target):
+		enter_idle()
+		return
+
 	var distance: float = distance_to_target()
 
 	if distance > detection_distance:
-		change_state(State.IDLE)
+		enter_idle()
 		return
 
 	if distance <= attack_distance:
@@ -105,6 +188,10 @@ func update_chase(delta: float) -> void:
 
 
 func update_attack(delta: float) -> void:
+	if not is_instance_valid(target):
+		enter_idle()
+		return
+
 	stop_moving(delta)
 	face_target(delta)
 
@@ -118,6 +205,16 @@ func update_attack(delta: float) -> void:
 		attacked.emit(target)
 		cooldown_remaining = attack_cooldown
 
+		if wait_after_attack:
+			begin_attack_wait()
+
+func begin_attack_wait() -> void:
+	wait_remaining = wait_time
+	await get_tree().create_timer(0.2).timeout
+	change_state(State.IDLE)
+
+	velocity.x = 0.0
+	velocity.z = 0.0
 
 func update_hit(delta: float) -> void:
 	velocity.x = 0.0
@@ -136,10 +233,9 @@ func update_hit(delta: float) -> void:
 
 func begin_scatter() -> void:
 	var navigation_map: RID = navigation_agent.get_navigation_map()
-
 	var angle: float = randf_range(0.0, TAU)
 
-	# Square root gives a more even distribution across the circle.
+	# Square root gives an even distribution across the circle.
 	var distance: float = sqrt(randf()) * scatter_radius
 
 	var random_offset := Vector3(
@@ -173,8 +269,13 @@ func follow_navigation_path(delta: float) -> void:
 		stop_moving(delta)
 		return
 
-	var next_position: Vector3 = navigation_agent.get_next_path_position()
-	var direction: Vector3 = global_position.direction_to(next_position)
+	var next_position: Vector3 = (
+		navigation_agent.get_next_path_position()
+	)
+
+	var direction: Vector3 = global_position.direction_to(
+		next_position
+	)
 
 	direction.y = 0.0
 
@@ -203,13 +304,13 @@ func follow_navigation_path(delta: float) -> void:
 
 func return_to_normal_state() -> void:
 	if not is_instance_valid(target):
-		change_state(State.IDLE)
+		enter_idle()
 		return
 
 	var distance: float = distance_to_target()
 
 	if distance > detection_distance:
-		change_state(State.IDLE)
+		enter_idle()
 	elif distance <= attack_distance:
 		change_state(State.ATTACK)
 	else:
@@ -241,6 +342,9 @@ func stop_moving(delta: float) -> void:
 
 
 func face_target(delta: float) -> void:
+	if not is_instance_valid(target):
+		return
+
 	var direction: Vector3 = global_position.direction_to(
 		target.global_position
 	)
@@ -264,8 +368,18 @@ func rotate_towards(direction: Vector3, delta: float) -> void:
 	)
 
 
+func can_detect_target() -> bool:
+	return (
+		is_instance_valid(target)
+		and distance_to_target() <= detection_distance
+	)
+
+
 func distance_to_target() -> float:
-	var enemy_position: Vector2 = Vector2(
+	if not is_instance_valid(target):
+		return INF
+
+	var enemy_position: Vector2= Vector2(
 		global_position.x,
 		global_position.z
 	)

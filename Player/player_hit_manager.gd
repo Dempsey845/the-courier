@@ -5,7 +5,6 @@ extends Node
 
 @onready var feet_hitbox: Hitbox = $"../FeetHitbox"
 
-
 func _ready() -> void:
 	feet_hitbox.hit_hurtbox.connect(_hit_hurtbox)
 	feet_hitbox.active = false
@@ -18,5 +17,6 @@ func _physics_process(_delta: float) -> void:
 	)
 
 
-func _hit_hurtbox(_hurtbox: Hurtbox) -> void:
-	player.apply_upward_force(upward_force)
+func _hit_hurtbox(hurtbox: Hurtbox) -> void:
+	if hurtbox.flags.has("UpwardForce"):
+		player.apply_upward_force(upward_force)

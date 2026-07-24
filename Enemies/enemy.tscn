@@ -18,4 +18,5 @@ collision_layer = 32
 collision_mask = 0
 script = ExtResource("3_572h1")
 health = NodePath("../Health")
+flags = Array[String](["UpwardForce"])
 metadata/_custom_type_script = "uid://dswhdacq2khkk"

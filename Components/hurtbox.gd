@@ -4,6 +4,7 @@ extends Area3D
 signal hit(hitbox: Hitbox)
 
 @export var health: Health
+@export var flags: Array[String]
 
 var just_hit: bool = false
 var hit_sequence: int = 0
