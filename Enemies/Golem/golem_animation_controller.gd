@@ -2,18 +2,27 @@ extends Node
 
 @export var minimum_walk_speed: float = 0.1
 
-@onready var animation_tree: AnimationTree = $'../AnimationTree'
+@onready var animation_tree: AnimationTree = $"../AnimationTree"
 
 var enemy: Enemy
-
 var state_machine: AnimationNodeStateMachinePlayback
+
 
 func _ready() -> void:
 	enemy = get_parent().get_parent()
-
 	state_machine = animation_tree.get("parameters/playback")
 
+	enemy.hit.connect(_on_enemy_hit)
+	enemy.attacked.connect(_on_enemy_attack)
+
+
 func _process(_delta: float) -> void:
+	if enemy.current_state == Enemy.State.HIT:
+		return
+
+	if enemy.current_state == Enemy.State.ATTACK:
+		return
+
 	var horizontal_speed: float = Vector2(
 		enemy.velocity.x,
 		enemy.velocity.z
@@ -24,8 +33,16 @@ func _process(_delta: float) -> void:
 	else:
 		travel_to("Idle")
 
+
 func travel_to(state_name: StringName) -> void:
 	if state_machine.get_current_node() == state_name:
 		return
 
 	state_machine.travel(state_name)
+
+
+func _on_enemy_hit() -> void:
+	travel_to("Hit")
+
+func _on_enemy_attack(_target: Node3D) -> void:
+	travel_to("Attack")

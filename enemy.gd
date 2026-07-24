@@ -3,11 +3,13 @@ extends CharacterBody3D
 
 signal attacked(target: Node3D)
 signal state_changed(new_state: State)
+signal hit
 
 enum State {
 	IDLE,
 	CHASE,
-	ATTACK
+	ATTACK,
+	HIT
 }
 
 @export_category("Target")
@@ -23,16 +25,19 @@ enum State {
 @export_category("Attack")
 @export var attack_cooldown: float = 1.5
 
+@export_category("Hit")
+@export var stun_time: float = 0.75
+
 @onready var navigation_agent: NavigationAgent3D = $NavigationAgent3D
 
 var current_state: State = State.IDLE
 var cooldown_remaining: float = 0.0
+var stun_remaining: float = 0.0
 
 
 func _ready() -> void:
 	navigation_agent.path_desired_distance = 1.5
 	navigation_agent.target_desired_distance = attack_distance
-
 
 func _physics_process(delta: float) -> void:
 	cooldown_remaining = maxf(cooldown_remaining - delta, 0.0)
@@ -52,6 +57,9 @@ func _physics_process(delta: float) -> void:
 
 		State.ATTACK:
 			update_attack(delta)
+
+		State.HIT:
+			update_hit(delta)
 
 	move_and_slide()
 
@@ -82,6 +90,7 @@ func update_chase(delta: float) -> void:
 
 	var next_position: Vector3 = navigation_agent.get_next_path_position()
 	var direction: Vector3 = global_position.direction_to(next_position)
+
 	direction.y = 0.0
 	direction = direction.normalized()
 
@@ -115,6 +124,36 @@ func update_attack(delta: float) -> void:
 	if cooldown_remaining <= 0.0:
 		attacked.emit(target)
 		cooldown_remaining = attack_cooldown
+
+
+func update_hit(delta: float) -> void:
+	velocity.x = 0.0
+	velocity.z = 0.0
+
+	stun_remaining = maxf(stun_remaining - delta, 0.0)
+
+	if stun_remaining > 0.0:
+		return
+
+	var distance: float = distance_to_target()
+
+	if distance > detection_distance:
+		change_state(State.IDLE)
+	elif distance <= attack_distance:
+		change_state(State.ATTACK)
+	else:
+		change_state(State.CHASE)
+
+
+func take_hit() -> void:
+	stun_remaining = stun_time
+	change_state(State.HIT)
+
+	# Stop immediately rather than slowing down.
+	velocity.x = 0.0
+	velocity.z = 0.0
+
+	hit.emit()
 
 
 func stop_moving(delta: float) -> void:
