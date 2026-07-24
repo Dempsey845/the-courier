@@ -9,7 +9,8 @@ enum State {
 	IDLE,
 	CHASE,
 	ATTACK,
-	HIT
+	HIT,
+	SCATTER
 }
 
 @export_category("Target")
@@ -37,17 +38,24 @@ var current_state: State = State.IDLE
 var cooldown_remaining: float = 0.0
 var stun_remaining: float = 0.0
 
+var scatter_position: Vector3
+
 
 func _ready() -> void:
 	navigation_agent.path_desired_distance = 1.5
-	navigation_agent.target_desired_distance = attack_distance
+	navigation_agent.target_desired_distance = 1.5
 
-	hurtbox.hit.connect(func(_hitbox: Hitbox):
-		take_hit()
+	hurtbox.hit.connect(
+		func(_hitbox: Hitbox):
+			take_hit()
 	)
 
+
 func _physics_process(delta: float) -> void:
-	cooldown_remaining = maxf(cooldown_remaining - delta, 0.0)
+	cooldown_remaining = maxf(
+		cooldown_remaining - delta,
+		0.0
+	)
 
 	if not is_instance_valid(target):
 		change_state(State.IDLE)
@@ -67,6 +75,9 @@ func _physics_process(delta: float) -> void:
 
 		State.HIT:
 			update_hit(delta)
+
+		State.SCATTER:
+			update_scatter(delta)
 
 	move_and_slide()
 
@@ -90,32 +101,7 @@ func update_chase(delta: float) -> void:
 		return
 
 	navigation_agent.target_position = target.global_position
-
-	if navigation_agent.is_navigation_finished():
-		stop_moving(delta)
-		return
-
-	var next_position: Vector3 = navigation_agent.get_next_path_position()
-	var direction: Vector3 = global_position.direction_to(next_position)
-
-	direction.y = 0.0
-	direction = direction.normalized()
-
-	var target_velocity: Vector3 = direction * move_speed
-
-	velocity.x = move_toward(
-		velocity.x,
-		target_velocity.x,
-		acceleration * delta
-	)
-
-	velocity.z = move_toward(
-		velocity.z,
-		target_velocity.z,
-		acceleration * delta
-	)
-
-	rotate_towards(direction, delta)
+	follow_navigation_path(delta)
 
 
 func update_attack(delta: float) -> void:
@@ -142,6 +128,84 @@ func update_hit(delta: float) -> void:
 	if stun_remaining > 0.0:
 		return
 
+	if scatter_on_hit:
+		begin_scatter()
+	else:
+		return_to_normal_state()
+
+
+func begin_scatter() -> void:
+	var navigation_map: RID = navigation_agent.get_navigation_map()
+
+	var angle: float = randf_range(0.0, TAU)
+
+	# Square root gives a more even distribution across the circle.
+	var distance: float = sqrt(randf()) * scatter_radius
+
+	var random_offset := Vector3(
+		cos(angle) * distance,
+		0.0,
+		sin(angle) * distance
+	)
+
+	var desired_position: Vector3 = global_position + random_offset
+
+	scatter_position = NavigationServer3D.map_get_closest_point(
+		navigation_map,
+		desired_position
+	)
+
+	navigation_agent.target_position = scatter_position
+	change_state(State.SCATTER)
+
+
+func update_scatter(delta: float) -> void:
+	if navigation_agent.is_navigation_finished():
+		stop_moving(delta)
+		return_to_normal_state()
+		return
+
+	follow_navigation_path(delta)
+
+
+func follow_navigation_path(delta: float) -> void:
+	if navigation_agent.is_navigation_finished():
+		stop_moving(delta)
+		return
+
+	var next_position: Vector3 = navigation_agent.get_next_path_position()
+	var direction: Vector3 = global_position.direction_to(next_position)
+
+	direction.y = 0.0
+
+	if direction.length_squared() <= 0.001:
+		stop_moving(delta)
+		return
+
+	direction = direction.normalized()
+
+	var target_velocity: Vector3 = direction * move_speed
+
+	velocity.x = move_toward(
+		velocity.x,
+		target_velocity.x,
+		acceleration * delta
+	)
+
+	velocity.z = move_toward(
+		velocity.z,
+		target_velocity.z,
+		acceleration * delta
+	)
+
+	rotate_towards(direction, delta)
+
+
+func return_to_normal_state() -> void:
+	if not is_instance_valid(target):
+		change_state(State.IDLE)
+		return
+
 	var distance: float = distance_to_target()
 
 	if distance > detection_distance:
@@ -156,7 +220,6 @@ func take_hit() -> void:
 	stun_remaining = stun_time
 	change_state(State.HIT)
 
-	# Stop immediately rather than slowing down.
 	velocity.x = 0.0
 	velocity.z = 0.0
 
@@ -189,7 +252,10 @@ func face_target(delta: float) -> void:
 
 
 func rotate_towards(direction: Vector3, delta: float) -> void:
-	var target_angle: float = atan2(direction.x, direction.z)
+	var target_angle: float = atan2(
+		direction.x,
+		direction.z
+	)
 
 	rotation.y = lerp_angle(
 		rotation.y,

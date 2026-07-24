@@ -156,3 +156,6 @@ func apply_gravity(delta: float) -> void:
 		gravity_multiplier = jump_cut_gravity_multiplier
 
 	velocity.y -= gravity * gravity_multiplier * delta
+
+func apply_upward_force(force: float):
+	velocity.y = force
