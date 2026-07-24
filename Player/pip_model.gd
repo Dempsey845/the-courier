@@ -1,12 +1,14 @@
 extends Node3D
 
 @export var player: Player
-@export var minimum_walk_speed: float = 0.1
+@export var movement_blend_speed: float = 8.0
 
 @onready var animation_tree: AnimationTree = $AnimationTree
 
 var state_machine: AnimationNodeStateMachinePlayback
+var current_movement_blend: float = 0.0
 var is_landing: bool = false
+
 
 func _ready() -> void:
 	state_machine = animation_tree.get(
@@ -16,10 +18,10 @@ func _ready() -> void:
 	player.jump.connect(_on_player_jump)
 	player.landed.connect(_on_player_landed)
 
-	state_machine.travel("Idle")
+	travel_to("Movement")
 
 
-func _physics_process(_delta: float) -> void:
+func _physics_process(delta: float) -> void:
 	if is_landing:
 		update_land_animation()
 		return
@@ -27,19 +29,37 @@ func _physics_process(_delta: float) -> void:
 	if not player.is_on_floor():
 		update_air_animation()
 	else:
-		update_ground_animation()
+		update_ground_animation(delta)
 
 
-func update_ground_animation() -> void:
-	var horizontal_speed: float = Vector2(
+func update_ground_animation(delta: float) -> void:
+	travel_to("Movement")
+
+	var horizontal_speed := Vector2(
 		player.velocity.x,
 		player.velocity.z
 	).length()
 
-	if horizontal_speed > minimum_walk_speed:
-		travel_to("Walk")
-	else:
-		travel_to("Idle")
+	var target_blend := clampf(
+		horizontal_speed / player.move_speed,
+		0.0,
+		1.0
+	)
+
+	var blend_weight := 1.0 - exp(
+		-movement_blend_speed * delta
+	)
+
+	current_movement_blend = lerpf(
+		current_movement_blend,
+		target_blend,
+		blend_weight
+	)
+
+	animation_tree.set(
+		"parameters/MovementStateMachine/Movement/blend_position",
+		current_movement_blend
+	)
 
 
 func update_air_animation() -> void:
@@ -50,13 +70,8 @@ func update_air_animation() -> void:
 
 
 func update_land_animation() -> void:
-	# Land does not automatically travel back to another state,
-	# so wait for it to finish and then deliberately change state.
-	var animation_position: float = \
-		state_machine.get_current_play_position()
-
-	var animation_length: float = \
-		state_machine.get_current_length()
+	var animation_position := state_machine.get_current_play_position()
+	var animation_length := state_machine.get_current_length()
 
 	if animation_length <= 0.0:
 		finish_landing()
@@ -68,7 +83,7 @@ func update_land_animation() -> void:
 
 func finish_landing() -> void:
 	is_landing = false
-	update_ground_animation()
+	travel_to("Movement")
 
 
 func travel_to(state_name: StringName) -> void:
