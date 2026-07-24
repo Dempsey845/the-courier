@@ -3,6 +3,7 @@
 [ext_resource type="PackedScene" uid="uid://cs7wkqeik4n74" path="res://Enemies/enemy.tscn" id="1_1pwku"]
 [ext_resource type="Script" uid="uid://d1er2p37pf4sl" path="res://Enemies/Golem/golem_hit_manager.gd" id="2_hrsag"]
 [ext_resource type="PackedScene" uid="uid://cw0c08lvfvyfs" path="res://Enemies/Golem/golem_model.tscn" id="2_r03q7"]
+[ext_resource type="Script" uid="uid://d2ysyawlhgh30" path="res://Enemies/Golem/golem_health_manager.gd" id="3_hrsag"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_xrivr"]
 radius = 0.77246094
@@ -21,16 +22,20 @@ scatter_radius = 12.0
 script = ExtResource("2_hrsag")
 hurtbox = NodePath("../Hurtbox")
 
-[node name="NavigationAgent3D" parent="." index="2" unique_id=1961274634]
+[node name="GolemHealthManager" type="Node" parent="." index="1" unique_id=1512817392 node_paths=PackedStringArray("golem_collider")]
+script = ExtResource("3_hrsag")
+golem_collider = NodePath("../CollisionShape3D")
+
+[node name="NavigationAgent3D" parent="." index="3" unique_id=1961274634]
 debug_enabled = true
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="." index="3" unique_id=1334450505]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." index="4" unique_id=1334450505]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.7575684, 0)
 shape = SubResource("CapsuleShape3D_xrivr")
 
-[node name="GolemModel" parent="." index="4" unique_id=1931516077 instance=ExtResource("2_r03q7")]
+[node name="GolemModel" parent="." index="5" unique_id=1931516077 instance=ExtResource("2_r03q7")]
 
-[node name="Hurtbox" parent="." index="5" unique_id=1172596633]
+[node name="Hurtbox" parent="." index="6" unique_id=1172596633]
 collision_mask = 64
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Hurtbox" index="0" unique_id=212333385]
