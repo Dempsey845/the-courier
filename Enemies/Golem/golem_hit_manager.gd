@@ -4,7 +4,6 @@ extends Node
 
 var hit_particles_scene: PackedScene = preload("uid://mo7gk0o8p4t")
 
-# Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	hurtbox.hit.connect(_on_hurtbox_hit)
 

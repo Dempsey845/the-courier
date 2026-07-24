@@ -53,6 +53,13 @@ attack={
 ]
 }
 
+[layer_names]
+
+3d_physics/layer_5="PlayerHurtbox"
+3d_physics/layer_6="EnemyHurtbox"
+3d_physics/layer_7="PlayerHitbox"
+3d_physics/layer_8="EnemyHitbox"
+
 [physics]
 
 3d/physics_engine="Jolt Physics"

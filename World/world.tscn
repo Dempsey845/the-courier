@@ -54,6 +54,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.3710585, 1.3000001, 4.6)
 size = Vector3(1, 2.6000001, 1)
 
 [node name="Player" parent="." unique_id=67220391 instance=ExtResource("1_62w18")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.2, 0)
 
 [node name="GolemEnemy" parent="." unique_id=1009641960 node_paths=PackedStringArray("target") instance=ExtResource("2_8a836")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 14)

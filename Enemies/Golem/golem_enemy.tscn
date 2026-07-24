@@ -30,7 +30,10 @@ shape = SubResource("CapsuleShape3D_xrivr")
 
 [node name="GolemModel" parent="." index="4" unique_id=1931516077 instance=ExtResource("2_r03q7")]
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Hurtbox" parent_id_path=PackedInt32Array(1172596633) index="0" unique_id=212333385]
+[node name="Hurtbox" parent="." index="5" unique_id=1172596633]
+collision_mask = 64
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Hurtbox" index="0" unique_id=212333385]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.5, 0)
 shape = SubResource("CylinderShape3D_13qdw")
 debug_color = Color(0.9388661, 1.4246702e-05, 0.6239978, 0.41960785)

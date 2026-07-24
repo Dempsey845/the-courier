@@ -74,7 +74,6 @@ func handle_jump() -> void:
 
 	if has_buffered_jump and can_jump:
 		velocity.y = jump_velocity
-
 		# Consume both timers so the same input cannot jump twice.
 		jump_buffer_timer = 0.0
 		coyote_timer = 0.0
