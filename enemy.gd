@@ -11,7 +11,8 @@ enum State {
 	CHASE,
 	ATTACK,
 	HIT,
-	SCATTER
+	SCATTER,
+	DEATH
 }
 
 @export_category("Target")
@@ -40,8 +41,15 @@ enum State {
 @export var scatter_on_hit: bool = true
 @export var scatter_radius: float = 15.0
 
+@export_category("Death")
+@export var death_duration: float = 3.0
+@export var remove_on_death: bool = true
+
+var death_remaining: float = 0.0
+
 @onready var navigation_agent: NavigationAgent3D = $NavigationAgent3D
 @onready var hurtbox: Hurtbox = $Hurtbox
+@onready var health: Health = $Health
 
 var current_state: State = State.IDLE
 
@@ -66,6 +74,10 @@ func _ready() -> void:
 	hurtbox.hit.connect(
 		func(_hitbox: Hitbox):
 			take_hit()
+	)
+
+	health.death.connect(func():
+		die()
 	)
 
 
@@ -94,7 +106,44 @@ func _physics_process(delta: float) -> void:
 		State.SCATTER:
 			update_scatter(delta)
 
+		State.DEATH:
+			update_death(delta)
+
 	move_and_slide()
+
+func die() -> void:
+	if current_state == State.DEATH:
+		return
+
+	death_remaining = death_duration
+	wait_remaining = 0.0
+	cooldown_remaining = 0.0
+
+	velocity.x = 0.0
+	velocity.z = 0.0
+
+	navigation_agent.target_position = global_position
+	navigation_agent.set_velocity_forced(Vector3.ZERO)
+
+	hurtbox.set_deferred("monitoring", false)
+	hurtbox.set_deferred("monitorable", false)
+
+	change_state(State.DEATH)
+
+
+func update_death(delta: float) -> void:
+	stop_moving(delta)
+
+	if not remove_on_death:
+		return
+
+	death_remaining = maxf(
+		death_remaining - delta,
+		0.0
+	)
+
+	if death_remaining <= 0.0:
+		queue_free()
 
 
 func update_idle(delta: float) -> void:
@@ -318,6 +367,10 @@ func return_to_normal_state() -> void:
 
 
 func take_hit() -> void:
+	if health.current_health <= 0:
+		die()
+		return
+
 	stun_remaining = stun_time
 	change_state(State.HIT)
 

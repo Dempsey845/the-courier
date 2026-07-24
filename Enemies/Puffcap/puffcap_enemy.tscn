@@ -2,6 +2,7 @@
 
 [ext_resource type="PackedScene" uid="uid://cs7wkqeik4n74" path="res://Enemies/enemy.tscn" id="1_2e3w6"]
 [ext_resource type="PackedScene" uid="uid://drxioowfywum0" path="res://Enemies/Puffcap/puffcap_model.tscn" id="2_6bnxe"]
+[ext_resource type="Script" uid="uid://dil1bl1fubm5f" path="res://Enemies/Puffcap/puffcap_death_manager.gd" id="2_hk2o2"]
 [ext_resource type="PackedScene" uid="uid://c7m21t528ai6t" path="res://Enemies/Puffcap/spore_hitbox.tscn" id="3_6bnxe"]
 [ext_resource type="Script" uid="uid://cygk0ata5pn1f" path="res://Enemies/Puffcap/spore_hitbox.gd" id="4_1ggph"]
 
@@ -16,22 +17,30 @@ height = 1.6
 attack_cooldown = 10.0
 wait_after_attack = true
 wait_time = 10.0
+remove_on_death = false
 
-[node name="Hurtbox" parent="." index="2" unique_id=1172596633]
+[node name="PuffcapDeathManager" type="Node" parent="." index="0" unique_id=1817584547 node_paths=PackedStringArray("puffcap_collider")]
+script = ExtResource("2_hk2o2")
+puffcap_collider = NodePath("../CollisionShape3D")
+
+[node name="Hurtbox" parent="." index="3" unique_id=1172596633]
 collision_mask = 64
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Hurtbox" index="0" unique_id=334972476]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.6343751, -0.12660277)
 shape = SubResource("CylinderShape3D_xrivr")
 
-[node name="PuffcapModel" parent="." index="3" unique_id=2006583683 instance=ExtResource("2_6bnxe")]
+[node name="PuffcapModel" parent="." index="4" unique_id=2006583683 instance=ExtResource("2_6bnxe")]
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="." index="4" unique_id=1202246336]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." index="5" unique_id=1202246336]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.8, 0)
 shape = SubResource("CapsuleShape3D_xrivr")
 
-[node name="SporeHitbox" parent="." index="5" unique_id=2137302131 instance=ExtResource("3_6bnxe")]
+[node name="SporeHitbox" parent="." index="6" unique_id=2137302131 instance=ExtResource("3_6bnxe")]
 collision_layer = 128
 collision_mask = 16
 script = ExtResource("4_1ggph")
 start_delay = 1.0
+
+[node name="DeathParticleSpawnPoint" type="Marker3D" parent="." index="7" unique_id=2087940404]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.1, 0)

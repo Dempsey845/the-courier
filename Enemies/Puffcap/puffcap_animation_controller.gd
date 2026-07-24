@@ -15,8 +15,16 @@ func _ready() -> void:
 	enemy.hit.connect(_on_enemy_hit)
 	enemy.attacked.connect(_on_enemy_attack)
 
+	var enemy_health: Health = enemy.get_node("Health")
+	enemy_health.death.connect(func(): 
+		travel_to("Death")
+	)
+
 
 func _process(_delta: float) -> void:
+	if enemy.current_state == Enemy.State.DEATH:
+		return
+
 	if enemy.current_state == Enemy.State.HIT:
 		return
 

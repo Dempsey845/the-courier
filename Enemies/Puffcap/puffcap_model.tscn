@@ -8,6 +8,7 @@
 [ext_resource type="Texture2D" uid="uid://dav6g0yahks6n" path="res://Enemies/Puffcap/puffcap_ShroomBottom.png" id="4_bn6dt"]
 [ext_resource type="PackedScene" uid="uid://blpcpcv4cmjbc" path="res://Enemies/Puffcap/puffcap_spore_effect.tscn" id="6_t5tt1"]
 [ext_resource type="PackedScene" uid="uid://c0k6l873437gy" path="res://Enemies/Puffcap/puffcap_release_spore_effect.tscn" id="7_bn6dt"]
+[ext_resource type="Animation" uid="uid://cwl2l2tp2guy5" path="res://Enemies/Puffcap/puffcap_death.anim" id="7_s1084"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_p7bs7"]
 resource_name = "Face"
@@ -309,8 +310,12 @@ _data = {
 &"Idle": SubResource("Animation_fxwf0"),
 &"Inflate": SubResource("Animation_s1084"),
 &"RESET": SubResource("Animation_p7bs7"),
-&"Walk": SubResource("Animation_bn6dt")
+&"Walk": SubResource("Animation_bn6dt"),
+&"puffcap_death": ExtResource("7_s1084")
 }
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_5gpxd"]
+animation = &"puffcap_death"
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_oivsg"]
 animation = &"Idle"
@@ -341,15 +346,27 @@ xfade_time = 0.2
 switch_mode = 2
 advance_mode = 2
 
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_s3hb2"]
+xfade_time = 0.2
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_ga3tp"]
+xfade_time = 0.2
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_36l6p"]
+xfade_time = 0.2
+
 [sub_resource type="AnimationNodeStateMachine" id="AnimationNodeStateMachine_xrivr"]
+states/Death/node = SubResource("AnimationNodeAnimation_5gpxd")
+states/Death/position = Vector2(341, 11)
 states/Idle/node = SubResource("AnimationNodeAnimation_oivsg")
 states/Idle/position = Vector2(341, 117)
 states/Inflate/node = SubResource("AnimationNodeAnimation_fxwf0")
-states/Inflate/position = Vector2(463, 186)
+states/Inflate/position = Vector2(503, 216)
+states/Start/position = Vector2(122, 117)
 states/Walk/node = SubResource("AnimationNodeAnimation_t5tt1")
-states/Walk/position = Vector2(349, 203)
-transitions = ["Start", "Idle", SubResource("AnimationNodeStateMachineTransition_bn6dt"), "Idle", "Walk", SubResource("AnimationNodeStateMachineTransition_p7bs7"), "Walk", "Idle", SubResource("AnimationNodeStateMachineTransition_s1084"), "Idle", "Inflate", SubResource("AnimationNodeStateMachineTransition_5gpxd"), "Walk", "Inflate", SubResource("AnimationNodeStateMachineTransition_7tbio"), "Inflate", "Idle", SubResource("AnimationNodeStateMachineTransition_i55cc")]
-graph_offset = Vector2(25, 48)
+states/Walk/position = Vector2(283, 224)
+transitions = ["Start", "Idle", SubResource("AnimationNodeStateMachineTransition_bn6dt"), "Idle", "Walk", SubResource("AnimationNodeStateMachineTransition_p7bs7"), "Walk", "Idle", SubResource("AnimationNodeStateMachineTransition_s1084"), "Idle", "Inflate", SubResource("AnimationNodeStateMachineTransition_5gpxd"), "Walk", "Inflate", SubResource("AnimationNodeStateMachineTransition_7tbio"), "Inflate", "Idle", SubResource("AnimationNodeStateMachineTransition_i55cc"), "Idle", "Death", SubResource("AnimationNodeStateMachineTransition_s3hb2"), "Walk", "Death", SubResource("AnimationNodeStateMachineTransition_ga3tp"), "Inflate", "Death", SubResource("AnimationNodeStateMachineTransition_36l6p")]
+graph_offset = Vector2(-23, -47)
 
 [node name="PuffcapModel" unique_id=2006583683 instance=ExtResource("1_oivsg")]
 script = ExtResource("2_p7bs7")
@@ -357,21 +374,21 @@ script = ExtResource("2_p7bs7")
 [node name="PuffcapAnimationController" type="Node" parent="." index="0" unique_id=1015491863]
 script = ExtResource("2_t5tt1")
 
-[node name="Skeleton3D" parent="Armature" parent_id_path=PackedInt32Array(988921233) index="0" unique_id=529543150]
-bones/0/position = Vector3(-0.011267751, 0.3251326, 0)
-bones/0/rotation = Quaternion(0, 0, -0.023349196, 0.99972737)
+[node name="Skeleton3D" parent="Armature" parent_id_path=PackedInt32Array(1540813913) index="0" unique_id=340238021]
+bones/0/position = Vector3(0.0037207133, 0.32504237, 0)
+bones/0/rotation = Quaternion(0, 0, 0.007477034, 0.9999721)
 bones/0/scale = Vector3(0.99999994, 0.99999994, 1)
-bones/1/position = Vector3(0.011267759, 0.8228563, -0.5557725)
-bones/1/rotation = Quaternion(0.574596, -0.013420111, -0.019107357, 0.8181041)
+bones/1/position = Vector3(-0.0037207115, 0.8229465, -0.5557725)
+bones/1/rotation = Quaternion(0.5747366, 0.004297342, 0.0061185877, 0.8183043)
 bones/1/scale = Vector3(1, 1, 1.0000002)
 bones/2/position = Vector3(0.21912877, 0.11440279, -0.20084074)
 bones/2/rotation = Quaternion(-0.04318904, 0.69833213, 0.7091312, -0.08717797)
 bones/3/position = Vector3(-0.21912877, 0.11440279, -0.20084074)
 
-[node name="Sphere" parent="Armature/Skeleton3D" index="0" unique_id=1609389406]
+[node name="Sphere" parent="Armature/Skeleton3D" index="0" unique_id=1093975010]
 mesh = SubResource("ArrayMesh_5gpxd")
 
-[node name="AnimationPlayer" parent="." index="2" unique_id=1870690319]
+[node name="AnimationPlayer" parent="." index="2" unique_id=1185318873]
 libraries/ = SubResource("AnimationLibrary_p7bs7")
 
 [node name="AnimationTree" type="AnimationTree" parent="." index="3" unique_id=930358500]
