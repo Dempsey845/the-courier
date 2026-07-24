@@ -3,12 +3,14 @@
 [ext_resource type="Script" uid="uid://c4xmpgw1x36jy" path="res://Player/player.gd" id="1_4ntmi"]
 [ext_resource type="Script" uid="uid://b4up548xnrtjy" path="res://Player/player_hit_manager.gd" id="2_00tjw"]
 [ext_resource type="PackedScene" uid="uid://bqwau4w6nankd" path="res://Player/pip_model.tscn" id="2_btcbx"]
+[ext_resource type="Script" uid="uid://dn5b8er116luc" path="res://Components/health.gd" id="3_apopc"]
 [ext_resource type="Script" uid="uid://dl3pxtcg0n102" path="res://Player/camera_controller.gd" id="3_btcbx"]
 [ext_resource type="Script" uid="uid://ysgrvrrrwkp0" path="res://Player/landing_shadow.gd" id="4_gwnis"]
 [ext_resource type="Texture2D" uid="uid://ddk2jwnyxf2iu" path="res://Player/platformer_circle_shadow.png" id="4_k53q1"]
 [ext_resource type="Texture2D" uid="uid://cgt180snb86g1" path="res://Player/jump_cloud_particle.png" id="6_fhl08"]
 [ext_resource type="Script" uid="uid://1i640mr2h221" path="res://Player/jump_particles.gd" id="7_vtle1"]
 [ext_resource type="Script" uid="uid://deroukfpp2mia" path="res://Components/hitbox.gd" id="8_od3ui"]
+[ext_resource type="Script" uid="uid://dswhdacq2khkk" path="res://Components/hurtbox.gd" id="11_5htga"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_xrivr"]
 
@@ -53,12 +55,18 @@ colors = PackedColorArray(0.41981313, 0.41981313, 0.4198131, 1, 1, 1, 1, 1)
 height = 0.3
 radius = 0.4
 
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_13qdw"]
+
 [node name="Player" type="CharacterBody3D" unique_id=67220391]
 script = ExtResource("1_4ntmi")
 
 [node name="PlayerHitManager" type="Node" parent="." unique_id=233237877 node_paths=PackedStringArray("player")]
 script = ExtResource("2_00tjw")
 player = NodePath("..")
+
+[node name="Health" type="Node" parent="." unique_id=326232818]
+script = ExtResource("3_apopc")
+metadata/_custom_type_script = "uid://dn5b8er116luc"
 
 [node name="Model" parent="." unique_id=1483251585 node_paths=PackedStringArray("player") instance=ExtResource("2_btcbx")]
 player = NodePath("..")
@@ -120,3 +128,13 @@ metadata/_custom_type_script = "uid://deroukfpp2mia"
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.15, 0)
 shape = SubResource("CylinderShape3D_x3vf3")
 debug_color = Color(0.96227235, 0.028574746, 0.4919914, 0.41960785)
+
+[node name="Hurtbox" type="Area3D" parent="." unique_id=906320335 node_paths=PackedStringArray("health")]
+script = ExtResource("11_5htga")
+health = NodePath("../Health")
+metadata/_custom_type_script = "uid://dswhdacq2khkk"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Hurtbox" unique_id=1619555108]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+shape = SubResource("CapsuleShape3D_13qdw")
+debug_color = Color(0, 0.64169705, 0.33515495, 0.41960785)

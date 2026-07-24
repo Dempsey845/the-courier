@@ -41,12 +41,12 @@ materials/extract_format=0
 materials/extract_path=""
 _subresources={
 "animations": {
-"Armature|Idle": {
-"save_to_file/enabled": false,
-"save_to_file/fallback_path": "",
+"Armature|Attack": {
+"save_to_file/enabled": true,
+"save_to_file/fallback_path": "res://Enemies/Golem/golem_attack.anim",
 "save_to_file/keep_custom_tracks": "",
-"save_to_file/path": "",
-"settings/loop_mode": 1,
+"save_to_file/path": "uid://dxpqwf37wj31p",
+"settings/loop_mode": 0,
 "slice_1/end_frame": 0,
 "slice_1/loop_mode": 0,
 "slice_1/name": "",
@@ -2097,7 +2097,7 @@ _subresources={
 "slice_99/start_frame": 0,
 "slices/amount": 0
 },
-"Armature|Walk": {
+"Armature|Idle": {
 "save_to_file/enabled": false,
 "save_to_file/fallback_path": "",
 "save_to_file/keep_custom_tracks": "",

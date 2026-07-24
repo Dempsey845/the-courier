@@ -21,6 +21,10 @@ signal landed
 @export var coyote_time: float = 0.15
 @export var jump_buffer_time: float = 0.15
 
+@export_category("Knockback")
+@export var knockback_control_lock_time: float = 0.2
+var knockback_timer: float = 0.0
+
 @onready var model: Node3D = $Model
 @onready var camera: Camera3D = \
 	$CameraController/SpringArm3D/Camera3D
@@ -35,7 +39,11 @@ func _physics_process(delta: float) -> void:
 	update_jump_timers(delta)
 	handle_jump()
 	apply_gravity(delta)
-	handle_movement(delta)
+
+	knockback_timer = maxf(knockback_timer - delta, 0.0)
+
+	if knockback_timer <= 0.0:
+		handle_movement(delta)
 
 	move_and_slide()
 
@@ -159,3 +167,23 @@ func apply_gravity(delta: float) -> void:
 
 func apply_upward_force(force: float):
 	velocity.y = force
+
+func apply_knockback(
+	source_position: Vector3,
+	force: float,
+	upward_force: float = 5.0 
+	) -> void:
+	var direction: Vector3 = global_position - source_position
+	direction.y = 0.0
+
+	if direction.length_squared() <= 0.001:
+		direction = -model.global_basis.z
+		direction.y = 0.0
+
+	direction = direction.normalized()
+
+	velocity.x = direction.x * force
+	velocity.z = direction.z * force
+	velocity.y = upward_force
+
+	knockback_timer = knockback_control_lock_time

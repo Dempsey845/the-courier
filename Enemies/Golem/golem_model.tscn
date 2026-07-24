@@ -1,110 +1,11 @@
 [gd_scene format=4 uid="uid://cw0c08lvfvyfs"]
 
 [ext_resource type="Texture2D" uid="uid://w85g3gtx4wxd" path="res://Enemies/Golem/ImpTexture.png" id="1_so5yf"]
+[ext_resource type="Script" uid="uid://dx4q5t1q8bgcq" path="res://Enemies/Golem/enemy_knockback_player.gd" id="2_e8k2g"]
 [ext_resource type="Script" uid="uid://cmpgcugcnxwm6" path="res://Enemies/Golem/golem_animation_controller.gd" id="2_ftk7c"]
 [ext_resource type="Animation" uid="uid://cjregambntirf" path="res://Enemies/Golem/golem_walk.anim" id="2_l403x"]
-
-[sub_resource type="Animation" id="Animation_kecck"]
-resource_name = "Armature|Attack"
-length = 0.7916666666666666
-tracks/0/type = "position_3d"
-tracks/0/imported = true
-tracks/0/enabled = true
-tracks/0/path = NodePath("Armature/Skeleton3D:Root")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = PackedFloat32Array(0, 1, 0, 0, 0.006584863, 0.16666667, 1, 0, 0.001163779, 0.0067380774, 0.75, 1, 0, 3.0251651e-05, 0.0065923147, 0.7916667, 1, 0, 0, 0.006584863)
-tracks/1/type = "rotation_3d"
-tracks/1/imported = true
-tracks/1/enabled = true
-tracks/1/path = NodePath("Armature/Skeleton3D:Root")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = PackedFloat32Array(0, 1, 0.7071068, 8.429372e-08, 8.42937e-08, 0.7071067, 0.041666668, 1, 0.7166479, 8.5431104e-08, 8.3140755e-08, 0.69743514, 0.083333336, 1, 0.7389088, 8.808481e-08, 8.032388e-08, 0.6738054, 0.125, 1, 0.76448786, 9.113407e-08, 7.684687e-08, 0.6446381, 0.16666667, 1, 0.78500974, 9.358047e-08, 7.3848184e-08, 0.6194834, 0.20833333, 1, 0.7933534, 9.457511e-08, 7.2570025e-08, 0.60876137, 0.33333334, 1, 0.7933534, 9.457511e-08, 7.2570025e-08, 0.60876137, 0.375, 1, 0.79149866, 9.435401e-08, 7.2857254e-08, 0.6111709, 0.41666666, 1, 0.7863721, 9.374287e-08, 7.364192e-08, 0.61775315, 0.45833334, 1, 0.77860206, 9.281661e-08, 7.480598e-08, 0.627518, 0.5, 1, 0.76881784, 9.165024e-08, 7.623051e-08, 0.63946784, 0.5416667, 1, 0.75768656, 9.032329e-08, 7.779821e-08, 0.6526186, 0.5833333, 1, 0.7459334, 8.892221e-08, 7.9395846e-08, 0.6660205, 0.625, 1, 0.7343479, 8.7541096e-08, 8.0916095e-08, 0.67877334, 0.6666667, 1, 0.7237775, 8.6281005e-08, 8.225841e-08, 0.6900335, 0.7083333, 1, 0.71511024, 8.524779e-08, 8.33287e-08, 0.6990117, 0.75, 1, 0.70925367, 8.454964e-08, 8.4037e-08, 0.7049534, 0.76666665, 1, 0.7083957, 8.4447365e-08, 8.413978e-08, 0.7058155, 0.7916667, 1, 0.7071068, 8.429372e-08, 8.42937e-08, 0.7071067)
-tracks/2/type = "scale_3d"
-tracks/2/imported = true
-tracks/2/enabled = true
-tracks/2/path = NodePath("Armature/Skeleton3D:Root")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = PackedFloat32Array(0, 1, 1, 1, 1)
-tracks/3/type = "rotation_3d"
-tracks/3/imported = true
-tracks/3/enabled = true
-tracks/3/path = NodePath("Armature/Skeleton3D:Foot.L")
-tracks/3/interp = 1
-tracks/3/loop_wrap = true
-tracks/3/keys = PackedFloat32Array(0, 1, 0.7071068, 0, 0, 0.7071067)
-tracks/4/type = "position_3d"
-tracks/4/imported = true
-tracks/4/enabled = true
-tracks/4/path = NodePath("Armature/Skeleton3D:Hand.L")
-tracks/4/interp = 1
-tracks/4/loop_wrap = true
-tracks/4/keys = PackedFloat32Array(0, 1, 0.009826254, -1.2688058e-09, 0.009443412, 0.083333336, 1, 0.009537306, -0.0010999958, 0.009443412, 0.125, 1, 0.0092943255, -0.0023080818, 0.009443412, 0.16666667, 1, 0.009090748, -0.0038065314, 0.009443412, 0.20833333, 1, 0.009005377, -0.0054840734, 0.009443412, 0.25, 1, 0.009017343, -0.006648708, 0.009238595, 0.375, 1, 0.009168115, -0.006648708, 0.008132582, 0.5, 1, 0.009415815, -0.0052125873, 0.00841572, 0.5416667, 1, 0.009503169, -0.004308363, 0.008593994, 0.625, 1, 0.009663514, -0.0023403456, 0.008982, 0.7083333, 1, 0.009780782, -0.0006914661, 0.009307086, 0.7916667, 1, 0.009826254, -1.2688058e-09, 0.009443412)
-tracks/5/type = "rotation_3d"
-tracks/5/imported = true
-tracks/5/enabled = true
-tracks/5/path = NodePath("Armature/Skeleton3D:Hand.L")
-tracks/5/interp = 1
-tracks/5/loop_wrap = true
-tracks/5/keys = PackedFloat32Array(0, 1, 0.7071068, 0, 0, 0.7071067, 0.041666668, 1, 0.7168322, 0, 0, 0.6972457, 0.083333336, 1, 0.73954666, 0, 0, 0.6731053, 0.125, 1, 0.7656823, 0, 0, 0.643219, 0.16666667, 1, 0.7866722, 0, 0, 0.61737096, 0.20833333, 1, 0.7952099, 0, 0, 0.60633427, 0.25, 1, 0.7940229, 0, 0, 0.6078878, 0.29166666, 1, 0.7906825, 0, 0, 0.61222637, 0.33333334, 1, 0.7855044, 0, 0, 0.6188561, 0.375, 1, 0.77879775, 0, 0, 0.6272751, 0.41666666, 1, 0.7708785, 0, 0, 0.6369822, 0.45833334, 1, 0.76207906, 0, 0, 0.647484, 0.5416667, 1, 0.7432853, 0, 0, 0.6689746, 0.5833333, 1, 0.73407453, 0, 0, 0.6790689, 0.625, 1, 0.7255464, 0, 0, 0.68817323, 0.6666667, 1, 0.7181397, 0, 0, 0.69589895, 0.7083333, 1, 0.7123008, 0, 0, 0.7018744, 0.75, 1, 0.70847666, 0, 0, 0.70573425, 0.76666665, 1, 0.7079291, 0, 0, 0.70628357, 0.7916667, 1, 0.7071068, 0, 0, 0.7071067)
-tracks/6/type = "scale_3d"
-tracks/6/imported = true
-tracks/6/enabled = true
-tracks/6/path = NodePath("Armature/Skeleton3D:Hand.L")
-tracks/6/interp = 1
-tracks/6/loop_wrap = true
-tracks/6/keys = PackedFloat32Array(0, 1, 1, 1, 1, 0.20833333, 1, 1, 0.99999994, 0.99999994, 0.25, 1, 1.0824075, 1.0824075, 1.0824075, 0.33333334, 1, 1.4450005, 1.4450005, 1.4450005, 0.375, 1, 1.5274081, 1.5274081, 1.5274081, 0.41666666, 1, 1.3906727, 1.3906727, 1.3906727, 0.45833334, 1, 1.1367354, 1.1367354, 1.1367354, 0.5, 1, 1, 0.99999994, 0.99999994, 0.7916667, 1, 1, 1, 1)
-tracks/7/type = "position_3d"
-tracks/7/imported = true
-tracks/7/enabled = true
-tracks/7/path = NodePath("Armature/Skeleton3D:Head")
-tracks/7/interp = 1
-tracks/7/loop_wrap = true
-tracks/7/keys = PackedFloat32Array(0, 1, 0, 0, 0.016621685, 0.16666667, 1, 0, -0.001163779, 0.016468469, 0.75, 1, 0, -3.0251234e-05, 0.016611278, 0.7916667, 1, 0, 0, 0.016621685)
-tracks/8/type = "rotation_3d"
-tracks/8/imported = true
-tracks/8/enabled = true
-tracks/8/path = NodePath("Armature/Skeleton3D:Head")
-tracks/8/interp = 1
-tracks/8/loop_wrap = true
-tracks/8/keys = PackedFloat32Array(0, 1, 0.7071068, 0, 0, 0.7071067, 0.041666668, 1, 0.7166479, 0, 0, 0.69743514, 0.083333336, 1, 0.7389088, 0, 0, 0.6738054, 0.125, 1, 0.76448786, 0, 0, 0.6446381, 0.16666667, 1, 0.78500974, 0, 0, 0.6194834, 0.20833333, 1, 0.7933534, 0, 0, 0.60876137, 0.33333334, 1, 0.7933534, 0, 0, 0.60876137, 0.375, 1, 0.79149866, 0, 0, 0.6111709, 0.41666666, 1, 0.7863721, 0, 0, 0.61775315, 0.45833334, 1, 0.77860206, 0, 0, 0.627518, 0.5, 1, 0.76881784, 0, 0, 0.63946784, 0.5416667, 1, 0.75768656, 0, 0, 0.6526186, 0.5833333, 1, 0.7459334, 0, 0, 0.6660205, 0.625, 1, 0.7343479, 0, 0, 0.67877334, 0.6666667, 1, 0.7237775, 0, 0, 0.6900335, 0.7083333, 1, 0.71511024, 0, 0, 0.6990117, 0.75, 1, 0.70925367, 0, 0, 0.7049534, 0.76666665, 1, 0.7083957, 0, 0, 0.7058155, 0.7916667, 1, 0.7071068, 0, 0, 0.7071067)
-tracks/9/type = "scale_3d"
-tracks/9/imported = true
-tracks/9/enabled = true
-tracks/9/path = NodePath("Armature/Skeleton3D:Head")
-tracks/9/interp = 1
-tracks/9/loop_wrap = true
-tracks/9/keys = PackedFloat32Array(0, 1, 1, 1, 1)
-tracks/10/type = "rotation_3d"
-tracks/10/imported = true
-tracks/10/enabled = true
-tracks/10/path = NodePath("Armature/Skeleton3D:Foot.R")
-tracks/10/interp = 1
-tracks/10/loop_wrap = true
-tracks/10/keys = PackedFloat32Array(0, 1, 0.7071068, 0, 0, 0.7071067)
-tracks/11/type = "position_3d"
-tracks/11/imported = true
-tracks/11/enabled = true
-tracks/11/path = NodePath("Armature/Skeleton3D:Hand.R")
-tracks/11/interp = 1
-tracks/11/loop_wrap = true
-tracks/11/keys = PackedFloat32Array(0, 1, -0.009826254, -1.2688058e-09, 0.009443412, 0.375, 1, -0.009826254, -1.2688058e-09, 0.009443412, 0.41666666, 1, -0.0096542435, -0.0030081265, 0.009443412, 0.45833334, 1, -0.009244064, -0.006648708, 0.009443412, 0.5, 1, -0.008754495, -0.0075388323, 0.009443412, 0.6666667, 1, -0.008754495, -0.0075388323, 0.009443412, 0.7083333, 1, -0.009244064, -0.006648708, 0.009443412, 0.75, 1, -0.0096542435, -0.0030081265, 0.009443412, 0.7916667, 1, -0.009826254, -1.2688058e-09, 0.009443412)
-tracks/12/type = "rotation_3d"
-tracks/12/imported = true
-tracks/12/enabled = true
-tracks/12/path = NodePath("Armature/Skeleton3D:Hand.R")
-tracks/12/interp = 1
-tracks/12/loop_wrap = true
-tracks/12/keys = PackedFloat32Array(0, 1, 0.7071068, 0, 0, 0.7071067, 0.375, 1, 0.7071068, 0, 0, 0.7071067, 0.41666666, 1, 0.72078717, 0, 0, 0.6931564, 0.45833334, 1, 0.7524238, 0, 0, 0.65867925, 0.5, 1, 0.78810984, 0, 0, 0.6155346, 0.5416667, 1, 0.8160417, 0, 0, 0.57799304, 0.625, 1, 0.8160417, 0, 0, 0.57799304, 0.6666667, 1, 0.78810984, 0, 0, 0.6155346, 0.7083333, 1, 0.7524238, 0, 0, 0.65867925, 0.75, 1, 0.72078717, 0, 0, 0.6931564, 0.7916667, 1, 0.7071068, 0, 0, 0.7071067)
-tracks/13/type = "scale_3d"
-tracks/13/imported = true
-tracks/13/enabled = true
-tracks/13/path = NodePath("Armature/Skeleton3D:Hand.R")
-tracks/13/interp = 1
-tracks/13/loop_wrap = true
-tracks/13/keys = PackedFloat32Array(0, 1, 1, 1, 1, 0.45833334, 1, 1, 1, 1, 0.5, 1, 1.152125, 1.1521251, 1.1521251, 0.5416667, 1, 1.434643, 1.434643, 1.434643, 0.625, 1, 1.4346429, 1.434643, 1.434643, 0.6666667, 1, 1.152125, 1.1521251, 1.1521251, 0.7083333, 1, 1, 1, 1, 0.7916667, 1, 1, 1, 1)
+[ext_resource type="Animation" uid="uid://dmeqx8k6solga" path="res://Enemies/Golem/golem_attack.anim" id="3_x3j3j"]
+[ext_resource type="Script" uid="uid://deroukfpp2mia" path="res://Components/hitbox.gd" id="4_l403x"]
 
 [sub_resource type="Animation" id="Animation_1klpd"]
 resource_name = "Armature|Death"
@@ -617,19 +518,35 @@ tracks/13/interp = 1
 tracks/13/loop_wrap = true
 tracks/13/keys = PackedFloat32Array(0, 1, 1, 1, 1)
 
+[sub_resource type="Animation" id="Animation_l403x"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AttackHitbox:active")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_r3gjx"]
 _data = {
-&"Armature|Attack": SubResource("Animation_kecck"),
 &"Armature|Death": SubResource("Animation_1klpd"),
 &"Armature|Hit": SubResource("Animation_c2lbv"),
 &"Armature|HitFromFront": SubResource("Animation_5xqsi"),
 &"Armature|Idle": SubResource("Animation_xr1s5"),
 &"Armature|Reset": SubResource("Animation_e5s3y"),
+&"RESET": SubResource("Animation_l403x"),
+&"golem_attack": ExtResource("3_x3j3j"),
 &"golem_walk": ExtResource("2_l403x")
 }
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_so5yf"]
-animation = &"Armature|Attack"
+animation = &"golem_attack"
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_l403x"]
 animation = &"Armature|Hit"
@@ -673,7 +590,7 @@ xfade_time = 0.1
 
 [sub_resource type="AnimationNodeStateMachine" id="AnimationNodeStateMachine_iy4mj"]
 states/Attack/node = SubResource("AnimationNodeAnimation_so5yf")
-states/Attack/position = Vector2(357, 227)
+states/Attack/position = Vector2(357, 230)
 states/Hit/node = SubResource("AnimationNodeAnimation_l403x")
 states/Hit/position = Vector2(534, 132)
 states/Idle/node = SubResource("AnimationNodeAnimation_7xldh")
@@ -682,7 +599,7 @@ states/Start/position = Vector2(75, 100)
 states/Walk/node = SubResource("AnimationNodeAnimation_wop0j")
 states/Walk/position = Vector2(470, -40)
 transitions = ["Start", "Idle", SubResource("AnimationNodeStateMachineTransition_so5yf"), "Idle", "Walk", SubResource("AnimationNodeStateMachineTransition_tcut3"), "Walk", "Idle", SubResource("AnimationNodeStateMachineTransition_w3o0w"), "Idle", "Attack", SubResource("AnimationNodeStateMachineTransition_l403x"), "Attack", "Idle", SubResource("AnimationNodeStateMachineTransition_e8k2g"), "Idle", "Hit", SubResource("AnimationNodeStateMachineTransition_x3j3j"), "Hit", "Idle", SubResource("AnimationNodeStateMachineTransition_682jx"), "Walk", "Hit", SubResource("AnimationNodeStateMachineTransition_8kll2"), "Attack", "Hit", SubResource("AnimationNodeStateMachineTransition_w83pk")]
-graph_offset = Vector2(85, -68)
+graph_offset = Vector2(89, 11)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_1bu21"]
 resource_name = "Stone"
@@ -831,10 +748,23 @@ _surfaces = [{
 }]
 blend_shape_mode = 0
 
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_13qdw"]
+radius = 0.4
+height = 2.15
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_13qdw"]
+radius = 0.6
+
 [node name="GolemModel" type="Node3D" unique_id=1160607809]
 
 [node name="GolemAnimationController" type="Node" parent="." unique_id=176496594]
 script = ExtResource("2_ftk7c")
+
+[node name="EnemyKnockbackPlayer" type="Node" parent="." unique_id=1064384547 node_paths=PackedStringArray("hitbox", "source")]
+script = ExtResource("2_e8k2g")
+hitbox = NodePath("../AttackHitbox")
+source = NodePath("..")
+upward_force = 12.0
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=538950205]
 libraries/ = SubResource("AnimationLibrary_r3gjx")
@@ -853,7 +783,7 @@ bones/0/parent = -1
 bones/0/rest = Transform3D(1, 4.973799e-14, 2.384186e-07, 2.384186e-07, -1.1920929e-07, -0.99999994, 0, 0.99999994, -1.1920929e-07, 0, 0, 0.006584863)
 bones/0/enabled = true
 bones/0/position = Vector3(0, 0, 0.006584863)
-bones/0/rotation = Quaternion(0.7065848, 8.423149e-08, 8.435588e-08, 0.70762837)
+bones/0/rotation = Quaternion(0.6808152, 8.115952e-08, 8.7315485e-08, 0.73245525)
 bones/0/scale = Vector3(1, 1, 1)
 bones/1/name = "Root_end"
 bones/1/parent = 0
@@ -867,7 +797,7 @@ bones/2/parent = -1
 bones/2/rest = Transform3D(1, 0, 0, 0, -1.1920929e-07, -0.99999994, 0, 0.99999994, -1.1920929e-07, 0.005723122, 0.00012586158, 0.0003879379)
 bones/2/enabled = true
 bones/2/position = Vector3(0.005723122, 0.00012586158, 0.0003879379)
-bones/2/rotation = Quaternion(0.70710623, 0.000976697, 0.0009766967, 0.7071061)
+bones/2/rotation = Quaternion(0.70474195, 0.057783224, 0.05778321, 0.70474184)
 bones/2/scale = Vector3(1, 0.99999994, 0.99999994)
 bones/3/name = "Foot.L_end"
 bones/3/parent = 2
@@ -881,7 +811,7 @@ bones/4/parent = -1
 bones/4/rest = Transform3D(1, 0, 0, 0, -1.1920929e-07, -0.99999994, 0, 0.99999994, -1.1920929e-07, 0.009826254, -1.2688058e-09, 0.009443412)
 bones/4/enabled = true
 bones/4/position = Vector3(0.009826254, -1.2688058e-09, 0.009443412)
-bones/4/rotation = Quaternion(0.7071064, 0.0007680868, -0.00076808705, 0.7071064)
+bones/4/rotation = Quaternion(0.7056451, 0.04544169, -0.04544169, 0.7056451)
 bones/4/scale = Vector3(1, 1, 1)
 bones/5/name = "Hand.L_end"
 bones/5/parent = 4
@@ -909,7 +839,7 @@ bones/8/parent = -1
 bones/8/rest = Transform3D(1, 0, 0, 0, -1.1920929e-07, -0.99999994, 0, 0.99999994, -1.1920929e-07, -0.005723122, 0.00012586158, 0.0003879379)
 bones/8/enabled = true
 bones/8/position = Vector3(-0.005723122, 0.00012586158, 0.0003879379)
-bones/8/rotation = Quaternion(0.707106, -0.0011267978, -0.0011267975, 0.7071059)
+bones/8/rotation = Quaternion(0.7039576, -0.06666198, -0.06666197, 0.7039575)
 bones/8/scale = Vector3(1, 0.99999994, 0.99999994)
 bones/9/name = "Foot.R_end"
 bones/9/parent = 8
@@ -923,7 +853,7 @@ bones/10/parent = -1
 bones/10/rest = Transform3D(1, 0, 0, 0, -1.1920929e-07, -0.99999994, 0, 0.99999994, -1.1920929e-07, -0.009826254, -1.2688058e-09, 0.009443412)
 bones/10/enabled = true
 bones/10/position = Vector3(-0.009826254, -1.2688058e-09, 0.009443412)
-bones/10/rotation = Quaternion(0.7071061, -0.001009726, 0.0010097261, 0.707106)
+bones/10/rotation = Quaternion(0.7045791, -0.059736125, 0.05973614, 0.704579)
 bones/10/scale = Vector3(1, 1, 1)
 bones/11/name = "Hand.R_end"
 bones/11/parent = 10
@@ -968,3 +898,19 @@ transform = Transform3D(1.0000004, 0, 0, 0, 1.0000004, -2.842171e-14, 0, 2.84217
 mesh = SubResource("ArrayMesh_tsug3")
 skin = SubResource("Skin_g7vlx")
 skeleton = NodePath("..")
+
+[node name="AttackHitbox" type="Area3D" parent="." unique_id=1976258156]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.3, 1.1)
+script = ExtResource("4_l403x")
+active = false
+metadata/_custom_type_script = "uid://deroukfpp2mia"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="AttackHitbox" unique_id=52282877]
+transform = Transform3D(-4.371139e-08, -1, 0, 2.9802322e-08, -8.881784e-16, 1, -1, 4.371139e-08, 2.9802322e-08, 0.024999857, 0, -0.3)
+shape = SubResource("CapsuleShape3D_13qdw")
+debug_color = Color(0.9281775, 0.14535546, 0.56265455, 0.41960785)
+
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="AttackHitbox" unique_id=1130768094]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5999999, -0.29999995)
+shape = SubResource("SphereShape3D_13qdw")
+debug_color = Color(0.9281775, 0.14535546, 0.56265455, 0.41960785)

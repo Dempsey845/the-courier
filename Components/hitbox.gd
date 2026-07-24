@@ -14,3 +14,16 @@ func register_hit(hurtbox: Hurtbox):
 	hit_hurtbox.emit(hurtbox)
 
 	return true
+
+func force_hit_update():
+	var overlapping_areas = get_overlapping_areas()
+
+	for area: Area3D in overlapping_areas:
+		if area is not Hurtbox:
+			continue
+		
+		var hurtbox: Hurtbox = area
+		if hurtbox.just_hit:
+			continue
+		
+		register_hit(hurtbox)
