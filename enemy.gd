@@ -27,8 +27,11 @@ enum State {
 
 @export_category("Hit")
 @export var stun_time: float = 0.75
+@export var scatter_on_hit: bool = true
+@export var scatter_radius: float = 15.0
 
 @onready var navigation_agent: NavigationAgent3D = $NavigationAgent3D
+@onready var hurtbox: Hurtbox = $Hurtbox
 
 var current_state: State = State.IDLE
 var cooldown_remaining: float = 0.0
@@ -38,6 +41,10 @@ var stun_remaining: float = 0.0
 func _ready() -> void:
 	navigation_agent.path_desired_distance = 1.5
 	navigation_agent.target_desired_distance = attack_distance
+
+	hurtbox.hit.connect(func(_hitbox: Hitbox):
+		take_hit()
+	)
 
 func _physics_process(delta: float) -> void:
 	cooldown_remaining = maxf(cooldown_remaining - delta, 0.0)

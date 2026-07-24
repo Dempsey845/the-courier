@@ -7,6 +7,7 @@
 [ext_resource type="Texture2D" uid="uid://ddk2jwnyxf2iu" path="res://Player/platformer_circle_shadow.png" id="4_k53q1"]
 [ext_resource type="Texture2D" uid="uid://cgt180snb86g1" path="res://Player/jump_cloud_particle.png" id="6_fhl08"]
 [ext_resource type="Script" uid="uid://1i640mr2h221" path="res://Player/jump_particles.gd" id="7_vtle1"]
+[ext_resource type="Script" uid="uid://deroukfpp2mia" path="res://Components/hitbox.gd" id="8_od3ui"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_xrivr"]
 
@@ -47,8 +48,11 @@ colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0)
 [sub_resource type="Gradient" id="Gradient_vtle1"]
 colors = PackedColorArray(0.41981313, 0.41981313, 0.4198131, 1, 1, 1, 1, 1)
 
+[sub_resource type="SphereShape3D" id="SphereShape3D_xrivr"]
+
 [node name="Player" type="CharacterBody3D" unique_id=67220391]
 script = ExtResource("1_4ntmi")
+jump_velocity = 15.0
 
 [node name="Model" parent="." unique_id=1483251585 node_paths=PackedStringArray("player") instance=ExtResource("2_btcbx")]
 player = NodePath("..")
@@ -101,3 +105,11 @@ color_ramp = SubResource("Gradient_wi6ju")
 color_initial_ramp = SubResource("Gradient_vtle1")
 script = ExtResource("7_vtle1")
 player = NodePath("..")
+
+[node name="Hitbox" type="Area3D" parent="." unique_id=513194322]
+script = ExtResource("8_od3ui")
+metadata/_custom_type_script = "uid://deroukfpp2mia"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Hitbox" unique_id=121648872]
+shape = SubResource("SphereShape3D_xrivr")
+debug_color = Color(0.96227235, 0.028574746, 0.4919914, 0.41960785)

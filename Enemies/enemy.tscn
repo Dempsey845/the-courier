@@ -1,8 +1,19 @@
 [gd_scene format=3 uid="uid://cs7wkqeik4n74"]
 
 [ext_resource type="Script" uid="uid://o5qqyq3tq03w" path="res://enemy.gd" id="1_3ih25"]
+[ext_resource type="Script" uid="uid://dn5b8er116luc" path="res://Components/health.gd" id="2_47qgu"]
+[ext_resource type="Script" uid="uid://dswhdacq2khkk" path="res://Components/hurtbox.gd" id="3_572h1"]
 
 [node name="Enemy" type="CharacterBody3D" unique_id=1009641960]
 script = ExtResource("1_3ih25")
 
+[node name="Health" type="Node" parent="." unique_id=2126961756]
+script = ExtResource("2_47qgu")
+metadata/_custom_type_script = "uid://dn5b8er116luc"
+
 [node name="NavigationAgent3D" type="NavigationAgent3D" parent="." unique_id=1961274634]
+
+[node name="Hurtbox" type="Area3D" parent="." unique_id=1172596633 node_paths=PackedStringArray("health")]
+script = ExtResource("3_572h1")
+health = NodePath("../Health")
+metadata/_custom_type_script = "uid://dswhdacq2khkk"

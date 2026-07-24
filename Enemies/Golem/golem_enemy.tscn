@@ -7,13 +7,22 @@
 radius = 1.0
 height = 3.5
 
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_13qdw"]
+height = 0.6
+radius = 0.605
+
 [node name="GolemEnemy" unique_id=1009641960 instance=ExtResource("1_1pwku")]
 
-[node name="NavigationAgent3D" parent="." index="0" unique_id=1961274634]
+[node name="NavigationAgent3D" parent="." index="1" unique_id=1961274634]
 debug_enabled = true
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="." index="1" unique_id=1334450505]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." index="2" unique_id=1334450505]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.75, 0)
 shape = SubResource("CapsuleShape3D_xrivr")
 
-[node name="GolemModel" parent="." index="2" unique_id=1931516077 instance=ExtResource("2_r03q7")]
+[node name="GolemModel" parent="." index="3" unique_id=1931516077 instance=ExtResource("2_r03q7")]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Hurtbox" parent_id_path=PackedInt32Array(1172596633) index="0" unique_id=212333385]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.5, 0)
+shape = SubResource("CylinderShape3D_13qdw")
+debug_color = Color(0.9388661, 1.4246702e-05, 0.6239978, 0.41960785)
