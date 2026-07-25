@@ -1,0 +1,27 @@
+[gd_scene format=3 uid="uid://bbqntu13b4jcb"]
+
+[ext_resource type="PackedScene" uid="uid://dq6faw831bmmm" path="res://NPC/Wisp/Wisp.glb" id="1_d700o"]
+[ext_resource type="PackedScene" uid="uid://ddpko5ymjypf0" path="res://NPC/Wisp/WispStaff.glb" id="2_1emhy"]
+
+[node name="WispModel" unique_id=76251156 instance=ExtResource("1_d700o")]
+
+[node name="Skeleton3D" parent="Armature" parent_id_path=PackedInt32Array(126815252) index="0" unique_id=1674564070]
+bones/1/rotation = Quaternion(0, 0, -0.018776834, 0.9998237)
+bones/4/rotation = Quaternion(-0.00703503, 0.11095232, -0.17752998, 0.9778155)
+bones/6/rotation = Quaternion(0.06527568, 0.05828209, -0.37018916, 0.9248255)
+bones/7/rotation = Quaternion(-0.023277415, -0.35947248, -0.229059, 0.90430623)
+bones/8/rotation = Quaternion(-0.081458025, 0.37348714, -0.10879001, 0.91762555)
+bones/11/rotation = Quaternion(0.23633397, 0.018081032, -0.021348512, 0.97126913)
+bones/12/rotation = Quaternion(0.30336103, 0.36645347, 0.14859632, 0.86695045)
+bones/13/rotation = Quaternion(0.24905026, -0.35628662, 0.08237005, 0.8967993)
+
+[node name="BoneAttachment3D" type="BoneAttachment3D" parent="Armature/Skeleton3D" index="1" unique_id=1472115297]
+transform = Transform3D(0.08428255, -0.10184083, 0.99122393, 0.9866482, 0.14765553, -0.068723045, -0.13936092, 0.983782, 0.11292573, -0.6489757, 0.69119596, 0.10725096)
+bone_name = "Hand.R"
+bone_idx = 14
+
+[node name="WispStaff" parent="Armature/Skeleton3D/BoneAttachment3D" index="0" unique_id=284386446 instance=ExtResource("2_1emhy")]
+transform = Transform3D(0.086175784, 0.9919723, 0.09254217, -0.9958405, 0.08852355, -0.021564335, -0.029583342, -0.09029879, 0.9954748, -0.62024033, 0.049176097, 0.057790875)
+
+[node name="AnimationPlayer" parent="." index="1" unique_id=1946363132]
+autoplay = &"Idle"

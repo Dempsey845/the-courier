@@ -5,6 +5,7 @@
 [ext_resource type="Texture2D" uid="uid://4rlm2g5x5820" path="res://Enemies/Golem/golem_stomp_instruction.png" id="3_j8job"]
 [ext_resource type="PackedScene" uid="uid://du7tgosjqxyde" path="res://Enemies/Puffcap/puffcap_enemy.tscn" id="4_3f78f"]
 [ext_resource type="PackedScene" uid="uid://cniwu7eyr0832" path="res://Enemies/Snapper/snapper_enemy.tscn" id="5_k8do8"]
+[ext_resource type="PackedScene" uid="uid://bbqntu13b4jcb" path="res://NPC/Wisp/wisp_model.tscn" id="6_bkhv4"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_62w18"]
 sky_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
@@ -82,3 +83,6 @@ target = NodePath("../Player")
 [node name="SnapperEnemy" parent="." unique_id=1088901969 node_paths=PackedStringArray("target") instance=ExtResource("5_k8do8")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9, 0, 0)
 target = NodePath("../Player")
+
+[node name="WispModel" parent="." unique_id=76251156 instance=ExtResource("6_bkhv4")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0, 0)
