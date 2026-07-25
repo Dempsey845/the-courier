@@ -68,7 +68,7 @@ size = Vector3(1, 2.6000001, 1)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.2, 0)
 
 [node name="GolemEnemy" parent="." unique_id=1009641960 node_paths=PackedStringArray("target") instance=ExtResource("2_8a836")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 14)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 29)
 target = NodePath("../Player")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1982185106]
@@ -77,11 +77,11 @@ material_override = SubResource("StandardMaterial3D_13qdw")
 mesh = SubResource("QuadMesh_xrivr")
 
 [node name="PuffcapEnemy" parent="." unique_id=685929452 node_paths=PackedStringArray("target") instance=ExtResource("4_3f78f")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -14)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -28)
 target = NodePath("../Player")
 
 [node name="SnapperEnemy" parent="." unique_id=1088901969 node_paths=PackedStringArray("target") instance=ExtResource("5_k8do8")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9, 0, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 36, 0, 0)
 target = NodePath("../Player")
 
 [node name="WispModel" parent="." unique_id=76251156 instance=ExtResource("6_bkhv4")]
