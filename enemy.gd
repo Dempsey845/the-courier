@@ -364,6 +364,10 @@ func follow_navigation_path(delta: float) -> void:
 
 
 func return_to_normal_state() -> void:
+	if wait_remaining > 0.0:
+		enter_idle()
+		return
+
 	if not is_instance_valid(target):
 		enter_idle()
 		return

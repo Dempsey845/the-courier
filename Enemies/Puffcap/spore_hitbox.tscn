@@ -1,10 +1,11 @@
 [gd_scene format=3 uid="uid://c7m21t528ai6t"]
 
-[ext_resource type="Script" uid="uid://deroukfpp2mia" path="res://Components/hitbox.gd" id="1_c5un8"]
+[ext_resource type="Script" uid="uid://cygk0ata5pn1f" path="res://Enemies/Puffcap/spore_hitbox.gd" id="1_c5un8"]
 [ext_resource type="Script" uid="uid://dfy504w8uuqaf" path="res://Enemies/Puffcap/spore_controller.gd" id="2_nro3b"]
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_xrivr"]
-size = Vector3(4.5, 2.4, 4.5)
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_s3hb2"]
+height = 3.0
+radius = 4.7
 
 [node name="SporeHitbox" type="Area3D" unique_id=2137302131]
 script = ExtResource("1_c5un8")
@@ -17,5 +18,5 @@ metadata/_custom_type_script = "uid://deroukfpp2mia"
 script = ExtResource("2_nro3b")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1374086604]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.2, 0)
-shape = SubResource("BoxShape3D_xrivr")
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.7, 0)
+shape = SubResource("CylinderShape3D_s3hb2")

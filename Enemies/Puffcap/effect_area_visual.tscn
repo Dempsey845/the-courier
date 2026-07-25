@@ -1,0 +1,500 @@
+[gd_scene format=3 uid="uid://bs74t03j5e85p"]
+
+[ext_resource type="Texture2D" uid="uid://3tof5md1p18y" path="res://Enemies/Puffcap/circle_white.png" id="1_ktos8"]
+[ext_resource type="Script" uid="uid://dsu2821b2ev01" path="res://Enemies/Puffcap/spore_effect_area_visual.gd" id="2_lgxra"]
+
+[sub_resource type="Shader" id="Shader_5gpxd"]
+code = "// Localised bubbling surface shader for a subdivided PlaneMesh.
+
+shader_type spatial;
+
+render_mode blend_mix, depth_draw_opaque, cull_back,
+	diffuse_burley, specular_schlick_ggx;
+
+
+uniform vec4 albedo : source_color = vec4(1.0);
+
+uniform sampler2D texture_albedo :
+	source_color, filter_nearest, repeat_enable;
+
+uniform ivec2 albedo_texture_size;
+uniform float point_size : hint_range(0.1, 128.0, 0.1);
+
+uniform float roughness : hint_range(0.0, 1.0) = 0.5;
+
+uniform sampler2D texture_metallic :
+	hint_default_white, filter_nearest, repeat_enable;
+
+uniform vec4 metallic_texture_channel = vec4(
+	1.0,
+	0.0,
+	0.0,
+	0.0
+);
+
+uniform sampler2D texture_roughness :
+	hint_roughness_r, filter_nearest, repeat_enable;
+
+uniform float specular :
+	hint_range(0.0, 1.0, 0.01) = 0.5;
+
+uniform float metallic :
+	hint_range(0.0, 1.0, 0.01) = 0.0;
+
+uniform vec3 uv1_scale = vec3(1.0);
+uniform vec3 uv1_offset = vec3(0.0);
+uniform vec3 uv2_scale = vec3(1.0);
+uniform vec3 uv2_offset = vec3(0.0);
+
+
+// Bubbling controls.
+
+uniform float bubble_strength :
+	hint_range(0.0, 1.0, 0.01) = 0.15;
+
+uniform float bubble_spacing :
+	hint_range(0.1, 10.0, 0.1) = 1.5;
+
+uniform float bubble_radius :
+	hint_range(0.05, 2.0, 0.01) = 0.45;
+
+uniform float bubble_speed :
+	hint_range(0.0, 10.0, 0.1) = 1.5;
+
+uniform float normal_sample_distance :
+	hint_range(0.001, 0.2, 0.001) = 0.03;
+
+uniform vec4 bubble_color : source_color = vec4(
+	0.65,
+	0.8,
+	1.0,
+	1.0
+);
+
+uniform float bubble_color_strength :
+	hint_range(0.0, 1.0, 0.01) = 1.0;
+
+uniform float bubble_edge_softness :
+	hint_range(0.01, 1.0, 0.01) = 0.3;
+
+varying float bubble_mask;
+
+const int MAX_INTERACTORS = 8;
+
+uniform int interaction_count = 0;
+uniform vec3 interaction_positions[MAX_INTERACTORS];
+
+uniform float interaction_radius :
+	hint_range(0.1, 5.0, 0.05) = 0.75;
+
+uniform float interaction_depth :
+	hint_range(0.0, 1.0, 0.01) = 0.2;
+
+uniform float interaction_rim_height :
+	hint_range(0.0, 1.0, 0.01) = 0.08;
+
+
+float random_value(vec2 position) {
+	return fract(
+		sin(
+			dot(
+				position,
+				vec2(127.1, 311.7)
+			)
+		) * 43758.5453
+	);
+}
+
+
+vec2 random_vector(vec2 position) {
+	return vec2(
+		random_value(position),
+		random_value(
+			position + vec2(19.19, 73.73)
+		)
+	);
+}
+
+
+float get_bubble_height(vec2 position) {
+	vec2 grid_position = position / bubble_spacing;
+	vec2 current_cell = floor(grid_position);
+
+	float height = 0.0;
+
+	for (int x = -1; x <= 1; x++) {
+		for (int y = -1; y <= 1; y++) {
+			vec2 cell = current_cell + vec2(
+				float(x),
+				float(y)
+			);
+
+			vec2 random_offset = random_vector(cell);
+
+			vec2 bubble_position = (
+				cell
+				+ vec2(0.15)
+				+ random_offset * 0.7
+			) * bubble_spacing;
+
+			float random_phase = random_value(
+				cell + vec2(41.7, 13.2)
+			) * TAU;
+
+			float life = sin(
+				TIME * bubble_speed
+				+ random_phase
+			);
+
+			// Only display the bubble during the positive
+			// half of its animation cycle.
+			life = max(life, 0.0);
+			life *= life;
+
+			float distance_to_bubble = distance(
+				position,
+				bubble_position
+			);
+
+			// Rounded dome shape.
+			float dome = 1.0 - smoothstep(
+				0.0,
+				bubble_radius,
+				distance_to_bubble
+			);
+
+			dome *= dome;
+
+			height += (
+				dome
+				* life
+				* bubble_strength
+			);
+		}
+	}
+
+	return height;
+}
+
+float get_interaction_height(vec2 position) {
+	float height = 0.0;
+
+	for (int index = 0; index < MAX_INTERACTORS; index++) {
+		if (index >= interaction_count) {
+			break;
+		}
+
+		vec2 interaction_position = (
+			interaction_positions[index].xz
+		);
+
+		float distance_from_object = distance(
+			position,
+			interaction_position
+		);
+
+		// Depression immediately underneath the object.
+		float depression = 1.0 - smoothstep(
+			0.0,
+			interaction_radius,
+			distance_from_object
+		);
+
+		depression *= depression;
+
+		// Raised liquid rim around the depression.
+		float rim_start = interaction_radius * 0.65;
+		float rim_end = interaction_radius * 1.35;
+
+		float rim = smoothstep(
+			0.0,
+			rim_start,
+			distance_from_object
+		);
+
+		rim *= 1.0 - smoothstep(
+			rim_start,
+			rim_end,
+			distance_from_object
+		);
+
+		height -= depression * interaction_depth;
+		height += rim * interaction_rim_height;
+	}
+
+	return height;
+}
+
+void vertex() {
+	UV = UV * uv1_scale.xy + uv1_offset.xy;
+
+	vec2 position = VERTEX.xz;
+
+	float bubble_height = get_bubble_height(position);
+	float interaction_height = get_interaction_height(position);
+	float height = bubble_height + interaction_height;
+
+	bubble_mask = clamp(
+		bubble_height / max(bubble_strength, 0.001),
+		0.0,
+		1.0
+	);
+
+	VERTEX.y += height;
+
+	float height_left = (
+		get_bubble_height(
+			position - vec2(normal_sample_distance, 0.0)
+		)
+		+ get_interaction_height(
+			position - vec2(normal_sample_distance, 0.0)
+		)
+	);
+
+	float height_right = (
+		get_bubble_height(
+			position + vec2(normal_sample_distance, 0.0)
+		)
+		+ get_interaction_height(
+			position + vec2(normal_sample_distance, 0.0)
+		)
+	);
+
+	float height_back = (
+		get_bubble_height(
+			position - vec2(0.0, normal_sample_distance)
+		)
+		+ get_interaction_height(
+			position - vec2(0.0, normal_sample_distance)
+		)
+	);
+
+	float height_front = (
+		get_bubble_height(
+			position + vec2(0.0, normal_sample_distance)
+		)
+		+ get_interaction_height(
+			position + vec2(0.0, normal_sample_distance)
+		)
+	);
+
+	float slope_x = (
+		height_right - height_left
+	) / (
+		normal_sample_distance * 2.0
+	);
+
+	float slope_z = (
+		height_front - height_back
+	) / (
+		normal_sample_distance * 2.0
+	);
+
+	NORMAL = normalize(
+		vec3(
+			-slope_x,
+			1.0,
+			-slope_z
+		)
+	);
+}
+
+
+void fragment() {
+	vec2 base_uv = UV;
+
+	vec4 albedo_tex = texture(
+		texture_albedo,
+		base_uv
+	);
+
+	// Vertex Colour Use as Albedo.
+	albedo_tex *= COLOR;
+
+	vec3 base_albedo = (
+		albedo.rgb
+		* albedo_tex.rgb
+	);
+
+	float shaped_bubble_mask = smoothstep(
+		bubble_edge_softness,
+		1.0,
+		bubble_mask
+	);
+
+	shaped_bubble_mask *= bubble_color_strength;
+
+	ALBEDO = mix(
+		base_albedo,
+		bubble_color.rgb,
+		shaped_bubble_mask
+	);
+
+	float metallic_tex = dot(
+		texture(
+			texture_metallic,
+			base_uv
+		),
+		metallic_texture_channel
+	);
+
+	METALLIC = metallic_tex * metallic;
+	SPECULAR = specular;
+
+	vec4 roughness_texture_channel = vec4(
+		1.0,
+		0.0,
+		0.0,
+		0.0
+	);
+
+	float roughness_tex = dot(
+		texture(
+			texture_roughness,
+			base_uv
+		),
+		roughness_texture_channel
+	);
+
+	ROUGHNESS = roughness_tex * roughness;
+
+	ALPHA *= albedo.a * albedo_tex.a;
+}"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_7tbio"]
+resource_local_to_scene = true
+render_priority = 0
+shader = SubResource("Shader_5gpxd")
+shader_parameter/albedo = Color(0.61960787, 0.4509804, 0.7529412, 0.5294118)
+shader_parameter/texture_albedo = ExtResource("1_ktos8")
+shader_parameter/albedo_texture_size = Vector2i(256, 256)
+shader_parameter/point_size = 1.0
+shader_parameter/roughness = 0.350000016625
+shader_parameter/metallic_texture_channel = Vector4(1, 0, 0, 0)
+shader_parameter/specular = 0.5
+shader_parameter/metallic = 0.0
+shader_parameter/uv1_scale = Vector3(1, 1, 1)
+shader_parameter/uv1_offset = Vector3(0, 0, 0)
+shader_parameter/uv2_scale = Vector3(1, 1, 1)
+shader_parameter/uv2_offset = Vector3(0, 0, 0)
+shader_parameter/bubble_strength = 0.249999994412
+shader_parameter/bubble_spacing = 0.90000001341108
+shader_parameter/bubble_radius = 0.7999999839810601
+shader_parameter/bubble_speed = 1.5
+shader_parameter/normal_sample_distance = 0.03
+shader_parameter/bubble_color = Color(0.9529412, 0.8352941, 0.6627451, 1)
+shader_parameter/bubble_color_strength = 1.0
+shader_parameter/bubble_edge_softness = 0.0999999977648
+shader_parameter/interaction_count = 0
+shader_parameter/interaction_positions = PackedVector3Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
+shader_parameter/interaction_radius = 1.5000000223518
+shader_parameter/interaction_depth = 0.999999977648
+shader_parameter/interaction_rim_height = 0.46999998949456
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_xrivr"]
+material = SubResource("ShaderMaterial_7tbio")
+size = Vector2(10, 10)
+subdivide_width = 60
+subdivide_depth = 60
+
+[sub_resource type="Animation" id="Animation_5gpxd"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0.1, 0.1, 0.1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:transparency")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [1.0]
+}
+
+[sub_resource type="Animation" id="Animation_7tbio"]
+resource_name = "show"
+length = 0.3
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:scale")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.20000002, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector3(0.1, 0.1, 0.1), Vector3(1.2, 1.2, 1.2), Vector3(1, 1, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:transparency")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [1.0, 0.0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_i55cc"]
+_data = {
+&"RESET": SubResource("Animation_5gpxd"),
+&"show": SubResource("Animation_7tbio")
+}
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_5gpxd"]
+height = 0.19999993
+radius = 4.7
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_13qdw"]
+transparency = 1
+shading_mode = 0
+albedo_color = Color(0.61960787, 0.4509804, 0.7529412, 0.5294118)
+
+[node name="EffectAreaVisual" type="MeshInstance3D" unique_id=963275507]
+transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, 0, 0, 0)
+transparency = 1.0
+mesh = SubResource("PlaneMesh_xrivr")
+script = ExtResource("2_lgxra")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=750223512]
+libraries/ = SubResource("AnimationLibrary_i55cc")
+
+[node name="SporeInteractionArea" type="Area3D" parent="." unique_id=1509270191]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="SporeInteractionArea" unique_id=485613712]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.2999999, 0)
+shape = SubResource("CylinderShape3D_5gpxd")
+
+[node name="CSGCombiner3D" type="CSGCombiner3D" parent="." unique_id=709658438]
+
+[node name="CSGCylinder3D" type="CSGCylinder3D" parent="CSGCombiner3D" unique_id=1987985341]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.2, 0)
+radius = 5.0
+height = 0.4
+sides = 45
+material = SubResource("StandardMaterial3D_13qdw")
+
+[node name="CSGCylinder3D2" type="CSGCylinder3D" parent="CSGCombiner3D" unique_id=329896941]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.2, 0)
+operation = 2
+radius = 4.8
+height = 0.4
+sides = 45
+material = SubResource("StandardMaterial3D_13qdw")

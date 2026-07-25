@@ -16,7 +16,8 @@ height = 1.6
 [node name="PuffcapEnemy" unique_id=1009641960 instance=ExtResource("1_2e3w6")]
 attack_cooldown = 10.0
 wait_after_attack = true
-wait_time = 10.0
+wait_time = 15.0
+scatter_on_hit = false
 remove_on_death = false
 
 [node name="PuffcapDeathManager" type="Node" parent="." index="0" unique_id=1817584547 node_paths=PackedStringArray("puffcap_collider")]
@@ -30,17 +31,17 @@ collision_mask = 64
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.6343751, -0.12660277)
 shape = SubResource("CylinderShape3D_xrivr")
 
-[node name="PuffcapModel" parent="." index="4" unique_id=2006583683 instance=ExtResource("2_6bnxe")]
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="." index="5" unique_id=1202246336]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." index="4" unique_id=1202246336]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.8, 0)
 shape = SubResource("CapsuleShape3D_xrivr")
 
-[node name="SporeHitbox" parent="." index="6" unique_id=2137302131 instance=ExtResource("3_6bnxe")]
+[node name="SporeHitbox" parent="." index="5" unique_id=2137302131 instance=ExtResource("3_6bnxe")]
 collision_layer = 128
 collision_mask = 16
 script = ExtResource("4_1ggph")
 start_delay = 1.0
 
-[node name="DeathParticleSpawnPoint" type="Marker3D" parent="." index="7" unique_id=2087940404]
+[node name="DeathParticleSpawnPoint" type="Marker3D" parent="." index="6" unique_id=2087940404]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.1, 0)
+
+[node name="PuffcapModel" parent="." index="7" unique_id=2006583683 instance=ExtResource("2_6bnxe")]
