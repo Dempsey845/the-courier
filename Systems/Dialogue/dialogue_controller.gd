@@ -10,6 +10,7 @@ extends Node
 
 func _ready() -> void:
 	await get_tree().process_frame
+	
 	if dialogue_ui == null:
 		dialogue_ui = get_tree().current_scene.get_node("CanvasLayer").get_node("DialogueUI")
 

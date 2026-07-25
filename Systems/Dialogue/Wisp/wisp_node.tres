@@ -1,0 +1,8 @@
+[gd_resource type="Resource" script_class="DialogueNode" format=3 uid="uid://b83u4su4ty2jg"]
+
+[ext_resource type="Script" uid="uid://b63eds8ft708c" path="res://Systems/Dialogue/dialogue_node.gd" id="1_00g3h"]
+
+[resource]
+script = ExtResource("1_00g3h")
+text = "Hello world!"
+speaker = "Wisp"

@@ -1,0 +1,12 @@
+[gd_scene format=3 uid="uid://bmi57avorlix8"]
+
+[ext_resource type="Script" uid="uid://ruvmn4aypul5" path="res://NPC/npc.gd" id="1_056qb"]
+[ext_resource type="Script" uid="uid://d162yxxl6wjtj" path="res://Systems/Dialogue/dialogue_controller.gd" id="1_asys0"]
+
+[node name="NPC" type="Node3D" unique_id=870401761]
+script = ExtResource("1_056qb")
+
+[node name="DialogueController" type="Node" parent="." unique_id=1124534431]
+script = ExtResource("1_asys0")
+
+[node name="InteractZone" type="Area3D" parent="." unique_id=362051573]
