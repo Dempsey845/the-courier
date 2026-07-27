@@ -15,6 +15,7 @@ offsets = PackedFloat32Array(0.40588236, 0.81960785)
 colors = PackedColorArray(0.4363562, 0.27376062, 0.68419045, 1, 0.83688384, 0.6528071, 0.36442527, 1)
 
 [node name="PuffcapSporeEffect" type="CPUParticles3D" unique_id=877704027]
+emitting = false
 amount = 40
 lifetime = 7.0
 one_shot = true

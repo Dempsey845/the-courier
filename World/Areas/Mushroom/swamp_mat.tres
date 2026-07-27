@@ -561,11 +561,26 @@ void fragment() {
 	ALPHA *= albedo.a * albedo_tex.a;
 }"
 
+[sub_resource type="Gradient" id="Gradient_0wqet"]
+colors = PackedColorArray(0.3102078, 0.6735869, 0.34585255, 1, 1, 1, 1, 1)
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_h2aik"]
+frequency = 0.0341
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_lo5ox"]
+width = 256
+height = 256
+noise = SubResource("FastNoiseLite_h2aik")
+color_ramp = SubResource("Gradient_0wqet")
+seamless = true
+in_3d_space = true
+
 [resource]
 resource_local_to_scene = true
 render_priority = 0
 shader = SubResource("Shader_5gpxd")
-shader_parameter/albedo = Color(2.23808e-06, 0.57074636, 0.2512938, 0.8901961)
+shader_parameter/albedo = Color(0.19445363, 0.57391554, 0.25773874, 0.8901961)
+shader_parameter/texture_albedo = SubResource("NoiseTexture2D_lo5ox")
 shader_parameter/albedo_texture_size = Vector2i(256, 256)
 shader_parameter/point_size = 1.0
 shader_parameter/roughness = 0.350000016625
@@ -577,17 +592,17 @@ shader_parameter/uv1_offset = Vector3(0, 0, 0)
 shader_parameter/uv2_scale = Vector3(1, 1, 1)
 shader_parameter/uv2_offset = Vector3(0, 0, 0)
 shader_parameter/bubble_strength = 0.249999994412
-shader_parameter/bubble_spacing = 0.90000001341108
+shader_parameter/bubble_spacing = 1.5000000223518
 shader_parameter/bubble_radius = 0.7999999839810601
 shader_parameter/bubble_speed = 1.5
 shader_parameter/bubble_color = Color(0.52596116, 0.68304086, 0.07235084, 1)
 shader_parameter/bubble_color_strength = 1.0
 shader_parameter/bubble_edge_softness = 0.0999999977648
-shader_parameter/wave_strength = 0.499999988824
+shader_parameter/wave_strength = 0.3499999921768
 shader_parameter/wave_scale = 0.5000000074506
 shader_parameter/wave_speed = 2.0000000298024
 shader_parameter/foam_color = Color(0.6221607, 0.81735814, 0.51433545, 1)
-shader_parameter/foam_strength = 0.999999977648
+shader_parameter/foam_strength = 0.75
 shader_parameter/foam_scale = 5.0
 shader_parameter/foam_speed = 0.25
 shader_parameter/wave_foam_threshold = 0.72
