@@ -30,6 +30,9 @@ polygons = [PackedInt32Array(4, 7, 5), PackedInt32Array(5, 7, 0), PackedInt32Arr
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_xrivr"]
 albedo_color = Color(0, 0.36078432, 0, 1)
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_b1lj4"]
+albedo_color = Color(0.35936037, 0.37951526, 0.1250053, 1)
+
 [sub_resource type="Shader" id="Shader_5gpxd"]
 code = "// Magical swamp water shader for a subdivided PlaneMesh.
 // Includes bubbles, liquid waves, interaction displacement and foam.
@@ -690,7 +693,7 @@ in_3d_space = true
 resource_local_to_scene = true
 render_priority = 0
 shader = SubResource("Shader_5gpxd")
-shader_parameter/albedo = Color(0.19607843, 0.57254905, 0.25882354, 0.9490196)
+shader_parameter/albedo = Color(0.47058824, 0.5176471, 0.16470589, 0.95686275)
 shader_parameter/texture_albedo = SubResource("NoiseTexture2D_lo5ox")
 shader_parameter/albedo_texture_size = Vector2i(256, 256)
 shader_parameter/point_size = 1.0000000149012
@@ -788,6 +791,7 @@ size = Vector3(1, 2.6000001, 1)
 
 [node name="CSGCombiner3D2" type="CSGCombiner3D" parent="NavigationRegion3D" unique_id=420214343]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -24, -81)
+material_override = SubResource("StandardMaterial3D_b1lj4")
 use_collision = true
 
 [node name="CSGBox3D" type="CSGBox3D" parent="NavigationRegion3D/CSGCombiner3D2" unique_id=497769013]

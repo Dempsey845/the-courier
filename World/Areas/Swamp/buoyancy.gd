@@ -1,5 +1,5 @@
 class_name Buoyancy
-extends Node3D
+extends StaticBody3D
 
 @export var water: MeshInstance3D
 @export var height_offset: float = 0.1
