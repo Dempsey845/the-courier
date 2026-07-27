@@ -3,7 +3,7 @@
 [ext_resource type="SphereMesh" uid="uid://bepyntechnux6" path="res://Enemies/Puffcap/puffcap_particle_mesh.tres" id="1_dargk"]
 
 [sub_resource type="Curve" id="Curve_njqwk"]
-_data = [Vector2(0.008241758, 0.048611045), 0.0, 0.0, 0, 0, Vector2(0.14876032, 1), 0.0, 0.0, 0, 0, Vector2(0.79752064, 1), 0.0, 0.0, 0, 0, Vector2(1, 0.03472221), 0.0, 0.0, 0, 0]
+_data = [Vector2(0.008241758, 0.048611045), 0.0, 0.0, 0, 0, Vector2(0.25746268, 1), 0.0, 0.0, 0, 0, Vector2(0.79752064, 1), 0.0, 0.0, 0, 0, Vector2(1, 0.03472221), 0.0, 0.0, 0, 0]
 point_count = 4
 
 [sub_resource type="Gradient" id="Gradient_7f2x3"]
@@ -11,24 +11,23 @@ offsets = PackedFloat32Array(0, 0.71597636, 1)
 colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0)
 
 [sub_resource type="Gradient" id="Gradient_wi6ju"]
-interpolation_mode = 1
-offsets = PackedFloat32Array(0.00887574, 0.5502958)
-colors = PackedColorArray(0.61960787, 0.4509804, 0.7529412, 1, 0.9529412, 0.8352941, 0.6627451, 1)
+offsets = PackedFloat32Array(0.40588236, 0.81960785)
+colors = PackedColorArray(0.4363562, 0.27376062, 0.68419045, 1, 0.83688384, 0.6528071, 0.36442527, 1)
 
 [node name="PuffcapSporeEffect" type="CPUParticles3D" unique_id=877704027]
-emitting = false
-amount = 60
+amount = 40
 lifetime = 7.0
 one_shot = true
 preprocess = 0.5
-randomness = 1.0
 mesh = ExtResource("1_dargk")
 emission_shape = 3
-emission_box_extents = Vector3(2.5, 0.1, 2.5)
+emission_box_extents = Vector3(1.7, 0.1, 1.7)
 particle_flag_align_y = true
 direction = Vector3(0, 0, 0)
 flatness = 1.0
-gravity = Vector3(0, 0.15, 0)
+gravity = Vector3(0, 0.1, 0)
+tangential_accel_min = 0.1
+tangential_accel_max = 0.3
 angle_min = -45.0
 angle_max = 45.0
 scale_amount_min = 0.8

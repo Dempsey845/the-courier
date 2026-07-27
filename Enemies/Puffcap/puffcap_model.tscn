@@ -375,11 +375,11 @@ script = ExtResource("2_p7bs7")
 script = ExtResource("2_t5tt1")
 
 [node name="Skeleton3D" parent="Armature" parent_id_path=PackedInt32Array(1540813913) index="0" unique_id=340238021]
-bones/0/position = Vector3(-0.009676237, 0.32512304, 0)
-bones/0/rotation = Quaternion(0, 0, -0.019444108, 0.999811)
+bones/0/position = Vector3(-0.0013976037, 0.32507315, 0)
+bones/0/rotation = Quaternion(0, 0, -0.0027981894, 0.9999962)
 bones/0/scale = Vector3(0.99999994, 0.99999994, 1)
-bones/1/position = Vector3(0.00967624, 0.82286584, -0.5557725)
-bones/1/rotation = Quaternion(0.574644, -0.0111756455, -0.015911715, 0.8181725)
+bones/1/position = Vector3(0.0013976065, 0.8229157, -0.5557725)
+bones/1/rotation = Quaternion(0.5747504, -0.0016083658, -0.002289906, 0.81832397)
 bones/1/scale = Vector3(1, 1, 1.0000002)
 bones/2/position = Vector3(0.21912877, 0.11440279, -0.20084074)
 bones/2/rotation = Quaternion(-0.04318904, 0.69833213, 0.7091312, -0.08717797)
@@ -396,8 +396,14 @@ tree_root = SubResource("AnimationNodeStateMachine_xrivr")
 anim_player = NodePath("../AnimationPlayer")
 
 [node name="PuffcapReleaseSporeEffect" parent="." index="4" unique_id=877704027 instance=ExtResource("7_bn6dt")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.7, 0)
+amount = 10
+initial_velocity_min = 0.5
+initial_velocity_max = 1.5
+tangential_accel_min = 0.1
+tangential_accel_max = 0.3
 
 [node name="PuffcapSporeEffect" parent="." index="5" unique_id=1172002146 instance=ExtResource("6_t5tt1")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.2, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.9, 0)
 amount = 80
 emission_box_extents = Vector3(4, 0.1, 4)
