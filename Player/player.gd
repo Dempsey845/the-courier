@@ -3,6 +3,7 @@ extends CharacterBody3D
 
 signal jump
 signal jump_cut
+signal hit_jump
 signal landed
 
 @export_category("Movement")
@@ -210,6 +211,7 @@ func apply_gravity(delta: float) -> void:
 
 func apply_upward_force(force: float):
 	velocity.y = force
+	hit_jump.emit()
 
 func apply_knockback(
 	source_position: Vector3,

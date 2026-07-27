@@ -26,6 +26,7 @@ func _ready() -> void:
 	current_transparency = starting_transparency
 
 	player.jump.connect(_on_player_jump)
+	player.hit_jump.connect(_on_player_jump)
 	player.jump_cut.connect(_on_player_jump_cut)
 	player.landed.connect(_on_player_landed)
 
