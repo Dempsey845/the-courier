@@ -1,0 +1,18 @@
+[gd_scene format=3 uid="uid://g6qjr8aewopi"]
+
+[ext_resource type="Script" uid="uid://d1j3nxe72ydsi" path="res://World/Areas/Swamp/lillypad.gd" id="1_i1ob8"]
+[ext_resource type="PackedScene" uid="uid://bbxuh2akymspg" path="res://World/Areas/Swamp/Lillypad.glb" id="2_lasly"]
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_xrivr"]
+height = 0.2
+radius = 1.0
+
+[node name="Lillypad" type="StaticBody3D" unique_id=1060873832]
+script = ExtResource("1_i1ob8")
+
+[node name="Lillypad" parent="." unique_id=1109776565 instance=ExtResource("2_lasly")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.09803091, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1900799113]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.02043277, 0)
+shape = SubResource("CylinderShape3D_xrivr")
