@@ -108,11 +108,11 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 89.0
+offset_left = 51.0
 offset_bottom = -0.6221657
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_font_sizes/font_size = 8
+theme_override_font_sizes/font_size = 16
 vertical_alignment = 1
 
 [node name="Icon" type="Control" parent="Container/MarginContainer" unique_id=926154258]

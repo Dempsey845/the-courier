@@ -1,0 +1,20 @@
+[gd_scene format=3 uid="uid://cl1wysfuxby3q"]
+
+[ext_resource type="PackedScene" uid="uid://bmi57avorlix8" path="res://NPC/npc.tscn" id="1_b5eij"]
+[ext_resource type="PackedScene" uid="uid://bbqntu13b4jcb" path="res://NPC/Wisp/wisp_model.tscn" id="2_7k7ye"]
+[ext_resource type="Resource" uid="uid://bxc41uapwm3s6" path="res://Systems/Dialogue/Wisp/wisp_dialogue.res" id="2_1766p"]
+[ext_resource type="Texture2D" uid="uid://gp4mpnxet71b" path="res://NPC/Wisp/Wisp_Wisp.png" id="3_7nt0i"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_xrivr"]
+radius = 4.0
+
+[node name="WispNPC" unique_id=870401761 instance=ExtResource("1_b5eij")]
+
+[node name="DialogueController" parent="." index="0" unique_id=1124534431]
+dialogue = ExtResource("2_1766p")
+icon_texture = ExtResource("3_7nt0i")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="InteractZone" parent_id_path=PackedInt32Array(362051573) index="0" unique_id=1815261730]
+shape = SubResource("SphereShape3D_xrivr")
+
+[node name="WispModel" parent="." index="2" unique_id=76251156 instance=ExtResource("2_7k7ye")]

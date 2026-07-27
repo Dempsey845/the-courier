@@ -10,3 +10,5 @@ script = ExtResource("1_056qb")
 script = ExtResource("1_asys0")
 
 [node name="InteractZone" type="Area3D" parent="." unique_id=362051573]
+collision_layer = 256
+collision_mask = 512

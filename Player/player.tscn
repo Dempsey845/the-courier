@@ -57,6 +57,9 @@ radius = 0.4
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_13qdw"]
 
+[sub_resource type="SphereShape3D" id="SphereShape3D_xrivr"]
+radius = 1.2
+
 [node name="Player" type="CharacterBody3D" unique_id=67220391]
 script = ExtResource("1_4ntmi")
 
@@ -142,3 +145,13 @@ metadata/_custom_type_script = "uid://dswhdacq2khkk"
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 shape = SubResource("CapsuleShape3D_13qdw")
 debug_color = Color(0, 0.64169705, 0.33515495, 0.41960785)
+
+[node name="PlayerInteractZone" type="Area3D" parent="." unique_id=411531527]
+collision_layer = 512
+collision_mask = 256
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="PlayerInteractZone" unique_id=1479845987]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.1000001, 0)
+shape = SubResource("SphereShape3D_xrivr")
+debug_color = Color(0.09644664, 0.52343696, 1, 0.41960785)
+debug_fill = false
