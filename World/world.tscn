@@ -170,6 +170,29 @@ varying float bubble_mask;
 varying float foam_mask;
 varying vec2 surface_position;
 
+// Entry ripple controls.
+
+const int MAX_RIPPLES = 8;
+
+uniform int ripple_count = 0;
+uniform vec3 ripple_positions[MAX_RIPPLES];
+uniform float ripple_ages[MAX_RIPPLES];
+
+uniform float ripple_duration :
+	hint_range(0.1, 5.0, 0.1) = 2.0;
+
+uniform float ripple_speed :
+	hint_range(0.1, 10.0, 0.1) = 2.0;
+
+uniform float ripple_strength :
+	hint_range(0.0, 0.5, 0.005) = 0.08;
+
+uniform float ripple_width :
+	hint_range(0.01, 1.0, 0.01) = 0.2;
+
+uniform float ripple_frequency :
+	hint_range(1.0, 30.0, 0.5) = 12.0;
+
 
 float random_value(vec2 position) {
 	return fract(
@@ -366,12 +389,68 @@ float get_interaction_foam(vec2 position) {
 	return result;
 }
 
+float get_ripple_height(vec2 position) {
+	float height = 0.0;
+
+	for (int index = 0; index < MAX_RIPPLES; index++) {
+		if (index >= ripple_count) {
+			break;
+		}
+
+		float age = ripple_ages[index];
+
+		if (age >= ripple_duration) {
+			continue;
+		}
+
+		vec2 ripple_position = ripple_positions[index].xz;
+
+		float distance_from_ripple = distance(
+			position,
+			ripple_position
+		);
+
+		float radius = age * ripple_speed;
+		float distance_from_ring = abs(
+			distance_from_ripple - radius
+		);
+
+		// Restrict the movement to a narrow expanding ring.
+		float ring_mask = 1.0 - smoothstep(
+			ripple_width,
+			ripple_width * 2.0,
+			distance_from_ring
+		);
+
+		// Smaller trailing waves behind the main ring.
+		float wave = sin(
+			(distance_from_ripple - radius)
+			* ripple_frequency
+		);
+
+		float fade = 1.0 - clamp(
+			age / ripple_duration,
+			0.0,
+			1.0
+		);
+
+		height += (
+			wave
+			* ring_mask
+			* fade
+			* ripple_strength
+		);
+	}
+
+	return height;
+}
 
 float get_total_height(vec2 position) {
 	return (
 		get_bubble_height(position)
 		+ get_interaction_height(position)
 		+ get_wave_height(position)
+		+ get_ripple_height(position)
 	);
 }
 
@@ -385,11 +464,13 @@ void vertex() {
 	float bubble_height = get_bubble_height(position);
 	float interaction_height = get_interaction_height(position);
 	float wave_height = get_wave_height(position);
+	float ripple_height = get_ripple_height(position);
 
 	float height = (
 		bubble_height
 		+ interaction_height
 		+ wave_height
+		+ ripple_height
 	);
 
 	bubble_mask = clamp(
@@ -643,6 +724,14 @@ shader_parameter/interaction_positions = PackedVector3Array(0, 0, 0, 0, 0, 0, 0,
 shader_parameter/interaction_radius = 0.80000001192096
 shader_parameter/interaction_depth = 0.3499999921768
 shader_parameter/interaction_rim_height = 0.1499999966472
+shader_parameter/ripple_count = 0
+shader_parameter/ripple_positions = PackedVector3Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
+shader_parameter/ripple_ages = PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0)
+shader_parameter/ripple_duration = 2.0
+shader_parameter/ripple_speed = 2.0
+shader_parameter/ripple_strength = 0.08
+shader_parameter/ripple_width = 0.2
+shader_parameter/ripple_frequency = 12.0
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_lo5ox"]
 resource_local_to_scene = true
@@ -727,7 +816,6 @@ mesh = SubResource("QuadMesh_xrivr")
 
 [node name="PuffcapEnemy" parent="." unique_id=685929452 node_paths=PackedStringArray("target") instance=ExtResource("4_3f78f")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -84)
-visible = false
 target = NodePath("../Player")
 
 [node name="SnapperEnemy" parent="." unique_id=1088901969 node_paths=PackedStringArray("target") instance=ExtResource("5_k8do8")]
@@ -742,170 +830,75 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 0, 0)
 [node name="Lillypad" parent="Lillypads" unique_id=1060873832 node_paths=PackedStringArray("water") instance=ExtResource("10_w47uh")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.6, -75)
 water = NodePath("../../NavigationRegion3D/CSGCombiner3D2/MushroomSwampEffect")
-height_offset = 0.1
-follow_speed = 15.0
-wave_strength = 0.225
-wave_scale = 0.5
-wave_speed = 1.2
 
 [node name="Lillypad2" parent="Lillypads" unique_id=416926161 node_paths=PackedStringArray("water") instance=ExtResource("10_w47uh")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10, 0.6, -69)
 water = NodePath("../../NavigationRegion3D/CSGCombiner3D2/MushroomSwampEffect")
-height_offset = 0.1
-follow_speed = 15.0
-wave_strength = 0.225
-wave_scale = 0.5
-wave_speed = 1.2
 
 [node name="Lillypad3" parent="Lillypads" unique_id=361613455 node_paths=PackedStringArray("water") instance=ExtResource("10_w47uh")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15, 0.6, -75)
 water = NodePath("../../NavigationRegion3D/CSGCombiner3D2/MushroomSwampEffect")
-height_offset = 0.1
-follow_speed = 15.0
-wave_strength = 0.225
-wave_scale = 0.5
-wave_speed = 1.2
 
 [node name="Lillypad4" parent="Lillypads" unique_id=815488106 node_paths=PackedStringArray("water") instance=ExtResource("10_w47uh")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -17, 0.6, -85)
 water = NodePath("../../NavigationRegion3D/CSGCombiner3D2/MushroomSwampEffect")
-height_offset = 0.1
-follow_speed = 15.0
-wave_strength = 0.225
-wave_scale = 0.5
-wave_speed = 1.2
 
 [node name="Lillypad5" parent="Lillypads" unique_id=1920360631 node_paths=PackedStringArray("water") instance=ExtResource("10_w47uh")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7, 0.6, -93)
 water = NodePath("../../NavigationRegion3D/CSGCombiner3D2/MushroomSwampEffect")
-height_offset = 0.1
-follow_speed = 15.0
-wave_strength = 0.225
-wave_scale = 0.5
-wave_speed = 1.2
 
 [node name="Lillypad6" parent="Lillypads" unique_id=1579021184 node_paths=PackedStringArray("water") instance=ExtResource("10_w47uh")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -18, 0.6, -62)
 water = NodePath("../../NavigationRegion3D/CSGCombiner3D2/MushroomSwampEffect")
-height_offset = 0.1
-follow_speed = 15.0
-wave_strength = 0.225
-wave_scale = 0.5
-wave_speed = 1.2
 
 [node name="Lillypad7" parent="Lillypads" unique_id=1719958190 node_paths=PackedStringArray("water") instance=ExtResource("10_w47uh")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 0.6, -62)
 water = NodePath("../../NavigationRegion3D/CSGCombiner3D2/MushroomSwampEffect")
-height_offset = 0.1
-follow_speed = 15.0
-wave_strength = 0.225
-wave_scale = 0.5
-wave_speed = 1.2
 
 [node name="Lillypad8" parent="Lillypads" unique_id=1505743555 node_paths=PackedStringArray("water") instance=ExtResource("10_w47uh")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15, 0.6, -61)
 water = NodePath("../../NavigationRegion3D/CSGCombiner3D2/MushroomSwampEffect")
-height_offset = 0.1
-follow_speed = 15.0
-wave_strength = 0.225
-wave_scale = 0.5
-wave_speed = 1.2
 
 [node name="Lillypad9" parent="Lillypads" unique_id=750860492 node_paths=PackedStringArray("water") instance=ExtResource("10_w47uh")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16, 0.6, -70)
 water = NodePath("../../NavigationRegion3D/CSGCombiner3D2/MushroomSwampEffect")
-height_offset = 0.1
-follow_speed = 15.0
-wave_strength = 0.225
-wave_scale = 0.5
-wave_speed = 1.2
 
 [node name="Lillypad10" parent="Lillypads" unique_id=1104025519 node_paths=PackedStringArray("water") instance=ExtResource("10_w47uh")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7, 0.6, -70)
 water = NodePath("../../NavigationRegion3D/CSGCombiner3D2/MushroomSwampEffect")
-height_offset = 0.1
-follow_speed = 15.0
-wave_strength = 0.225
-wave_scale = 0.5
-wave_speed = 1.2
 
 [node name="Lillypad11" parent="Lillypads" unique_id=1947081398 node_paths=PackedStringArray("water") instance=ExtResource("10_w47uh")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14, 0.6, -78)
 water = NodePath("../../NavigationRegion3D/CSGCombiner3D2/MushroomSwampEffect")
-height_offset = 0.1
-follow_speed = 15.0
-wave_strength = 0.225
-wave_scale = 0.5
-wave_speed = 1.2
 
 [node name="Lillypad12" parent="Lillypads" unique_id=1953554856 node_paths=PackedStringArray("water") instance=ExtResource("10_w47uh")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 0.6, -81)
 water = NodePath("../../NavigationRegion3D/CSGCombiner3D2/MushroomSwampEffect")
-height_offset = 0.1
-follow_speed = 15.0
-wave_strength = 0.225
-wave_scale = 0.5
-wave_speed = 1.2
 
 [node name="Lillypad13" parent="Lillypads" unique_id=1775958655 node_paths=PackedStringArray("water") instance=ExtResource("10_w47uh")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0.6, -85)
 water = NodePath("../../NavigationRegion3D/CSGCombiner3D2/MushroomSwampEffect")
-height_offset = 0.1
-follow_speed = 15.0
-wave_strength = 0.225
-wave_scale = 0.5
-wave_speed = 1.2
 
 [node name="Lillypad14" parent="Lillypads" unique_id=1154177529 node_paths=PackedStringArray("water") instance=ExtResource("10_w47uh")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15, 0.6, -94)
 water = NodePath("../../NavigationRegion3D/CSGCombiner3D2/MushroomSwampEffect")
-height_offset = 0.1
-follow_speed = 15.0
-wave_strength = 0.225
-wave_scale = 0.5
-wave_speed = 1.2
 
 [node name="Lillypad15" parent="Lillypads" unique_id=1877918593 node_paths=PackedStringArray("water") instance=ExtResource("10_w47uh")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 0.6, -91)
 water = NodePath("../../NavigationRegion3D/CSGCombiner3D2/MushroomSwampEffect")
-height_offset = 0.1
-follow_speed = 15.0
-wave_strength = 0.225
-wave_scale = 0.5
-wave_speed = 1.2
 
 [node name="Lillypad16" parent="Lillypads" unique_id=1621307586 node_paths=PackedStringArray("water") instance=ExtResource("10_w47uh")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0.6, -96)
 water = NodePath("../../NavigationRegion3D/CSGCombiner3D2/MushroomSwampEffect")
-height_offset = 0.1
-follow_speed = 15.0
-wave_strength = 0.225
-wave_scale = 0.5
-wave_speed = 1.2
 
 [node name="Lillypad17" parent="Lillypads" unique_id=604997585 node_paths=PackedStringArray("water") instance=ExtResource("10_w47uh")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -17, 0.6, -98)
 water = NodePath("../../NavigationRegion3D/CSGCombiner3D2/MushroomSwampEffect")
-height_offset = 0.1
-follow_speed = 15.0
-wave_strength = 0.225
-wave_scale = 0.5
-wave_speed = 1.2
 
 [node name="Lillypad18" parent="Lillypads" unique_id=2147341478 node_paths=PackedStringArray("water") instance=ExtResource("10_w47uh")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -20, 0.6, -93)
 water = NodePath("../../NavigationRegion3D/CSGCombiner3D2/MushroomSwampEffect")
-height_offset = 0.1
-follow_speed = 15.0
-wave_strength = 0.225
-wave_scale = 0.5
-wave_speed = 1.2
 
 [node name="Lillypad19" parent="Lillypads" unique_id=1956590250 node_paths=PackedStringArray("water") instance=ExtResource("10_w47uh")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 17, 0.6, -85)
 water = NodePath("../../NavigationRegion3D/CSGCombiner3D2/MushroomSwampEffect")
-height_offset = 0.1
-follow_speed = 15.0
-wave_strength = 0.225
-wave_scale = 0.5
-wave_speed = 1.2

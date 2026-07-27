@@ -1,12 +1,12 @@
 extends StaticBody3D
 
 @export var water: MeshInstance3D
-@export var height_offset: float = 0.025
-@export var follow_speed: float = 8.0
+@export var height_offset: float = 0.1
+@export var follow_speed: float = 11.0
 
-@export var wave_strength: float = 0.035
-@export var wave_scale: float = 1.4
-@export var wave_speed: float = 0.4
+@export var wave_strength: float = 0.225
+@export var wave_scale: float = 0.5
+@export var wave_speed: float = 1.2
 
 func _process(delta: float) -> void:
 	if not is_instance_valid(water):
