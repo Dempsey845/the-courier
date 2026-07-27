@@ -4,6 +4,7 @@
 [ext_resource type="PackedScene" uid="uid://bp6pkgigbquhx" path="res://Enemies/Golem/golem_enemy.tscn" id="2_8a836"]
 [ext_resource type="Script" uid="uid://dh6q176dnlgbu" path="res://Systems/Dialogue/dialogue_manager.gd" id="2_eidgh"]
 [ext_resource type="Texture2D" uid="uid://4rlm2g5x5820" path="res://Enemies/Golem/golem_stomp_instruction.png" id="3_j8job"]
+[ext_resource type="PackedScene" uid="uid://c4qraqdt2f0hp" path="res://World/Areas/Mushroom/mushroom_swamp_effect.tscn" id="3_oe8m4"]
 [ext_resource type="PackedScene" uid="uid://du7tgosjqxyde" path="res://Enemies/Puffcap/puffcap_enemy.tscn" id="4_3f78f"]
 [ext_resource type="PackedScene" uid="uid://cniwu7eyr0832" path="res://Enemies/Snapper/snapper_enemy.tscn" id="5_k8do8"]
 [ext_resource type="PackedScene" uid="uid://b4yyn7ah5o6it" path="res://Systems/Dialogue/dialogue_ui.tscn" id="7_yf0ba"]
@@ -22,11 +23,617 @@ sky = SubResource("Sky_8a836")
 glow_enabled = true
 
 [sub_resource type="NavigationMesh" id="NavigationMesh_13qdw"]
-vertices = PackedVector3Array(3.25, 0.5, 5, 4.25, 0.5, 5, 4.25, 0.5, 3.75, -49.5, 0.5, 6, 3, 0.5, 6, 5.25, 0.5, 3.5, 5.25, 0.5, -49.5, -49.5, 0.5, -49.5, 6.5, 0.5, 3.75, 6.5, 0.5, 5.25, 49.5, 0.5, 5.25, 49.5, 0.5, -49.5, 6.5, 0.5, 7, 4.75, 0.5, 7.25, 4.75, 0.5, 49.5, 49.5, 0.5, 49.5, 3.25, 0.5, 7.25, -49.5, 0.5, 49.5)
-polygons = [PackedInt32Array(2, 1, 0), PackedInt32Array(0, 4, 3), PackedInt32Array(6, 5, 2), PackedInt32Array(0, 3, 2), PackedInt32Array(2, 3, 7), PackedInt32Array(2, 7, 6), PackedInt32Array(10, 9, 8), PackedInt32Array(8, 5, 10), PackedInt32Array(10, 5, 6), PackedInt32Array(10, 6, 11), PackedInt32Array(13, 12, 14), PackedInt32Array(14, 12, 15), PackedInt32Array(15, 12, 10), PackedInt32Array(12, 9, 10), PackedInt32Array(16, 13, 14), PackedInt32Array(16, 14, 4), PackedInt32Array(4, 14, 3), PackedInt32Array(3, 14, 17)]
+vertices = PackedVector3Array(22.25, 1.5, -105.5, -24.5, 1.5, -105.5, -24.5, 1.5, -58.75, -22.5, 1.5, -58.75, 22, 1, -59, 22.25, 1.5, -103.5, -21.489626, 1, -102.9844, 20.490715, 1, -102.97676, -21.4795, 1, -61.005245, 23, 1.5, -103.5, 24.5, 1.5, -105.5, 23, 1.5, -58.25, 24.5, 1.5, -56.5, 20.75, 1.5, -58, 20.75, 1.5, -56.5, -22.5, 1.5, -58, -24.5, 1.5, -56.5, 3, 0.5, 4.75, 4.25, 0.5, 4.5, 4.25, 0.5, 3.75, -49.5, 0.5, 6, 3, 0.5, 6, 5.25, 0.5, 3.5, 5.25, 0.5, -49.5, -49.5, 0.5, -49.5, 6.5, 0.5, 3.75, 6.5, 0.5, 5.25, 49.5, 0.5, 5.25, 49.5, 0.5, -49.5, 6.25, 0.5, 7.25, 4, 0.5, 7.75, 4, 0.5, 49.5, 49.5, 0.5, 49.5, 3, 0.5, 7.5, -49.5, 0.5, 49.5)
+polygons = [PackedInt32Array(4, 7, 5), PackedInt32Array(5, 7, 0), PackedInt32Array(0, 6, 1), PackedInt32Array(1, 6, 2), PackedInt32Array(2, 8, 3), PackedInt32Array(3, 8, 4), PackedInt32Array(4, 8, 7), PackedInt32Array(7, 6, 0), PackedInt32Array(6, 8, 2), PackedInt32Array(8, 6, 7), PackedInt32Array(5, 0, 9), PackedInt32Array(9, 0, 10), PackedInt32Array(11, 9, 12), PackedInt32Array(12, 9, 10), PackedInt32Array(13, 11, 14), PackedInt32Array(14, 11, 12), PackedInt32Array(3, 15, 2), PackedInt32Array(2, 15, 16), PackedInt32Array(13, 14, 15), PackedInt32Array(15, 14, 16), PackedInt32Array(19, 18, 17), PackedInt32Array(17, 21, 20), PackedInt32Array(23, 22, 19), PackedInt32Array(17, 20, 19), PackedInt32Array(19, 20, 24), PackedInt32Array(19, 24, 23), PackedInt32Array(27, 26, 25), PackedInt32Array(25, 22, 27), PackedInt32Array(27, 22, 23), PackedInt32Array(27, 23, 28), PackedInt32Array(31, 30, 29), PackedInt32Array(26, 27, 29), PackedInt32Array(29, 27, 32), PackedInt32Array(29, 32, 31), PackedInt32Array(30, 31, 33), PackedInt32Array(33, 31, 34), PackedInt32Array(33, 34, 20), PackedInt32Array(20, 21, 33)]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_xrivr"]
 albedo_color = Color(0, 0.36078432, 0, 1)
+
+[sub_resource type="Shader" id="Shader_5gpxd"]
+code = "// Magical swamp water shader for a subdivided PlaneMesh.
+// Includes bubbles, liquid waves, interaction displacement and foam.
+
+shader_type spatial;
+
+render_mode blend_mix, depth_draw_opaque, cull_back,
+	diffuse_burley, specular_schlick_ggx;
+
+
+uniform vec4 albedo : source_color = vec4(1.0);
+
+uniform sampler2D texture_albedo :
+	source_color, filter_nearest, repeat_enable;
+
+uniform ivec2 albedo_texture_size;
+uniform float point_size : hint_range(0.1, 128.0, 0.1);
+
+uniform float roughness :
+	hint_range(0.0, 1.0) = 0.35;
+
+uniform sampler2D texture_metallic :
+	hint_default_white, filter_nearest, repeat_enable;
+
+uniform vec4 metallic_texture_channel = vec4(
+	1.0,
+	0.0,
+	0.0,
+	0.0
+);
+
+uniform sampler2D texture_roughness :
+	hint_roughness_r, filter_nearest, repeat_enable;
+
+uniform float specular :
+	hint_range(0.0, 1.0, 0.01) = 0.5;
+
+uniform float metallic :
+	hint_range(0.0, 1.0, 0.01) = 0.0;
+
+uniform vec3 uv1_scale = vec3(1.0);
+uniform vec3 uv1_offset = vec3(0.0);
+uniform vec3 uv2_scale = vec3(1.0);
+uniform vec3 uv2_offset = vec3(0.0);
+
+
+// Bubbling controls.
+
+uniform float bubble_strength :
+	hint_range(0.0, 1.0, 0.01) = 0.15;
+
+uniform float bubble_spacing :
+	hint_range(0.1, 10.0, 0.1) = 1.5;
+
+uniform float bubble_radius :
+	hint_range(0.05, 2.0, 0.01) = 0.45;
+
+uniform float bubble_speed :
+	hint_range(0.0, 10.0, 0.1) = 1.5;
+
+uniform vec4 bubble_color : source_color = vec4(
+	0.65,
+	0.8,
+	1.0,
+	1.0
+);
+
+uniform float bubble_color_strength :
+	hint_range(0.0, 1.0, 0.01) = 1.0;
+
+uniform float bubble_edge_softness :
+	hint_range(0.01, 1.0, 0.01) = 0.3;
+
+
+// Liquid wave controls.
+
+uniform float wave_strength :
+	hint_range(0.0, 0.5, 0.005) = 0.035;
+
+uniform float wave_scale :
+	hint_range(0.1, 10.0, 0.1) = 1.4;
+
+uniform float wave_speed :
+	hint_range(0.0, 5.0, 0.05) = 0.4;
+
+
+// Foam controls.
+
+uniform vec4 foam_color : source_color = vec4(
+	0.75,
+	0.9,
+	0.72,
+	1.0
+);
+
+uniform float foam_strength :
+	hint_range(0.0, 1.0, 0.01) = 0.75;
+
+uniform float foam_scale :
+	hint_range(0.1, 20.0, 0.1) = 5.0;
+
+uniform float foam_speed :
+	hint_range(0.0, 5.0, 0.05) = 0.25;
+
+uniform float wave_foam_threshold :
+	hint_range(0.0, 1.0, 0.01) = 0.72;
+
+uniform float bubble_foam_width :
+	hint_range(0.01, 0.5, 0.01) = 0.12;
+
+
+// Surface normal controls.
+
+uniform float normal_sample_distance :
+	hint_range(0.001, 0.2, 0.001) = 0.03;
+
+
+// Interaction controls.
+
+const int MAX_INTERACTORS = 8;
+
+uniform int interaction_count = 0;
+uniform vec3 interaction_positions[MAX_INTERACTORS];
+
+uniform float interaction_radius :
+	hint_range(0.1, 5.0, 0.05) = 0.75;
+
+uniform float interaction_depth :
+	hint_range(0.0, 1.0, 0.01) = 0.2;
+
+uniform float interaction_rim_height :
+	hint_range(0.0, 1.0, 0.01) = 0.08;
+
+
+// Values passed from vertex() to fragment().
+
+varying float bubble_mask;
+varying float foam_mask;
+varying vec2 surface_position;
+
+
+float random_value(vec2 position) {
+	return fract(
+		sin(
+			dot(
+				position,
+				vec2(127.1, 311.7)
+			)
+		) * 43758.5453
+	);
+}
+
+
+vec2 random_vector(vec2 position) {
+	return vec2(
+		random_value(position),
+		random_value(
+			position + vec2(19.19, 73.73)
+		)
+	);
+}
+
+
+float get_bubble_height(vec2 position) {
+	vec2 grid_position = position / bubble_spacing;
+	vec2 current_cell = floor(grid_position);
+
+	float height = 0.0;
+
+	for (int x = -1; x <= 1; x++) {
+		for (int y = -1; y <= 1; y++) {
+			vec2 cell = current_cell + vec2(
+				float(x),
+				float(y)
+			);
+
+			vec2 random_offset = random_vector(cell);
+
+			vec2 bubble_position = (
+				cell
+				+ vec2(0.15)
+				+ random_offset * 0.7
+			) * bubble_spacing;
+
+			float random_phase = random_value(
+				cell + vec2(41.7, 13.2)
+			) * TAU;
+
+			float life = sin(
+				TIME * bubble_speed
+				+ random_phase
+			);
+
+			// Only show the bubble during the positive
+			// half of its animation.
+			life = max(life, 0.0);
+			life *= life;
+
+			float distance_to_bubble = distance(
+				position,
+				bubble_position
+			);
+
+			float dome = 1.0 - smoothstep(
+				0.0,
+				bubble_radius,
+				distance_to_bubble
+			);
+
+			dome *= dome;
+
+			height += (
+				dome
+				* life
+				* bubble_strength
+			);
+		}
+	}
+
+	return height;
+}
+
+
+float get_wave_height(vec2 position) {
+	vec2 scaled_position = position * wave_scale;
+
+	float first_wave = sin(
+		scaled_position.x * 1.15
+		+ scaled_position.y * 0.45
+		+ TIME * wave_speed
+	);
+
+	float second_wave = sin(
+		scaled_position.x * -0.55
+		+ scaled_position.y * 1.35
+		- TIME * wave_speed * 0.7
+	);
+
+	float third_wave = sin(
+		scaled_position.x * 1.8
+		+ scaled_position.y * -1.1
+		+ TIME * wave_speed * 0.45
+	);
+
+	return (
+		first_wave * 0.5
+		+ second_wave * 0.3
+		+ third_wave * 0.2
+	) * wave_strength;
+}
+
+
+float get_interaction_height(vec2 position) {
+	float height = 0.0;
+
+	for (int index = 0; index < MAX_INTERACTORS; index++) {
+		if (index >= interaction_count) {
+			break;
+		}
+
+		vec2 interaction_position = (
+			interaction_positions[index].xz
+		);
+
+		float distance_from_object = distance(
+			position,
+			interaction_position
+		);
+
+		// Depression underneath the object.
+		float depression = 1.0 - smoothstep(
+			0.0,
+			interaction_radius,
+			distance_from_object
+		);
+
+		depression *= depression;
+
+		// Raised liquid rim around the object.
+		float rim_start = interaction_radius * 0.65;
+		float rim_end = interaction_radius * 1.35;
+
+		float rim = smoothstep(
+			0.0,
+			rim_start,
+			distance_from_object
+		);
+
+		rim *= 1.0 - smoothstep(
+			rim_start,
+			rim_end,
+			distance_from_object
+		);
+
+		height -= depression * interaction_depth;
+		height += rim * interaction_rim_height;
+	}
+
+	return height;
+}
+
+
+float get_interaction_foam(vec2 position) {
+	float result = 0.0;
+
+	for (int index = 0; index < MAX_INTERACTORS; index++) {
+		if (index >= interaction_count) {
+			break;
+		}
+
+		float distance_from_object = distance(
+			position,
+			interaction_positions[index].xz
+		);
+
+		float inner_radius = interaction_radius * 0.65;
+		float outer_radius = interaction_radius * 1.35;
+
+		float ring = smoothstep(
+			inner_radius,
+			interaction_radius,
+			distance_from_object
+		);
+
+		ring *= 1.0 - smoothstep(
+			interaction_radius,
+			outer_radius,
+			distance_from_object
+		);
+
+		result = max(result, ring);
+	}
+
+	return result;
+}
+
+
+float get_total_height(vec2 position) {
+	return (
+		get_bubble_height(position)
+		+ get_interaction_height(position)
+		+ get_wave_height(position)
+	);
+}
+
+
+void vertex() {
+	UV = UV * uv1_scale.xy + uv1_offset.xy;
+
+	vec2 position = VERTEX.xz;
+	surface_position = position;
+
+	float bubble_height = get_bubble_height(position);
+	float interaction_height = get_interaction_height(position);
+	float wave_height = get_wave_height(position);
+
+	float height = (
+		bubble_height
+		+ interaction_height
+		+ wave_height
+	);
+
+	bubble_mask = clamp(
+		bubble_height / max(bubble_strength, 0.001),
+		0.0,
+		1.0
+	);
+
+	// Create a narrow foam ring around the middle
+	// of each rising bubble.
+	float bubble_foam = 1.0 - (
+		abs(bubble_mask - 0.45)
+		/ max(bubble_foam_width, 0.001)
+	);
+
+	bubble_foam = clamp(
+		bubble_foam,
+		0.0,
+		1.0
+	);
+
+	// Add a small amount of foam to wave crests.
+	float normalized_wave_height = (
+		wave_height / max(wave_strength, 0.001)
+		+ 1.0
+	) * 0.5;
+
+	float wave_foam = smoothstep(
+		wave_foam_threshold,
+		1.0,
+		normalized_wave_height
+	);
+
+	foam_mask = max(
+		bubble_foam,
+		max(
+			wave_foam,
+			get_interaction_foam(position)
+		)
+	);
+
+	VERTEX.y += height;
+
+	// Recalculate the normal using the complete displaced surface.
+
+	float height_left = get_total_height(
+		position - vec2(
+			normal_sample_distance,
+			0.0
+		)
+	);
+
+	float height_right = get_total_height(
+		position + vec2(
+			normal_sample_distance,
+			0.0
+		)
+	);
+
+	float height_back = get_total_height(
+		position - vec2(
+			0.0,
+			normal_sample_distance
+		)
+	);
+
+	float height_front = get_total_height(
+		position + vec2(
+			0.0,
+			normal_sample_distance
+		)
+	);
+
+	float slope_x = (
+		height_right - height_left
+	) / (
+		normal_sample_distance * 2.0
+	);
+
+	float slope_z = (
+		height_front - height_back
+	) / (
+		normal_sample_distance * 2.0
+	);
+
+	NORMAL = normalize(
+		vec3(
+			-slope_x,
+			1.0,
+			-slope_z
+		)
+	);
+}
+
+
+void fragment() {
+	vec2 base_uv = UV;
+
+	vec4 albedo_tex = texture(
+		texture_albedo,
+		base_uv
+	);
+
+	// Use vertex colour as part of the albedo.
+	albedo_tex *= COLOR;
+
+	vec3 base_albedo = (
+		albedo.rgb
+		* albedo_tex.rgb
+	);
+
+	float shaped_bubble_mask = smoothstep(
+		bubble_edge_softness,
+		1.0,
+		bubble_mask
+	);
+
+	shaped_bubble_mask *= bubble_color_strength;
+
+	ALBEDO = mix(
+		base_albedo,
+		bubble_color.rgb,
+		shaped_bubble_mask
+	);
+
+	// Animate two overlapping patterns to break up
+	// the foam and prevent perfect circular rings.
+
+	float foam_noise_a = sin(
+		surface_position.x * foam_scale
+		+ surface_position.y * foam_scale * 0.7
+		+ TIME * foam_speed
+	);
+
+	float foam_noise_b = sin(
+		surface_position.x * foam_scale * -0.65
+		+ surface_position.y * foam_scale * 1.3
+		- TIME * foam_speed * 0.8
+	);
+
+	float foam_noise = (
+		foam_noise_a * 0.5
+		+ foam_noise_b * 0.5
+	) * 0.5 + 0.5;
+
+	float broken_foam = smoothstep(
+		0.25,
+		0.75,
+		foam_noise + foam_mask * 0.65
+	);
+
+	float final_foam = clamp(
+		foam_mask
+		* broken_foam
+		* foam_strength,
+		0.0,
+		1.0
+	);
+
+	ALBEDO = mix(
+		ALBEDO,
+		foam_color.rgb,
+		final_foam
+	);
+
+	float metallic_tex = dot(
+		texture(
+			texture_metallic,
+			base_uv
+		),
+		metallic_texture_channel
+	);
+
+	METALLIC = metallic_tex * metallic;
+	SPECULAR = specular;
+
+	vec4 roughness_texture_channel = vec4(
+		1.0,
+		0.0,
+		0.0,
+		0.0
+	);
+
+	float roughness_tex = dot(
+		texture(
+			texture_roughness,
+			base_uv
+		),
+		roughness_texture_channel
+	);
+
+	// Foam is less reflective than the exposed liquid.
+	ROUGHNESS = mix(
+		roughness_tex * roughness,
+		0.85,
+		final_foam
+	);
+
+	ALPHA *= albedo.a * albedo_tex.a;
+}"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_oe8m4"]
+resource_local_to_scene = true
+render_priority = 0
+shader = SubResource("Shader_5gpxd")
+shader_parameter/albedo = Color(0.19445363, 0.57391554, 0.25773874, 0.8901961)
+shader_parameter/albedo_texture_size = Vector2i(256, 256)
+shader_parameter/point_size = 1.0
+shader_parameter/roughness = 0.350000016625
+shader_parameter/metallic_texture_channel = Vector4(1, 0, 0, 0)
+shader_parameter/specular = 0.5
+shader_parameter/metallic = 0.0
+shader_parameter/uv1_scale = Vector3(1, 1, 1)
+shader_parameter/uv1_offset = Vector3(0, 0, 0)
+shader_parameter/uv2_scale = Vector3(1, 1, 1)
+shader_parameter/uv2_offset = Vector3(0, 0, 0)
+shader_parameter/bubble_strength = 0.249999994412
+shader_parameter/bubble_spacing = 0.90000001341108
+shader_parameter/bubble_radius = 0.7999999839810601
+shader_parameter/bubble_speed = 1.5
+shader_parameter/bubble_color = Color(0.52596116, 0.68304086, 0.07235084, 1)
+shader_parameter/bubble_color_strength = 1.0
+shader_parameter/bubble_edge_softness = 0.0999999977648
+shader_parameter/wave_strength = 0.3499999921768
+shader_parameter/wave_scale = 0.5000000074506
+shader_parameter/wave_speed = 2.0000000298024
+shader_parameter/foam_color = Color(0.6221607, 0.81735814, 0.51433545, 1)
+shader_parameter/foam_strength = 0.75
+shader_parameter/foam_scale = 5.0
+shader_parameter/foam_speed = 0.25
+shader_parameter/wave_foam_threshold = 0.72
+shader_parameter/bubble_foam_width = 0.12
+shader_parameter/normal_sample_distance = 0.03
+shader_parameter/interaction_count = 0
+shader_parameter/interaction_positions = PackedVector3Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
+shader_parameter/interaction_radius = 1.0000000149012
+shader_parameter/interaction_depth = 0.5999999865888
+shader_parameter/interaction_rim_height = 0.1999999955296
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_w47uh"]
+resource_local_to_scene = true
+material = SubResource("ShaderMaterial_oe8m4")
+size = Vector2(45, 45)
+subdivide_width = 450
+subdivide_depth = 450
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_13qdw"]
 albedo_texture = ExtResource("3_j8job")
@@ -74,8 +681,24 @@ size = Vector3(1, 2, 1)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.3710585, 1.3000001, 4.6)
 size = Vector3(1, 2.6000001, 1)
 
+[node name="CSGCombiner3D2" type="CSGCombiner3D" parent="NavigationRegion3D" unique_id=420214343]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -24, -81)
+use_collision = true
+
+[node name="CSGBox3D" type="CSGBox3D" parent="NavigationRegion3D/CSGCombiner3D2" unique_id=497769013]
+size = Vector3(50, 50, 50)
+
+[node name="MushroomSwampEffect" parent="NavigationRegion3D/CSGCombiner3D2" unique_id=963275507 instance=ExtResource("3_oe8m4")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 24.600002, 0)
+mesh = SubResource("PlaneMesh_w47uh")
+
+[node name="CSGBox3D2" type="CSGBox3D" parent="NavigationRegion3D/CSGCombiner3D2" unique_id=1070495913]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 24.5, 0)
+operation = 2
+size = Vector3(45, 1, 45)
+
 [node name="Player" parent="." unique_id=67220391 instance=ExtResource("1_62w18")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.2, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.2, -69)
 
 [node name="GolemEnemy" parent="." unique_id=1009641960 node_paths=PackedStringArray("target") instance=ExtResource("2_8a836")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 29)
@@ -87,7 +710,7 @@ material_override = SubResource("StandardMaterial3D_13qdw")
 mesh = SubResource("QuadMesh_xrivr")
 
 [node name="PuffcapEnemy" parent="." unique_id=685929452 node_paths=PackedStringArray("target") instance=ExtResource("4_3f78f")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -28)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -84)
 target = NodePath("../Player")
 
 [node name="SnapperEnemy" parent="." unique_id=1088901969 node_paths=PackedStringArray("target") instance=ExtResource("5_k8do8")]

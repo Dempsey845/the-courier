@@ -1,12 +1,12 @@
 extends MeshInstance3D
 
-const MAX_INTERACTORS := 8
+const MAX_INTERACTORS: int = 8
 
 var interaction_bodies: Array[Node3D] = []
 var shader_material: ShaderMaterial
 
 @onready var interaction_area: Area3D = $SporeInteractionArea
-
+@onready var shape: CollisionShape3D = $SporeInteractionArea/CollisionShape3D
 
 func _ready() -> void:
 	shader_material = get_active_material(0)
@@ -18,6 +18,10 @@ func _ready() -> void:
 	interaction_area.body_exited.connect(
 		_on_interaction_body_exited
 	)
+
+	var size: Vector2 = mesh.get("size")
+
+	shape.shape.set("size", Vector3(size.x, 0.6, size.y))
 
 	# Collect bodies that may already be inside the area.
 	for body in interaction_area.get_overlapping_bodies():

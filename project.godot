@@ -66,6 +66,8 @@ advance_dialogue={
 
 [layer_names]
 
+3d_physics/layer_3="PlayerBody"
+3d_physics/layer_4="EnemyBody"
 3d_physics/layer_5="PlayerHurtbox"
 3d_physics/layer_6="EnemyHurtbox"
 3d_physics/layer_7="PlayerHitbox"

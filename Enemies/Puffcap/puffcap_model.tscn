@@ -9,7 +9,6 @@
 [ext_resource type="PackedScene" uid="uid://blpcpcv4cmjbc" path="res://Enemies/Puffcap/puffcap_spore_effect.tscn" id="6_t5tt1"]
 [ext_resource type="PackedScene" uid="uid://c0k6l873437gy" path="res://Enemies/Puffcap/puffcap_release_spore_effect.tscn" id="7_bn6dt"]
 [ext_resource type="Animation" uid="uid://cwl2l2tp2guy5" path="res://Enemies/Puffcap/puffcap_death.anim" id="7_s1084"]
-[ext_resource type="PackedScene" uid="uid://bs74t03j5e85p" path="res://Enemies/Puffcap/effect_area_visual.tscn" id="9_5gpxd"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_p7bs7"]
 resource_name = "Face"
@@ -376,11 +375,11 @@ script = ExtResource("2_p7bs7")
 script = ExtResource("2_t5tt1")
 
 [node name="Skeleton3D" parent="Armature" parent_id_path=PackedInt32Array(1540813913) index="0" unique_id=340238021]
-bones/0/position = Vector3(-0.0115939, 0.32513458, 0)
-bones/0/rotation = Quaternion(0, 0, -0.023687808, 0.9997195)
+bones/0/position = Vector3(-0.009676237, 0.32512304, 0)
+bones/0/rotation = Quaternion(0, 0, -0.019444108, 0.999811)
 bones/0/scale = Vector3(0.99999994, 0.99999994, 1)
-bones/1/position = Vector3(0.011593908, 0.82285434, -0.5557725)
-bones/1/rotation = Quaternion(0.57459134, -0.013614726, -0.01938445, 0.81809765)
+bones/1/position = Vector3(0.00967624, 0.82286584, -0.5557725)
+bones/1/rotation = Quaternion(0.574644, -0.0111756455, -0.015911715, 0.8181725)
 bones/1/scale = Vector3(1, 1, 1.0000002)
 bones/2/position = Vector3(0.21912877, 0.11440279, -0.20084074)
 bones/2/rotation = Quaternion(-0.04318904, 0.69833213, 0.7091312, -0.08717797)
@@ -398,11 +397,7 @@ anim_player = NodePath("../AnimationPlayer")
 
 [node name="PuffcapReleaseSporeEffect" parent="." index="4" unique_id=877704027 instance=ExtResource("7_bn6dt")]
 
-[node name="EffectAreaVisual" parent="." index="5" unique_id=963275507 instance=ExtResource("9_5gpxd")]
-transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, 0, 0.05, 0)
-transparency = 1.0
-
-[node name="PuffcapSporeEffect" parent="." index="6" unique_id=1172002146 instance=ExtResource("6_t5tt1")]
+[node name="PuffcapSporeEffect" parent="." index="5" unique_id=1172002146 instance=ExtResource("6_t5tt1")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.2, 0)
 amount = 80
 emission_box_extents = Vector3(4, 0.1, 4)

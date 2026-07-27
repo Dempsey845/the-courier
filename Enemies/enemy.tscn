@@ -5,6 +5,7 @@
 [ext_resource type="Script" uid="uid://dswhdacq2khkk" path="res://Components/hurtbox.gd" id="3_572h1"]
 
 [node name="Enemy" type="CharacterBody3D" unique_id=1009641960]
+collision_layer = 9
 script = ExtResource("1_3ih25")
 
 [node name="Health" type="Node" parent="." unique_id=2126961756]

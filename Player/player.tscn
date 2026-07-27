@@ -61,6 +61,7 @@ radius = 0.4
 radius = 1.2
 
 [node name="Player" type="CharacterBody3D" unique_id=67220391]
+collision_layer = 5
 script = ExtResource("1_4ntmi")
 
 [node name="PlayerHitManager" type="Node" parent="." unique_id=233237877 node_paths=PackedStringArray("player")]
