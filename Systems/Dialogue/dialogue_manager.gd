@@ -1,6 +1,9 @@
 class_name DialogueManager
 extends Node
 
+signal dialogue_started(npc: NPC)
+signal dialogue_ended
+
 static var instance: DialogueManager
 
 var current_dialogue: Dialogue
@@ -11,7 +14,9 @@ var in_dialogue: bool
 func _ready() -> void:
 	instance = self
 
-func start(dialogue: Dialogue, dialogue_ui: DialogueUI, icon_texture: CompressedTexture2D) -> void:
+func start(dialogue: Dialogue, dialogue_ui: DialogueUI, icon_texture: CompressedTexture2D, npc: NPC) -> void:
+	dialogue_started.emit(npc)
+
 	current_dialogue = dialogue
 	current_node = 0
 
@@ -41,6 +46,7 @@ func _run_dialogue(dialogue_ui: DialogueUI) -> void:
 
 	in_dialogue = false
 	dialogue_ui.close_dialogue()
+	dialogue_ended.emit()
 
 func trigger_event(event: String) -> void:
 	match event:

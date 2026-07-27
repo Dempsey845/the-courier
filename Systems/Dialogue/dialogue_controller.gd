@@ -2,6 +2,7 @@ class_name DialogueController
 extends Node
 
 @export var dialogue_ui: DialogueUI
+@export var npc: NPC
 
 @export var dialogue: Dialogue
 @export var icon_texture: CompressedTexture2D
@@ -18,5 +19,5 @@ func _ready() -> void:
 		start()
 
 func start():
-	DialogueManager.instance.start(dialogue, dialogue_ui, icon_texture)
+	DialogueManager.instance.start(dialogue, dialogue_ui, icon_texture, npc)
 	

@@ -6,8 +6,9 @@
 [node name="NPC" type="Node3D" unique_id=870401761]
 script = ExtResource("1_056qb")
 
-[node name="DialogueController" type="Node" parent="." unique_id=1124534431]
+[node name="DialogueController" type="Node" parent="." unique_id=1124534431 node_paths=PackedStringArray("npc")]
 script = ExtResource("1_asys0")
+npc = NodePath("..")
 
 [node name="InteractZone" type="Area3D" parent="." unique_id=362051573]
 collision_layer = 256

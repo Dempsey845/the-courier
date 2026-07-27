@@ -33,16 +33,42 @@ var knockback_timer: float = 0.0
 var coyote_timer: float = 0.0
 var jump_buffer_timer: float = 0.0
 
+var player_in_dialogue: bool
+var dialogue_npc: NPC
+
+func _ready() -> void:
+	await get_tree().process_frame
+
+	DialogueManager.instance.dialogue_started.connect(func(npc: NPC):
+		player_in_dialogue = true
+		jump_buffer_timer = 0.0
+		velocity.x = 0.0
+		velocity.z = 0.0
+
+		dialogue_npc = npc
+	)
+
+	DialogueManager.instance.dialogue_ended.connect(func():
+		player_in_dialogue = false
+		dialogue_npc = null
+	)
+
 func _physics_process(delta: float) -> void:
 	var was_on_floor: bool = is_on_floor()
 
-	update_jump_timers(delta)
-	handle_jump()
+	if not player_in_dialogue:
+		update_jump_timers(delta)
+		handle_jump()
+	else:
+		jump_buffer_timer = 0.0
+
 	apply_gravity(delta)
 
 	knockback_timer = maxf(knockback_timer - delta, 0.0)
 
-	if knockback_timer <= 0.0:
+	if player_in_dialogue:
+		look_at_dialogue_npc(delta)
+	elif knockback_timer <= 0.0:
 		handle_movement(delta)
 
 	move_and_slide()
@@ -50,6 +76,24 @@ func _physics_process(delta: float) -> void:
 	if not was_on_floor and is_on_floor():
 		landed.emit()
 
+
+func look_at_dialogue_npc(delta: float) -> void:
+	if not is_instance_valid(dialogue_npc):
+		return
+
+	var direction: Vector3 = dialogue_npc.global_position - global_position
+	direction.y = 0.0
+
+	if direction.length_squared() <= 0.001:
+		return
+
+	var target_angle: float = atan2(direction.x, direction.z)
+
+	model.rotation.y = lerp_angle(
+		model.rotation.y,
+		target_angle,
+		rotation_speed * delta
+	)
 
 func update_jump_timers(delta: float) -> void:
 	# Refresh coyote time while standing on the ground.
