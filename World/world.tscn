@@ -6,6 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://4rlm2g5x5820" path="res://Enemies/Golem/golem_stomp_instruction.png" id="3_j8job"]
 [ext_resource type="PackedScene" uid="uid://c4qraqdt2f0hp" path="res://World/Areas/Swamp/mushroom_swamp_effect.tscn" id="3_oe8m4"]
 [ext_resource type="PackedScene" uid="uid://du7tgosjqxyde" path="res://Enemies/Puffcap/puffcap_enemy.tscn" id="4_3f78f"]
+[ext_resource type="PackedScene" uid="uid://h2bnamg205h1" path="res://World/Areas/Swamp/tree_log_swamp.tscn" id="4_lo5ox"]
 [ext_resource type="PackedScene" uid="uid://cniwu7eyr0832" path="res://Enemies/Snapper/snapper_enemy.tscn" id="5_k8do8"]
 [ext_resource type="PackedScene" uid="uid://b4yyn7ah5o6it" path="res://Systems/Dialogue/dialogue_ui.tscn" id="7_yf0ba"]
 [ext_resource type="PackedScene" uid="uid://cl1wysfuxby3q" path="res://NPC/Wisp/wisp_npc.tscn" id="8_eidgh"]
@@ -679,7 +680,7 @@ void fragment() {
 colors = PackedColorArray(0.3102078, 0.6735869, 0.34585255, 1, 1, 1, 1, 1)
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_h2aik"]
-frequency = 0.28
+frequency = 0.1
 
 [sub_resource type="NoiseTexture2D" id="NoiseTexture2D_lo5ox"]
 width = 256
@@ -689,7 +690,7 @@ color_ramp = SubResource("Gradient_0wqet")
 seamless = true
 in_3d_space = true
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_w47uh"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_lo5ox"]
 resource_local_to_scene = true
 render_priority = 0
 shader = SubResource("Shader_5gpxd")
@@ -736,9 +737,9 @@ shader_parameter/ripple_strength = 0.08
 shader_parameter/ripple_width = 0.2
 shader_parameter/ripple_frequency = 12.0
 
-[sub_resource type="PlaneMesh" id="PlaneMesh_lo5ox"]
+[sub_resource type="PlaneMesh" id="PlaneMesh_h2aik"]
 resource_local_to_scene = true
-material = SubResource("ShaderMaterial_w47uh")
+material = SubResource("ShaderMaterial_lo5ox")
 size = Vector2(45, 45)
 subdivide_width = 450
 subdivide_depth = 450
@@ -799,12 +800,16 @@ size = Vector3(50, 50, 50)
 
 [node name="MushroomSwampEffect" parent="NavigationRegion3D/CSGCombiner3D2" unique_id=963275507 instance=ExtResource("3_oe8m4")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 24.600002, 0)
-mesh = SubResource("PlaneMesh_lo5ox")
+mesh = SubResource("PlaneMesh_h2aik")
 
 [node name="CSGBox3D2" type="CSGBox3D" parent="NavigationRegion3D/CSGCombiner3D2" unique_id=1070495913]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 24.5, 0)
 operation = 2
 size = Vector3(45, 1, 45)
+
+[node name="TreeLogSwamp" parent="." unique_id=1450662068 node_paths=PackedStringArray("water") instance=ExtResource("4_lo5ox")]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 6, 1, -73)
+water = NodePath("../NavigationRegion3D/CSGCombiner3D2/MushroomSwampEffect")
 
 [node name="Player" parent="." unique_id=67220391 instance=ExtResource("1_62w18")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.2, -69)
