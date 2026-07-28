@@ -8,10 +8,13 @@ signal landed
 
 @export_category("Movement")
 @export var move_speed: float = 7.0
+@export var slow_move_speed: float = 2.5
 @export var acceleration: float = 30.0
 @export var deceleration: float = 25.0
 @export var air_acceleration: float = 10.0
 @export var rotation_speed: float = 12.0
+
+var slow_movement_enabled: bool = false
 
 @export_category("Jumping")
 @export var gravity: float = 18.0
@@ -155,6 +158,11 @@ func handle_movement(delta: float) -> void:
 		velocity.z
 	)
 
+	var current_move_speed: float = (
+		slow_move_speed if slow_movement_enabled
+		else move_speed
+	)
+
 	if direction != Vector3.ZERO:
 		var current_acceleration: float = (
 			acceleration if is_on_floor()
@@ -162,7 +170,7 @@ func handle_movement(delta: float) -> void:
 		)
 
 		horizontal_velocity = horizontal_velocity.move_toward(
-			direction * move_speed,
+			direction * current_move_speed,
 			current_acceleration * delta
 		)
 
@@ -252,3 +260,6 @@ func apply_knockback(
 	velocity.y = upward_force
 
 	knockback_timer = knockback_control_lock_time
+
+func set_slow_movement(enabled: bool) -> void:
+	slow_movement_enabled = enabled

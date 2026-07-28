@@ -168,8 +168,12 @@ func add_interaction_body(
 
 
 func _on_interaction_body_entered(body: Node3D) -> void:
+	if body is Player:
+		body.set_slow_movement(true)
 	add_interaction_body(body, true)
 
 
 func _on_interaction_body_exited(body: Node3D) -> void:
+	if body is Player:
+		body.set_slow_movement(false)
 	interaction_bodies.erase(body)
