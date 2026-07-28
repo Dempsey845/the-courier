@@ -9,7 +9,7 @@
 [ext_resource type="PackedScene" uid="uid://cniwu7eyr0832" path="res://Enemies/Snapper/snapper_enemy.tscn" id="5_k8do8"]
 [ext_resource type="PackedScene" uid="uid://b4yyn7ah5o6it" path="res://Systems/Dialogue/dialogue_ui.tscn" id="7_yf0ba"]
 [ext_resource type="PackedScene" uid="uid://cl1wysfuxby3q" path="res://NPC/Wisp/wisp_npc.tscn" id="8_eidgh"]
-[ext_resource type="PackedScene" uid="uid://g6qjr8aewopi" path="res://World/Areas/Swamp/lillypad.tscn" id="10_w47uh"]
+[ext_resource type="Script" uid="uid://dg1d0kjbrocst" path="res://World/Areas/Swamp/lillypad_spawner.gd" id="10_w47uh"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_62w18"]
 sky_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
@@ -829,80 +829,8 @@ target = NodePath("../Player")
 [node name="WispNPC" parent="." unique_id=870401761 instance=ExtResource("8_eidgh")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 0, 0)
 
-[node name="Lillypads" type="Node3D" parent="." unique_id=344359410]
-
-[node name="Lillypad" parent="Lillypads" unique_id=1060873832 node_paths=PackedStringArray("water") instance=ExtResource("10_w47uh")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.6, -75)
-water = NodePath("../../NavigationRegion3D/CSGCombiner3D2/MushroomSwampEffect")
-
-[node name="Lillypad2" parent="Lillypads" unique_id=416926161 node_paths=PackedStringArray("water") instance=ExtResource("10_w47uh")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10, 0.6, -69)
-water = NodePath("../../NavigationRegion3D/CSGCombiner3D2/MushroomSwampEffect")
-
-[node name="Lillypad3" parent="Lillypads" unique_id=361613455 node_paths=PackedStringArray("water") instance=ExtResource("10_w47uh")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15, 0.6, -75)
-water = NodePath("../../NavigationRegion3D/CSGCombiner3D2/MushroomSwampEffect")
-
-[node name="Lillypad4" parent="Lillypads" unique_id=815488106 node_paths=PackedStringArray("water") instance=ExtResource("10_w47uh")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -17, 0.6, -85)
-water = NodePath("../../NavigationRegion3D/CSGCombiner3D2/MushroomSwampEffect")
-
-[node name="Lillypad5" parent="Lillypads" unique_id=1920360631 node_paths=PackedStringArray("water") instance=ExtResource("10_w47uh")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7, 0.6, -93)
-water = NodePath("../../NavigationRegion3D/CSGCombiner3D2/MushroomSwampEffect")
-
-[node name="Lillypad6" parent="Lillypads" unique_id=1579021184 node_paths=PackedStringArray("water") instance=ExtResource("10_w47uh")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -18, 0.6, -62)
-water = NodePath("../../NavigationRegion3D/CSGCombiner3D2/MushroomSwampEffect")
-
-[node name="Lillypad7" parent="Lillypads" unique_id=1719958190 node_paths=PackedStringArray("water") instance=ExtResource("10_w47uh")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 0.6, -62)
-water = NodePath("../../NavigationRegion3D/CSGCombiner3D2/MushroomSwampEffect")
-
-[node name="Lillypad8" parent="Lillypads" unique_id=1505743555 node_paths=PackedStringArray("water") instance=ExtResource("10_w47uh")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15, 0.6, -61)
-water = NodePath("../../NavigationRegion3D/CSGCombiner3D2/MushroomSwampEffect")
-
-[node name="Lillypad9" parent="Lillypads" unique_id=750860492 node_paths=PackedStringArray("water") instance=ExtResource("10_w47uh")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16, 0.6, -70)
-water = NodePath("../../NavigationRegion3D/CSGCombiner3D2/MushroomSwampEffect")
-
-[node name="Lillypad10" parent="Lillypads" unique_id=1104025519 node_paths=PackedStringArray("water") instance=ExtResource("10_w47uh")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7, 0.6, -70)
-water = NodePath("../../NavigationRegion3D/CSGCombiner3D2/MushroomSwampEffect")
-
-[node name="Lillypad11" parent="Lillypads" unique_id=1947081398 node_paths=PackedStringArray("water") instance=ExtResource("10_w47uh")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14, 0.6, -78)
-water = NodePath("../../NavigationRegion3D/CSGCombiner3D2/MushroomSwampEffect")
-
-[node name="Lillypad12" parent="Lillypads" unique_id=1953554856 node_paths=PackedStringArray("water") instance=ExtResource("10_w47uh")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 0.6, -81)
-water = NodePath("../../NavigationRegion3D/CSGCombiner3D2/MushroomSwampEffect")
-
-[node name="Lillypad13" parent="Lillypads" unique_id=1775958655 node_paths=PackedStringArray("water") instance=ExtResource("10_w47uh")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0.6, -85)
-water = NodePath("../../NavigationRegion3D/CSGCombiner3D2/MushroomSwampEffect")
-
-[node name="Lillypad14" parent="Lillypads" unique_id=1154177529 node_paths=PackedStringArray("water") instance=ExtResource("10_w47uh")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15, 0.6, -94)
-water = NodePath("../../NavigationRegion3D/CSGCombiner3D2/MushroomSwampEffect")
-
-[node name="Lillypad15" parent="Lillypads" unique_id=1877918593 node_paths=PackedStringArray("water") instance=ExtResource("10_w47uh")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 0.6, -91)
-water = NodePath("../../NavigationRegion3D/CSGCombiner3D2/MushroomSwampEffect")
-
-[node name="Lillypad16" parent="Lillypads" unique_id=1621307586 node_paths=PackedStringArray("water") instance=ExtResource("10_w47uh")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0.6, -96)
-water = NodePath("../../NavigationRegion3D/CSGCombiner3D2/MushroomSwampEffect")
-
-[node name="Lillypad17" parent="Lillypads" unique_id=604997585 node_paths=PackedStringArray("water") instance=ExtResource("10_w47uh")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -17, 0.6, -98)
-water = NodePath("../../NavigationRegion3D/CSGCombiner3D2/MushroomSwampEffect")
-
-[node name="Lillypad18" parent="Lillypads" unique_id=2147341478 node_paths=PackedStringArray("water") instance=ExtResource("10_w47uh")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -20, 0.6, -93)
-water = NodePath("../../NavigationRegion3D/CSGCombiner3D2/MushroomSwampEffect")
-
-[node name="Lillypad19" parent="Lillypads" unique_id=1956590250 node_paths=PackedStringArray("water") instance=ExtResource("10_w47uh")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 17, 0.6, -85)
-water = NodePath("../../NavigationRegion3D/CSGCombiner3D2/MushroomSwampEffect")
+[node name="LillypadSpawner" type="Node3D" parent="." unique_id=344359410 node_paths=PackedStringArray("water")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, -60)
+script = ExtResource("10_w47uh")
+water = NodePath("../NavigationRegion3D/CSGCombiner3D2/MushroomSwampEffect")
+spacing = 9.0

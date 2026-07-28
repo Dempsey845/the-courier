@@ -213,6 +213,26 @@ func apply_upward_force(force: float):
 	velocity.y = force
 	hit_jump.emit()
 
+func apply_forward_force(force: float) -> void:
+	var forward: Vector3 = model.global_basis.z
+	forward.y = 0.0
+	forward = forward.normalized()
+
+	velocity.x = forward.x * force
+	velocity.z = forward.z * force
+
+	knockback_timer = knockback_control_lock_time
+
+func apply_camera_forward_force(force: float) -> void:
+	var camera_forward: Vector3 = -camera.global_basis.z
+	camera_forward.y = 0.0
+	camera_forward = camera_forward.normalized()
+
+	velocity.x = camera_forward.x * force
+	velocity.z = camera_forward.z * force
+
+	knockback_timer = knockback_control_lock_time
+
 func apply_knockback(
 	source_position: Vector3,
 	force: float,
