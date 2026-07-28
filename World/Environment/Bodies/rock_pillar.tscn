@@ -1,0 +1,58 @@
+[gd_scene format=4 uid="uid://dxffamdf7vshk"]
+
+[ext_resource type="Script" uid="uid://bpfw0l68ileil" path="res://World/Areas/Swamp/buoyancy.gd" id="1_n5w13"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_fg6dr"]
+resource_name = "Rock"
+cull_mode = 2
+albedo_color = Color(0.51897776, 0.51897776, 0.51897776, 1)
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_gt4nd"]
+_surfaces = [{
+"aabb": AABB(-0.99701285, -0.30226558, -1.0084724, 2, 0.6366613, 2),
+"format": 34896613377,
+"index_count": 84,
+"index_data": PackedByteArray("AAAJAAIAAAAGAAkACgACAAkABgAKAAkACwAAAAIACwAGAAAACwACAAcAAgAMAAcACgAMAAIACAALAAcACAAHAAwABgANAAoABQALAAgABQAIAAwACwAEAAYABAALAAUABgAEAA0ADQABAAoADQAEAAEADgAKAAEADAAKAA4ABAAOAAEABQAMAAMADAAOAAMABAAFAA8ABAAPAA4ADwAFAAMADwADAA4A"),
+"lods": [0.48807326, PackedByteArray("AAAGAAIABgABAAIABgAEAAEAAAAEAAYAAAACAAcABAAFAAEABAAAAAUAAQADAAIAAgADAAcABQADAAEACAAAAAcABQAAAAgACAAHAAMABQAIAAMA"), 0.93547726, PackedByteArray("AAABAAIAAQADAAIAAAAEAAEABQACAAMABQAAAAIABQADAAEABAAAAAUABAAFAAEA")],
+"name": "Rock",
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 16,
+"vertex_data": PackedByteArray("/38AAAAAAACpx///sMkAAHmG4eULFAAAfSXZ7YHaAACB2gAAgdoAAH0lcxeB2gAAgdoAAH0lAAB9JdntfSUAAAAAAAD/fwAAgdrZ7X0lAAD//9nt/38AAGQg1xIRKwAAWAsw44mIAAD//wAA/38AAP9/2e3//wAA/38AAP//AAA=")
+}]
+blend_shape_mode = 0
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_aqouw"]
+resource_name = "RockPillar_Cylinder"
+_surfaces = [{
+"aabb": AABB(-0.99701285, -0.30226558, -1.0084724, 2, 0.6366613, 2),
+"attribute_data": PackedByteArray("lsiUqfjla1r54s6hlsj/UQtVz6e9V+BpbnL6nllw4GkT8z/libuU/CrLfqwfw11Srapdo62qglJvxZSpnJG8qJyR//8LVbjAlsjtj5bIMm5SrXySraoPvRhV2uStqhjn4+Ptj+PjpmuWyKZrWXAnjgtVJ44erpVsaMbOj///TsVg6pSpraqe4uDe//+la9T9rarzwiluz6c="),
+"format": 34896613399,
+"index_count": 84,
+"index_data": PackedByteArray("AAAYAAIAAAASABgAEgAZABgAEgAaABkAGgABABkAGgADAAEABAAbAAYABAAcABsAHAAHABsAHAAFAAcACwAdAA0ACwATAB0AEwAUAB0AEwAeABQAHgAMABQAHgAOAAwAHwAKACAAHwAhAAoACgAhABUAIQAfACIAIgAfAAgAIQAiAAkAIwAXABAAIwAPABcAFwAPACQADwAjABEAEQAjABYADwARACUA"),
+"lods": [0.48807326, PackedByteArray("AAASAAIAEgABAAIAEgADAAEABAAFAAYABQAHAAYACwATAA0AEwAUAA0AEwAOABQADgAMABQACgAJABUACAAJAAoAEQAQABYADwAQABEAEAAPABcA"), 0.93547726, PackedByteArray("AAABAAIAAAADAAEABAAFAAYABQAHAAYACAAJAAoACwAMAA0ACwAOAAwADwAQABEA")],
+"material": SubResource("StandardMaterial3D_fg6dr"),
+"name": "Rock",
+"primitive": 3,
+"uv_scale": Vector4(2.762822, 3.1220155, 0, 0),
+"vertex_count": 38,
+"vertex_data": PackedByteArray("/38AAAAAAfKpx///sMlf4XmG4eULFLbvgdoAAIHaJtCB2gAAgdodtH0lcxeB2pTSqcf//7DJyMR9JdntgdoowKnH//+wydStfSXZ7YHacKl5huHlCxRe4H0lcxeB2ijCeYbh5QsUKu19Jdntgdow1P9/AAAAAGfygdoAAIHadab/fwAAAAB95n0lcxeB2n2wgdoAAH0lqNkAAAAA/38qyX0l2e19JZX/fSXZ7X0lXNsAAAAA/3911oHaAAB9JQ/dgdrZ7X0lVf7//9nt/3+S5f//AAD/fwPI/3/Z7f//qsP/fwAA//+ew1gLMOOJiOjoZCDXEhErw9j//9nt/3/vzYHa2e19Jf3hWAsw44mIa8D/f9nt//84nWQg1xIRK1zl//8AAP9/D7//fwAA//8znJVTUkHyMDkF5KYOv2oF1M/3E8Q4bc91+QbMThKF+pfEh8vSYJPGWbzG7g2MpkfehaPERSwuew2yEUOB2O5CT0AhDkN2o0Q9m3029EYaP3idjVcftMDoHqpROpyHyBktVOo1UCe9MxsXQxw9QJLjpBkXGOvjPWgAs1c837QNxBdwF+BwgNjP5b8I4+iCbyTsgBM4vzqPKthw")
+}]
+blend_shape_mode = 0
+shadow_mesh = SubResource("ArrayMesh_gt4nd")
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_xrivr"]
+height = 0.54999995
+radius = 1.0
+
+[node name="RockPillar" type="StaticBody3D" unique_id=861066469]
+script = ExtResource("1_n5w13")
+metadata/_custom_type_script = "uid://bpfw0l68ileil"
+
+[node name="RockPillar" type="MeshInstance3D" parent="." unique_id=1760078892]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.2, 0)
+mesh = SubResource("ArrayMesh_aqouw")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1953117950]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.22499998, 0)
+shape = SubResource("CylinderShape3D_xrivr")

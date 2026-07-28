@@ -1,0 +1,19 @@
+[gd_scene format=3 uid="uid://erbexrpjuitl"]
+
+[ext_resource type="Script" uid="uid://bpfw0l68ileil" path="res://World/Areas/Swamp/buoyancy.gd" id="1_dtitq"]
+[ext_resource type="PackedScene" uid="uid://bfefkkjmqwfrk" path="res://World/Environment/DirtPillarTall.glb" id="2_7jsls"]
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_xrivr"]
+height = 2.073047
+radius = 0.32470703
+
+[node name="DirtPillarTall" type="StaticBody3D" unique_id=956359038]
+script = ExtResource("1_dtitq")
+metadata/_custom_type_script = "uid://bpfw0l68ileil"
+
+[node name="DirtPillarTall2" parent="." unique_id=1385201708 instance=ExtResource("2_7jsls")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.6, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=185287003]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.36347663, 0)
+shape = SubResource("CylinderShape3D_xrivr")

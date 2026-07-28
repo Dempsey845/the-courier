@@ -69,6 +69,10 @@ _data = {
 &"bounce": SubResource("Animation_lasly")
 }
 
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_lasly"]
+height = 0.31638184
+radius = 1.0
+
 [node name="Lillypad" type="StaticBody3D" unique_id=1060873832]
 script = ExtResource("1_i1ob8")
 
@@ -87,5 +91,5 @@ collision_mask = 4
 script = ExtResource("3_lasly")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="DetectArea" unique_id=165727926]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.03879214, 0)
-shape = SubResource("CylinderShape3D_xrivr")
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0786237, 0)
+shape = SubResource("CylinderShape3D_lasly")
