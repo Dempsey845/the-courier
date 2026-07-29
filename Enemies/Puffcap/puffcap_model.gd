@@ -1,9 +1,9 @@
 extends Node3D
 
-@onready var puffcap_spore_effect: CPUParticles3D = $PuffcapSporeEffect
+@onready var mushroom_gas_effect: CPUParticles3D = $MushroomGas
 @onready var puffcap_release_spore_effect: CPUParticles3D = $PuffcapReleaseSporeEffect
 
 func release_spores():
     puffcap_release_spore_effect.emitting = true
-    puffcap_spore_effect.emitting = true
-    await puffcap_spore_effect.finished
+    mushroom_gas_effect.emitting = true
+    await mushroom_gas_effect.finished

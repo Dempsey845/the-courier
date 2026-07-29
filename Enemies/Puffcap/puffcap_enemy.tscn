@@ -4,7 +4,6 @@
 [ext_resource type="PackedScene" uid="uid://drxioowfywum0" path="res://Enemies/Puffcap/puffcap_model.tscn" id="2_6bnxe"]
 [ext_resource type="Script" uid="uid://dil1bl1fubm5f" path="res://Enemies/Puffcap/puffcap_death_manager.gd" id="2_hk2o2"]
 [ext_resource type="PackedScene" uid="uid://c7m21t528ai6t" path="res://Enemies/Puffcap/spore_hitbox.tscn" id="3_6bnxe"]
-[ext_resource type="Script" uid="uid://cygk0ata5pn1f" path="res://Enemies/Puffcap/spore_hitbox.gd" id="4_1ggph"]
 
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_xrivr"]
 height = 0.31875
@@ -16,7 +15,7 @@ height = 1.6
 [node name="PuffcapEnemy" unique_id=1009641960 instance=ExtResource("1_2e3w6")]
 attack_cooldown = 10.0
 wait_after_attack = true
-wait_time = 15.0
+wait_time = 10.0
 scatter_on_hit = false
 remove_on_death = false
 
@@ -38,8 +37,6 @@ shape = SubResource("CapsuleShape3D_xrivr")
 [node name="SporeHitbox" parent="." index="5" unique_id=2137302131 instance=ExtResource("3_6bnxe")]
 collision_layer = 128
 collision_mask = 16
-script = ExtResource("4_1ggph")
-start_delay = 1.0
 
 [node name="DeathParticleSpawnPoint" type="Marker3D" parent="." index="6" unique_id=2087940404]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.1, 0)
