@@ -1,0 +1,16 @@
+[gd_scene format=3 uid="uid://c6632q5gwt8u5"]
+
+[ext_resource type="PackedScene" uid="uid://vfnjqckdhmqp" path="res://World/Areas/Ruins/TowerPlatform.glb" id="1_8v84w"]
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_xrivr"]
+height = 55.2625
+radius = 9.3
+
+[node name="TowerPlatformBody" type="StaticBody3D" unique_id=481848440]
+
+[node name="TowerPlatform2" parent="." unique_id=875188787 instance=ExtResource("1_8v84w")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -12.400001, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=617144434]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -27.39375, 0)
+shape = SubResource("CylinderShape3D_xrivr")

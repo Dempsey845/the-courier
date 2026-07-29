@@ -5,6 +5,7 @@
 [ext_resource type="Script" uid="uid://dh6q176dnlgbu" path="res://Systems/Dialogue/dialogue_manager.gd" id="2_eidgh"]
 [ext_resource type="Texture2D" uid="uid://4rlm2g5x5820" path="res://Enemies/Golem/golem_stomp_instruction.png" id="3_j8job"]
 [ext_resource type="PackedScene" uid="uid://c4qraqdt2f0hp" path="res://World/Areas/Swamp/mushroom_swamp_effect.tscn" id="3_oe8m4"]
+[ext_resource type="PackedScene" uid="uid://ceghomufoistc" path="res://World/Areas/Ruins/Bodies/ruins_start_platform.tscn" id="3_x0pyu"]
 [ext_resource type="PackedScene" uid="uid://du7tgosjqxyde" path="res://Enemies/Puffcap/puffcap_enemy.tscn" id="4_3f78f"]
 [ext_resource type="PackedScene" uid="uid://cyaqell3bfqr2" path="res://World/Environment/Bodies/dirt_pillar_wide.tscn" id="4_h2aik"]
 [ext_resource type="PackedScene" uid="uid://h2bnamg205h1" path="res://World/Areas/Swamp/tree_log_swamp.tscn" id="4_lo5ox"]
@@ -752,7 +753,7 @@ color_ramp = SubResource("Gradient_0wqet")
 seamless = true
 in_3d_space = true
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_o6lw0"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_x0pyu"]
 resource_local_to_scene = true
 render_priority = 0
 shader = SubResource("Shader_5gpxd")
@@ -799,9 +800,9 @@ shader_parameter/ripple_strength = 0.08
 shader_parameter/ripple_width = 0.2
 shader_parameter/ripple_frequency = 12.0
 
-[sub_resource type="PlaneMesh" id="PlaneMesh_x0pyu"]
+[sub_resource type="PlaneMesh" id="PlaneMesh_dg1ng"]
 resource_local_to_scene = true
-material = SubResource("ShaderMaterial_o6lw0")
+material = SubResource("ShaderMaterial_x0pyu")
 size = Vector2(45, 45)
 subdivide_width = 450
 subdivide_depth = 450
@@ -888,6 +889,12 @@ shadow_blur = 1.5
 [node name="NavigationRegion3D" type="NavigationRegion3D" parent="." unique_id=44607026]
 navigation_mesh = SubResource("NavigationMesh_13qdw")
 
+[node name="RuinsArea" type="Node3D" parent="NavigationRegion3D" unique_id=717047552]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -66.1, 0, -26.800001)
+
+[node name="RuinsStartPlatform" parent="NavigationRegion3D/RuinsArea" unique_id=1720105681 instance=ExtResource("3_x0pyu")]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 21.4, 0, -1.7484555e-07)
+
 [node name="PuffcapEnemy" parent="NavigationRegion3D" unique_id=685929452 node_paths=PackedStringArray("target") instance=ExtResource("4_3f78f")]
 transform = Transform3D(0.258819, 0, -0.9659258, 0, 1, 0, 0.9659258, 0, 0.258819, -1.9396076, 2.3999999, -77.86061)
 target = NodePath("../../Player")
@@ -920,7 +927,7 @@ transform = Transform3D(0.49609634, 0.060223475, -0.788083, -0.13249165, 0.90199
 
 [node name="MushroomSwampEffect" parent="NavigationRegion3D/SwampArea" unique_id=963275507 instance=ExtResource("3_oe8m4")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 24.600002, 0)
-mesh = SubResource("PlaneMesh_x0pyu")
+mesh = SubResource("PlaneMesh_dg1ng")
 
 [node name="DirtPillarWide" parent="NavigationRegion3D/SwampArea" unique_id=2051397190 node_paths=PackedStringArray("water") instance=ExtResource("4_h2aik")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15.6, 24, 16.099998)

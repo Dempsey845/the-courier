@@ -1,0 +1,15 @@
+[gd_scene format=3 uid="uid://du27bmd181d5m"]
+
+[ext_resource type="PackedScene" uid="uid://bfn0ueskmqx3q" path="res://World/Areas/Ruins/TowerPlatform2.glb" id="1_eungv"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_xrivr"]
+size = Vector3(4.9, 53.100002, 4.8)
+
+[node name="TowerPlatform2Body" type="StaticBody3D" unique_id=1842237128]
+
+[node name="TowerPlatform22" parent="." unique_id=922052275 instance=ExtResource("1_eungv")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -11.900001, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1616635303]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.049999952, -26.05, 0)
+shape = SubResource("BoxShape3D_xrivr")
