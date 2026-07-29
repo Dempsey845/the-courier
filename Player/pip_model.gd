@@ -9,6 +9,7 @@ var state_machine: AnimationNodeStateMachinePlayback
 var current_movement_blend: float = 0.0
 var is_landing: bool = false
 var is_dead: bool = false
+var just_taken_damage: bool = false
 
 
 func _ready() -> void:
@@ -20,13 +21,25 @@ func _ready() -> void:
 	player.landed.connect(_on_player_landed)
 
 	var player_hurtbox: Hurtbox = player.get_node("Hurtbox")
+	var player_health: Health = player.get_node("Health")
+	
 
 	player_hurtbox.hit.connect(func(hitbox: Hitbox):
+		if player_health.dead or !just_taken_damage:
+			return
+			
 		match hitbox.source:
 			"":
 				animation_tree.set("parameters/HitShot/request", AnimationNodeOneShot.ONE_SHOT_REQUEST_FIRE)
 			"puffcap":
 				animation_tree.set("parameters/CoughShot/request", AnimationNodeOneShot.ONE_SHOT_REQUEST_FIRE)
+	)
+
+	player_health.damage_taken.connect(func(_damage_amount, _new_health):
+		just_taken_damage = true
+		await get_tree().process_frame
+
+		just_taken_damage = false
 	)
 
 	var health: Health = player.get_node("Health")
