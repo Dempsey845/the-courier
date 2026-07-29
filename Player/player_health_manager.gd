@@ -16,6 +16,10 @@ func _ready() -> void:
         protection_ended.emit()
     )
 
+    health.death.connect(func():
+        get_parent().stop_moving()
+    )
+
 func _on_damage_taken(_damage_amount, _new_health):
     health.can_damage = false
     protection_timer.start()

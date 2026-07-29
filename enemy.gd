@@ -69,7 +69,6 @@ var scatter_position: Vector3
 
 var wait_remaining: float = 0.0
 
-
 func _ready() -> void:
 	navigation_agent.path_desired_distance = 1.2
 	navigation_agent.target_desired_distance = 1.2
@@ -85,6 +84,14 @@ func _ready() -> void:
 	health.death.connect(func():
 		die()
 	)
+
+	if target:
+		var target_health = target.get_node_or_null("Health")
+		if target_health:
+			target_health.death.connect(func():
+				target = null
+				enter_idle()
+			)
 
 
 func _physics_process(delta: float) -> void:

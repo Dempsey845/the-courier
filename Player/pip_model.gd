@@ -8,6 +8,7 @@ extends Node3D
 var state_machine: AnimationNodeStateMachinePlayback
 var current_movement_blend: float = 0.0
 var is_landing: bool = false
+var is_dead: bool = false
 
 
 func _ready() -> void:
@@ -26,6 +27,13 @@ func _ready() -> void:
 				animation_tree.set("parameters/HitShot/request", AnimationNodeOneShot.ONE_SHOT_REQUEST_FIRE)
 			"puffcap":
 				animation_tree.set("parameters/CoughShot/request", AnimationNodeOneShot.ONE_SHOT_REQUEST_FIRE)
+	)
+
+	var health: Health = player.get_node("Health")
+
+	health.death.connect(func():
+		travel_to("Death")
+		is_dead = true
 	)
 
 	travel_to("Movement")
@@ -98,6 +106,9 @@ func finish_landing() -> void:
 
 func travel_to(state_name: StringName) -> void:
 	if state_machine.get_current_node() == state_name:
+		return
+
+	if is_dead:
 		return
 
 	state_machine.travel(state_name)

@@ -40,6 +40,9 @@ var jump_buffer_timer: float = 0.0
 var player_in_dialogue: bool
 var dialogue_npc: NPC
 
+var can_move: bool = true
+var jump_enabled: bool = true
+
 func _ready() -> void:
 	await get_tree().process_frame
 
@@ -73,7 +76,10 @@ func _physics_process(delta: float) -> void:
 	if player_in_dialogue:
 		look_at_dialogue_npc(delta)
 	elif knockback_timer <= 0.0:
-		handle_movement(delta)
+		if can_move:
+			handle_movement(delta)
+		else:
+			decelerate_to_still(delta)
 
 	move_and_slide()
 
@@ -118,7 +124,7 @@ func update_jump_timers(delta: float) -> void:
 
 func handle_jump() -> void:
 	var has_buffered_jump: bool = jump_buffer_timer > 0.0
-	var can_jump: bool = coyote_timer > 0.0
+	var can_jump: bool = coyote_timer > 0.0 and jump_enabled
 
 	if has_buffered_jump and can_jump:
 		velocity.y = jump_velocity
@@ -128,6 +134,25 @@ func handle_jump() -> void:
 
 		jump.emit()
 
+func decelerate_to_still(delta: float) -> void:
+	var horizontal_velocity: Vector3 = Vector3(
+		velocity.x,
+		0.0,
+		velocity.z
+	)
+
+	var current_deceleration: float = (
+		deceleration if is_on_floor()
+		else air_acceleration
+	)
+
+	horizontal_velocity = horizontal_velocity.move_toward(
+		Vector3.ZERO,
+		current_deceleration * delta
+	)
+
+	velocity.x = horizontal_velocity.x
+	velocity.z = horizontal_velocity.z
 
 func handle_movement(delta: float) -> void:
 	var input: Vector2 = Input.get_vector(
@@ -263,3 +288,8 @@ func apply_knockback(
 
 func set_slow_movement(enabled: bool) -> void:
 	slow_movement_enabled = enabled
+
+func stop_moving() -> void:
+	can_move = false
+	jump_enabled = false
+	jump_buffer_timer = 0.0
