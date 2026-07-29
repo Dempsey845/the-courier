@@ -51,6 +51,11 @@ script = ExtResource("1_38rhs")
 metadata/_custom_type_script = "uid://deroukfpp2mia"
 
 [node name="LeafProjectile" type="MeshInstance3D" parent="." unique_id=192754685]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.168, 0, 0)
+mesh = SubResource("ArrayMesh_hpo26")
+
+[node name="LeafProjectile2" type="MeshInstance3D" parent="." unique_id=1818977298]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.187, 0, 0)
 mesh = SubResource("ArrayMesh_hpo26")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=146262429]

@@ -437,11 +437,8 @@ transitions = ["Idle", "Shoot", SubResource("AnimationNodeStateMachineTransition
 [node name="SnapperModel" type="Node3D" unique_id=1247999917]
 script = ExtResource("2_b6eq4")
 
-[node name="RightProjectilePoint" type="Marker3D" parent="." unique_id=1870606839]
-transform = Transform3D(0.85, 0, 0, 0, 0.85, 0, 0, 0, 0.85, -0.18678954, 0.67629355, 0.2)
-
-[node name="LeftProjectilePoint" type="Marker3D" parent="." unique_id=676902531]
-transform = Transform3D(0.85, 0, 0, 0, 0.85, 0, 0, 0, 0.85, 0.16773012, 0.6653129, 0.2)
+[node name="ProjectilePoint" type="Marker3D" parent="." unique_id=1870606839]
+transform = Transform3D(0.85, 0, 0, 0, 0.85, 0, 0, 0, 0.85, 0, 0.676, 0.2)
 
 [node name="Armature" type="Node3D" parent="." unique_id=2068293138]
 transform = Transform3D(0.85, 0, 0, 0, 0.85, 0, 0, 0, 0.85, 0, 0, 0)
@@ -459,7 +456,7 @@ bones/1/parent = 0
 bones/1/rest = Transform3D(0.99831915, 0.055583965, 0.016407263, -0.055880368, 0.99827164, 0.01819629, -0.015367482, -0.01908255, 0.99969983, 0, 0.5359771, 0)
 bones/1/enabled = true
 bones/1/position = Vector3(0, 0.5359771, 0)
-bones/1/rotation = Quaternion(-0.009878034, 0.0072472603, 0.044984963, 0.9989126)
+bones/1/rotation = Quaternion(-0.008272395, 0.009036914, -0.15097259, 0.98846203)
 bones/1/scale = Vector3(0.99999994, 1, 1)
 bones/2/name = "MidHead"
 bones/2/parent = 1
@@ -473,7 +470,7 @@ bones/3/parent = 2
 bones/3/rest = Transform3D(0.99897385, 0.042890973, -0.014546055, -0.044492457, 0.98940414, -0.13820235, 0.008464294, 0.13870773, 0.9902973, 1.6431924e-10, 0.23487668, -5.2264424e-09)
 bones/3/enabled = true
 bones/3/position = Vector3(1.6431924e-10, 0.23487668, -5.2264424e-09)
-bones/3/rotation = Quaternion(-0.027892781, 0.040496618, -0.008175387, 0.9987568)
+bones/3/rotation = Quaternion(0.07628578, 0.062152714, 0.0055779405, 0.9951314)
 bones/3/scale = Vector3(1, 1, 1.0000001)
 bones/4/name = "HeadTip"
 bones/4/parent = 3

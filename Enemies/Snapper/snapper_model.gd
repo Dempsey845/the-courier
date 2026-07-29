@@ -2,8 +2,7 @@ extends Node3D
 
 @export var shoot_projectile_time: float = 1.2
 
-@onready var right_projectile_point: Marker3D = $RightProjectilePoint
-@onready var left_projectile_point: Marker3D = $LeftProjectilePoint
+@onready var projectile_point: Marker3D = $ProjectilePoint
 @onready var animation_tree: AnimationTree = $AnimationTree
 
 var projectile_scene: PackedScene = preload("uid://cahnx3e1k3wqg")
@@ -48,5 +47,4 @@ func _spawn_projectile(spawn_point: Marker3D):
 
 func spawn_projectiles():
 	if !just_hit:
-		_spawn_projectile(right_projectile_point)
-		_spawn_projectile(left_projectile_point)
+		_spawn_projectile(projectile_point)
