@@ -20,6 +20,9 @@
 [ext_resource type="PackedScene" uid="uid://gitm3rb6yty2" path="res://World/Environment/Bodies/cloud_carrier.tscn" id="13_kcyjf"]
 [ext_resource type="Shader" uid="uid://c48cwtn0k43tk" path="res://World/water.gdshader" id="19_xw5lg"]
 [ext_resource type="Script" uid="uid://cw2emsu8y2j2l" path="res://World/water_plane.gd" id="20_0lysu"]
+[ext_resource type="PackedScene" uid="uid://cjtuq4am582u0" path="res://World/Environment/Bodies/tree.tscn" id="21_26uyv"]
+[ext_resource type="PackedScene" uid="uid://cnxvt8i3eaqk4" path="res://World/Environment/Foliage/grass.tscn" id="22_o6lw0"]
+[ext_resource type="PackedScene" uid="uid://c255fa1gv5vfc" path="res://World/Environment/Foliage/flower.tscn" id="23_x0pyu"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_62w18"]
 sky_top_color = Color(0.34509805, 0.4745098, 0.5411765, 1)
@@ -749,7 +752,7 @@ color_ramp = SubResource("Gradient_0wqet")
 seamless = true
 in_3d_space = true
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_0lysu"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_o6lw0"]
 resource_local_to_scene = true
 render_priority = 0
 shader = SubResource("Shader_5gpxd")
@@ -796,9 +799,9 @@ shader_parameter/ripple_strength = 0.08
 shader_parameter/ripple_width = 0.2
 shader_parameter/ripple_frequency = 12.0
 
-[sub_resource type="PlaneMesh" id="PlaneMesh_26uyv"]
+[sub_resource type="PlaneMesh" id="PlaneMesh_x0pyu"]
 resource_local_to_scene = true
-material = SubResource("ShaderMaterial_0lysu")
+material = SubResource("ShaderMaterial_o6lw0")
 size = Vector2(45, 45)
 subdivide_width = 450
 subdivide_depth = 450
@@ -917,7 +920,7 @@ transform = Transform3D(0.49609634, 0.060223475, -0.788083, -0.13249165, 0.90199
 
 [node name="MushroomSwampEffect" parent="NavigationRegion3D/SwampArea" unique_id=963275507 instance=ExtResource("3_oe8m4")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 24.600002, 0)
-mesh = SubResource("PlaneMesh_26uyv")
+mesh = SubResource("PlaneMesh_x0pyu")
 
 [node name="DirtPillarWide" parent="NavigationRegion3D/SwampArea" unique_id=2051397190 node_paths=PackedStringArray("water") instance=ExtResource("4_h2aik")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15.6, 24, 16.099998)
@@ -1087,3 +1090,12 @@ target = NodePath("../Player")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.5, -80.3)
 size = Vector3(45, 5, 45)
 material = SubResource("FogMaterial_xrivr")
+
+[node name="Tree" parent="." unique_id=1093363344 instance=ExtResource("21_26uyv")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 0, -42)
+
+[node name="Grass" parent="." unique_id=507273567 instance=ExtResource("22_o6lw0")]
+transform = Transform3D(0.7, 0, 0, 0, 0.7, 0, 0, 0, 0.7, -2, 0, -44)
+
+[node name="Flower" parent="." unique_id=676603140 instance=ExtResource("23_x0pyu")]
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, -4, 0, -44)

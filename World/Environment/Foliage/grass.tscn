@@ -1,0 +1,46 @@
+[gd_scene format=4 uid="uid://cnxvt8i3eaqk4"]
+
+[ext_resource type="PackedScene" uid="uid://cnsy0hs8aergs" path="res://World/Environment/Grass.glb" id="1_20sh0"]
+[ext_resource type="Material" uid="uid://dt077i7htfiy4" path="res://World/green_gradient.tres" id="2_51k78"]
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_0b7m0"]
+_surfaces = [{
+"aabb": AABB(-1.0142086, -0.061540622, -1.0447176, 2.6389604, 4.6436844, 2.8374233),
+"format": 34896613377,
+"index_count": 36,
+"index_data": PackedByteArray("AAABAAIAAQADAAIAAwAAAAIAAAADAAEABAAFAAYABQAHAAYABwAEAAYABAAHAAUACAAJAAoACQALAAoACwAIAAoACAALAAkA"),
+"name": "GrassGradient",
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 12,
+"vertex_data": PackedByteArray("2mvWAiFkAABunEsB268AAAqM/////wAAY0IAAFXHAAC8AAcDDHEAANsbcAIAAAAAAABr8E4OAAB+bcACs1gAAOuD6wCEDwAAZunrAMU2AAD//9rXDSoAANl26wAuZgAA")
+}]
+blend_shape_mode = 0
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_l7kka"]
+resource_name = "Grass_Cylinder_007"
+_surfaces = [{
+"aabb": AABB(-1.0142086, -0.061540622, -1.0447176, 2.6389604, 4.6436844, 2.8374233),
+"attribute_data": PackedByteArray("MeHZs0zwergx4f7/TPCPuP//j7ic9f7/DZSLuHemvbN3pv7/NqO9sw2UfKg2o5Skd6Z9vmC7fb70tv///3+ovw2Ut7kNlP7/z86DuzHh8b7Pzv7//3/Ppd2Qrq3/f7e5d6bfgi6234KTsn2+YLtJxs/O4b7Pzv7/YLv/fxnL/39fyuG+Gd6Du8/OubcZ3vKp"),
+"format": 34896613399,
+"index_count": 36,
+"index_data": PackedByteArray("AAABAAIAAwAEAAUABgAHAAgACQAKAAsADAANAA4ADwAQABEAEgATABQAFQAWABcAGAAZABoAGwAcAB0AHgAfACAAIQAiACMA"),
+"material": ExtResource("2_51k78"),
+"name": "GrassGradient",
+"primitive": 3,
+"uv_scale": Vector4(1.9038842, 2.0000002, 0, 0),
+"vertex_count": 36,
+"vertex_data": PackedByteArray("2mvWAiFkq/RunEsB26+r9AqM/////6v0bpxLAduv+f9jQgAAVcf5/wqM//////n/Y0IAAFXHRPLaa9YCIWRE8gqM/////0Ty2mvWAiFkUcRjQgAAVcdRxG6cSwHbr1HEvAAHAwxx+f3bG3ACAAD5/QAAa/BODvn92xtwAgAAiv1+bcACs1iK/QAAa/BODor9fm3AArNYD/e8AAcDDHEP9wAAa/BODg/3vAAHAwxxJsB+bcACs1gmwNsbcAIAACbA64PrAIQPv/1m6esAxTa//f//2tcNKr/9ZunrAMU2+/DZdusALmb78P//2tcNKvvw2XbrAC5mEPbrg+sAhA8Q9v//2tcNKhD264PrAIQPwMzZdusALmbAzGbp6wDFNsDMwsvcdcLL3HXCy9x1dI7DdnSOw3ZzjsN2rfkLt635C7et+Qu38SyBaPEsgWjxLIForTmvfq05r36tOa9+YA0hTmANIU5gDSFOho1ii4aNYouGjWKLrwswl68LMJevCzCXmADMlZgAzJWYAMyVlwSNFZcEjRWXBI0V9vaiP/b2oj/29qI/KklqWypJalsqSWpb")
+}]
+blend_shape_mode = 0
+shadow_mesh = SubResource("ArrayMesh_0b7m0")
+
+[node name="Grass" type="Node3D" unique_id=507273567]
+transform = Transform3D(0.7, 0, 0, 0, 0.7, 0, 0, 0, 0.7, 0, 0, 0)
+
+[node name="Grass2" parent="." unique_id=1537058150 instance=ExtResource("1_20sh0")]
+
+[node name="Grass" parent="Grass2" index="0" unique_id=1201594579]
+mesh = SubResource("ArrayMesh_l7kka")
+
+[editable path="Grass2"]

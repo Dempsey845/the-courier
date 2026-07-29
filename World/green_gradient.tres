@@ -1,0 +1,11 @@
+[gd_resource type="ShaderMaterial" format=3 uid="uid://dt077i7htfiy4"]
+
+[ext_resource type="Shader" uid="uid://ccpnef7870xq1" path="res://World/gradient.gdshader" id="1_ew8po"]
+
+[resource]
+render_priority = 0
+shader = ExtResource("1_ew8po")
+shader_parameter/bottom_color = Color(0.15, 0.35, 0.12, 1)
+shader_parameter/top_color = Color(0.55, 0.85, 0.35, 1)
+shader_parameter/gradient_bottom = -0.15
+shader_parameter/gradient_top = 2.57
