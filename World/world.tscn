@@ -1040,8 +1040,8 @@ size = Vector3(45, 1, 45)
 use_collision = true
 
 [node name="CSGBox3D" type="CSGBox3D" parent="NavigationRegion3D/CSGCombiner3D" unique_id=2127783126]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, -144.95001, -25.5)
-size = Vector3(49, 289.9, 49)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, -144.95001, -26.95)
+size = Vector3(49, 289.9, 51.9)
 material = SubResource("StandardMaterial3D_xrivr")
 
 [node name="CSGBox3D2" type="CSGBox3D" parent="NavigationRegion3D/CSGCombiner3D" unique_id=838519258]
@@ -1065,7 +1065,7 @@ size = Vector3(1, 2.6000001, 1)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.2, -45)
 
 [node name="GolemEnemy" parent="." unique_id=890047339 node_paths=PackedStringArray("target") instance=ExtResource("2_8a836")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -14)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -17, 0, -14)
 target = NodePath("../Player")
 
 [node name="SnapperEnemy" parent="." unique_id=1088901969 node_paths=PackedStringArray("target") instance=ExtResource("5_k8do8")]
