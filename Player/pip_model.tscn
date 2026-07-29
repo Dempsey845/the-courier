@@ -2,6 +2,26 @@
 
 [ext_resource type="PackedScene" uid="uid://dxf0kpitdmo6e" path="res://Player/Pip.fbx" id="1_exmgt"]
 [ext_resource type="Script" uid="uid://b8yhjt1d2w6gg" path="res://Player/pip_model.gd" id="2_qhan0"]
+[ext_resource type="Material" uid="uid://cm5aayp416qvp" path="res://Player/Health/shield_material.tres" id="3_hn526"]
+[ext_resource type="Script" uid="uid://dk4svxl2jobts" path="res://Player/protection_visual.gd" id="4_wisk6"]
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_e7dl7"]
+animation = &"Armature|Cough"
+
+[sub_resource type="AnimationNodeOneShot" id="AnimationNodeOneShot_5o0o3"]
+filter_enabled = true
+filters = ["Armature/Skeleton3D:arm.l", "Armature/Skeleton3D:arm_upper.l", "Armature/Skeleton3D:forearm.l", "Armature/Skeleton3D:hand.l"]
+fadein_time = 0.2
+fadeout_time = 0.2
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_cpqkc"]
+animation = &"Armature|Hit"
+
+[sub_resource type="AnimationNodeOneShot" id="AnimationNodeOneShot_3f4a3"]
+filter_enabled = true
+filters = ["Armature/Skeleton3D:head"]
+fadein_time = 0.1
+fadeout_time = 0.1
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_exmgt"]
 animation = &"Armature|Fall"
@@ -70,41 +90,82 @@ states/Movement/node = SubResource("AnimationNodeBlendSpace1D_e7dl7")
 states/Movement/position = Vector2(127, 100)
 states/Start/position = Vector2(-83, 100)
 transitions = ["Jump", "Land", SubResource("AnimationNodeStateMachineTransition_5pno0"), "Fall", "Land", SubResource("AnimationNodeStateMachineTransition_wxmnb"), "Jump", "Fall", SubResource("AnimationNodeStateMachineTransition_iu47l"), "Fall", "Jump", SubResource("AnimationNodeStateMachineTransition_ea3xq"), "Start", "Movement", SubResource("AnimationNodeStateMachineTransition_5o0o3"), "Land", "Movement", SubResource("AnimationNodeStateMachineTransition_cpqkc"), "Fall", "Movement", SubResource("AnimationNodeStateMachineTransition_3f4a3"), "Movement", "Fall", SubResource("AnimationNodeStateMachineTransition_cieq6"), "Jump", "Movement", SubResource("AnimationNodeStateMachineTransition_j4754"), "Movement", "Jump", SubResource("AnimationNodeStateMachineTransition_femmi")]
-graph_offset = Vector2(-220, -134)
+graph_offset = Vector2(-173, -126)
 
 [sub_resource type="AnimationNodeBlendTree" id="AnimationNodeBlendTree_xrivr"]
-graph_offset = Vector2(-80.2518, -33.75908)
-nodes/output/position = Vector2(860, 60)
+graph_offset = Vector2(7.701294, -20.317627)
+nodes/output/position = Vector2(1260, 300)
 nodes/MovementStateMachine/node = SubResource("AnimationNodeStateMachine_hv07e")
 nodes/MovementStateMachine/position = Vector2(40, 40)
-node_connections = [&"output", 0, &"MovementStateMachine"]
+nodes/CoughShot/node = SubResource("AnimationNodeOneShot_5o0o3")
+nodes/CoughShot/position = Vector2(400, 220)
+nodes/CoughAnimation/node = SubResource("AnimationNodeAnimation_e7dl7")
+nodes/CoughAnimation/position = Vector2(100, 360)
+nodes/HitShot/node = SubResource("AnimationNodeOneShot_3f4a3")
+nodes/HitShot/position = Vector2(940, 260)
+nodes/HitAnimation/node = SubResource("AnimationNodeAnimation_cpqkc")
+nodes/HitAnimation/position = Vector2(632.37, 480.13)
+node_connections = [&"output", 0, &"HitShot", &"CoughShot", 0, &"MovementStateMachine", &"CoughShot", 1, &"CoughAnimation", &"HitShot", 0, &"CoughShot", &"HitShot", 1, &"HitAnimation"]
 
 [node name="PipModel" unique_id=1483251585 instance=ExtResource("1_exmgt")]
 script = ExtResource("2_qhan0")
-minimum_walk_speed = 5.0
 
-[node name="Skeleton3D" parent="Armature" parent_id_path=PackedInt32Array(1326404255) index="0" unique_id=1659585558]
-bones/0/position = Vector3(0, 0, 0.006892169)
-bones/0/rotation = Quaternion(0.7057451, -0.043860666, 0.043860674, 0.7057452)
-bones/1/rotation = Quaternion(-1.1314973e-07, -5.981034e-08, -0.8112538, 0.58469415)
-bones/2/rotation = Quaternion(-0.016688274, 0.0011003161, -0.06577605, 0.99769425)
-bones/3/rotation = Quaternion(0.029855099, 0.00054523867, -0.17444456, 0.9842141)
-bones/6/rotation = Quaternion(0, 0, 0, 1)
-bones/7/rotation = Quaternion(-0.10801733, 0.014675415, -0.12472296, 0.98618513)
-bones/10/rotation = Quaternion(-0.016524661, -0.0025778657, 0.15410998, 0.9879122)
-bones/11/rotation = Quaternion(0.029801454, -0.0005755835, 0.18415238, 0.98244566)
-bones/14/position = Vector3(0, 0, 0.006892169)
-bones/14/rotation = Quaternion(-0.32864597, 0.3880965, -0.5561692, 0.6573043)
-bones/15/rotation = Quaternion(-0.15618445, 0.0101035675, -0.09878876, 0.9827234)
-bones/16/rotation = Quaternion(-0.09460931, -8.008207e-08, 0.017061861, 0.99536824)
-bones/16/scale = Vector3(1, 1, 0.99999994)
-bones/19/position = Vector3(0, 0, 0.006892169)
-bones/19/rotation = Quaternion(-0.32864597, -0.3880965, 0.5561692, 0.6573043)
-bones/20/rotation = Quaternion(-0.15618445, -0.0101035675, 0.09878876, 0.9827234)
-bones/21/rotation = Quaternion(-0.09460931, 8.008207e-08, -0.017061861, 0.99536824)
-bones/21/scale = Vector3(1, 1, 0.99999994)
+[node name="Skeleton3D" parent="Armature" parent_id_path=PackedInt32Array(440434288) index="0" unique_id=1904976966]
+bones/0/rotation = Quaternion(0.70549303, 0.048134007, -0.048130397, 0.70544046)
+bones/1/rotation = Quaternion(9.516366e-06, 4.099462e-06, -0.8112242, 0.5847353)
+bones/2/position = Vector3(2.8838668e-10, 0.0020723885, -1.0812953e-16)
+bones/2/rotation = Quaternion(-0.016752597, 0.0012685439, -0.06575622, 0.9976944)
+bones/2/scale = Vector3(1, 1, 1)
+bones/3/position = Vector3(4.3838676e-11, 0.0014552355, 1.3754577e-11)
+bones/3/rotation = Quaternion(0.029894287, 0.00057375623, -0.17464061, 0.98417825)
+bones/3/scale = Vector3(1.0000001, 1, 0.99999994)
+bones/4/position = Vector3(4.5680495e-10, 0.001789615, -1.7652131e-11)
+bones/4/rotation = Quaternion(-0.013596629, -0.00025290516, -0.018594116, 0.99973464)
+bones/6/rotation = Quaternion(-7.736923e-12, 0, 0, 1)
+bones/7/rotation = Quaternion(-0.107924804, 0.014657805, -0.12472477, 0.98619527)
+bones/9/rotation = Quaternion(-1.1142625e-07, 6.296289e-08, 0.79452187, 0.60723555)
+bones/10/position = Vector3(-2.8838668e-10, 0.0020723885, -1.0812953e-16)
+bones/10/rotation = Quaternion(-0.016453562, -0.0024914443, 0.15401277, 0.98792875)
+bones/10/scale = Vector3(1, 1, 1)
+bones/11/position = Vector3(-4.3838676e-11, 0.0014552355, 1.3754577e-11)
+bones/11/rotation = Quaternion(0.029805066, -0.00055678654, 0.18431765, 0.9824146)
+bones/11/scale = Vector3(1.0000001, 1, 0.99999994)
+bones/12/position = Vector3(-4.5680495e-10, 0.001789615, -1.7652131e-11)
+bones/12/rotation = Quaternion(-0.013596631, 0.00025290548, 0.018594114, 0.99973464)
+bones/14/rotation = Quaternion(-0.3286605, 0.388084, -0.556178, 0.65729684)
+bones/15/position = Vector3(9.458485e-11, 0.0029883252, -1.3614111e-10)
+bones/15/rotation = Quaternion(-0.15618819, 0.010048208, -0.098941594, 0.982708)
+bones/16/position = Vector3(1.5057068e-11, 0.0012365765, 3.4642114e-10)
+bones/16/rotation = Quaternion(-0.09460931, -8.0083176e-08, 0.017061861, 0.99536824)
+bones/16/scale = Vector3(1.0000001, 1.0000001, 0.99999994)
+bones/17/position = Vector3(-4.986289e-11, 0.0017214572, -1.8755544e-10)
+bones/17/rotation = Quaternion(0.0017958808, 1.8439247e-08, -0.7071045, 0.70710677)
+bones/17/scale = Vector3(0.99999994, 1, 1)
+bones/19/rotation = Quaternion(-0.32858464, -0.38814852, 0.5561335, 0.6573344)
+bones/20/position = Vector3(-9.458485e-11, 0.0029883252, -1.3614111e-10)
+bones/20/rotation = Quaternion(-0.15616617, -0.010373747, 0.09804282, 0.98279816)
+bones/21/position = Vector3(-1.5057068e-11, 0.0012365765, 3.4642114e-10)
+bones/21/rotation = Quaternion(-0.09460931, 8.008071e-08, -0.017061861, 0.99536824)
+bones/21/scale = Vector3(1.0000001, 1.0000001, 0.99999994)
+bones/22/position = Vector3(4.986289e-11, 0.0017214572, -1.8755544e-10)
+bones/22/rotation = Quaternion(0.0017958808, -1.8439247e-08, 0.7071045, 0.70710677)
+bones/22/scale = Vector3(0.99999994, 1, 1)
+
+[node name="Sphere" parent="Armature/Skeleton3D" index="0" unique_id=1225627917 node_paths=PackedStringArray("player_model")]
+material_overlay = ExtResource("3_hn526")
+script = ExtResource("4_wisk6")
+player_model = NodePath("../../..")
+
+[node name="Sphere_001" parent="Armature/Skeleton3D" index="1" unique_id=1564201523]
+material_overlay = ExtResource("3_hn526")
 
 [node name="AnimationTree" type="AnimationTree" parent="." index="2" unique_id=1279154137]
 tree_root = SubResource("AnimationNodeBlendTree_xrivr")
 anim_player = NodePath("../AnimationPlayer")
-parameters/MovementStateMachine/Movement/blend_position = 0.0
+parameters/MovementStateMachine/Movement/blend_position = 0.0010384321
+parameters/CoughShot/active = false
+parameters/CoughShot/internal_active = false
+parameters/CoughShot/request = 0
+parameters/HitShot/active = false
+parameters/HitShot/internal_active = false
+parameters/HitShot/request = 0

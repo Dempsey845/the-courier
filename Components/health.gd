@@ -17,6 +17,7 @@ var current_health: int:
 		health_changed.emit()
 
 var dead: bool
+var can_damage: bool = true
 
 func _ready() -> void:
 	_current_health = max_health
@@ -26,6 +27,9 @@ func clamp_health():
 
 func take_damage(damage: int):
 	if dead:
+		return
+
+	if !can_damage:
 		return
 
 	current_health -= damage

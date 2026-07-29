@@ -18,6 +18,16 @@ func _ready() -> void:
 	player.jump.connect(_on_player_jump)
 	player.landed.connect(_on_player_landed)
 
+	var player_hurtbox: Hurtbox = player.get_node("Hurtbox")
+
+	player_hurtbox.hit.connect(func(hitbox: Hitbox):
+		match hitbox.source:
+			"":
+				animation_tree.set("parameters/HitShot/request", AnimationNodeOneShot.ONE_SHOT_REQUEST_FIRE)
+			"puffcap":
+				animation_tree.set("parameters/CoughShot/request", AnimationNodeOneShot.ONE_SHOT_REQUEST_FIRE)
+	)
+
 	travel_to("Movement")
 
 

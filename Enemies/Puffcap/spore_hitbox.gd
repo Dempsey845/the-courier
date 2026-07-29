@@ -1,7 +1,8 @@
 class_name SporeHitbox
 extends Hitbox
 
-@export var start_delay: float = 1.0
+@export var start_delay: float = 0.5
+
 
 @onready var spore_controller: SporeController = $SporeController
 

@@ -24,7 +24,6 @@ func _on_area_entered(area: Area3D) -> void:
 		just_hit = true
 		hit_sequence += 1
 
-		hit.emit(hitbox)
 		clear_just_hit_next_frame(hit_sequence)
 
 
@@ -33,3 +32,6 @@ func clear_just_hit_next_frame(sequence: int) -> void:
 
 	if sequence == hit_sequence:
 		just_hit = false
+
+func emit_hit(hitbox: Hitbox):
+	hit.emit(hitbox)

@@ -5,6 +5,7 @@ signal hit_hurtbox(hurtbox: Hurtbox)
 
 @export var damage: int = 1
 @export var active: bool = true
+@export var source: String = ""
 
 func register_hit(hurtbox: Hurtbox):
 	if not active:
@@ -12,6 +13,7 @@ func register_hit(hurtbox: Hurtbox):
 
 	hurtbox.health.take_damage(damage)
 	hit_hurtbox.emit(hurtbox)
+	hurtbox.emit_hit(self)
 
 	return true
 
