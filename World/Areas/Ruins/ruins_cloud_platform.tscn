@@ -1,0 +1,36 @@
+[gd_scene format=3 uid="uid://5kka40lmrt1x"]
+
+[ext_resource type="PackedScene" uid="uid://bhvubptd42mn6" path="res://World/large_cloud_platform.tscn" id="1_8w2x1"]
+[ext_resource type="PackedScene" uid="uid://cslpdd72ihokk" path="res://World/Areas/Ruins/Bodies/ruins_body.tscn" id="2_twfp8"]
+
+[node name="RuinsCloudPlatform" type="Node3D" unique_id=1861670185]
+
+[node name="LargeCloudPlatform" parent="." unique_id=1538887151 instance=ExtResource("1_8w2x1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -5.1000004, 0)
+
+[node name="LargeCloudPlatform3" parent="." unique_id=733747666 instance=ExtResource("1_8w2x1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15, -5.1000004, 0)
+
+[node name="LargeCloudPlatform2" parent="." unique_id=1958585620 instance=ExtResource("1_8w2x1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13, -5.1000004, 0)
+
+[node name="LargeCloudPlatform4" parent="." unique_id=747141229 instance=ExtResource("1_8w2x1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -5.1000004, -13)
+
+[node name="LargeCloudPlatform5" parent="." unique_id=779875290 instance=ExtResource("1_8w2x1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15, -5.1000004, -13)
+
+[node name="LargeCloudPlatform6" parent="." unique_id=1684412876 instance=ExtResource("1_8w2x1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13, -5.1000004, -13)
+
+[node name="LargeCloudPlatform7" parent="." unique_id=276944086 instance=ExtResource("1_8w2x1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -5.1000004, 14)
+
+[node name="LargeCloudPlatform8" parent="." unique_id=1979646316 instance=ExtResource("1_8w2x1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15, -5.1000004, 14)
+
+[node name="LargeCloudPlatform9" parent="." unique_id=234214171 instance=ExtResource("1_8w2x1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13, -5.7000003, 14)
+
+[node name="RuinsBody" parent="." unique_id=2026512571 instance=ExtResource("2_twfp8")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 0, -1)

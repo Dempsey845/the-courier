@@ -7,10 +7,12 @@
 [ext_resource type="PackedScene" uid="uid://c4qraqdt2f0hp" path="res://World/Areas/Swamp/mushroom_swamp_effect.tscn" id="3_oe8m4"]
 [ext_resource type="PackedScene" uid="uid://ceghomufoistc" path="res://World/Areas/Ruins/Bodies/ruins_start_platform.tscn" id="3_x0pyu"]
 [ext_resource type="PackedScene" uid="uid://du7tgosjqxyde" path="res://Enemies/Puffcap/puffcap_enemy.tscn" id="4_3f78f"]
+[ext_resource type="PackedScene" uid="uid://dem10o88fea0" path="res://World/cloud_platform.tscn" id="4_dg1ng"]
 [ext_resource type="PackedScene" uid="uid://cyaqell3bfqr2" path="res://World/Environment/Bodies/dirt_pillar_wide.tscn" id="4_h2aik"]
 [ext_resource type="PackedScene" uid="uid://h2bnamg205h1" path="res://World/Areas/Swamp/tree_log_swamp.tscn" id="4_lo5ox"]
 [ext_resource type="PackedScene" uid="uid://cnm8sgtocpwuv" path="res://World/Environment/Bodies/decorated_dirt_pillar_wide.tscn" id="5_0wqet"]
 [ext_resource type="PackedScene" uid="uid://cniwu7eyr0832" path="res://Enemies/Snapper/snapper_enemy.tscn" id="5_k8do8"]
+[ext_resource type="PackedScene" uid="uid://5kka40lmrt1x" path="res://World/Areas/Ruins/ruins_cloud_platform.tscn" id="5_yfuda"]
 [ext_resource type="PackedScene" uid="uid://dxffamdf7vshk" path="res://World/Environment/Bodies/rock_pillar.tscn" id="6_awrha"]
 [ext_resource type="PackedScene" uid="uid://erbexrpjuitl" path="res://World/Environment/Bodies/dirt_pillar_tall.tscn" id="7_f23eu"]
 [ext_resource type="PackedScene" uid="uid://b4yyn7ah5o6it" path="res://Systems/Dialogue/dialogue_ui.tscn" id="7_yf0ba"]
@@ -753,7 +755,7 @@ color_ramp = SubResource("Gradient_0wqet")
 seamless = true
 in_3d_space = true
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_x0pyu"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_yfuda"]
 resource_local_to_scene = true
 render_priority = 0
 shader = SubResource("Shader_5gpxd")
@@ -800,9 +802,9 @@ shader_parameter/ripple_strength = 0.08
 shader_parameter/ripple_width = 0.2
 shader_parameter/ripple_frequency = 12.0
 
-[sub_resource type="PlaneMesh" id="PlaneMesh_dg1ng"]
+[sub_resource type="PlaneMesh" id="PlaneMesh_i8dl0"]
 resource_local_to_scene = true
-material = SubResource("ShaderMaterial_x0pyu")
+material = SubResource("ShaderMaterial_yfuda")
 size = Vector2(45, 45)
 subdivide_width = 450
 subdivide_depth = 450
@@ -895,6 +897,69 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -66.1, 0, -26.800001)
 [node name="RuinsStartPlatform" parent="NavigationRegion3D/RuinsArea" unique_id=1720105681 instance=ExtResource("3_x0pyu")]
 transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 21.4, 0, -1.7484555e-07)
 
+[node name="CloudPlatform" parent="NavigationRegion3D/RuinsArea" unique_id=1538887151 instance=ExtResource("4_dg1ng")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.1000001, -1.7, 0)
+
+[node name="CloudPlatform2" parent="NavigationRegion3D/RuinsArea" unique_id=885557954 instance=ExtResource("4_dg1ng")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.7, 0.5, 0)
+
+[node name="CloudPlatform3" parent="NavigationRegion3D/RuinsArea" unique_id=996379944 instance=ExtResource("4_dg1ng")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.7, 2.5, 8)
+
+[node name="CloudPlatform4" parent="NavigationRegion3D/RuinsArea" unique_id=2120306103 instance=ExtResource("4_dg1ng")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -13.7, 4.5, 11.1)
+
+[node name="CloudPlatform5" parent="NavigationRegion3D/RuinsArea" unique_id=516325193 instance=ExtResource("4_dg1ng")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -16.7, 5.7, 3.4)
+
+[node name="CloudPlatform6" parent="NavigationRegion3D/RuinsArea" unique_id=2115100694 instance=ExtResource("4_dg1ng")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -25, 0.6999998, 1)
+
+[node name="CloudPlatform12" parent="NavigationRegion3D/RuinsArea" unique_id=1756551056 instance=ExtResource("4_dg1ng")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -60.9, 0.6999998, 1)
+
+[node name="CloudPlatform13" parent="NavigationRegion3D/RuinsArea" unique_id=122200808 node_paths=PackedStringArray("end_point") instance=ExtResource("4_dg1ng")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -70, 0.6999998, 1)
+movement_enabled = true
+end_point = NodePath("Marker3D")
+movement_duration = 5.0
+
+[node name="Marker3D" type="Marker3D" parent="NavigationRegion3D/RuinsArea/CloudPlatform13" unique_id=1476622648]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7, 10, 0)
+
+[node name="CloudPlatform11" parent="NavigationRegion3D/RuinsArea" unique_id=621501538 node_paths=PackedStringArray("end_point") instance=ExtResource("4_dg1ng")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -32.9, 0.6999998, 1)
+forward_force = 7.5
+movement_enabled = true
+end_point = NodePath("Marker3D")
+movement_duration = 4.0
+
+[node name="Marker3D" type="Marker3D" parent="NavigationRegion3D/RuinsArea/CloudPlatform11" unique_id=494214260]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -22, 0, 0)
+
+[node name="CloudPlatform7" parent="NavigationRegion3D/RuinsArea" unique_id=712411608 instance=ExtResource("4_dg1ng")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -25, 0.6999998, 9.5)
+
+[node name="CloudPlatform8" parent="NavigationRegion3D/RuinsArea" unique_id=280152736 instance=ExtResource("4_dg1ng")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -29, 0.6999998, 17)
+
+[node name="CloudPlatform9" parent="NavigationRegion3D/RuinsArea" unique_id=746594746 instance=ExtResource("4_dg1ng")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -23, 0.6999998, 23)
+
+[node name="CloudPlatform10" parent="NavigationRegion3D/RuinsArea" unique_id=1417805417 node_paths=PackedStringArray("end_point") instance=ExtResource("4_dg1ng")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15, 0.6999998, 23)
+upward_force = 30.0
+movement_enabled = true
+end_point = NodePath("Marker3D")
+movement_duration = 4.0
+
+[node name="Marker3D" type="Marker3D" parent="NavigationRegion3D/RuinsArea/CloudPlatform10" unique_id=468622529]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -81.1, 11.7, -7.800001)
+top_level = true
+
+[node name="RuinsCloudPlatform" parent="NavigationRegion3D/RuinsArea" unique_id=1861670185 instance=ExtResource("5_yfuda")]
+transform = Transform3D(2.9802322e-08, 0, 1, 0, 1, 0, -1, 0, 2.9802322e-08, -99.21487, 6, 1.7871828)
+
 [node name="PuffcapEnemy" parent="NavigationRegion3D" unique_id=685929452 node_paths=PackedStringArray("target") instance=ExtResource("4_3f78f")]
 transform = Transform3D(0.258819, 0, -0.9659258, 0, 1, 0, 0.9659258, 0, 0.258819, -1.9396076, 2.3999999, -77.86061)
 target = NodePath("../../Player")
@@ -927,7 +992,7 @@ transform = Transform3D(0.49609634, 0.060223475, -0.788083, -0.13249165, 0.90199
 
 [node name="MushroomSwampEffect" parent="NavigationRegion3D/SwampArea" unique_id=963275507 instance=ExtResource("3_oe8m4")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 24.600002, 0)
-mesh = SubResource("PlaneMesh_dg1ng")
+mesh = SubResource("PlaneMesh_i8dl0")
 
 [node name="DirtPillarWide" parent="NavigationRegion3D/SwampArea" unique_id=2051397190 node_paths=PackedStringArray("water") instance=ExtResource("4_h2aik")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15.6, 24, 16.099998)
@@ -1072,7 +1137,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.3710585, 1.3000001, -38.4)
 size = Vector3(1, 2.6000001, 1)
 
 [node name="Player" parent="." unique_id=67220391 instance=ExtResource("1_62w18")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.2, -45)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -51.3, 0.2, -27.8)
 
 [node name="GolemEnemy" parent="." unique_id=890047339 node_paths=PackedStringArray("target") instance=ExtResource("2_8a836")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -17, 0, -14)
