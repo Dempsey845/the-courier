@@ -43,6 +43,8 @@ var dialogue_npc: NPC
 var can_move: bool = true
 var jump_enabled: bool = true
 
+var launched_by_force: bool = false
+
 func _ready() -> void:
 	await get_tree().process_frame
 
@@ -70,6 +72,9 @@ func _physics_process(delta: float) -> void:
 		jump_buffer_timer = 0.0
 
 	apply_gravity(delta)
+
+	if launched_by_force and velocity.y <= 0.0:
+		launched_by_force = false
 
 	knockback_timer = maxf(knockback_timer - delta, 0.0)
 
@@ -112,8 +117,10 @@ func update_jump_timers(delta: float) -> void:
 	else:
 		coyote_timer = maxf(coyote_timer - delta, 0.0)
 
-	# Remember a jump pressed shortly before landing.
-	if Input.is_action_just_pressed("jump"):
+	if launched_by_force:
+		jump_buffer_timer = 0.0
+	elif Input.is_action_just_pressed("jump"):
+		# Remember a jump pressed shortly before landing.
 		jump_buffer_timer = jump_buffer_time
 	else:
 		jump_buffer_timer = maxf(
@@ -225,6 +232,10 @@ func handle_movement(delta: float) -> void:
 
 
 func apply_gravity(delta: float) -> void:
+	if launched_by_force:
+		velocity.y -= gravity * delta
+		return
+
 	if is_on_floor():
 		return
 
@@ -242,8 +253,12 @@ func apply_gravity(delta: float) -> void:
 
 	velocity.y -= gravity * gravity_multiplier * delta
 
-func apply_upward_force(force: float):
+func apply_upward_force(force: float) -> void:
 	velocity.y = force
+	coyote_timer = 0.0
+	jump_buffer_timer = 0.0
+	launched_by_force = true
+
 	hit_jump.emit()
 
 func apply_forward_force(force: float) -> void:

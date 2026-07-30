@@ -1,6 +1,6 @@
 extends Area3D
 
-@export var upward_force: float = 20.0
+@export var upward_force: float = 12.0
 @export var forward_force: float = 0.0
 
 @export_category("Movement")

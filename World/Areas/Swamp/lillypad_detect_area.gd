@@ -2,7 +2,7 @@ extends Area3D
 
 @onready var animation_player: AnimationPlayer = $"../AnimationPlayer"
 
-@export var upforce: float = 22.0
+@export var upforce: float = 12.0
 @export var forward_force: float = 12.0
 
 var force: float = 35.0

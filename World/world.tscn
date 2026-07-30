@@ -948,7 +948,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -23, 0.6999998, 23)
 
 [node name="CloudPlatform10" parent="NavigationRegion3D/RuinsArea" unique_id=1417805417 node_paths=PackedStringArray("end_point") instance=ExtResource("4_dg1ng")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15, 0.6999998, 23)
-upward_force = 30.0
+upward_force = 18.0
 movement_enabled = true
 end_point = NodePath("Marker3D")
 movement_duration = 4.0

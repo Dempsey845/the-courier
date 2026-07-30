@@ -60,7 +60,6 @@ autoplay = &"move"
 transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 0, 4.2, -3)
 
 [node name="DetectArea" parent="Lillypad" index="3" unique_id=2125594080]
-upforce = 30.0
-forward_force = 18.0
+forward_force = 15.0
 
 [editable path="Lillypad"]

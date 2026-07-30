@@ -74,6 +74,8 @@ height = 0.31638184
 radius = 1.0
 
 [node name="Lillypad" type="StaticBody3D" unique_id=1060873832]
+collision_layer = 0
+collision_mask = 0
 script = ExtResource("1_i1ob8")
 
 [node name="Lillypad" parent="." unique_id=1109776565 instance=ExtResource("2_lasly")]

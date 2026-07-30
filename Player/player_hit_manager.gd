@@ -1,7 +1,7 @@
 extends Node
 
 @export var player: Player
-@export var upward_force: float = 22.0
+@export var upward_force: float = 12.0
 
 @onready var feet_hitbox: Hitbox = $"../FeetHitbox"
 

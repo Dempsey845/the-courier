@@ -7,6 +7,7 @@ height = 2.4076173
 radius = 6.2000003
 
 [node name="LargeCloudPlatform" unique_id=1538887151 instance=ExtResource("1_ob7jl")]
+upward_force = 10.0
 
 [node name="MeshInstance3D" parent="." index="0" unique_id=2050255227]
 transform = Transform3D(13, 0, 0, 0, 13, 0, 0, 0, 13, 0, 0, 0)
