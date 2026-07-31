@@ -8,6 +8,26 @@
 [sub_resource type="SphereShape3D" id="SphereShape3D_xrivr"]
 radius = 2.0
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_njqwk"]
+transparency = 1
+shading_mode = 0
+vertex_color_use_as_albedo = true
+texture_filter = 0
+
+[sub_resource type="SphereMesh" id="SphereMesh_b1lj4"]
+material = SubResource("StandardMaterial3D_njqwk")
+radial_segments = 10
+rings = 6
+
+[sub_resource type="Curve" id="Curve_wi6ju"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.24950886, 1), 0.0, 0.0, 0, 0, Vector2(0.7662083, 1), 0.0, 0.0, 0, 0, Vector2(0.9941062, 0.009478569), 0.0, 0.0, 0, 0]
+point_count = 4
+
+[sub_resource type="Gradient" id="Gradient_7f2x3"]
+interpolation_mode = 1
+offsets = PackedFloat32Array(0, 0.54244304)
+colors = PackedColorArray(1, 0.60784316, 0, 1, 1, 1, 0, 1)
+
 [node name="WispNPC" unique_id=870401761 instance=ExtResource("1_b5eij")]
 
 [node name="DialogueController" parent="." index="0" unique_id=1124534431]
@@ -18,3 +38,12 @@ icon_texture = ExtResource("3_7nt0i")
 shape = SubResource("SphereShape3D_xrivr")
 
 [node name="WispModel" parent="." index="2" unique_id=76251156 instance=ExtResource("2_7k7ye")]
+
+[node name="CPUParticles3D" type="CPUParticles3D" parent="." index="3" unique_id=1842883679]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.7, 1.2, 0.2)
+mesh = SubResource("SphereMesh_b1lj4")
+gravity = Vector3(0.1, 0.1, 0)
+scale_amount_min = 0.1
+scale_amount_max = 0.2
+scale_amount_curve = SubResource("Curve_wi6ju")
+color_initial_ramp = SubResource("Gradient_7f2x3")
