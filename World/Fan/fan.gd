@@ -10,7 +10,6 @@ func _ready() -> void:
 	fan_zone.body_entered.connect(_on_body_entered)
 	fan_zone.body_exited.connect(_on_body_exited)
 	
-	fan_particles.angle_min = rotation_degrees.z
 
 
 func _physics_process(_delta: float) -> void:

@@ -2,26 +2,26 @@
 
 [ext_resource type="PackedScene" uid="uid://c1l72cdkngx88" path="res://World/Fan/fan_visual.tscn" id="1_7clj7"]
 [ext_resource type="Script" uid="uid://22y0tidpwmva" path="res://World/Fan/fan.gd" id="1_w0l84"]
-[ext_resource type="Texture2D" uid="uid://bijutrh53nufy" path="res://World/Fan/wind_particle.png" id="2_cs3ms"]
 
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_gei8a"]
 height = 0.3731079
 radius = 1.4038086
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_70f2h"]
+[sub_resource type="Curve" id="Curve_r8t5o"]
+_data = [Vector2(0.07734806, 1), 0.0, 0.0, 0, 0, Vector2(0.53867406, 0.99085367), 0.0, 0.0, 0, 0, Vector2(1, 0.6128049), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_lt2gv"]
 transparency = 1
 shading_mode = 0
 vertex_color_use_as_albedo = true
-albedo_texture = ExtResource("2_cs3ms")
-billboard_mode = 3
-billboard_keep_scale = true
-particles_anim_h_frames = 1
-particles_anim_v_frames = 1
-particles_anim_loop = false
 
-[sub_resource type="QuadMesh" id="QuadMesh_ec6s3"]
-material = SubResource("StandardMaterial3D_70f2h")
-size = Vector2(1, 1.5)
+[sub_resource type="TubeTrailMesh" id="TubeTrailMesh_7nsnk"]
+material = SubResource("StandardMaterial3D_lt2gv")
+radius = 0.05
+radial_steps = 3
+sections = 4
+curve = SubResource("Curve_r8t5o")
 
 [sub_resource type="Curve" id="Curve_7clj7"]
 _data = [Vector2(0.0026455075, 0.026315808), 0.0, 0.0, 0, 0, Vector2(0.16137567, 1), 0.0, 0.0, 0, 0, Vector2(0.7619047, 1), 0.0, 0.0, 0, 0, Vector2(1, 0.020467758), 0.0, 0.0, 0, 0]
@@ -46,10 +46,9 @@ shape = SubResource("CylinderShape3D_gei8a")
 [node name="FanParticles" type="CPUParticles3D" parent="." unique_id=1500018507]
 amount = 12
 lifetime = 0.7
-mesh = SubResource("QuadMesh_ec6s3")
+mesh = SubResource("TubeTrailMesh_7nsnk")
 emission_shape = 1
 emission_sphere_radius = 1.2
-particle_flag_align_y = true
 direction = Vector3(0, 1, 0)
 spread = 0.0
 flatness = 1.0
@@ -58,9 +57,10 @@ initial_velocity_min = 2.0
 initial_velocity_max = 2.0
 linear_accel_min = 10.0
 linear_accel_max = 40.0
-scale_amount_min = 0.7
+scale_amount_min = 1.2
+scale_amount_max = 1.5
 scale_amount_curve = SubResource("Curve_7clj7")
-color = Color(1, 1, 1, 0.41568628)
+color = Color(1, 1, 1, 0.1882353)
 
 [node name="FanZone" type="Area3D" parent="." unique_id=1262795644]
 
