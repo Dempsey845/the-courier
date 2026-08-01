@@ -8,13 +8,13 @@ radius = 2.5
 
 [node name="SporeHitbox" type="Area3D" unique_id=2137302131]
 script = ExtResource("1_c5un8")
-start_delay = 2.0
+start_delay = 1.5
+end_delay = -0.5
 active = false
 source = "puffcap"
 metadata/_custom_type_script = "uid://deroukfpp2mia"
 
 [node name="Timer" type="Timer" parent="." unique_id=164543533]
-wait_time = 1.5
 
 [node name="SporeController" type="Node" parent="." unique_id=946854792]
 script = ExtResource("2_nro3b")
