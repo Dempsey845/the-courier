@@ -12,4 +12,3 @@ func _ready() -> void:
 			var player: Player = hurtbox.get_parent()
 			player.apply_knockback(source.global_position, force, upward_force)
 	)
-

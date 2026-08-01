@@ -29,6 +29,7 @@
 [ext_resource type="PackedScene" uid="uid://cjtuq4am582u0" path="res://World/Environment/Bodies/tree.tscn" id="21_26uyv"]
 [ext_resource type="PackedScene" uid="uid://cnxvt8i3eaqk4" path="res://World/Environment/Foliage/grass.tscn" id="22_o6lw0"]
 [ext_resource type="PackedScene" uid="uid://c255fa1gv5vfc" path="res://World/Environment/Foliage/flower.tscn" id="23_x0pyu"]
+[ext_resource type="PackedScene" uid="uid://bxm70bskieiiu" path="res://World/Fan/fan.tscn" id="30_3sd22"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_62w18"]
 sky_top_color = Color(0.34509805, 0.4745098, 0.5411765, 1)
@@ -117,7 +118,7 @@ shader_parameter/flow_speed = 0.12
 shader_parameter/distortion_strength = 1.999999955296
 shader_parameter/crust_amount = 0.51999998837696
 shader_parameter/crust_softness = 0.03999999910592
-shader_parameter/crack_width = 0.049999998882400004
+shader_parameter/crack_width = 0.0499999988824
 shader_parameter/highlight_amount = 0.8
 shader_parameter/emission_strength = 3.0000000447036
 shader_parameter/crack_emission_strength = 4.0000000596048
@@ -794,7 +795,7 @@ color_ramp = SubResource("Gradient_0wqet")
 seamless = true
 in_3d_space = true
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_rw02v"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_3sd22"]
 resource_local_to_scene = true
 render_priority = 0
 shader = SubResource("Shader_5gpxd")
@@ -841,9 +842,9 @@ shader_parameter/ripple_strength = 0.08
 shader_parameter/ripple_width = 0.2
 shader_parameter/ripple_frequency = 12.0
 
-[sub_resource type="PlaneMesh" id="PlaneMesh_3sd22"]
+[sub_resource type="PlaneMesh" id="PlaneMesh_s5a7k"]
 resource_local_to_scene = true
-material = SubResource("ShaderMaterial_rw02v")
+material = SubResource("ShaderMaterial_3sd22")
 size = Vector2(45, 45)
 subdivide_width = 450
 subdivide_depth = 450
@@ -964,6 +965,12 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -25, 0.6999998, 1)
 
 [node name="CloudPlatform12" parent="NavigationRegion3D/RuinsArea" unique_id=1756551056 instance=ExtResource("4_dg1ng")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -60.9, 0.6999998, 1)
+
+[node name="CloudPlatform14" parent="NavigationRegion3D/RuinsArea" unique_id=1993678761 instance=ExtResource("4_dg1ng")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -125.044044, 0.6999998, 1)
+
+[node name="CloudPlatform15" parent="NavigationRegion3D/RuinsArea" unique_id=1792139605 instance=ExtResource("4_dg1ng")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -133.38644, 0.6999998, 1)
 
 [node name="CloudPlatform13" parent="NavigationRegion3D/RuinsArea" unique_id=122200808 node_paths=PackedStringArray("end_point") instance=ExtResource("4_dg1ng")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -70, 0.6999998, 1)
@@ -1220,7 +1227,7 @@ transform = Transform3D(0.49609634, 0.060223475, -0.788083, -0.13249165, 0.90199
 
 [node name="MushroomSwampEffect" parent="NavigationRegion3D/SwampArea" unique_id=963275507 instance=ExtResource("3_oe8m4")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 24.600002, 0)
-mesh = SubResource("PlaneMesh_3sd22")
+mesh = SubResource("PlaneMesh_s5a7k")
 
 [node name="DirtPillarWide" parent="NavigationRegion3D/SwampArea" unique_id=2051397190 node_paths=PackedStringArray("water") instance=ExtResource("4_h2aik")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15.6, 24, 16.099998)
@@ -1368,7 +1375,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -78.90001, 0)
 mesh = SubResource("PlaneMesh_13qdw")
 
 [node name="Player" parent="." unique_id=67220391 instance=ExtResource("1_62w18")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -209.3, 15.4, -27.8)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.5984497, 1.0698833, -27.8)
 
 [node name="GolemEnemy" parent="." unique_id=890047339 node_paths=PackedStringArray("target") instance=ExtResource("2_8a836")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -41, 0, -28)
@@ -1402,3 +1409,12 @@ transform = Transform3D(0.7, 0, 0, 0, 0.7, 0, 0, 0, 0.7, -2, 0, -44)
 
 [node name="Flower" parent="." unique_id=676603140 instance=ExtResource("23_x0pyu")]
 transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, -4, 0, -44)
+
+[node name="Fan" parent="." unique_id=1718461765 instance=ExtResource("30_3sd22")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -31)
+max_fan_speed = 10.0
+
+[node name="Fan2" parent="." unique_id=7671958 instance=ExtResource("30_3sd22")]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0, 1.3, -34.57632)
+fan_strength = 30.0
+max_fan_speed = 20.0

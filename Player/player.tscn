@@ -6,6 +6,7 @@
 [ext_resource type="Script" uid="uid://dn5b8er116luc" path="res://Components/health.gd" id="3_apopc"]
 [ext_resource type="Script" uid="uid://dl3pxtcg0n102" path="res://Player/camera_controller.gd" id="3_btcbx"]
 [ext_resource type="Script" uid="uid://be5u0wvfeloek" path="res://Player/player_health_manager.gd" id="3_dkpta"]
+[ext_resource type="Script" uid="uid://bljke43e1e843" path="res://Player/player_debug.gd" id="3_lfmf2"]
 [ext_resource type="Script" uid="uid://ysgrvrrrwkp0" path="res://Player/landing_shadow.gd" id="4_gwnis"]
 [ext_resource type="Texture2D" uid="uid://ddk2jwnyxf2iu" path="res://Player/platformer_circle_shadow.png" id="4_k53q1"]
 [ext_resource type="Texture2D" uid="uid://cgt180snb86g1" path="res://Player/jump_cloud_particle.png" id="6_fhl08"]
@@ -132,7 +133,9 @@ script = ExtResource("1_4ntmi")
 [node name="PlayerHitManager" type="Node" parent="." unique_id=233237877 node_paths=PackedStringArray("player")]
 script = ExtResource("2_00tjw")
 player = NodePath("..")
-upward_force = 12.0
+
+[node name="PlayerDebug" type="Node" parent="." unique_id=1475136395]
+script = ExtResource("3_lfmf2")
 
 [node name="PlayerHealthManager" type="Node" parent="." unique_id=2089549425 node_paths=PackedStringArray("health")]
 script = ExtResource("3_dkpta")
@@ -294,3 +297,15 @@ layout_mode = 2
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="CanvasLayer/Control/HealthUI" unique_id=1973791419]
 libraries/ = SubResource("AnimationLibrary_dkpta")
+
+[node name="FPSLabel" type="Label" parent="CanvasLayer/Control" unique_id=324536875]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -127.0
+offset_bottom = 23.0
+grow_horizontal = 0
+text = "100 FPS"
+horizontal_alignment = 2

@@ -45,6 +45,13 @@ var jump_enabled: bool = true
 
 var launched_by_force: bool = false
 
+@export_category("Fan")
+@export var max_fan_speed: float = 12.0
+
+var in_fan: bool = false
+var fan_strength: float = 0.0
+var fan_direction: Vector3 = Vector3.UP
+
 func _ready() -> void:
 	await get_tree().process_frame
 
@@ -72,6 +79,7 @@ func _physics_process(delta: float) -> void:
 		jump_buffer_timer = 0.0
 
 	apply_gravity(delta)
+	apply_fan_force(delta)
 
 	if launched_by_force and velocity.y <= 0.0:
 		launched_by_force = false
@@ -230,25 +238,37 @@ func handle_movement(delta: float) -> void:
 	velocity.x = horizontal_velocity.x
 	velocity.z = horizontal_velocity.z
 
-
-func apply_gravity(delta: float) -> void:
-	if launched_by_force:
-		velocity.y -= gravity * delta
+func apply_fan_force(delta: float) -> void:
+	if not in_fan:
 		return
 
-	if is_on_floor():
+	var direction: Vector3 = fan_direction.normalized()
+	var force_velocity: Vector3 = velocity.project(direction)
+
+	var current_speed: float = force_velocity.dot(direction)
+	var new_speed: float = minf(
+		current_speed + fan_strength * delta,
+		max_fan_speed
+	)
+
+	velocity += direction * (new_speed - current_speed)
+
+func apply_gravity(delta: float) -> void:
+	if is_on_floor() and not in_fan:
 		return
 
 	var gravity_multiplier: float = 1.0
 
-	if velocity.y < 0.0:
-		# Make falling faster and less floaty.
+	if launched_by_force:
+		gravity_multiplier = 1.0
+	elif in_fan and fan_direction.dot(Vector3.UP) > 0.1:
+		gravity_multiplier = 1.0
+	elif velocity.y < 0.0:
 		gravity_multiplier = fall_gravity_multiplier
 	elif Input.is_action_just_released("jump"):
 		gravity_multiplier = jump_cut_gravity_multiplier
 		jump_cut.emit()
 	elif not Input.is_action_pressed("jump"):
-		# Cut the jump short when the button is released.
 		gravity_multiplier = jump_cut_gravity_multiplier
 
 	velocity.y -= gravity * gravity_multiplier * delta
@@ -308,3 +328,23 @@ func stop_moving() -> void:
 	can_move = false
 	jump_enabled = false
 	jump_buffer_timer = 0.0
+
+func enter_fan(
+	direction: Vector3,
+	strength: float,
+	max_speed: float = 20.0
+) -> void:
+	in_fan = true
+	fan_direction = direction.normalized()
+	fan_strength = strength
+	max_fan_speed = max_speed
+
+
+func exit_fan() -> void:
+	in_fan = false
+	fan_strength = 0.0
+	fan_direction = Vector3.UP
+	
+func update_fan_direction(direction: Vector3) -> void:
+	if in_fan:
+		fan_direction = direction.normalized()
