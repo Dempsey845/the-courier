@@ -15,6 +15,9 @@ enum State {
 	DEATH
 }
 
+@export_category("Zone")
+@export var assigned_zone: ZoneManager.Zone
+
 @export_category("Target")
 @export var target: Node3D
 @export var detection_distance: float = 10.0
@@ -100,6 +103,10 @@ func _physics_process(delta: float) -> void:
 		0.0
 	)
 
+	if current_state != State.IDLE:
+		if ZoneManager.instance and ZoneManager.instance.current_zone != assigned_zone:
+			enter_idle()
+
 	match current_state:
 		State.IDLE:
 			update_idle(delta)
@@ -161,6 +168,9 @@ func update_death(delta: float) -> void:
 
 func update_idle(delta: float) -> void:
 	stop_moving(delta)
+
+	if ZoneManager.instance and ZoneManager.instance.current_zone != assigned_zone:
+		return
 
 	if wait_remaining > 0.0:
 		wait_remaining = maxf(

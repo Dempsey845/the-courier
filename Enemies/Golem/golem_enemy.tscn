@@ -14,6 +14,7 @@ height = 0.6
 radius = 0.605
 
 [node name="GolemEnemy" unique_id=1009641960 instance=ExtResource("1_1pwku")]
+assigned_zone = 2
 attack_distance = 1.5
 stun_time = 0.4
 scatter_radius = 12.0

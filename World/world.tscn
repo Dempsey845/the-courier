@@ -1,5 +1,6 @@
 [gd_scene format=3 uid="uid://bj3ripvo7qsjp"]
 
+[ext_resource type="Script" uid="uid://c4n1xs4w6jaeu" path="res://World/zone_manager.gd" id="1_3sd22"]
 [ext_resource type="PackedScene" uid="uid://dmc36oojdry5d" path="res://Player/player.tscn" id="1_62w18"]
 [ext_resource type="PackedScene" uid="uid://bp6pkgigbquhx" path="res://Enemies/Golem/golem_enemy.tscn" id="2_8a836"]
 [ext_resource type="Script" uid="uid://dh6q176dnlgbu" path="res://Systems/Dialogue/dialogue_manager.gd" id="2_eidgh"]
@@ -29,6 +30,7 @@
 [ext_resource type="PackedScene" uid="uid://cnxvt8i3eaqk4" path="res://World/Environment/Foliage/grass.tscn" id="22_o6lw0"]
 [ext_resource type="PackedScene" uid="uid://c255fa1gv5vfc" path="res://World/Environment/Foliage/flower.tscn" id="23_x0pyu"]
 [ext_resource type="PackedScene" uid="uid://bxm70bskieiiu" path="res://World/Fan/fan.tscn" id="30_3sd22"]
+[ext_resource type="Script" uid="uid://bmpi2qgjq8pdg" path="res://World/zone_area.gd" id="31_s5a7k"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_62w18"]
 sky_top_color = Color(0.34509805, 0.4745098, 0.5411765, 1)
@@ -814,7 +816,7 @@ color_ramp = SubResource("Gradient_0wqet")
 seamless = true
 in_3d_space = true
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_rw02v"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_s5a7k"]
 resource_local_to_scene = true
 render_priority = 0
 shader = SubResource("Shader_5gpxd")
@@ -861,9 +863,9 @@ shader_parameter/ripple_strength = 0.08
 shader_parameter/ripple_width = 0.2
 shader_parameter/ripple_frequency = 12.0
 
-[sub_resource type="PlaneMesh" id="PlaneMesh_3sd22"]
+[sub_resource type="PlaneMesh" id="PlaneMesh_koyeq"]
 resource_local_to_scene = true
-material = SubResource("ShaderMaterial_rw02v")
+material = SubResource("ShaderMaterial_s5a7k")
 size = Vector2(45, 45)
 subdivide_width = 450
 subdivide_depth = 450
@@ -932,7 +934,13 @@ density = 0.75
 albedo = Color(0.7790972, 0.91043407, 0.31408426, 1)
 emission = Color(0.17628652, 0.17673275, 0.06327736, 1)
 
+[sub_resource type="BoxShape3D" id="BoxShape3D_13qdw"]
+size = Vector3(50, 50, 50)
+
 [node name="World" type="Node3D" unique_id=970689617]
+
+[node name="ZoneManager" type="Node" parent="." unique_id=358080498]
+script = ExtResource("1_3sd22")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=168465678]
 
@@ -1105,7 +1113,7 @@ transform = Transform3D(0.49609634, 0.060223475, -0.788083, -0.13249165, 0.90199
 
 [node name="MushroomSwampEffect" parent="NavigationRegion3D/SwampArea" unique_id=963275507 instance=ExtResource("3_oe8m4")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 24.600002, 0)
-mesh = SubResource("PlaneMesh_3sd22")
+mesh = SubResource("PlaneMesh_koyeq")
 
 [node name="DirtPillarWide" parent="NavigationRegion3D/SwampArea" unique_id=2051397190 node_paths=PackedStringArray("water") instance=ExtResource("4_h2aik")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15.6, 24, 16.099998)
@@ -1253,7 +1261,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -78.90001, 0)
 mesh = SubResource("PlaneMesh_13qdw")
 
 [node name="Player" parent="." unique_id=67220391 instance=ExtResource("1_62w18")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -207.59845, 4.0698833, -27.8)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.5984497, 4.0698833, -27.8)
 
 [node name="GolemEnemy" parent="." unique_id=890047339 node_paths=PackedStringArray("target") instance=ExtResource("2_8a836")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -41, 0, -28)
@@ -1296,3 +1304,34 @@ max_fan_speed = 10.0
 transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0, 1.3, -34.57632)
 fan_strength = 30.0
 max_fan_speed = 20.0
+
+[node name="ZoneAreas" type="Node3D" parent="." unique_id=1497661187]
+
+[node name="StartZoneArea" type="Area3D" parent="ZoneAreas" unique_id=362264955]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -26)
+script = ExtResource("31_s5a7k")
+metadata/_custom_type_script = "uid://bmpi2qgjq8pdg"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="ZoneAreas/StartZoneArea" unique_id=1431731098]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1.3000001)
+shape = SubResource("BoxShape3D_13qdw")
+
+[node name="RuinsZoneArea" type="Area3D" parent="ZoneAreas" unique_id=1003526252]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -52, 0, -26)
+script = ExtResource("31_s5a7k")
+zone = 2
+metadata/_custom_type_script = "uid://bmpi2qgjq8pdg"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="ZoneAreas/RuinsZoneArea" unique_id=270668267]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1.3000001)
+shape = SubResource("BoxShape3D_13qdw")
+
+[node name="SwampZoneArea" type="Area3D" parent="ZoneAreas" unique_id=508198371]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -80)
+script = ExtResource("31_s5a7k")
+zone = 1
+metadata/_custom_type_script = "uid://bmpi2qgjq8pdg"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="ZoneAreas/SwampZoneArea" unique_id=1292204990]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1.3000001)
+shape = SubResource("BoxShape3D_13qdw")
