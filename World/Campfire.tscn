@@ -100,5 +100,5 @@ mesh = SubResource("CylinderMesh_xrivr")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.7, 0)
 light_color = Color(0.9848661, 0.8663973, 0.37135237, 1)
 light_energy = 2.0
-omni_range = 8.0
-omni_attenuation = 2.08
+omni_range = 10.0
+omni_attenuation = 1.8

@@ -1,0 +1,55 @@
+[gd_scene format=3 uid="uid://dp2pm2g8bopie"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_djvqq"]
+albedo_color = Color(0.32791412, 0.21686536, 0, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_xrivr"]
+size = Vector3(0.3, 1, 0.3)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_b1lj4"]
+transparency = 1
+vertex_color_use_as_albedo = true
+emission_enabled = true
+emission = Color(0.90416425, 0.6806723, 0.1283119, 1)
+emission_energy_multiplier = 3.0
+texture_filter = 0
+disable_receive_shadows = true
+
+[sub_resource type="SphereMesh" id="SphereMesh_xrivr"]
+material = SubResource("StandardMaterial3D_b1lj4")
+radial_segments = 6
+rings = 4
+
+[sub_resource type="Curve" id="Curve_njqwk"]
+_data = [Vector2(0, 0.047393322), 0.0, 0.0, 0, 0, Vector2(0.24950886, 1), 0.0, 0.0, 0, 0, Vector2(0.7485266, 1), 0.0, 0.0, 0, 0, Vector2(0.99803543, 0.023696661), 0.0, 0.0, 0, 0]
+point_count = 4
+
+[sub_resource type="Gradient" id="Gradient_wi6ju"]
+colors = PackedColorArray(1, 0.5921569, 0, 1, 1, 1, 0, 1)
+
+[node name="WallLight" type="Node3D" unique_id=65693250]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1914277861]
+transform = Transform3D(0.7071067, -0.70710677, 0, 0.70710677, 0.7071067, 0, 0, 0, 1, -0.24330126, 0.32141018, 0.049999982)
+material_override = SubResource("StandardMaterial3D_djvqq")
+mesh = SubResource("BoxMesh_xrivr")
+
+[node name="OmniLight3D" type="OmniLight3D" parent="." unique_id=1888448421]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.6, 0.8, 0)
+light_color = Color(0.88235295, 0.73333335, 0.43529412, 1)
+omni_range = 6.0
+
+[node name="CPUParticles3D" type="CPUParticles3D" parent="." unique_id=1780380198]
+transform = Transform3D(0.9848077, -0.17364818, 0, 0.17364818, 0.9848077, 0, 0, 0, 1, -0.5667896, 0.52040327, 0)
+cast_shadow = 0
+amount = 5
+mesh = SubResource("SphereMesh_xrivr")
+emission_shape = 1
+emission_sphere_radius = 0.2
+direction = Vector3(0, 1, 0)
+gravity = Vector3(0, 0, 0)
+initial_velocity_min = 1.0
+initial_velocity_max = 2.0
+scale_amount_min = 0.5
+scale_amount_curve = SubResource("Curve_njqwk")
+color_initial_ramp = SubResource("Gradient_wi6ju")
