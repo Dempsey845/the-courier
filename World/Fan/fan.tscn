@@ -32,8 +32,7 @@ height = 8.901367
 radius = 1.0405273
 
 [node name="Fan" type="StaticBody3D" unique_id=1718461765]
-collision_layer = 0
-collision_mask = 4
+collision_mask = 5
 script = ExtResource("1_w0l84")
 
 [node name="FanVisual" parent="." unique_id=547467503 instance=ExtResource("1_7clj7")]
@@ -63,6 +62,7 @@ scale_amount_curve = SubResource("Curve_7clj7")
 color = Color(1, 1, 1, 0.1882353)
 
 [node name="FanZone" type="Area3D" parent="." unique_id=1262795644]
+collision_mask = 5
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="FanZone" unique_id=1501290274]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.4501114, 0)
@@ -70,3 +70,7 @@ shape = SubResource("CylinderShape3D_7xg00")
 
 [node name="BlowTimer" type="Timer" parent="." unique_id=1331365682]
 wait_time = 0.5
+
+[node name="CheckAreaTimer" type="Timer" parent="." unique_id=2143628012]
+wait_time = 0.5
+autostart = true

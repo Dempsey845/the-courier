@@ -79,6 +79,7 @@ reload={
 3d_physics/layer_8="EnemyHitbox"
 3d_physics/layer_9="NPC_Interact"
 3d_physics/layer_10="Player_Interact"
+3d_physics/layer_11="FanArea"
 
 [physics]
 
