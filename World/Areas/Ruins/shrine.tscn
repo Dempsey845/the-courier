@@ -1,0 +1,43 @@
+[gd_scene format=3 uid="uid://jfn62th5bwv7"]
+
+[ext_resource type="PackedScene" uid="uid://b8ryahl55a5dg" path="res://World/Areas/Swamp/Shrine.glb" id="1_iu6qj"]
+[ext_resource type="Shader" uid="uid://di51q7lwquwai" path="res://World/Environment/Bodies/shrine.gdshader" id="2_lck1h"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_1got2"]
+render_priority = 0
+shader = ExtResource("2_lck1h")
+shader_parameter/albedo = Color(0.446777, 0.44677705, 0.44677705, 1)
+shader_parameter/albedo_texture_size = Vector2i(0, 0)
+shader_parameter/point_size = 1.0
+shader_parameter/roughness = 0.8
+shader_parameter/metallic_texture_channel = Vector4(1, 0, 0, 0)
+shader_parameter/specular = 0.5
+shader_parameter/metallic = 0.0
+shader_parameter/uv1_scale = Vector3(1, 1, 1)
+shader_parameter/uv1_offset = Vector3(0, 0, 0)
+shader_parameter/uv2_scale = Vector3(1, 1, 1)
+shader_parameter/uv2_offset = Vector3(0, 0, 0)
+shader_parameter/crack_color = Color(0.58, 0.08, 1, 1)
+shader_parameter/crack_highlight_color = Color(1, 0.55, 1, 1)
+shader_parameter/crack_scale = 10.0000004275
+shader_parameter/crack_width = 0.0570000027075
+shader_parameter/crack_softness = 0.012
+shader_parameter/crack_amount = 1.0
+shader_parameter/crack_brightness = 6.97200033117
+shader_parameter/crack_animation_speed = 1.5
+shader_parameter/pulse_strength = 0.6
+shader_parameter/surface_glow = 0.15
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_xrivr"]
+size = Vector3(2.5, 5.5, 2.2)
+
+[node name="Shrine" unique_id=1246758162 instance=ExtResource("1_iu6qj")]
+
+[node name="Cube" parent="." index="0" unique_id=427460278]
+material_overlay = SubResource("ShaderMaterial_1got2")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="." index="1" unique_id=503829179]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D" index="0" unique_id=411498824]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.049999952, 2.75, -1.1920929e-07)
+shape = SubResource("BoxShape3D_xrivr")

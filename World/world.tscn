@@ -1262,7 +1262,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -78.90001, 0)
 mesh = SubResource("PlaneMesh_13qdw")
 
 [node name="Player" parent="." unique_id=67220391 instance=ExtResource("1_62w18")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.5984497, 4.0698833, -27.8)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.5984497, 9.069883, -137.8)
 
 [node name="GolemEnemy" parent="." unique_id=890047339 node_paths=PackedStringArray("target") instance=ExtResource("2_8a836")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -41, 0, -28)

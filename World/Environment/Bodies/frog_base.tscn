@@ -9,11 +9,13 @@
 [ext_resource type="Script" uid="uid://vhphkydnyccp" path="res://World/Environment/Bodies/portal.gd" id="5_d5hcn"]
 [ext_resource type="PackedScene" uid="uid://426a33gochdl" path="res://World/Environment/GrassGroup.glb" id="5_wmqoy"]
 [ext_resource type="PackedScene" uid="uid://dxffamdf7vshk" path="res://World/Environment/Bodies/rock_pillar.tscn" id="6_ectnj"]
+[ext_resource type="Script" uid="uid://epcpb44orgo6" path="res://World/Environment/Bodies/portal_entrance.gd" id="6_g46ae"]
 [ext_resource type="PackedScene" uid="uid://erbexrpjuitl" path="res://World/Environment/Bodies/dirt_pillar_tall.tscn" id="7_d5hcn"]
 [ext_resource type="PackedScene" uid="uid://cnm8sgtocpwuv" path="res://World/Environment/Bodies/decorated_dirt_pillar_wide.tscn" id="8_g46ae"]
 [ext_resource type="PackedScene" uid="uid://cyaqell3bfqr2" path="res://World/Environment/Bodies/dirt_pillar_wide.tscn" id="9_h22cb"]
 [ext_resource type="PackedScene" uid="uid://h2bnamg205h1" path="res://World/Areas/Swamp/tree_log_swamp.tscn" id="10_var18"]
 [ext_resource type="PackedScene" uid="uid://g6qjr8aewopi" path="res://World/Areas/Swamp/lillypad.tscn" id="12_wmqoy"]
+[ext_resource type="PackedScene" uid="uid://jfn62th5bwv7" path="res://World/Areas/Ruins/shrine.tscn" id="16_h22cb"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_xrivr"]
 size = Vector3(24.5, 5.6, 16)
@@ -49,6 +51,9 @@ shader_parameter/oval_height = 1.0
 shader_parameter/animation_speed = 1.0
 shader_parameter/swirl_strength = 4.0
 shader_parameter/distortion_strength = 0.035
+shader_parameter/interaction_distortion = 0.045
+shader_parameter/interaction_ring_width = 0.025
+shader_parameter/interaction_brightness = 3.0
 shader_parameter/brightness = 2.5
 shader_parameter/detail_scale = 8.0
 
@@ -56,6 +61,9 @@ shader_parameter/detail_scale = 8.0
 flip_faces = true
 size = Vector2(9, 10)
 orientation = 0
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_13qdw"]
+size = Vector3(1, 7, 5)
 
 [node name="FrogBase" type="StaticBody3D" unique_id=1909349785]
 
@@ -96,6 +104,16 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -2.0999994, 0)
 material_override = SubResource("ShaderMaterial_xrivr")
 mesh = SubResource("QuadMesh_xrivr")
 script = ExtResource("5_d5hcn")
+
+[node name="PortalEntrance" type="Area3D" parent="Arc2" unique_id=1068423514 node_paths=PackedStringArray("portal")]
+collision_layer = 0
+collision_mask = 4
+script = ExtResource("6_g46ae")
+portal = NodePath("../Portal")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Arc2/PortalEntrance" unique_id=1836497176]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -2, -8.940697e-08)
+shape = SubResource("BoxShape3D_13qdw")
 
 [node name="WhiteMushroom2" parent="." unique_id=311050730 instance=ExtResource("3_fcvqc")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11, 4, 6)
@@ -183,5 +201,8 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -13, 0.3, 0)
 
 [node name="DetectArea" parent="Lillypad" index="3" unique_id=2125594080]
 forward_force = 18.0
+
+[node name="Shrine" parent="." unique_id=1246758162 instance=ExtResource("16_h22cb")]
+transform = Transform3D(0.23941405, 0, -0.6577848, 0, 0.7, 0, 0.6577848, 0, 0.23941405, 18.4, 3.6, -1.1)
 
 [editable path="Lillypad"]
