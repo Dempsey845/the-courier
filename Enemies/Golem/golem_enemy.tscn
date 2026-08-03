@@ -27,9 +27,6 @@ hurtbox = NodePath("../Hurtbox")
 script = ExtResource("3_hrsag")
 golem_collider = NodePath("../CollisionShape3D")
 
-[node name="NavigationAgent3D" parent="." index="3" unique_id=1961274634]
-debug_enabled = true
-
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." index="4" unique_id=1334450505]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.7575684, 0)
 shape = SubResource("CapsuleShape3D_xrivr")

@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://gyy51fh2c0o3"]
 
 [ext_resource type="Script" uid="uid://deroukfpp2mia" path="res://Components/hitbox.gd" id="1_ww0m6"]
+[ext_resource type="Shader" uid="uid://bxwxcde66qdm1" path="res://World/Areas/Ruins/cracked_rock.gdshader" id="2_ww0m6"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_b5b2l"]
 albedo_color = Color(0.50534403, 0.5053441, 0.50534403, 1)
@@ -89,6 +90,23 @@ _data = {
 [sub_resource type="BoxShape3D" id="BoxShape3D_b1lj4"]
 size = Vector3(5, 12.405579, 5)
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_i5ew2"]
+render_priority = 0
+shader = ExtResource("2_ww0m6")
+shader_parameter/rock_color = Color(0.26666668, 0.26666668, 0.26666668, 1)
+shader_parameter/rock_highlight = Color(0.42365062, 0.42365065, 0.42365062, 1)
+shader_parameter/crack_color = Color(0.20511743, 0.20511743, 0.20511743, 1)
+shader_parameter/texture_scale = 8.0
+shader_parameter/crack_width = 0.065
+shader_parameter/crack_softness = 0.015
+shader_parameter/crack_depth = 0.0
+shader_parameter/color_variation = 0.25
+shader_parameter/normal_strength = 0.0
+shader_parameter/roughness = 0.9
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_xrivr"]
+size = Vector2(5, 5)
+
 [node name="Press" type="StaticBody3D" unique_id=1094818044]
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=170436455]
@@ -134,3 +152,7 @@ autoplay = &"loop"
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=988197456]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 8.279877, 0)
 shape = SubResource("BoxShape3D_b1lj4")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="." unique_id=210335545]
+material_override = SubResource("ShaderMaterial_i5ew2")
+mesh = SubResource("PlaneMesh_xrivr")
