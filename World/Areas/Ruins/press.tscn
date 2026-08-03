@@ -1,0 +1,137 @@
+[gd_scene format=3 uid="uid://gyy51fh2c0o3"]
+
+[ext_resource type="Script" uid="uid://deroukfpp2mia" path="res://Components/hitbox.gd" id="1_ww0m6"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_b5b2l"]
+albedo_color = Color(0.50534403, 0.5053441, 0.50534403, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_xrivr"]
+material = SubResource("StandardMaterial3D_b5b2l")
+size = Vector3(5, 15, 5)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_13qdw"]
+size = Vector3(4.6047363, 1, 4.663086)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_i5ew2"]
+albedo_color = Color(0.5689727, 0.56897277, 0.5689727, 1)
+
+[sub_resource type="SphereMesh" id="SphereMesh_xrivr"]
+material = SubResource("StandardMaterial3D_i5ew2")
+radial_segments = 6
+rings = 4
+
+[sub_resource type="Curve" id="Curve_13qdw"]
+_data = [Vector2(0, 0.023696661), 0.0, 0.0, 0, 0, Vector2(0.2514735, 1), 0.0, 0.0, 0, 0, Vector2(0.48330063, 0.99526066), 0.0, 0.0, 0, 0, Vector2(0.7426326, 1), 0.0, 0.0, 0, 0, Vector2(0.9882122, 0.0047392845), 0.0, 0.0, 0, 0]
+point_count = 5
+
+[sub_resource type="Animation" id="Animation_irbiq"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("MeshInstance3D:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 12.016457, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("CPUParticles3D:emitting")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+
+[sub_resource type="Animation" id="Animation_qpj7e"]
+resource_name = "loop"
+length = 2.5000000000000004
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("MeshInstance3D:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.46666667),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(0, 12.016457, 0), Vector3(0, 7, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("CPUParticles3D:emitting")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.65),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_3v2o4"]
+_data = {
+&"RESET": SubResource("Animation_irbiq"),
+&"loop": SubResource("Animation_qpj7e")
+}
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_b1lj4"]
+size = Vector3(5, 12.405579, 5)
+
+[node name="Press" type="StaticBody3D" unique_id=1094818044]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=170436455]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 12.016457, 0)
+mesh = SubResource("BoxMesh_xrivr")
+
+[node name="Hitbox" type="Area3D" parent="MeshInstance3D" unique_id=1951788003]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -7.2690187, 0)
+collision_layer = 128
+collision_mask = 16
+script = ExtResource("1_ww0m6")
+source = "press"
+metadata/_custom_type_script = "uid://deroukfpp2mia"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="MeshInstance3D/Hitbox" unique_id=719002484]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.00012207031, 0, -0.0053710938)
+shape = SubResource("BoxShape3D_13qdw")
+
+[node name="CPUParticles3D" type="CPUParticles3D" parent="." unique_id=1492436964]
+emitting = false
+lifetime = 1.5
+one_shot = true
+explosiveness = 1.0
+local_coords = true
+mesh = SubResource("SphereMesh_xrivr")
+emission_shape = 3
+emission_box_extents = Vector3(2, 0.1, 2)
+direction = Vector3(0, 1, 0)
+spread = 15.0
+flatness = 1.0
+gravity = Vector3(0, -4.9, 0)
+initial_velocity_min = 1.5
+initial_velocity_max = 3.0
+angle_min = -720.0
+angle_max = 720.0
+scale_amount_min = 0.7
+scale_amount_max = 1.2
+scale_amount_curve = SubResource("Curve_13qdw")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1703353797]
+libraries/ = SubResource("AnimationLibrary_3v2o4")
+autoplay = &"loop"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=988197456]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 8.279877, 0)
+shape = SubResource("BoxShape3D_b1lj4")

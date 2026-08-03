@@ -33,6 +33,8 @@ func _ready() -> void:
 				animation_tree.set("parameters/HitShot/request", AnimationNodeOneShot.ONE_SHOT_REQUEST_FIRE)
 			"puffcap":
 				animation_tree.set("parameters/CoughShot/request", AnimationNodeOneShot.ONE_SHOT_REQUEST_FIRE)
+			"press":
+				animation_tree.set("parameters/SquishShot/request", AnimationNodeOneShot.ONE_SHOT_REQUEST_FIRE)
 	)
 
 	player_health.damage_taken.connect(func(_damage_amount, _new_health):
