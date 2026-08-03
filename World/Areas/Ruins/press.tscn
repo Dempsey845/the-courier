@@ -109,7 +109,6 @@ shape = SubResource("BoxShape3D_13qdw")
 
 [node name="CPUParticles3D" type="CPUParticles3D" parent="." unique_id=1492436964]
 emitting = false
-lifetime = 1.5
 one_shot = true
 explosiveness = 1.0
 local_coords = true

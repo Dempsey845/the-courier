@@ -84,6 +84,13 @@ radius = 1.4
 height = 6.4506836
 radius = 1.0405273
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_b5b2l"]
+albedo_color = Color(0.50928617, 0.50928617, 0.50928617, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_xrivr"]
+material = SubResource("StandardMaterial3D_b5b2l")
+size = Vector3(3.135, 0.24, 3.1)
+
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_0jy41"]
 height = 3.7506835
 radius = 1.4
@@ -124,14 +131,14 @@ fog_density = 0.0025
 fog_sky_affect = 0.45
 fog_depth_curve = 8.282087
 fog_depth_end = 200.0
-volumetric_fog_density = 0.004
-volumetric_fog_albedo = Color(0.70980394, 0.7764706, 0.65882355, 1)
-volumetric_fog_emission = Color(0.14509805, 0.20784314, 0.16862746, 1)
-volumetric_fog_emission_energy = 0.15
+volumetric_fog_enabled = true
+volumetric_fog_albedo = Color(0.40696374, 0.47204792, 0.35534862, 1)
+volumetric_fog_emission = Color(0.02927509, 0.054966018, 0.038387954, 1)
+volumetric_fog_emission_energy = 0.1
 volumetric_fog_gi_inject = 0.5
 volumetric_fog_anisotropy = 0.25
 volumetric_fog_length = 90.0
-volumetric_fog_sky_affect = 0.35
+volumetric_fog_sky_affect = 0.0
 volumetric_fog_temporal_reprojection_amount = 0.85
 adjustment_enabled = true
 adjustment_brightness = 1.02
@@ -298,7 +305,7 @@ max_fan_speed = 31.0
 lifetime = 0.9
 
 [node name="Fan7" parent="NavigationRegion3D" unique_id=1119042869 instance=ExtResource("4_fcrmi")]
-transform = Transform3D(0, -8.3051646e-08, 1.9000001, -1.9000003, 0, 0, 0, -1.9000003, -8.305164e-08, -36.5, -15.200001, 7.7)
+transform = Transform3D(0, -8.3051646e-08, 1.9000001, -1.9000003, 0, 0, 0, -1.9000003, -8.305164e-08, -34.02878, -15.200001, 7.7)
 fan_strength = 35.0
 max_fan_speed = 31.0
 
@@ -310,13 +317,18 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.1975493, 0)
 shape = SubResource("CylinderShape3D_ijylj")
 
 [node name="Fan8" parent="NavigationRegion3D" unique_id=22922975 instance=ExtResource("4_fcrmi")]
-transform = Transform3D(0, -1.9000003, -1.6610328e-07, -1.9000003, 0, 0, 0, 1.6610329e-07, -1.9000001, -41.5, -15.200001, 0.6999998)
+transform = Transform3D(0, -1.9000003, -1.6610328e-07, -1.9000003, 0, 0, 0, 1.6610329e-07, -1.9000001, -41.5, -15.200001, 1.596117)
 fan_strength = 35.0
 max_fan_speed = 31.0
 
 [node name="CollisionShape3D" parent="NavigationRegion3D/Fan8/FanZone" parent_id_path=PackedInt32Array(22922975, 1262795644) index="0" unique_id=1501290274]
 transform = Transform3D(1.0000112, 0, 0, 0, 1.0000112, 2.842171e-13, 0, -9.947598e-14, 1.0000112, 0, 3.2247715, 0)
 shape = SubResource("CylinderShape3D_w3ou8")
+
+[node name="CSGMesh3D" type="CSGMesh3D" parent="NavigationRegion3D/Fan8" unique_id=1091945843]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.09557322, -0.1477151, -2.220446e-16)
+use_collision = true
+mesh = SubResource("BoxMesh_xrivr")
 
 [node name="Press" parent="NavigationRegion3D" unique_id=1691642139 instance=ExtResource("6_b5b2l")]
 transform = Transform3D(1.9000003, 0, 0, 0, 1.9000003, 0, 0, 0, 1.9000001, -23.516708, -17.7934, 0.6999998)
@@ -427,6 +439,45 @@ color = Color(0, 0, 0, 0)
 [node name="AnimationPlayer" type="AnimationPlayer" parent="CanvasLayer" unique_id=430810038]
 libraries/ = SubResource("AnimationLibrary_b5b2l")
 autoplay = &"fade_in"
+
+[node name="CeilingLights" type="Node3D" parent="." unique_id=649643331]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -32.41815, -19.477333, 0)
+
+[node name="SpotLight3D" type="SpotLight3D" parent="CeilingLights" unique_id=1997880023]
+transform = Transform3D(1, 0, 0, 0, -4.3711385e-08, 0.99999994, 0, -0.99999994, -4.3711385e-08, 0, 0, 0)
+light_color = Color(1, 0.9082013, 0.6330468, 1)
+light_energy = 4.0
+light_volumetric_fog_energy = 10.0
+shadow_bias = 7.769
+spot_range = 15.726216
+spot_angle = 31.019934
+
+[node name="SpotLight3D2" type="SpotLight3D" parent="CeilingLights" unique_id=890858789]
+transform = Transform3D(1, 0, 0, 0, -4.3711385e-08, 0.99999994, 0, -0.99999994, -4.3711385e-08, -10.44162, 0, 0)
+light_color = Color(1, 0.9082013, 0.6330468, 1)
+light_energy = 4.0
+light_volumetric_fog_energy = 10.0
+shadow_bias = 7.769
+spot_range = 15.726216
+spot_angle = 31.019934
+
+[node name="SpotLight3D4" type="SpotLight3D" parent="CeilingLights" unique_id=1252748234]
+transform = Transform3D(1, 0, 0, 0, -4.3711385e-08, 0.99999994, 0, -0.99999994, -4.3711385e-08, -10.44162, 14.771553, -6.456851e-07)
+light_color = Color(1, 0.9082013, 0.6330468, 1)
+light_energy = 4.0
+light_volumetric_fog_energy = 10.0
+shadow_bias = 7.769
+spot_range = 15.726216
+spot_angle = 31.019934
+
+[node name="SpotLight3D3" type="SpotLight3D" parent="CeilingLights" unique_id=375472669]
+transform = Transform3D(1, 0, 0, 0, -4.3711385e-08, 0.99999994, 0, -0.99999994, -4.3711385e-08, -20.732143, 0, 0)
+light_color = Color(1, 0.9082013, 0.6330468, 1)
+light_energy = 4.0
+light_volumetric_fog_energy = 10.0
+shadow_bias = 7.769
+spot_range = 15.726216
+spot_angle = 31.019934
 
 [editable path="NavigationRegion3D/Fan5"]
 [editable path="NavigationRegion3D/Fan7"]
