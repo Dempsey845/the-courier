@@ -1,0 +1,211 @@
+[gd_scene format=3 uid="uid://bxgl2yh2tglip"]
+
+[ext_resource type="Script" uid="uid://c2ggebyhjt77r" path="res://Player/item_bubble.gd" id="1_7e4w2"]
+[ext_resource type="Shader" uid="uid://bl6csfrfuloux" path="res://Player/bubble.gdshader" id="1_k6rhh"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_13qdw"]
+render_priority = 0
+shader = ExtResource("1_k6rhh")
+shader_parameter/bubble_tint = Color(0.55, 0.85, 1, 1)
+shader_parameter/rim_color = Color(0.75, 0.95, 1, 1)
+shader_parameter/transparency = 0.12
+shader_parameter/rim_strength = 1.6
+shader_parameter/rim_power = 3.0
+shader_parameter/refraction_strength = 0.025
+shader_parameter/rainbow_strength = 0.65
+shader_parameter/rainbow_scale = 8.0
+shader_parameter/rainbow_speed = 0.35
+shader_parameter/wobble_strength = 0.025
+shader_parameter/wobble_scale = 2.0
+shader_parameter/wobble_speed = 1.0
+
+[sub_resource type="SphereMesh" id="SphereMesh_xrivr"]
+radial_segments = 32
+rings = 16
+
+[sub_resource type="Animation" id="Animation_pisgm"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("../Label3D:transparency")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [1.0]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("../TextureQuad:transparency")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [1.0]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("../TextureQuad:scale")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_o28un"]
+resource_name = "add"
+step = 0.05
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:scale")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.45, 0.65, 0.8),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Vector3(0.5, 0.5, 0.5), Vector3(0.7, 0.7, 0.7), Vector3(0.4, 0.4, 0.4), Vector3(0.5, 0.5, 0.5)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("../Label3D:transparency")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.4, 0.65, 1),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [0.0, 1.0, 1.0, 0.0]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("../TextureQuad:scale")
+tracks/2/interp = 2
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.4, 0.6, 1),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Vector3(1, 1, 1), Vector3(1.2, 1.6, 1.4), Vector3(0.9, 0.8, 0.8), Vector3(1, 1, 1)]
+}
+tracks/3/type = "method"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("..")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0.6),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"update_quantity_label"
+}]
+}
+
+[sub_resource type="Animation" id="Animation_b1ygp"]
+resource_name = "pop_in"
+step = 0.05
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:scale")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5, 0.65),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector3(0, 0, 0), Vector3(0.7, 0.7, 0.7), Vector3(0.5, 0.5, 0.5)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("../Label3D:transparency")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.5, 0.75),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [1.0, 1.0, 0.0]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("../TextureQuad:transparency")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.5, 0.75),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [1.0, 1.0, 0.0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_o28un"]
+_data = {
+&"RESET": SubResource("Animation_pisgm"),
+&"add": SubResource("Animation_o28un"),
+&"pop_in": SubResource("Animation_b1ygp")
+}
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_13qdw"]
+resource_local_to_scene = true
+transparency = 1
+shading_mode = 0
+texture_filter = 0
+billboard_mode = 1
+billboard_keep_scale = true
+
+[sub_resource type="QuadMesh" id="QuadMesh_xrivr"]
+size = Vector2(0.3, 0.3)
+
+[node name="ItemBubble" type="Node3D" unique_id=181074458]
+script = ExtResource("1_7e4w2")
+
+[node name="BubbleVisual" type="MeshInstance3D" parent="." unique_id=524321952]
+transform = Transform3D(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
+material_override = SubResource("ShaderMaterial_13qdw")
+mesh = SubResource("SphereMesh_xrivr")
+
+[node name="Label3D" type="Label3D" parent="." unique_id=1321716805]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.4000001, 0)
+transparency = 1.0
+billboard = 2
+text = "x1"
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1690690383]
+root_node = NodePath("../BubbleVisual")
+libraries/ = SubResource("AnimationLibrary_o28un")
+autoplay = &"pop_in"
+
+[node name="TextureQuad" type="MeshInstance3D" parent="." unique_id=1061763438]
+material_override = SubResource("StandardMaterial3D_13qdw")
+transparency = 1.0
+mesh = SubResource("QuadMesh_xrivr")

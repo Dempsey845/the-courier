@@ -3,7 +3,9 @@
 [ext_resource type="Script" uid="uid://c4xmpgw1x36jy" path="res://Player/player.gd" id="1_4ntmi"]
 [ext_resource type="Script" uid="uid://b4up548xnrtjy" path="res://Player/player_hit_manager.gd" id="2_00tjw"]
 [ext_resource type="PackedScene" uid="uid://bqwau4w6nankd" path="res://Player/pip_model.tscn" id="2_btcbx"]
+[ext_resource type="Script" uid="uid://0mc4120sb7qc" path="res://Player/player_item_manager.gd" id="2_pisgm"]
 [ext_resource type="Script" uid="uid://dn5b8er116luc" path="res://Components/health.gd" id="3_apopc"]
+[ext_resource type="Texture2D" uid="uid://cstr626a2q74f" path="res://Enemies/Puffcap/puffcap_mushroom_icon.png" id="3_b1ygp"]
 [ext_resource type="Script" uid="uid://dl3pxtcg0n102" path="res://Player/camera_controller.gd" id="3_btcbx"]
 [ext_resource type="Script" uid="uid://be5u0wvfeloek" path="res://Player/player_health_manager.gd" id="3_dkpta"]
 [ext_resource type="Script" uid="uid://bljke43e1e843" path="res://Player/player_debug.gd" id="3_lfmf2"]
@@ -129,6 +131,12 @@ _data = {
 [node name="Player" type="CharacterBody3D" unique_id=67220391]
 collision_layer = 5
 script = ExtResource("1_4ntmi")
+
+[node name="PlayerItemManager" type="Node" parent="." unique_id=1145519169]
+script = ExtResource("2_pisgm")
+item_to_texture = Dictionary[int, CompressedTexture2D]({
+0: ExtResource("3_b1ygp")
+})
 
 [node name="PlayerHitManager" type="Node" parent="." unique_id=233237877 node_paths=PackedStringArray("player")]
 script = ExtResource("2_00tjw")
@@ -309,3 +317,7 @@ offset_bottom = 23.0
 grow_horizontal = 0
 text = "100 FPS"
 horizontal_alignment = 2
+
+[node name="BubblePoint" type="Marker3D" parent="." unique_id=1289271651]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.4, 0)

@@ -2,6 +2,10 @@
 
 [ext_resource type="PackedScene" uid="uid://b8ryahl55a5dg" path="res://World/Areas/Swamp/Shrine.glb" id="1_iu6qj"]
 [ext_resource type="Shader" uid="uid://di51q7lwquwai" path="res://World/Environment/Bodies/shrine.gdshader" id="2_lck1h"]
+[ext_resource type="Script" uid="uid://crcr68foy1l80" path="res://World/Areas/Ruins/shrine.gd" id="2_t65mg"]
+[ext_resource type="PackedScene" uid="uid://bxgl2yh2tglip" path="res://Player/item_bubble.tscn" id="3_ljc1e"]
+[ext_resource type="Texture2D" uid="uid://cstr626a2q74f" path="res://Enemies/Puffcap/puffcap_mushroom_icon.png" id="4_jesbn"]
+[ext_resource type="PackedScene" uid="uid://b2la335wa5e4t" path="res://Systems/interact_area.tscn" id="5_jesbn"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_1got2"]
 render_priority = 0
@@ -31,7 +35,11 @@ shader_parameter/surface_glow = 0.15
 [sub_resource type="BoxShape3D" id="BoxShape3D_xrivr"]
 size = Vector3(2.5, 5.5, 2.2)
 
+[sub_resource type="SphereShape3D" id="SphereShape3D_xrivr"]
+radius = 5.481
+
 [node name="Shrine" unique_id=1246758162 instance=ExtResource("1_iu6qj")]
+script = ExtResource("2_t65mg")
 
 [node name="Cube" parent="." index="0" unique_id=427460278]
 material_overlay = SubResource("ShaderMaterial_1got2")
@@ -41,3 +49,14 @@ material_overlay = SubResource("ShaderMaterial_1got2")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D" index="0" unique_id=411498824]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.049999952, 2.75, -1.1920929e-07)
 shape = SubResource("BoxShape3D_xrivr")
+
+[node name="ItemBubble" parent="." index="2" unique_id=181074458 instance=ExtResource("3_ljc1e")]
+transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, -0.4, 6.4, 0)
+texture = ExtResource("4_jesbn")
+quantity = 5
+
+[node name="InteractArea" parent="." index="3" unique_id=617546903 instance=ExtResource("5_jesbn")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="InteractArea" index="0" unique_id=1598102564]
+shape = SubResource("SphereShape3D_xrivr")
