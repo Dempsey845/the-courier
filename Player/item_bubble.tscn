@@ -203,7 +203,6 @@ text = "x1"
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1690690383]
 root_node = NodePath("../BubbleVisual")
 libraries/ = SubResource("AnimationLibrary_o28un")
-autoplay = &"pop_in"
 
 [node name="TextureQuad" type="MeshInstance3D" parent="." unique_id=1061763438]
 material_override = SubResource("StandardMaterial3D_13qdw")

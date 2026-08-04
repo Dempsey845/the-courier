@@ -93,7 +93,8 @@ func _ready() -> void:
 		if target_health:
 			target_health.death.connect(func():
 				target = null
-				enter_idle()
+				if !health.dead:
+					enter_idle()
 			)
 
 

@@ -2,7 +2,7 @@
 
 [ext_resource type="PackedScene" uid="uid://cgwmw5mcqgc1t" path="res://World/Environment/FrogBase.glb" id="1_aa1tr"]
 [ext_resource type="PackedScene" uid="uid://c58sildkevbgv" path="res://World/Environment/Arc.glb" id="2_3v65d"]
-[ext_resource type="PackedScene" uid="uid://b5m21b64sf5q1" path="res://World/Environment/FrogBaseClouds.glb" id="2_wg83y"]
+[ext_resource type="PackedScene" uid="uid://bhvubptd42mn6" path="res://World/large_cloud_platform.tscn" id="2_h22cb"]
 [ext_resource type="PackedScene" uid="uid://b46f1yixxassy" path="res://World/Environment/WhiteMushroom.glb" id="3_fcvqc"]
 [ext_resource type="Shader" uid="uid://cl0i4nn534r2d" path="res://World/Environment/Bodies/portal.gdshader" id="4_ectnj"]
 [ext_resource type="PackedScene" uid="uid://bfu4d4dureino" path="res://World/Environment/PurpleMushroom.glb" id="4_wg83y"]
@@ -69,8 +69,29 @@ size = Vector3(1, 7, 5)
 
 [node name="FrogBase2" parent="." unique_id=688802953 instance=ExtResource("1_aa1tr")]
 
-[node name="FrogBaseClouds" parent="FrogBase2" unique_id=1715672555 instance=ExtResource("2_wg83y")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.600001, -7.8999996, 0)
+[node name="LargeCloudPlatform" parent="FrogBase2" unique_id=1538887151 instance=ExtResource("2_h22cb")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -11, -8, -4)
+
+[node name="LargeCloudPlatform2" parent="FrogBase2" unique_id=356900602 instance=ExtResource("2_h22cb")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -11, -8, 5)
+
+[node name="LargeCloudPlatform3" parent="FrogBase2" unique_id=1067001843 instance=ExtResource("2_h22cb")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, -8, -8)
+
+[node name="LargeCloudPlatform4" parent="FrogBase2" unique_id=326107826 instance=ExtResource("2_h22cb")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, -8, 8)
+
+[node name="LargeCloudPlatform5" parent="FrogBase2" unique_id=1746822735 instance=ExtResource("2_h22cb")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13, -8, -8)
+
+[node name="LargeCloudPlatform6" parent="FrogBase2" unique_id=976910069 instance=ExtResource("2_h22cb")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13, -8, 8)
+
+[node name="LargeCloudPlatform7" parent="FrogBase2" unique_id=707698404 instance=ExtResource("2_h22cb")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24, -8, -4)
+
+[node name="LargeCloudPlatform8" parent="FrogBase2" unique_id=2034433525 instance=ExtResource("2_h22cb")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24, -8, 5)
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1376052390]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.3500004, -2.6000001, 0)

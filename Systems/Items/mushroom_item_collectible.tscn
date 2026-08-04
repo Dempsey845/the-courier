@@ -1,0 +1,16 @@
+[gd_scene format=3 uid="uid://sfybsl54mno4"]
+
+[ext_resource type="PackedScene" uid="uid://c36to3ds7b0v6" path="res://Systems/Items/item_collectible.tscn" id="1_a4ddo"]
+[ext_resource type="PackedScene" uid="uid://b2jlrcw1423u6" path="res://Enemies/Puffcap/PuffcapMushroomItem.glb" id="2_pdvkc"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_xrivr"]
+radius = 0.6
+
+[node name="MushroomItemCollectible" unique_id=336674807 instance=ExtResource("1_a4ddo")]
+
+[node name="PuffcapMushroomItem" parent="ScaleOffset/ItemVisual" parent_id_path=PackedInt32Array(506992200) index="0" unique_id=884678998 instance=ExtResource("2_pdvkc")]
+transform = Transform3D(0.99999994, 0, -1.4210855e-14, 0, 0.99999994, 0, 1.4210855e-14, 0, 0.99999994, 0, 0.86666673, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." index="2" unique_id=693555483]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.3000001, 0)
+shape = SubResource("SphereShape3D_xrivr")

@@ -33,6 +33,7 @@ func add_item(item: Item) -> void:
 	bubble_point.add_child(item_bubble)
 
 	item_bubble.position = _get_new_bubble_position()
+	item_bubble.show_bubble()
 
 	current_items[item] = 1
 	current_bubbles[item] = item_bubble

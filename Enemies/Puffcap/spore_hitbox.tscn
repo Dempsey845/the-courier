@@ -9,7 +9,7 @@ radius = 2.5
 [node name="SporeHitbox" type="Area3D" unique_id=2137302131]
 script = ExtResource("1_c5un8")
 start_delay = 1.5
-end_delay = -0.5
+end_delay = -1.0
 active = false
 source = "puffcap"
 metadata/_custom_type_script = "uid://deroukfpp2mia"

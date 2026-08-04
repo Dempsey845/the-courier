@@ -1,0 +1,136 @@
+[gd_scene format=3 uid="uid://c36to3ds7b0v6"]
+
+[ext_resource type="Script" uid="uid://ck6a87fv0tnw" path="res://Systems/Items/item_collectible.gd" id="1_6gfjq"]
+
+[sub_resource type="Animation" id="Animation_2ogdi"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ScaleOffset/ItemVisual:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0.15, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("ScaleOffset/ItemVisual:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 6.2831855, 0)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("ScaleOffset/ItemVisual:scale")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(1.2, 1.2, 1.2)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("ScaleOffset:scale")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_eu401"]
+resource_name = "collect"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ScaleOffset:scale")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.33333334, 0.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Vector3(1, 1, 1), Vector3(1.3, 1.3, 1.3), Vector3(1.2, 1.2, 1.2), Vector3(0, 0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_f58hx"]
+resource_name = "loop"
+length = 2.0
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ScaleOffset/ItemVisual:position")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(0, 0, 0), Vector3(0, 0.15, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("ScaleOffset/ItemVisual:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(0, 0, 0), Vector3(0, 6.2831855, 0)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("ScaleOffset/ItemVisual:scale")
+tracks/2/interp = 2
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(1, 1, 1), Vector3(1.2, 1.2, 1.2)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_vllr7"]
+_data = {
+&"RESET": SubResource("Animation_2ogdi"),
+&"collect": SubResource("Animation_eu401"),
+&"loop": SubResource("Animation_f58hx")
+}
+
+[node name="ItemCollectible" type="Area3D" unique_id=336674807]
+collision_layer = 0
+collision_mask = 4
+script = ExtResource("1_6gfjq")
+
+[node name="ScaleOffset" type="Node3D" parent="." unique_id=1683149609]
+
+[node name="ItemVisual" type="Node3D" parent="ScaleOffset" unique_id=506992200]
+transform = Transform3D(1.2, 0, 2.0981467e-07, 0, 1.2, 0, -2.0981467e-07, 0, 1.2, 0, 0.15, 0)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=350776560]
+libraries/ = SubResource("AnimationLibrary_vllr7")
+autoplay = &"loop"
+
+[node name="CollectDelayTimer" type="Timer" parent="." unique_id=1573475459]
+one_shot = true
+autostart = true

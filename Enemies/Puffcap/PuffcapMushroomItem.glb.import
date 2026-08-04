@@ -3,13 +3,13 @@
 importer="scene"
 importer_version=1
 type="PackedScene"
-uid="uid://b5m21b64sf5q1"
-path="res://.godot/imported/FrogBaseClouds.glb-8ecf64a221db0934607763541c5012a4.scn"
+uid="uid://b2jlrcw1423u6"
+path="res://.godot/imported/PuffcapMushroomItem.glb-3d8ff5f2b6f11f512253475b84f0041e.scn"
 
 [deps]
 
-source_file="res://World/Environment/FrogBaseClouds.glb"
-dest_files=["res://.godot/imported/FrogBaseClouds.glb-8ecf64a221db0934607763541c5012a4.scn"]
+source_file="res://Enemies/Puffcap/PuffcapMushroomItem.glb"
+dest_files=["res://.godot/imported/PuffcapMushroomItem.glb-3d8ff5f2b6f11f512253475b84f0041e.scn"]
 
 [params]
 
@@ -19,7 +19,7 @@ nodes/root_script=null
 mesh_library/use_node_names_as_mesh_names=false
 array_mesh/deduplicate_surfaces=true
 nodes/apply_root_scale=true
-nodes/root_scale=1.0
+nodes/root_scale=0.5
 nodes/import_as_skeleton_bones=false
 nodes/use_name_suffixes=true
 nodes/use_node_type_suffixes=true
