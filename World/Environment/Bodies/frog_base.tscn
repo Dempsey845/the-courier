@@ -223,7 +223,8 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -13, 0.3, 0)
 [node name="DetectArea" parent="Lillypad" index="3" unique_id=2125594080]
 forward_force = 18.0
 
-[node name="Shrine" parent="." unique_id=1246758162 instance=ExtResource("16_h22cb")]
+[node name="Shrine" parent="." unique_id=1246758162 node_paths=PackedStringArray("portal") instance=ExtResource("16_h22cb")]
 transform = Transform3D(0.23941405, 0, -0.6577848, 0, 0.7, 0, 0.6577848, 0, 0.23941405, 18.4, 3.6, -1.1)
+portal = NodePath("../Arc2/Portal")
 
 [editable path="Lillypad"]

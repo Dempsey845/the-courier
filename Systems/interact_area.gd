@@ -1,11 +1,13 @@
 class_name InteractArea
 extends Area3D
 
-signal interacted
-signal player_entered
+signal interacted(player: Player)
+signal player_entered()
 signal player_exited
 
 var in_area: bool
+
+var player: Player
 
 func _ready() -> void:
     body_entered.connect(_on_body_entered)
@@ -13,10 +15,11 @@ func _ready() -> void:
 
 func _process(_delta: float) -> void:
     if Input.is_action_just_pressed("interact") and in_area:
-        interacted.emit()
+        interacted.emit(player)
 
 func _on_body_entered(body: Node3D):
     if body is Player:
+        player = body
         in_area = true
         player_entered.emit()
 
