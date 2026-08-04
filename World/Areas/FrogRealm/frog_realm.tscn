@@ -1,0 +1,165 @@
+[gd_scene format=3 uid="uid://bgkvi24wpw605"]
+
+[ext_resource type="Script" uid="uid://co2os8n7jd3ny" path="res://World/Areas/FrogRealm/frog_realm.gd" id="1_0derk"]
+[ext_resource type="PackedScene" uid="uid://dmc36oojdry5d" path="res://Player/player.tscn" id="1_6d5p3"]
+[ext_resource type="Script" uid="uid://dh6q176dnlgbu" path="res://Systems/Dialogue/dialogue_manager.gd" id="1_7argv"]
+[ext_resource type="Shader" uid="uid://dn6qb8lp60ekd" path="res://World/Areas/FrogRealm/frog_realm_sky.gdshader" id="3_syi77"]
+[ext_resource type="PackedScene" uid="uid://c58sildkevbgv" path="res://World/Environment/Arc.glb" id="4_eu6gw"]
+[ext_resource type="Shader" uid="uid://cl0i4nn534r2d" path="res://World/Environment/Bodies/portal.gdshader" id="5_0derk"]
+[ext_resource type="Script" uid="uid://vhphkydnyccp" path="res://World/Environment/Bodies/portal.gd" id="6_x7iw1"]
+[ext_resource type="Script" uid="uid://epcpb44orgo6" path="res://World/Environment/Bodies/portal_entrance.gd" id="7_08s18"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_syi77"]
+shader = ExtResource("3_syi77")
+shader_parameter/zenith_color = Color(0.012, 0.002, 0.055, 1)
+shader_parameter/upper_color = Color(0.085, 0.012, 0.22, 1)
+shader_parameter/horizon_color = Color(0.42, 0.055, 0.65, 1)
+shader_parameter/lower_color = Color(0.035, 0.003, 0.09, 1)
+shader_parameter/nebula_color = Color(0.55, 0.06, 1, 1)
+shader_parameter/nebula_highlight = Color(1, 0.32, 0.95, 1)
+shader_parameter/aurora_color = Color(0.4, 0.15, 1, 1)
+shader_parameter/star_color = Color(0.95, 0.72, 1, 1)
+shader_parameter/moon_color = Color(0.88, 0.62, 1, 1)
+shader_parameter/animation_speed = 0.08
+shader_parameter/nebula_strength = 0.85
+shader_parameter/aurora_strength = 0.5
+shader_parameter/star_strength = 1.4
+shader_parameter/star_density = 0.975
+shader_parameter/moon_size = 0.045
+shader_parameter/moon_glow_size = 0.06000000215148
+shader_parameter/brightness = 1.0
+
+[sub_resource type="Sky" id="Sky_8a836"]
+sky_material = SubResource("ShaderMaterial_syi77")
+
+[sub_resource type="Environment" id="Environment_syi77"]
+background_mode = 2
+background_energy_multiplier = 0.7
+sky = SubResource("Sky_8a836")
+ambient_light_source = 3
+ambient_light_color = Color(0.24, 0.06, 0.42, 1)
+ambient_light_sky_contribution = 0.5
+ambient_light_energy = 0.68
+reflected_light_source = 2
+tonemap_mode = 2
+tonemap_exposure = 1.08
+tonemap_white = 2.2
+ssao_enabled = true
+ssao_radius = 1.8
+ssao_intensity = 1.45
+ssao_power = 1.35
+ssao_detail = 0.55
+ssao_sharpness = 0.8
+ssil_enabled = true
+ssil_radius = 3.5
+ssil_intensity = 0.7
+ssil_sharpness = 0.82
+glow_enabled = true
+glow_normalized = true
+glow_intensity = 0.9
+glow_strength = 1.05
+glow_bloom = 0.12
+glow_blend_mode = 2
+glow_hdr_threshold = 0.85
+glow_hdr_scale = 1.7
+fog_enabled = true
+fog_mode = 1
+fog_light_color = Color(0.24, 0.035, 0.42, 1)
+fog_light_energy = 0.7
+fog_sun_scatter = 0.35
+fog_density = 0.0035
+fog_aerial_perspective = 0.55
+fog_sky_affect = 0.5
+fog_depth_curve = 6.0
+fog_depth_begin = 15.0
+fog_depth_end = 180.0
+volumetric_fog_enabled = true
+volumetric_fog_density = 0.007
+volumetric_fog_albedo = Color(0.29, 0.065, 0.48, 1)
+volumetric_fog_emission = Color(0.1, 0.008, 0.22, 1)
+volumetric_fog_emission_energy = 0.28
+volumetric_fog_gi_inject = 0.65
+volumetric_fog_anisotropy = 0.35
+volumetric_fog_length = 100.0
+volumetric_fog_sky_affect = 0.42
+volumetric_fog_temporal_reprojection_amount = 0.85
+adjustment_enabled = true
+adjustment_contrast = 1.14
+adjustment_saturation = 1.22
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_e7ccy"]
+render_priority = 0
+shader = ExtResource("5_0derk")
+shader_parameter/inner_color = Color(0.12, 0.01, 0.25, 1)
+shader_parameter/energy_color = Color(0.55, 0.08, 1, 1)
+shader_parameter/highlight_color = Color(0.95, 0.55, 1, 1)
+shader_parameter/transition_progress = 1.0
+shader_parameter/portal_radius = 0.46
+shader_parameter/edge_softness = 0.04
+shader_parameter/rim_width = 0.11
+shader_parameter/oval_width = 1.0
+shader_parameter/oval_height = 1.0
+shader_parameter/animation_speed = 1.0
+shader_parameter/swirl_strength = 4.0
+shader_parameter/distortion_strength = 0.035
+shader_parameter/interaction_distortion = 0.045
+shader_parameter/interaction_ring_width = 0.025
+shader_parameter/interaction_brightness = 3.0
+shader_parameter/brightness = 2.5
+shader_parameter/detail_scale = 8.0
+
+[sub_resource type="QuadMesh" id="QuadMesh_s85ib"]
+flip_faces = true
+size = Vector2(9, 10)
+orientation = 0
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_lbc42"]
+size = Vector3(1, 7, 5)
+
+[node name="FrogRealm" type="Node3D" unique_id=1350201666 node_paths=PackedStringArray("player")]
+script = ExtResource("1_0derk")
+player = NodePath("Player")
+
+[node name="DialogueManager" type="Node" parent="." unique_id=1954538742]
+script = ExtResource("1_7argv")
+metadata/_custom_type_script = "uid://dh6q176dnlgbu"
+
+[node name="Player" parent="." unique_id=67220391 instance=ExtResource("1_6d5p3")]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1350030308]
+environment = SubResource("Environment_syi77")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=784528531]
+transform = Transform3D(0.7610994, 0.5229026, 0.38379753, 0.08154646, -0.6641429, 0.74314487, 0.6434888, -0.53430974, -0.54811966, 0, 10.1, -6)
+light_color = Color(0.72, 0.48, 1, 1)
+light_energy = 1.05
+light_indirect_energy = 0.72
+light_volumetric_fog_energy = 1.15
+light_angular_distance = 1.8
+shadow_enabled = true
+shadow_blur = 2.0
+
+[node name="CSGBox3D" type="CSGBox3D" parent="." unique_id=433598377]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.1, 0)
+use_collision = true
+size = Vector3(20, 0.1, 20)
+
+[node name="Arc2" parent="." unique_id=857686855 instance=ExtResource("4_eu6gw")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.6412163, 6.342369, 0.1837593)
+
+[node name="Portal" type="MeshInstance3D" parent="Arc2" unique_id=1072618496]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -2.0999994, 0)
+material_override = SubResource("ShaderMaterial_e7ccy")
+mesh = SubResource("QuadMesh_s85ib")
+script = ExtResource("6_x7iw1")
+shown = true
+
+[node name="PortalEntrance" type="Area3D" parent="Arc2" unique_id=197325497 node_paths=PackedStringArray("portal")]
+collision_layer = 0
+collision_mask = 4
+script = ExtResource("7_08s18")
+portal = NodePath("../Portal")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Arc2/PortalEntrance" unique_id=1324752707]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -2, -8.940697e-08)
+shape = SubResource("BoxShape3D_lbc42")

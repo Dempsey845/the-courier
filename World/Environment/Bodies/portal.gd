@@ -1,10 +1,12 @@
 class_name Portal
 extends MeshInstance3D
 
-var shown: bool
+signal portal_entered
+
+@export var shown: bool
 
 func open_portal():
-	var tween := create_tween()
+	var tween: Tween = create_tween()
 
 	tween.tween_method(
 		func(value: float):
@@ -17,7 +19,7 @@ func open_portal():
 	shown = true
 
 func close_portal():
-	var tween := create_tween()
+	var tween: Tween = create_tween()
 
 	tween.tween_method(
 		func(value: float):
@@ -35,7 +37,9 @@ func play_enter_feedback() -> void:
 		0.0
 	)
 
-	var tween := create_tween()
+	portal_entered.emit()
+
+	var tween: Tween = create_tween()
 
 	tween.tween_method(
 		func(value: float) -> void:
@@ -47,3 +51,4 @@ func play_enter_feedback() -> void:
 		1.0,
 		0.45
 	).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
+

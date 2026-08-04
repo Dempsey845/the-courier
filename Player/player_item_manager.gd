@@ -11,7 +11,9 @@ enum Item {
 
 @onready var bubble_point: Marker3D = %BubblePoint
 
-var current_items: Dictionary[Item, int] = {}
+var current_items: Dictionary[Item, int] = {
+	Item.Mushroom: 5
+}
 
 var current_bubbles: Dictionary[Item, ItemBubble] = {}
 

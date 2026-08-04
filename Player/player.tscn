@@ -18,6 +18,8 @@
 [ext_resource type="Script" uid="uid://cjmnw0iybayd6" path="res://Player/Health/health_ui.gd" id="12_gu6f8"]
 [ext_resource type="Texture2D" uid="uid://c3sc721e3r236" path="res://Player/health_wood_background.png" id="12_p5o4e"]
 [ext_resource type="PackedScene" uid="uid://wih3m4bc8dy4" path="res://Player/Health/health_droplet.tscn" id="13_p5o4e"]
+[ext_resource type="Shader" uid="uid://mswekxtpio3m" path="res://Player/portal_ui.gdshader" id="19_o28un"]
+[ext_resource type="Script" uid="uid://8fgppubyskta" path="res://Player/portal_transition_ui.gd" id="20_n471f"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_xrivr"]
 
@@ -127,6 +129,27 @@ _data = {
 &"RESET": SubResource("Animation_p5o4e"),
 &"hit": SubResource("Animation_gu6f8")
 }
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_xrivr"]
+shader = ExtResource("19_o28un")
+shader_parameter/inner_color = Color(0.41152805, 0.10528893, 0.7813808, 1)
+shader_parameter/energy_color = Color(0.48, 0.035, 1, 1)
+shader_parameter/highlight_color = Color(1, 0.55, 1, 1)
+shader_parameter/final_color = Color(0.082745574, 0.000100930185, 0.1649768, 1)
+shader_parameter/transition_progress = 0.0
+shader_parameter/starting_radius = 0.04
+shader_parameter/edge_softness = 0.035
+shader_parameter/rim_width = 0.075
+shader_parameter/animation_speed = 1.0
+shader_parameter/swirl_strength = 7.0
+shader_parameter/distortion_strength = 0.045
+shader_parameter/detail_scale = 9.0
+shader_parameter/brightness = 1.65
+shader_parameter/ring_density = 12.0
+shader_parameter/flash_strength = 1.5
+shader_parameter/final_darkening = 0.82
+shader_parameter/use_texture = false
+shader_parameter/texture_influence = 0.2
 
 [node name="Player" type="CharacterBody3D" unique_id=67220391]
 collision_layer = 5
@@ -245,7 +268,7 @@ debug_fill = false
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1080396337]
 
-[node name="Control" type="Control" parent="CanvasLayer" unique_id=535616297]
+[node name="Container" type="Control" parent="CanvasLayer" unique_id=535616297]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -254,7 +277,7 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 
-[node name="HealthUI" type="Control" parent="CanvasLayer/Control" unique_id=1663635927 node_paths=PackedStringArray("health", "droplets")]
+[node name="HealthUI" type="Control" parent="CanvasLayer/Container" unique_id=1663635927 node_paths=PackedStringArray("health", "droplets")]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -271,7 +294,7 @@ script = ExtResource("12_gu6f8")
 health = NodePath("../../../Health")
 droplets = [NodePath("HealthContainer/HBoxContainer/HealthDroplet"), NodePath("HealthContainer/HBoxContainer/HealthDroplet2"), NodePath("HealthContainer/HBoxContainer/HealthDroplet3")]
 
-[node name="HealthContainer" type="TextureRect" parent="CanvasLayer/Control/HealthUI" unique_id=452682250]
+[node name="HealthContainer" type="TextureRect" parent="CanvasLayer/Container/HealthUI" unique_id=452682250]
 layout_mode = 0
 offset_left = -143.83838
 offset_top = -44.5
@@ -281,7 +304,7 @@ texture = ExtResource("12_p5o4e")
 expand_mode = 2
 stretch_mode = 5
 
-[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/Control/HealthUI/HealthContainer" unique_id=345691109]
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/Container/HealthUI/HealthContainer" unique_id=345691109]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -294,19 +317,19 @@ grow_horizontal = 2
 grow_vertical = 2
 alignment = 1
 
-[node name="HealthDroplet" parent="CanvasLayer/Control/HealthUI/HealthContainer/HBoxContainer" unique_id=1437849419 instance=ExtResource("13_p5o4e")]
+[node name="HealthDroplet" parent="CanvasLayer/Container/HealthUI/HealthContainer/HBoxContainer" unique_id=1437849419 instance=ExtResource("13_p5o4e")]
 layout_mode = 2
 
-[node name="HealthDroplet2" parent="CanvasLayer/Control/HealthUI/HealthContainer/HBoxContainer" unique_id=1026495791 instance=ExtResource("13_p5o4e")]
+[node name="HealthDroplet2" parent="CanvasLayer/Container/HealthUI/HealthContainer/HBoxContainer" unique_id=1026495791 instance=ExtResource("13_p5o4e")]
 layout_mode = 2
 
-[node name="HealthDroplet3" parent="CanvasLayer/Control/HealthUI/HealthContainer/HBoxContainer" unique_id=804026972 instance=ExtResource("13_p5o4e")]
+[node name="HealthDroplet3" parent="CanvasLayer/Container/HealthUI/HealthContainer/HBoxContainer" unique_id=804026972 instance=ExtResource("13_p5o4e")]
 layout_mode = 2
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="CanvasLayer/Control/HealthUI" unique_id=1973791419]
+[node name="AnimationPlayer" type="AnimationPlayer" parent="CanvasLayer/Container/HealthUI" unique_id=1973791419]
 libraries/ = SubResource("AnimationLibrary_dkpta")
 
-[node name="FPSLabel" type="Label" parent="CanvasLayer/Control" unique_id=324536875]
+[node name="FPSLabel" type="Label" parent="CanvasLayer/Container" unique_id=324536875]
 unique_name_in_owner = true
 layout_mode = 1
 anchors_preset = 1
@@ -317,6 +340,17 @@ offset_bottom = 23.0
 grow_horizontal = 0
 text = "100 FPS"
 horizontal_alignment = 2
+
+[node name="PortalTransitionUI" type="ColorRect" parent="CanvasLayer/Container" unique_id=406471958]
+material = SubResource("ShaderMaterial_xrivr")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("20_n471f")
 
 [node name="BubblePoint" type="Marker3D" parent="." unique_id=1289271651]
 unique_name_in_owner = true

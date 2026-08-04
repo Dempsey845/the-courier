@@ -2,7 +2,7 @@ extends Node3D
 
 @export var portal: Portal
 
-@onready var    item_bubble: ItemBubble = $ItemBubble
+@onready var item_bubble: ItemBubble = $ItemBubble
 @onready var interact_area: InteractArea = $InteractArea
 
 func _ready() -> void:
@@ -19,6 +19,11 @@ func _on_interacted(player: Player):
         item_bubble.hide_bubble()
         item_manager.remove_item(PlayerItemManager.Item.Mushroom, 5)
         portal.open_portal()
+        portal.portal_entered.connect(func():
+            var canvas_layer = player.get_node("CanvasLayer")
+            var portal_transition: PortalTransitionUI = canvas_layer.get_node("Container/PortalTransitionUI")
+            portal_transition.enter_portal("res://World/Areas/FrogRealm/frog_realm.tscn")
+        )
 
 func _on_player_entered():
     if !portal.shown:

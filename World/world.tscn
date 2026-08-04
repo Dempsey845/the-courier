@@ -13,6 +13,7 @@
 [ext_resource type="PackedScene" uid="uid://cyaqell3bfqr2" path="res://World/Environment/Bodies/dirt_pillar_wide.tscn" id="4_h2aik"]
 [ext_resource type="PackedScene" uid="uid://h2bnamg205h1" path="res://World/Areas/Swamp/tree_log_swamp.tscn" id="4_lo5ox"]
 [ext_resource type="PackedScene" uid="uid://cnm8sgtocpwuv" path="res://World/Environment/Bodies/decorated_dirt_pillar_wide.tscn" id="5_0wqet"]
+[ext_resource type="Shader" uid="uid://but3vfvapjmu" path="res://World/world_sky.gdshader" id="5_3ql07"]
 [ext_resource type="PackedScene" uid="uid://cniwu7eyr0832" path="res://Enemies/Snapper/snapper_enemy.tscn" id="5_k8do8"]
 [ext_resource type="PackedScene" uid="uid://5kka40lmrt1x" path="res://World/Areas/Ruins/ruins_cloud_platform.tscn" id="5_yfuda"]
 [ext_resource type="PackedScene" uid="uid://dxffamdf7vshk" path="res://World/Environment/Bodies/rock_pillar.tscn" id="6_awrha"]
@@ -33,23 +34,37 @@
 [ext_resource type="PackedScene" uid="uid://bxm70bskieiiu" path="res://World/Fan/fan.tscn" id="30_3sd22"]
 [ext_resource type="Script" uid="uid://bmpi2qgjq8pdg" path="res://World/zone_area.gd" id="31_s5a7k"]
 
-[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_62w18"]
-sky_top_color = Color(0.34509805, 0.4745098, 0.5411765, 1)
-sky_horizon_color = Color(0.77254903, 0.8392157, 0.68235296, 1)
-sky_curve = 0.12
-sky_energy_multiplier = 1.1
-ground_bottom_color = Color(0.65528727, 0.9627144, 0.8497311, 1)
-ground_horizon_color = Color(0.5176471, 0.60784316, 0.4392157, 1)
-sun_angle_max = 60.0
-sun_curve = 0.08
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_syi77"]
+shader = ExtResource("5_3ql07")
+shader_parameter/zenith_color = Color(0.075, 0.29, 0.48, 1)
+shader_parameter/upper_color = Color(0.24, 0.56, 0.68, 1)
+shader_parameter/horizon_color = Color(0.72, 0.88, 0.72, 1)
+shader_parameter/lower_color = Color(0.19, 0.37, 0.31, 1)
+shader_parameter/cloud_shadow_color = Color(0.3, 0.52, 0.56, 1)
+shader_parameter/cloud_color = Color(0.86, 0.96, 0.9, 1)
+shader_parameter/cloud_highlight_color = Color(1, 0.94, 0.7, 1)
+shader_parameter/magic_color = Color(0.25, 0.9, 0.82, 1)
+shader_parameter/sparkle_color = Color(0.85, 1, 0.78, 1)
+shader_parameter/sun_color = Color(1, 0.82, 0.44, 1)
+shader_parameter/animation_speed = 0.025
+shader_parameter/cloud_scale = 5.0
+shader_parameter/cloud_coverage = 0.48
+shader_parameter/cloud_softness = 0.16
+shader_parameter/cloud_strength = 0.9
+shader_parameter/magic_strength = 0.22
+shader_parameter/sparkle_strength = 0.45
+shader_parameter/sun_size = 0.010000000475
+shader_parameter/sun_glow_size = 0.01500000001398
+shader_parameter/sun_strength = 2.0
+shader_parameter/brightness = 1.0
 
-[sub_resource type="Sky" id="Sky_8a836"]
-sky_material = SubResource("ProceduralSkyMaterial_62w18")
+[sub_resource type="Sky" id="Sky_w08tj"]
+sky_material = SubResource("ShaderMaterial_syi77")
 
 [sub_resource type="Environment" id="Environment_j8job"]
 background_mode = 2
 background_energy_multiplier = 0.8
-sky = SubResource("Sky_8a836")
+sky = SubResource("Sky_w08tj")
 ambient_light_source = 2
 ambient_light_color = Color(0.5058824, 0.6117647, 0.5372549, 1)
 ambient_light_sky_contribution = 0.35
@@ -816,7 +831,7 @@ color_ramp = SubResource("Gradient_0wqet")
 seamless = true
 in_3d_space = true
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_koyeq"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_3ql07"]
 resource_local_to_scene = true
 render_priority = 0
 shader = SubResource("Shader_5gpxd")
@@ -863,9 +878,9 @@ shader_parameter/ripple_strength = 0.08
 shader_parameter/ripple_width = 0.2
 shader_parameter/ripple_frequency = 12.0
 
-[sub_resource type="PlaneMesh" id="PlaneMesh_3ql07"]
+[sub_resource type="PlaneMesh" id="PlaneMesh_w08tj"]
 resource_local_to_scene = true
-material = SubResource("ShaderMaterial_koyeq")
+material = SubResource("ShaderMaterial_3ql07")
 size = Vector2(45, 45)
 subdivide_width = 450
 subdivide_depth = 450
@@ -937,8 +952,9 @@ emission = Color(0.17628652, 0.17673275, 0.06327736, 1)
 [sub_resource type="BoxShape3D" id="BoxShape3D_13qdw"]
 size = Vector3(50, 50, 50)
 
-[node name="World" type="Node3D" unique_id=970689617]
+[node name="World" type="Node3D" unique_id=970689617 node_paths=PackedStringArray("player")]
 script = ExtResource("1_koyeq")
+player = NodePath("Player")
 
 [node name="ZoneManager" type="Node" parent="." unique_id=358080498]
 script = ExtResource("1_3sd22")
@@ -955,7 +971,7 @@ metadata/_custom_type_script = "uid://dh6q176dnlgbu"
 environment = SubResource("Environment_j8job")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=510594859]
-transform = Transform3D(0.81915206, 0.4055798, -0.4055798, 0, 0.70710677, 0.70710677, 0.57357645, -0.579228, 0.579228, 0, 0, 0)
+transform = Transform3D(0.81915206, 0.40557984, -0.40557975, 0, 0.7071067, 0.7071068, 0.57357645, -0.579228, 0.5792279, 0, 0, 0)
 light_color = Color(1, 0.8901961, 0.7019608, 1)
 light_energy = 1.15
 light_indirect_energy = 0.8
@@ -1114,7 +1130,7 @@ transform = Transform3D(0.49609634, 0.060223475, -0.788083, -0.13249165, 0.90199
 
 [node name="MushroomSwampEffect" parent="NavigationRegion3D/SwampArea" unique_id=963275507 instance=ExtResource("3_oe8m4")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 24.600002, 0)
-mesh = SubResource("PlaneMesh_3ql07")
+mesh = SubResource("PlaneMesh_w08tj")
 
 [node name="DirtPillarWide" parent="NavigationRegion3D/SwampArea" unique_id=2051397190 node_paths=PackedStringArray("water") instance=ExtResource("4_h2aik")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15.6, 24, 16.099998)
