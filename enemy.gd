@@ -72,6 +72,8 @@ var scatter_position: Vector3
 
 var wait_remaining: float = 0.0
 
+var index: int
+
 func _ready() -> void:
 	navigation_agent.path_desired_distance = 1.2
 	navigation_agent.target_desired_distance = 1.2

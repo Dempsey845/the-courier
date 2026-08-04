@@ -6,9 +6,16 @@ extends Node3D
 @onready var interact_area: InteractArea = $InteractArea
 
 func _ready() -> void:
-    interact_area.player_entered.connect(_on_player_entered)
-    interact_area.player_exited.connect(_on_player_exited)
-    interact_area.interacted.connect(_on_interacted)
+    if DataManager.world_portal_activated:
+        portal.open_portal()
+        portal.portal_entered.connect(func():
+            var player = get_tree().current_scene.get_node("Player")
+            _on_portal_entered(player)
+        )
+    else:
+        interact_area.player_entered.connect(_on_player_entered)
+        interact_area.player_exited.connect(_on_player_exited)
+        interact_area.interacted.connect(_on_interacted)
 
 func _on_interacted(player: Player):
     var item_manager: PlayerItemManager
@@ -18,12 +25,18 @@ func _on_interacted(player: Player):
     and item_manager.current_items[PlayerItemManager.Item.Mushroom] >= 5:
         item_bubble.hide_bubble()
         item_manager.remove_item(PlayerItemManager.Item.Mushroom, 5)
+        
         portal.open_portal()
         portal.portal_entered.connect(func():
-            var canvas_layer = player.get_node("CanvasLayer")
-            var portal_transition: PortalTransitionUI = canvas_layer.get_node("Container/PortalTransitionUI")
-            portal_transition.enter_portal("res://World/Areas/FrogRealm/frog_realm.tscn")
+          _on_portal_entered(player)
         )
+
+        DataManager.world_portal_activated = true
+
+func _on_portal_entered(player: Player):
+    var canvas_layer = player.get_node("CanvasLayer")
+    var portal_transition: PortalTransitionUI = canvas_layer.get_node("Container/PortalTransitionUI")
+    portal_transition.enter_portal("res://World/Areas/FrogRealm/frog_realm.tscn")
 
 func _on_player_entered():
     if !portal.shown:

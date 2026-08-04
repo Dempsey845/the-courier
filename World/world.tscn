@@ -8,7 +8,6 @@
 [ext_resource type="Texture2D" uid="uid://4rlm2g5x5820" path="res://Enemies/Golem/golem_stomp_instruction.png" id="3_j8job"]
 [ext_resource type="PackedScene" uid="uid://c4qraqdt2f0hp" path="res://World/Areas/Swamp/mushroom_swamp_effect.tscn" id="3_oe8m4"]
 [ext_resource type="PackedScene" uid="uid://ceghomufoistc" path="res://World/Areas/Ruins/Bodies/ruins_start_platform.tscn" id="3_x0pyu"]
-[ext_resource type="PackedScene" uid="uid://du7tgosjqxyde" path="res://Enemies/Puffcap/puffcap_enemy.tscn" id="4_3f78f"]
 [ext_resource type="PackedScene" uid="uid://dem10o88fea0" path="res://World/cloud_platform.tscn" id="4_dg1ng"]
 [ext_resource type="PackedScene" uid="uid://cyaqell3bfqr2" path="res://World/Environment/Bodies/dirt_pillar_wide.tscn" id="4_h2aik"]
 [ext_resource type="PackedScene" uid="uid://h2bnamg205h1" path="res://World/Areas/Swamp/tree_log_swamp.tscn" id="4_lo5ox"]
@@ -24,6 +23,7 @@
 [ext_resource type="PackedScene" uid="uid://cl1wysfuxby3q" path="res://NPC/Wisp/wisp_npc.tscn" id="8_eidgh"]
 [ext_resource type="PackedScene" uid="uid://ciw84m3tiix01" path="res://World/Environment/Bodies/puffcap_base.tscn" id="8_oeat8"]
 [ext_resource type="PackedScene" uid="uid://fmmropord2sc" path="res://World/Environment/Bodies/frog_base.tscn" id="10_5xkvv"]
+[ext_resource type="Script" uid="uid://uaatf3j3db7p" path="res://Systems/enemy_spawner.gd" id="11_3ql07"]
 [ext_resource type="PackedScene" uid="uid://g6qjr8aewopi" path="res://World/Areas/Swamp/lillypad.tscn" id="11_lo5ox"]
 [ext_resource type="PackedScene" uid="uid://gitm3rb6yty2" path="res://World/Environment/Bodies/cloud_carrier.tscn" id="13_kcyjf"]
 [ext_resource type="Shader" uid="uid://c48cwtn0k43tk" path="res://World/water.gdshader" id="19_xw5lg"]
@@ -1098,25 +1098,35 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 17.4, 0.5)
 material_override = SubResource("StandardMaterial3D_njqwk")
 mesh = SubResource("BoxMesh_xrivr")
 
-[node name="PuffcapEnemy" parent="NavigationRegion3D" unique_id=685929452 node_paths=PackedStringArray("target") instance=ExtResource("4_3f78f")]
-transform = Transform3D(0.258819, 0, -0.9659258, 0, 1, 0, 0.9659258, 0, 0.258819, -1.9396076, 2.3999999, -77.86061)
-target = NodePath("../../Player")
+[node name="EnemySpawner" type="Marker3D" parent="NavigationRegion3D" unique_id=1936923661]
+transform = Transform3D(0.258819, 0, -0.9659258, 0, 1, 0, 0.9659258, 0, 0.258819, -1.9396057, 2.3999999, -77.86061)
+script = ExtResource("11_3ql07")
+enemy_type = 1
+metadata/_custom_type_script = "uid://uaatf3j3db7p"
 
-[node name="PuffcapEnemy2" parent="NavigationRegion3D" unique_id=240667530 node_paths=PackedStringArray("target") instance=ExtResource("4_3f78f")]
-transform = Transform3D(-0.86602545, 0, -0.50000006, 0, 1, 0, 0.50000006, 0, -0.86602545, -12.5169735, 4.0999985, -95.29017)
-target = NodePath("../../Player")
+[node name="EnemySpawner2" type="Marker3D" parent="NavigationRegion3D" unique_id=394791149]
+transform = Transform3D(-0.86602545, 0, -0.50000006, 0, 1, 0, 0.50000006, 0, -0.86602545, -12.516975, 4.0999985, -95.29017)
+script = ExtResource("11_3ql07")
+enemy_type = 1
+metadata/_custom_type_script = "uid://uaatf3j3db7p"
 
-[node name="PuffcapEnemy3" parent="NavigationRegion3D" unique_id=1478375136 node_paths=PackedStringArray("target") instance=ExtResource("4_3f78f")]
-transform = Transform3D(0.258819, 0, -0.9659258, 0, 1, 0, 0.9659258, 0, 0.258819, 4.0603924, 3.3999999, -91.86061)
-target = NodePath("../../Player")
+[node name="EnemySpawner3" type="Marker3D" parent="NavigationRegion3D" unique_id=1203899371]
+transform = Transform3D(0.258819, 0, -0.9659258, 0, 1, 0, 0.9659258, 0, 0.258819, 4.0603943, 3.3999999, -91.86061)
+script = ExtResource("11_3ql07")
+enemy_type = 1
+metadata/_custom_type_script = "uid://uaatf3j3db7p"
 
-[node name="PuffcapEnemy4" parent="NavigationRegion3D" unique_id=218814760 node_paths=PackedStringArray("target") instance=ExtResource("4_3f78f")]
-transform = Transform3D(0.8660254, 0, -0.5, 0, 1, 0, 0.5, 0, 0.8660254, 15.516999, 2.3999999, -64.90983)
-target = NodePath("../../Player")
+[node name="EnemySpawner4" type="Marker3D" parent="NavigationRegion3D" unique_id=1140111998]
+transform = Transform3D(0.8660254, 0, -0.5, 0, 1, 0, 0.5, 0, 0.8660254, 15.516998, 2.3999999, -64.90983)
+script = ExtResource("11_3ql07")
+enemy_type = 1
+metadata/_custom_type_script = "uid://uaatf3j3db7p"
 
-[node name="PuffcapEnemy5" parent="NavigationRegion3D" unique_id=1529748673 node_paths=PackedStringArray("target") instance=ExtResource("4_3f78f")]
+[node name="EnemySpawner5" type="Marker3D" parent="NavigationRegion3D" unique_id=1957481696]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5.100001, -133.2)
-target = NodePath("../../Player")
+script = ExtResource("11_3ql07")
+enemy_type = 1
+metadata/_custom_type_script = "uid://uaatf3j3db7p"
 
 [node name="SwampArea" type="Node3D" parent="NavigationRegion3D" unique_id=1540419995]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -24, -81)
@@ -1198,6 +1208,10 @@ transform = Transform3D(0.8660254, 0, -0.5, 0, 1, 0, 0.5, 0, 0.8660254, 15.8, 25
 
 [node name="FrogBase" parent="NavigationRegion3D/SwampArea" unique_id=1909349785 instance=ExtResource("10_5xkvv")]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -1.136496e-06, 28.9, -59)
+
+[node name="PlayerPortalStartPosition" type="Marker3D" parent="NavigationRegion3D/SwampArea/FrogBase" unique_id=1445250135]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -1.6610327e-06, 8.9, -152)
+top_level = true
 
 [node name="Lillypad" parent="NavigationRegion3D/SwampArea" unique_id=1060873832 node_paths=PackedStringArray("water") instance=ExtResource("11_lo5ox")]
 transform = Transform3D(0.25881907, 0, 0.9659258, 0, 1, 0, -0.9659258, 0, 0.25881907, 7, 24.7, 20)
@@ -1352,3 +1366,6 @@ metadata/_custom_type_script = "uid://bmpi2qgjq8pdg"
 [node name="CollisionShape3D" type="CollisionShape3D" parent="ZoneAreas/SwampZoneArea" unique_id=1292204990]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1.3000001)
 shape = SubResource("BoxShape3D_13qdw")
+
+[node name="Marker3D" type="Marker3D" parent="." unique_id=984720141]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -25)

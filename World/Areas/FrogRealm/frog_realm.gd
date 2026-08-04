@@ -7,6 +7,8 @@ extends Node3D
 var portal_transition: PortalTransitionUI
 
 func _ready() -> void:
+    DataManager.player_world_start_position = Vector3(0, 8.9, -152.0)
+
     var canvas_layer = player.get_node("CanvasLayer")
     portal_transition = canvas_layer.get_node("Container/PortalTransitionUI")
     portal_transition.set_portal_transition(1.0)
