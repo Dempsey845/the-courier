@@ -3,6 +3,7 @@
 [ext_resource type="Shader" uid="uid://udm3b3q1w1a0" path="res://Player/pip_overlay.gdshader" id="1_hyf7c"]
 
 [resource]
+resource_local_to_scene = true
 render_priority = 0
 shader = ExtResource("1_hyf7c")
 shader_parameter/progress = 0.0
@@ -12,7 +13,7 @@ shader_parameter/highlight_color = Color(0.8, 1, 1, 1)
 shader_parameter/opacity = 0.6
 shader_parameter/rim_power = 2.5
 shader_parameter/rim_strength = 1.5
-shader_parameter/shell_offset = 0.00019999999493999998
+shader_parameter/shell_offset = 0.00019999999493999
 shader_parameter/pattern_scale = 25.0
 shader_parameter/animation_speed = 1.5
 shader_parameter/shimmer_strength = 0.25

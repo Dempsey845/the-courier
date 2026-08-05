@@ -11,12 +11,15 @@ var index: int = -1
 func _ready() -> void:
     body_entered.connect(_on_body_entered)
 
+    await get_tree().process_frame
+
     index = WorldCollectibles.add_world_collectible(self, global_position)
 
 func _on_body_entered(body: Node3D):
     if body is Player and collect_delay_timer.is_stopped():
         animation_player.play("collect")
         await animation_player.animation_finished
+
         var item_manager: PlayerItemManager = body.get_node("PlayerItemManager")
         item_manager.add_item(item)
         

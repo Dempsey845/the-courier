@@ -7,7 +7,7 @@
 [ext_resource type="Texture2D" uid="uid://dud2a0puoio8e" path="res://Enemies/Puffcap/puffcap_Cap.png" id="3_t5tt1"]
 [ext_resource type="Texture2D" uid="uid://dav6g0yahks6n" path="res://Enemies/Puffcap/puffcap_ShroomBottom.png" id="4_bn6dt"]
 [ext_resource type="PackedScene" uid="uid://c0k6l873437gy" path="res://Enemies/Puffcap/puffcap_release_spore_effect.tscn" id="7_bn6dt"]
-[ext_resource type="Animation" uid="uid://r0bklv4jhbwv" path="res://Enemies/Puffcap/puffcap_death.anim" id="7_s1084"]
+[ext_resource type="Animation" uid="uid://cwl2l2tp2guy5" path="res://Enemies/Puffcap/puffcap_death.anim" id="7_s1084"]
 [ext_resource type="PackedScene" uid="uid://wvsvu224vtm3" path="res://Enemies/Puffcap/mushroom_gas.tscn" id="9_s1084"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_p7bs7"]
@@ -374,21 +374,21 @@ script = ExtResource("2_p7bs7")
 [node name="PuffcapAnimationController" type="Node" parent="." index="0" unique_id=1015491863]
 script = ExtResource("2_t5tt1")
 
-[node name="Skeleton3D" parent="Armature" parent_id_path=PackedInt32Array(1887977614) index="0" unique_id=1928285293]
-bones/0/position = Vector3(-0.011930507, 0.32513663, 0)
-bones/0/rotation = Quaternion(0, 0, -0.023967436, 0.99971277)
+[node name="Skeleton3D" parent="Armature" parent_id_path=PackedInt32Array(1540813913) index="0" unique_id=340238021]
+bones/0/position = Vector3(0.008568127, 0.32501313, 0)
+bones/0/rotation = Quaternion(0, 0, 0.017564379, 0.9998458)
 bones/0/scale = Vector3(0.99999994, 0.99999994, 1)
-bones/1/position = Vector3(0.011930516, 0.8228523, -0.5557725)
-bones/1/rotation = Quaternion(0.5745876, -0.013775444, -0.019613275, 0.8180921)
+bones/1/position = Vector3(-0.008568127, 0.8229757, -0.5557725)
+bones/1/rotation = Quaternion(0.57466394, 0.010095074, 0.014373342, 0.81820107)
 bones/1/scale = Vector3(1, 1, 1.0000002)
 bones/2/position = Vector3(0.21912877, 0.11440279, -0.20084074)
 bones/2/rotation = Quaternion(-0.04318904, 0.69833213, 0.7091312, -0.08717797)
 bones/3/position = Vector3(-0.21912877, 0.11440279, -0.20084074)
 
-[node name="Sphere" parent="Armature/Skeleton3D" index="0" unique_id=1732147677]
+[node name="Sphere" parent="Armature/Skeleton3D" index="0" unique_id=1093975010]
 mesh = SubResource("ArrayMesh_5gpxd")
 
-[node name="AnimationPlayer" parent="." index="2" unique_id=641029244]
+[node name="AnimationPlayer" parent="." index="2" unique_id=1185318873]
 libraries/ = SubResource("AnimationLibrary_p7bs7")
 
 [node name="AnimationTree" type="AnimationTree" parent="." index="3" unique_id=930358500]

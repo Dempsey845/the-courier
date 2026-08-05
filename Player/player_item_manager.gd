@@ -19,10 +19,19 @@ var bubble_order: Array[ItemBubble] = []
 
 var item_bubble_scene: PackedScene = preload("uid://bxgl2yh2tglip")
 
-func add_item(item: Item) -> void:
+func _ready() -> void:
+	await get_tree().process_frame
+	for item in DataManager.player_items:
+		var quantity = DataManager.player_items[item]
+		for i in range(quantity):
+			add_item(item, false)
+
+func add_item(item: Item, play_add_animation: bool = true) -> void:
 	if item in current_items:
 		current_items[item] += 1
-		current_bubbles[item].add()
+		current_bubbles[item].add(play_add_animation)
+		if !play_add_animation:
+			current_bubbles[item].update_quantity_label()
 		return
 
 	await _make_space_for_new_bubble()
@@ -128,3 +137,7 @@ func resort_bubbles() -> void:
 
 	for tween: Tween in movement_tweens:
 		await tween.finished
+
+func _exit_tree() -> void:
+	DataManager.player_items.clear()
+	DataManager.player_items = current_items.duplicate()
