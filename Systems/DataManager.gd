@@ -1,7 +1,7 @@
 extends Node
 
 var world_portal_activated: bool
-var player_world_start_position: Vector3 = Vector3(0, 0, -25.0)
+var player_world_start_position: Vector3 = Vector3(-191.144, 2, -25.8)
 
 var world_started: bool
 
