@@ -1,0 +1,151 @@
+[gd_scene format=4 uid="uid://bar88i5lv34bx"]
+
+[ext_resource type="PackedScene" uid="uid://lg1dripowoaf" path="res://Enemies/RealmBoss/FrogBoss.glb" id="1_3g56f"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_8hhjs"]
+resource_name = "FrogMouth"
+cull_mode = 2
+albedo_color = Color(0.41771832, 0.087719955, 0.062477387, 1)
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_grdnj"]
+_surfaces = [{
+"aabb": AABB(-0.542018, -0.7337266, -0.34972152, 1.1045835, 0.5534965, 1.0252416),
+"format": 34359742465,
+"index_count": 168,
+"index_data": PackedByteArray("EAARABIAEAATABEAEwACABEAEgARAAIAEgAIABAAEwAKAAIAEgAJAAgABQATABAABQAKABMAEAAIAAAAEAAAAAUACQAAAAgAEgACAAwADAAJABIACgAUAAIADAACABQACwAAAAkADAALAAkAFQALAAwADAAUABUADQAAAAsAFQANAAsADQAWAAAABQAAABYAFwANABUABQAWABgAGAAKAAUAFgANAAMAFwADAA0AGAAWAA4AFgADAA4AGAAZAAoACgAZABQAGAAOABoAGgAZABgADgADAAQAGgAOAAQABAADABsAGgABABkAAQAUABkAGgAEAAcABwABABoABwAEABsADwAbAAMABwAbAA8ADwADABcABwAcAAEADwAcAAcAAQAGABQAHAAGAAEAFQAUAAYAFQAGABcAHAAdAAYADwAdABwAFwAGAB0AFwAdAA8A"),
+"lods": [0.3581613, PackedByteArray("CAACAAkACAAKAAIACQAAAAgABQAKAAgACAAAAAUACwAAAAkABQABAAoACgABAAIADAALAAkACQACAAwADQAAAAsADAANAAsABQAAAA4ADQAOAAAABwABAAUABQAOAAcAAQAGAAIADAACAAYAAwANAAwADgANAAMADAAGAAMABwAOAAQADgADAAQABwAPAAEADwAGAAEABwAEAA8AAwAGAA8ADwAEAAMA"), 0.65969646, PackedByteArray("BQABAAIAAQAGAAIABwAGAAEABwABAAUAAgAGAAMAAwAGAAcABwAEAAMABQAEAAcAAwAEAAAABQAAAAQAAgADAAAACAAAAAUAAgAAAAgABQACAAgA"), 0.9936303, PackedByteArray("AAABAAIAAQADAAIAAgADAAAAAQAEAAMAAwAEAAAAAAAEAAEA")],
+"name": "FrogMouth",
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 30,
+"vertex_data": PackedByteArray("tjDGPknjPb5m9m++qMi5vmpeL7/wMRU/6Im5PmHf6r4v2ho/ReK2vkSOOL4bCGi+9KsEvwPIWr6zDrO+cVm4PkJf8r7cKj4+7AqyvuXe6r7/6ho/BHMGvygGqL5SH6Y9ntQPP7MNUr6zDrO+SwQQP1xDTL52k7G+GIKsPiRgL7+sKxU/lfXEPkCOOL4jCGi+dmfBPkfplr7sJFE+JDVhPFCLcb7zeRy+Yt+vvkfjPb5u9m++scEKv/sgpb5IDKw9++gIP3h0/L7MB5A91lwHP0Ws8r5mX/0+Oz0OP9PDoL5IDKw9b00AP4hdM7/YA/Q+SPvlOyTnAb/j7iw/kOLeO81ns76OWY4+oYqyPFLgdr6WjiW+ZHC6vkfplr7sJFE+qKaru+RuB79cSYQ+GCdWvILVO7/+8iY/p7a9vkJf8r7cKj4+ofoIv6r9VL52k7G+3aoBv2TUCL+ixfk+spUDv3Vl9r5Om/0+")
+}]
+blend_shape_mode = 0
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_jx2j8"]
+resource_name = "FrogBoss_Sphere_001"
+_surfaces = [{
+"aabb": AABB(-0.542018, -0.7337266, -0.34972152, 1.1045835, 0.5534965, 1.0252416),
+"attribute_data": PackedByteArray("AfufPuCbEj8A+58+4JsSP/QEoD4hZA0/9QSgPiBkDT8R/rE+4JsSPwH7nz7gmxI/9ASgPiFkDT8R/rE+4JsSPxH+sT7gmxI/aCqyPiFkDT8A+58+4JsSP/UEoD4gZA0/9QSgPiBkDT/1BIA+IGQNPwH7nz7gmxI/aCqyPiFkDT8R/rE+4JsSP2gqsj4hZA0/aCqyPiFkDT8S/rE+35sSP/UEgD4gZA0/9QSAPiBkDT8A9n8+4JsSP/UEoD4gZA0/APZ/PuCbEj8A9n8+4JsSPwH7nz7gmxI/aCqyPiFkDT8S/rE+35sSP2gqsj4hZA0/"),
+"format": 34359742487,
+"index_count": 168,
+"index_data": PackedByteArray("EAARABIAEAATABEAEwACABEAEgARAAIAEgAIABAAEwAKAAIAEgAJAAgABQATABAABQAKABMAEAAIAAAAEAAAAAUACQAAAAgAEgACAAwADAAJABIACgAUAAIADAACABQACwAAAAkADAALAAkAFQALAAwADAAUABUADQAAAAsAFQANAAsADQAWAAAABQAAABYAFwANABUABQAWABgAGAAKAAUAFgANAAMAFwADAA0AGAAWAA4AFgADAA4AGAAZAAoACgAZABQAGAAOABoAGgAZABgADgADAAQAGgAOAAQABAADABsAGgABABkAAQAUABkAGgAEAAcABwABABoABwAEABsADwAbAAMABwAbAA8ADwADABcABwAcAAEADwAcAAcAAQAGABQAHAAGAAEAFQAUAAYAFQAGABcAHAAdAAYADwAdABwAFwAGAB0AFwAdAA8A"),
+"lods": [0.3581613, PackedByteArray("CAACAAkACAAKAAIACQAAAAgABQAKAAgACAAAAAUACwAAAAkABQABAAoACgABAAIADAALAAkACQACAAwADQAAAAsADAANAAsABQAAAA4ADQAOAAAABwABAAUABQAOAAcAAQAGAAIADAACAAYAAwANAAwADgANAAMADAAGAAMABwAOAAQADgADAAQABwAPAAEADwAGAAEABwAEAA8AAwAGAA8ADwAEAAMA"), 0.65969646, PackedByteArray("BQABAAIAAQAGAAIABwAGAAEABwABAAUAAgAGAAMAAwAGAAcABwAEAAMABQAEAAcAAwAEAAAABQAAAAQAAgADAAAACAAAAAUAAgAAAAgABQACAAgA"), 0.9936303, PackedByteArray("AAABAAIAAQADAAIAAgADAAAAAQAEAAMAAwAEAAAAAAAEAAEA")],
+"material": SubResource("StandardMaterial3D_8hhjs"),
+"name": "FrogMouth",
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 30,
+"vertex_data": PackedByteArray("tjDGPknjPb5m9m++qMi5vmpeL7/wMRU/6Im5PmHf6r4v2ho/ReK2vkSOOL4bCGi+9KsEvwPIWr6zDrO+cVm4PkJf8r7cKj4+7AqyvuXe6r7/6ho/BHMGvygGqL5SH6Y9ntQPP7MNUr6zDrO+SwQQP1xDTL52k7G+GIKsPiRgL7+sKxU/lfXEPkCOOL4jCGi+dmfBPkfplr7sJFE+JDVhPFCLcb7zeRy+Yt+vvkfjPb5u9m++scEKv/sgpb5IDKw9++gIP3h0/L7MB5A91lwHP0Ws8r5mX/0+Oz0OP9PDoL5IDKw9b00AP4hdM7/YA/Q+SPvlOyTnAb/j7iw/kOLeO81ns76OWY4+oYqyPFLgdr6WjiW+ZHC6vkfplr7sJFE+qKaru+RuB79cSYQ+GCdWvILVO7/+8iY/p7a9vkJf8r7cKj4+ofoIv6r9VL52k7G+3aoBv2TUCL+ixfk+spUDv3Vl9r5Om/0+VgZlGtr+TU48XZpBsxlEJKeXnaeY6yvdWGzI9f///79IDwUZkBzpv2dFAhD///+/f2hJqQ0OLyYkQgEkoYalrfD4R8V4rVdWNMUSzP///7+VlI08mv+q1fGRTPd/9tpRBYsN17Xqo+82d7L/1/6USswTXwOrElXJhiVJm1R9r6sOxkUli3w2V5q+BZrj7pWXf8S8q8PysvhFqnI3w/Er6dmAc6pqE+0xCYBY3////z/xFUIAThOGyzZzzNWmAp5Rhq8CAP///78Xf5MwVvkwuP9GphH///+/IREovfFhxoeJPFNT0SI0Eq87GZVRE3pq")
+}]
+blend_shape_mode = 0
+shadow_mesh = SubResource("ArrayMesh_grdnj")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_xrivr"]
+albedo_color = Color(0.41960785, 0.08627451, 0.0627451, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_xrivr"]
+size = Vector3(1.0964355, 0.18632813, 0.17633057)
+
+[sub_resource type="Animation" id="Animation_3g56f"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(1, 1, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("..:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_8hhjs"]
+resource_name = "attack"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:scale")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(1, 1, 1), Vector3(1, 1, 15)]
+}
+
+[sub_resource type="Animation" id="Animation_jx2j8"]
+resource_name = "spin"
+length = 2.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("..:rotation")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(0, 0, 0), Vector3(0, 6.2831855, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(1, 1, 15)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_6ouje"]
+_data = {
+&"RESET": SubResource("Animation_3g56f"),
+&"attack": SubResource("Animation_8hhjs"),
+&"spin": SubResource("Animation_jx2j8")
+}
+
+[node name="FrogBossVisual" unique_id=205895835 instance=ExtResource("1_3g56f")]
+
+[node name="Skeleton3D" parent="Armature" parent_id_path=PackedInt32Array(1901845253) index="0" unique_id=376812993]
+bones/0/scale = Vector3(1.0104408, 1.0104408, 1.0104408)
+bones/1/rotation = Quaternion(-7.742051e-07, -1.9589955e-07, -0.83034796, 0.55724525)
+bones/2/rotation = Quaternion(-7.7478643e-07, 1.9389422e-07, 0.8317562, 0.55514115)
+
+[node name="Tongue" parent="." index="1" unique_id=2059366889]
+transform = Transform3D(1, 0, 0, 0, 0.9374698, -0.34806666, 0, 0.34806666, 0.9374698, -0.0078090504, 1.1010978, 1.022341)
+visible = false
+mesh = SubResource("ArrayMesh_jx2j8")
+
+[node name="AnimationPlayer" parent="." index="2" unique_id=632265438]
+autoplay = &"Idle"
+
+[node name="TongueOrigin" type="Node3D" parent="." index="3" unique_id=1866193207]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.006713867, 0.80683595, 0.4881653)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="TongueOrigin" index="0" unique_id=861637143]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.099999994)
+material_override = SubResource("StandardMaterial3D_xrivr")
+mesh = SubResource("BoxMesh_xrivr")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="TongueOrigin" index="1" unique_id=1550621995]
+libraries/ = SubResource("AnimationLibrary_6ouje")
