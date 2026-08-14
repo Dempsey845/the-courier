@@ -15,6 +15,7 @@
 [ext_resource type="Script" uid="uid://dn5b8er116luc" path="res://Components/health.gd" id="10_voqia"]
 [ext_resource type="PackedScene" uid="uid://dem10o88fea0" path="res://World/cloud_platform.tscn" id="11_e7ccy"]
 [ext_resource type="Script" uid="uid://cbtrm8rq6ckg6" path="res://Enemies/RealmBoss/frog_shield.gd" id="11_lbc42"]
+[ext_resource type="PackedScene" uid="uid://ct5p0f6qqf1y2" path="res://World/Areas/FrogRealm/ShieldTurret.glb" id="16_1xr6s"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_syi77"]
 shader = ExtResource("3_syi77")
@@ -972,3 +973,6 @@ mesh = SubResource("PlaneMesh_1xr6s")
 
 [node name="CloudPlatform" parent="." unique_id=1538887151 instance=ExtResource("11_e7ccy")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15, 0, 0)
+
+[node name="ShieldTurret" parent="." unique_id=1556338559 instance=ExtResource("16_1xr6s")]
+transform = Transform3D(0.20521207, 0, -0.56381553, 0, 0.6, 0, 0.56381553, 0, 0.20521207, -25.32935, 1.001482, -9.380882)
