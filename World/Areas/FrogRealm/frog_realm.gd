@@ -16,5 +16,7 @@ func _ready() -> void:
 
     portal.portal_entered.connect(_on_portal_entered)
 
+    player.gravity /= 2
+    
 func _on_portal_entered():
     portal_transition.enter_portal("res://World/world.tscn")

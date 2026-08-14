@@ -1,12 +1,14 @@
 class_name FrogBossVisual
 extends Node3D
 
+signal attack_finished
+
 @export_category("Spin")
 @export var spin_duration: float = 3.0
 
 @export_category("Charge")
 @export var puff_scale_multiplier: float = 1.25
-@export var puff_up_duration: float = 1.5
+@export var puff_up_duration: float = 0.8
 @export var puff_down_duration: float = 0.5
 
 @export_category("Tongue")
@@ -38,12 +40,29 @@ func _ready() -> void:
 			0.0
 		)
 
+func rotate_towards_position(
+	target_position: Vector3,
+	speed: float,
+	delta: float
+) -> void:
+	var target_local_y: float = _get_local_angle_to(
+		target_position
+	)
+
+	rotation.y = lerp_angle(
+		rotation.y,
+		target_local_y,
+		speed * delta
+	)
 
 func start_attack(
 	spin_left: bool,
-	target_position: Vector3
+	target: Node3D
 ) -> void:
 	if attacking:
+		return
+
+	if not is_instance_valid(target):
 		return
 
 	attacking = true
@@ -52,15 +71,35 @@ func start_attack(
 	_puff_down()
 	await _extend_tongue()
 
-	await _spin_towards_position(
+	await _spin_towards_target(
 		spin_left,
-		target_position
+		target
 	)
 
 	await _retract_tongue()
 
 	attacking = false
+	attack_finished.emit()
 
+
+func start_straight_tongue_attack(
+	target_position: Vector3
+) -> void:
+	if attacking:
+		return
+
+	attacking = true
+
+	_face_target(target_position)
+
+	await _puff_up()
+	_puff_down()
+
+	await _extend_tongue()
+	await _retract_tongue()
+
+	attacking = false
+	attack_finished.emit()
 
 func _puff_up() -> void:
 	var target_scale: Vector3 = Vector3(
@@ -98,55 +137,79 @@ func _puff_down() -> void:
 	await tween.finished
 
 
-func _spin_towards_position(
+func _spin_towards_target(
 	spin_left: bool,
-	target_position: Vector3
+	target: Node3D
 ) -> void:
-	var direction: Vector3 = (
-		target_position - global_position
-	)
-	direction.y = 0.0
-
-	if direction.length_squared() <= 0.001:
+	if not is_instance_valid(target):
 		return
 
-	direction = direction.normalized()
-
-	var forward: Vector3 = global_basis.z
-	forward.y = 0.0
-	forward = forward.normalized()
-
-	var angle_to_target: float = forward.signed_angle_to(
-		direction,
-		Vector3.UP
-	)
-
-	var spin_angle: float
-
-	if spin_left:
-		spin_angle = (
-			TAU + fposmod(angle_to_target, TAU)
-		)
-	else:
-		spin_angle = (
-			-TAU - fposmod(-angle_to_target, TAU)
-		)
-
-	var target_rotation: float = rotation.y + spin_angle
+	var starting_rotation: float = rotation.y
+	var spin_direction: float = 1.0 if spin_left else -1.0
 
 	var tween := create_tween()
 	tween.set_trans(Tween.TRANS_LINEAR)
 
-	tween.tween_property(
-		self,
-		"rotation:y",
-		target_rotation,
+	tween.tween_method(
+		func(progress: float) -> void:
+			if not is_instance_valid(target):
+				return
+
+			var target_local_y: float = _get_local_angle_to(
+				target.global_position
+			)
+
+		
+			var target_correction: float = wrapf(
+				target_local_y - starting_rotation,
+				-PI,
+				PI
+			)
+
+			rotation.y = (
+				starting_rotation
+				+ spin_direction * TAU * progress
+				+ target_correction * progress
+			),
+		0.0,
+		1.0,
 		spin_duration
 	)
 
 	await tween.finished
 
+	if is_instance_valid(target):
+		rotation.y = _get_local_angle_to(
+			target.global_position
+		)
+
 	rotation.y = wrapf(rotation.y, -PI, PI)
+
+func _get_local_angle_to(
+	target_position: Vector3
+) -> float:
+	var direction: Vector3 = target_position - global_position
+	direction.y = 0.0
+
+	if direction.length_squared() <= 0.001:
+		return rotation.y
+
+	var target_global_y: float = atan2(
+		direction.x,
+		direction.z
+	)
+
+	var parent_global_y: float = 0.0
+	var parent_3d: Node3D = get_parent_node_3d()
+
+	if is_instance_valid(parent_3d):
+		parent_global_y = parent_3d.global_rotation.y
+
+	return wrapf(
+		target_global_y - parent_global_y,
+		-PI,
+		PI
+	)
 
 func _extend_tongue() -> void:
 	if not is_instance_valid(tongue_material):
@@ -181,3 +244,22 @@ func _retract_tongue() -> void:
 	)
 
 	await tween.finished
+
+func _face_target(target_position: Vector3) -> void:
+	var direction: Vector3 = target_position - global_position
+	direction.y = 0.0
+
+	if direction.length_squared() <= 0.001:
+		return
+
+	var target_global_angle: float = atan2(
+		direction.x,
+		direction.z
+	)
+
+	var parent_global_y: float = 0.0
+
+	if is_instance_valid(get_parent_node_3d()):
+		parent_global_y = get_parent_node_3d().global_rotation.y
+
+	rotation.y = target_global_angle - parent_global_y
