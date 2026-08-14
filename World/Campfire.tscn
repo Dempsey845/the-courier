@@ -33,7 +33,9 @@ rings = 3
 albedo_color = Color(0.5996318, 0.47687966, 0.1235516, 1)
 
 [sub_resource type="CylinderMesh" id="CylinderMesh_xrivr"]
+lightmap_size_hint = Vector2i(8, 12)
 material = SubResource("StandardMaterial3D_wi6ju")
+add_uv2 = true
 top_radius = 0.2
 bottom_radius = 0.2
 height = 1.225
@@ -100,5 +102,6 @@ mesh = SubResource("CylinderMesh_xrivr")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
 light_color = Color(0.9848661, 0.8663973, 0.37135237, 1)
 light_energy = 2.0
+light_bake_mode = 1
 omni_range = 10.0
 omni_attenuation = 1.8

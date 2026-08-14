@@ -812,7 +812,7 @@ color_ramp = SubResource("Gradient_0wqet")
 seamless = true
 in_3d_space = true
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_s85ib"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_lbc42"]
 resource_local_to_scene = true
 render_priority = 0
 shader = SubResource("Shader_5gpxd")
@@ -859,9 +859,9 @@ shader_parameter/ripple_strength = 0.08
 shader_parameter/ripple_width = 0.2
 shader_parameter/ripple_frequency = 12.0
 
-[sub_resource type="PlaneMesh" id="PlaneMesh_lbc42"]
+[sub_resource type="PlaneMesh" id="PlaneMesh_h7lvl"]
 resource_local_to_scene = true
-material = SubResource("ShaderMaterial_s85ib")
+material = SubResource("ShaderMaterial_lbc42")
 size = Vector2(45, 45)
 subdivide_width = 450
 subdivide_depth = 450
@@ -947,7 +947,7 @@ height = 2.442871
 
 [node name="MushroomSwampEffect" parent="CSGCombiner3D" unique_id=963275507 instance=ExtResource("10_08s18")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.41529846, 0)
-mesh = SubResource("PlaneMesh_lbc42")
+mesh = SubResource("PlaneMesh_h7lvl")
 
 [node name="CloudPlatform" parent="." unique_id=1538887151 instance=ExtResource("11_e7ccy")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15, 0, 0)

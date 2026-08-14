@@ -4,6 +4,8 @@
 albedo_color = Color(0.32791412, 0.21686536, 0, 1)
 
 [sub_resource type="BoxMesh" id="BoxMesh_xrivr"]
+lightmap_size_hint = Vector2i(7, 17)
+add_uv2 = true
 size = Vector3(0.3, 1, 0.3)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_b1lj4"]
@@ -38,6 +40,7 @@ mesh = SubResource("BoxMesh_xrivr")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.6, 0.8, 0)
 light_color = Color(0.88235295, 0.73333335, 0.43529412, 1)
 light_volumetric_fog_energy = 5.0
+light_bake_mode = 1
 omni_range = 6.0
 
 [node name="CPUParticles3D" type="CPUParticles3D" parent="." unique_id=1780380198]

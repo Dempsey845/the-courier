@@ -86,7 +86,7 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0, 1),
 "transitions": PackedFloat32Array(1, 1),
 "update": 0,
-"values": [Vector3(1, 1, 1), Vector3(1, 1, 15)]
+"values": [Vector3(0.5, 1, 0.5), Vector3(1, 1, 15)]
 }
 
 [sub_resource type="Animation" id="Animation_jx2j8"]
@@ -126,17 +126,17 @@ _data = {
 
 [node name="FrogBossVisual" unique_id=205895835 instance=ExtResource("1_3g56f")]
 
-[node name="Skeleton3D" parent="Armature" parent_id_path=PackedInt32Array(1901845253) index="0" unique_id=376812993]
+[node name="Skeleton3D" parent="Armature" parent_id_path=PackedInt32Array(1973317045) index="0" unique_id=184584735]
 bones/0/scale = Vector3(1.0104408, 1.0104408, 1.0104408)
 bones/1/rotation = Quaternion(-7.742051e-07, -1.9589955e-07, -0.83034796, 0.55724525)
 bones/2/rotation = Quaternion(-7.7478643e-07, 1.9389422e-07, 0.8317562, 0.55514115)
 
-[node name="Tongue" parent="." index="1" unique_id=2059366889]
+[node name="Tongue" parent="." index="1" unique_id=2043027734]
 transform = Transform3D(1, 0, 0, 0, 0.9374698, -0.34806666, 0, 0.34806666, 0.9374698, -0.0078090504, 1.1010978, 1.022341)
 visible = false
 mesh = SubResource("ArrayMesh_jx2j8")
 
-[node name="AnimationPlayer" parent="." index="2" unique_id=632265438]
+[node name="AnimationPlayer" parent="." index="2" unique_id=778464412]
 autoplay = &"Idle"
 
 [node name="TongueOrigin" type="Node3D" parent="." index="3" unique_id=1866193207]

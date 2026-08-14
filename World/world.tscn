@@ -954,7 +954,6 @@ size = Vector3(50, 50, 50)
 
 [node name="World" type="Node3D" unique_id=970689617 node_paths=PackedStringArray("player")]
 script = ExtResource("1_koyeq")
-scale_3d = 0.8
 player = NodePath("Player")
 
 [node name="ZoneManager" type="Node" parent="." unique_id=358080498]
