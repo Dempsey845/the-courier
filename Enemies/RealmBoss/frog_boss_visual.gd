@@ -15,6 +15,7 @@ signal attack_finished
 @export var tongue_mesh: MeshInstance3D
 @export var tongue_extend_duration: float = 3.0
 @export var tongue_retract_duration: float = 0.5
+@onready var tongue_hitbox: Hitbox = $TongueHitbox
 
 var tongue_material: ShaderMaterial
 
@@ -69,12 +70,17 @@ func start_attack(
 
 	await _puff_up()
 	_puff_down()
+	tongue_hitbox.active = true
+	tongue_hitbox.force_hit_update()
+
 	await _extend_tongue()
 
 	await _spin_towards_target(
 		spin_left,
 		target
 	)
+
+	tongue_hitbox.active = false
 
 	await _retract_tongue()
 
@@ -95,8 +101,14 @@ func start_straight_tongue_attack(
 	await _puff_up()
 	_puff_down()
 
+	tongue_hitbox.active = true
+	tongue_hitbox.force_hit_update()
+
 	await _extend_tongue()
+
 	await _retract_tongue()
+
+	tongue_hitbox.active = false
 
 	attacking = false
 	attack_finished.emit()

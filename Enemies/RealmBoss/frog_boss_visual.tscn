@@ -3,6 +3,7 @@
 [ext_resource type="PackedScene" uid="uid://lg1dripowoaf" path="res://Enemies/RealmBoss/FrogBoss.glb" id="1_3g56f"]
 [ext_resource type="Script" uid="uid://d3ao1nhi1u1fx" path="res://Enemies/RealmBoss/frog_boss_visual.gd" id="2_8hhjs"]
 [ext_resource type="Shader" uid="uid://c7288y1yexemw" path="res://Enemies/RealmBoss/tongue.gdshader" id="3_jx2j8"]
+[ext_resource type="Script" uid="uid://deroukfpp2mia" path="res://Components/hitbox.gd" id="4_6ouje"]
 
 [sub_resource type="Animation" id="Animation_3g56f"]
 length = 0.001
@@ -160,6 +161,9 @@ _surfaces = [{
 blend_shape_mode = 0
 shadow_mesh = SubResource("ArrayMesh_grdnj")
 
+[sub_resource type="BoxShape3D" id="BoxShape3D_xrivr"]
+size = Vector3(0.8, 0.12446594, 2.3807495)
+
 [node name="FrogBossVisual" unique_id=205895835 node_paths=PackedStringArray("tongue_mesh") instance=ExtResource("1_3g56f")]
 script = ExtResource("2_8hhjs")
 tongue_mesh = NodePath("Armature/Skeleton3D/BoneAttachment3D/TongueOrigin/MeshInstance3D")
@@ -192,3 +196,15 @@ mesh = SubResource("ArrayMesh_jx2j8")
 
 [node name="AnimationPlayer" parent="." index="2" unique_id=778464412]
 autoplay = &"Idle"
+
+[node name="TongueHitbox" type="Area3D" parent="." index="3" unique_id=449866112]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.8, 2.1000001)
+collision_layer = 128
+collision_mask = 16
+script = ExtResource("4_6ouje")
+active = false
+metadata/_custom_type_script = "uid://deroukfpp2mia"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="TongueHitbox" index="0" unique_id=778922688]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.9802322e-08, 0.024360657, -0.009625673)
+shape = SubResource("BoxShape3D_xrivr")

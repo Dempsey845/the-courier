@@ -158,6 +158,9 @@ shader_parameter/emission_strength = 2.0
 radius = 20.0
 height = 40.0
 
+[sub_resource type="SphereShape3D" id="SphereShape3D_13qdw"]
+radius = 20.0
+
 [sub_resource type="Shader" id="Shader_5gpxd"]
 code = "// Magical swamp water shader for a subdivided PlaneMesh.
 // Includes bubbles, liquid waves, interaction displacement and foam.
@@ -921,7 +924,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -51.505283, -5.3, -0.44737053
 script = ExtResource("9_h7lvl")
 health = NodePath("Health")
 player = NodePath("../Player")
-shield = NodePath("Shield")
+shield = NodePath("ShieldBody/Shield")
 visual = NodePath("FrogBossVisual")
 
 [node name="Health" type="Node" parent="FrogBoss" unique_id=1606034843]
@@ -936,11 +939,17 @@ transform = Transform3D(10, 0, 0, 0, 10, 0, 0, 0, 10, 0, 0, 0)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 10.2868805, 0)
 shape = SubResource("SphereShape3D_xrivr")
 
-[node name="Shield" type="MeshInstance3D" parent="FrogBoss" unique_id=154924986]
+[node name="ShieldBody" type="StaticBody3D" parent="FrogBoss" unique_id=256870177]
+
+[node name="Shield" type="MeshInstance3D" parent="FrogBoss/ShieldBody" unique_id=154924986]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 6.8675737, 0)
 material_override = SubResource("ShaderMaterial_13qdw")
 mesh = SubResource("SphereMesh_xrivr")
 script = ExtResource("11_lbc42")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="FrogBoss/ShieldBody" unique_id=599463676]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 7.34784, 0)
+shape = SubResource("SphereShape3D_13qdw")
 
 [node name="CSGCombiner3D" type="CSGCombiner3D" parent="." unique_id=1900368148]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -52, 0, 0)
