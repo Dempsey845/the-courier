@@ -8,9 +8,11 @@
 [ext_resource type="Shader" uid="uid://cl0i4nn534r2d" path="res://World/Environment/Bodies/portal.gdshader" id="5_0derk"]
 [ext_resource type="Script" uid="uid://vhphkydnyccp" path="res://World/Environment/Bodies/portal.gd" id="6_x7iw1"]
 [ext_resource type="Script" uid="uid://epcpb44orgo6" path="res://World/Environment/Bodies/portal_entrance.gd" id="7_08s18"]
+[ext_resource type="Script" uid="uid://ctv4iw4ctndov" path="res://World/Areas/FrogRealm/frog_boss.gd" id="9_h7lvl"]
 [ext_resource type="PackedScene" uid="uid://bar88i5lv34bx" path="res://Enemies/RealmBoss/frog_boss_visual.tscn" id="9_x7iw1"]
 [ext_resource type="PackedScene" uid="uid://c4qraqdt2f0hp" path="res://World/Areas/Swamp/mushroom_swamp_effect.tscn" id="10_08s18"]
 [ext_resource type="Shader" uid="uid://dfgy7msd5o7di" path="res://Enemies/RealmBoss/frog_shield.gdshader" id="10_s85ib"]
+[ext_resource type="Script" uid="uid://dn5b8er116luc" path="res://Components/health.gd" id="10_voqia"]
 [ext_resource type="PackedScene" uid="uid://dem10o88fea0" path="res://World/cloud_platform.tscn" id="11_e7ccy"]
 [ext_resource type="Script" uid="uid://cbtrm8rq6ckg6" path="res://Enemies/RealmBoss/frog_shield.gd" id="11_lbc42"]
 
@@ -125,9 +127,9 @@ size = Vector3(1, 7, 5)
 radius = 10.0
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_13qdw"]
-render_priority = 0
+render_priority = 1
 shader = ExtResource("10_s85ib")
-shader_parameter/transition = 0.30000001425
+shader_parameter/transition = 1.0
 shader_parameter/transition_softness = 0.12
 shader_parameter/transition_edge_width = 0.06
 shader_parameter/transition_edge_brightness = 4.0
@@ -162,7 +164,7 @@ code = "// Magical swamp water shader for a subdivided PlaneMesh.
 
 shader_type spatial;
 
-render_mode blend_mix, depth_draw_opaque, cull_back,
+render_mode blend_mix, depth_prepass_alpha, cull_back,
 	diffuse_burley, specular_schlick_ggx;
 
 
@@ -812,7 +814,7 @@ color_ramp = SubResource("Gradient_0wqet")
 seamless = true
 in_3d_space = true
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_lbc42"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_voqia"]
 resource_local_to_scene = true
 render_priority = 0
 shader = SubResource("Shader_5gpxd")
@@ -859,9 +861,9 @@ shader_parameter/ripple_strength = 0.08
 shader_parameter/ripple_width = 0.2
 shader_parameter/ripple_frequency = 12.0
 
-[sub_resource type="PlaneMesh" id="PlaneMesh_h7lvl"]
+[sub_resource type="PlaneMesh" id="PlaneMesh_1xr6s"]
 resource_local_to_scene = true
-material = SubResource("ShaderMaterial_lbc42")
+material = SubResource("ShaderMaterial_voqia")
 size = Vector2(45, 45)
 subdivide_width = 450
 subdivide_depth = 450
@@ -914,8 +916,18 @@ portal = NodePath("../Portal")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -2, -8.940697e-08)
 shape = SubResource("BoxShape3D_lbc42")
 
-[node name="FrogBoss" type="StaticBody3D" parent="." unique_id=271442124]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -51.505283, -6.3, -0.44737053)
+[node name="FrogBoss" type="StaticBody3D" parent="." unique_id=271442124 node_paths=PackedStringArray("health", "player", "shield", "visual")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -51.505283, -5.3, -0.44737053)
+script = ExtResource("9_h7lvl")
+health = NodePath("Health")
+player = NodePath("../Player")
+shield = NodePath("Shield")
+visual = NodePath("FrogBossVisual")
+
+[node name="Health" type="Node" parent="FrogBoss" unique_id=1606034843]
+script = ExtResource("10_voqia")
+max_health = 50
+metadata/_custom_type_script = "uid://dn5b8er116luc"
 
 [node name="FrogBossVisual" parent="FrogBoss" unique_id=205895835 instance=ExtResource("9_x7iw1")]
 transform = Transform3D(10, 0, 0, 0, 10, 0, 0, 0, 10, 0, 0, 0)
@@ -947,7 +959,7 @@ height = 2.442871
 
 [node name="MushroomSwampEffect" parent="CSGCombiner3D" unique_id=963275507 instance=ExtResource("10_08s18")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.41529846, 0)
-mesh = SubResource("PlaneMesh_h7lvl")
+mesh = SubResource("PlaneMesh_1xr6s")
 
 [node name="CloudPlatform" parent="." unique_id=1538887151 instance=ExtResource("11_e7ccy")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15, 0, 0)

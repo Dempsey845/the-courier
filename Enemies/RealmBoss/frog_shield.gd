@@ -1,3 +1,4 @@
+class_name FrogShield
 extends MeshInstance3D
 
 @export var transition_duration: float = 1.5
@@ -5,9 +6,6 @@ extends MeshInstance3D
 @onready var shield_material: ShaderMaterial = \
 	get_active_material(0) as ShaderMaterial
 
-
-func _ready() -> void:
-	show_shield()
 
 func show_shield() -> void:
 	var tween := create_tween()
