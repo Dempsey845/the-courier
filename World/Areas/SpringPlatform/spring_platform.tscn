@@ -1,0 +1,102 @@
+[gd_scene format=3 uid="uid://cxvgjbkqlfcx7"]
+
+[ext_resource type="PackedScene" uid="uid://dg3qrtjo6k776" path="res://World/Areas/SpringPlatform/SpringPlatform.glb" id="1_eh6p7"]
+[ext_resource type="Script" uid="uid://nvweb7ulves2" path="res://World/Areas/SpringPlatform/spring_platform.gd" id="2_3xs14"]
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_3xs14"]
+points = PackedVector3Array(-0.24473792, 0.3303153, -0.5920071, 0.97361046, 2.1994033, 1.0012965, 0.97371143, 2.1293027, 1.0713972, -1.1634923, 2.0989165, 1.0060077, -1.0893606, 2.0954366, -1.0270393, 1.0800768, 2.0954046, -0.9569231, 0.68132997, 0.034493208, 0.022785664, -0.20731606, 0.713809, 0.69328934, -0.64968026, 0.4721314, -0.24831374, 1.005703, 1.8367996, 1.1044999, 1.005703, 1.8367996, -1.0589286, -1.0598353, 2.2066998, -0.927185, -1.1935287, 1.8367996, 0.99628615, -1.1935287, 1.8367996, -0.9507148, -0.14247188, 0.39545628, -0.73207986, 1.1141286, 1.8367996, 0.99628615, 0.44047534, 0.2241129, -0.5603726, -0.61718184, 0.5385271, 0.29457784, 0.98043525, 2.2066998, -0.927185, 1.1141286, 1.8367996, -0.9507148, -1.0530105, 2.1994033, 1.0012965, -1.085103, 1.8367996, 1.1044999, 0.7895296, 0.1428023, 0.022785664, -1.085103, 1.8367996, -1.0589286, 0.3928728, -0.0016098022, 0.022785664, -0.10730545, 0.77794534, 0.7330803, -0.68951, 0.5345658, -0.31918436, 1.0840923, 2.0989165, 1.0060077, 1.0099605, 2.0954366, -1.0270394, -1.1594768, 2.0954046, -0.9569231, -1.0531114, 2.1293027, 1.0713972, 0.4747437, 0.29301482, -0.59448224)
+
+[sub_resource type="Animation" id="Animation_ee5f4"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Spring:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(1, 1, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AnimatableBody3D:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_dyp2c"]
+resource_name = "spring"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Spring:scale")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4, 0.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Vector3(1, 1, 1), Vector3(1, 0.5, 1), Vector3(1, 1.2, 1), Vector3(1, 1, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AnimatableBody3D:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.36666667, 0.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Vector3(0, 0, 0), Vector3(0, -1, 0.233), Vector3(0, 0.349, -0.109), Vector3(0, 0, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_7hia1"]
+_data = {
+&"RESET": SubResource("Animation_ee5f4"),
+&"spring": SubResource("Animation_dyp2c")
+}
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_13qdw"]
+size = Vector3(1.8000001, 0.2, 1.6)
+
+[node name="SpringPlatform" unique_id=1576561160 node_paths=PackedStringArray("forward_pivot") instance=ExtResource("1_eh6p7")]
+script = ExtResource("2_3xs14")
+upward_force = 30.0
+forward_force = 16.0
+forward_pivot = NodePath("ForwardPivot")
+
+[node name="AnimatableBody3D" type="AnimatableBody3D" parent="." index="1" unique_id=318458652]
+transform = Transform3D(1, 0, 0, 0, 1.0000001, 0, 0, 0, 1.0000001, 0, 0, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="AnimatableBody3D" index="0" unique_id=357732282]
+transform = Transform3D(1, 0, 0, 0, 0.9659258, 0.25881904, 0, -0.25881904, 0.9659258, 0, -0.1, 0.2)
+shape = SubResource("ConvexPolygonShape3D_3xs14")
+debug_color = Color(0.91883546, 0.020890478, 0.6910632, 1)
+
+[node name="Spring" parent="." index="2" unique_id=854755489]
+transform = Transform3D(1, 0, 0, 0, 0.9659258, 0.25881904, 0, -0.25881904, 0.9659258, 0, -0.1, 0.2)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." index="3" unique_id=894561871]
+libraries/ = SubResource("AnimationLibrary_7hia1")
+
+[node name="SpringActivationArea" type="Area3D" parent="." index="4" unique_id=200734411]
+collision_layer = 0
+collision_mask = 4
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="SpringActivationArea" index="0" unique_id=2030746711]
+transform = Transform3D(1, 0, 0, 0, 0.9659258, 0.25881904, 0, -0.25881904, 0.9659258, 8.940697e-08, 2.111866, -0.38965756)
+shape = SubResource("BoxShape3D_13qdw")
+
+[node name="ForwardPivot" type="Marker3D" parent="." index="5" unique_id=1496311730]
+transform = Transform3D(-1, 2.6645353e-15, 8.742278e-08, -4.3711392e-08, 0.8660253, -0.5, -7.5710346e-08, -0.5, -0.8660253, 0, 2, -0.3)

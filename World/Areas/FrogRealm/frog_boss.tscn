@@ -10,7 +10,7 @@
 [ext_resource type="PackedScene" uid="uid://mk2ngqtci0le" path="res://World/Areas/FrogRealm/frog_boss_ui.tscn" id="7_k5umt"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_xrivr"]
-radius = 10.0
+radius = 9.415994
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_13qdw"]
 render_priority = 1
@@ -93,7 +93,7 @@ visual = NodePath("FrogBossVisual")
 
 [node name="Health" type="Node" parent="." unique_id=806976795]
 script = ExtResource("2_k5umt")
-max_health = 1
+max_health = 10
 metadata/_custom_type_script = "uid://dn5b8er116luc"
 
 [node name="FrogBossHurtbox" type="Area3D" parent="." unique_id=781144187 node_paths=PackedStringArray("health")]
@@ -104,8 +104,9 @@ health = NodePath("../Health")
 metadata/_custom_type_script = "uid://dswhdacq2khkk"
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="FrogBossHurtbox" unique_id=1962529910]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 10.2868805, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 10.626251, -1.2603297)
 shape = SubResource("SphereShape3D_xrivr")
+debug_color = Color(0.24099874, 0.63181865, 0.22024909, 1)
 
 [node name="FrogBossVisual" parent="." unique_id=205895835 instance=ExtResource("3_bvgwd")]
 transform = Transform3D(10, 0, 0, 0, 10, 0, 0, 0, 10, 0, 0, 0)
@@ -151,8 +152,9 @@ process_material = SubResource("ParticleProcessMaterial_iw61r")
 draw_pass_1 = SubResource("TorusMesh_j3gm1")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1776240062]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 10.2868805, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 10.626251, -1.2603297)
 shape = SubResource("SphereShape3D_xrivr")
+debug_color = Color(0.24099874, 0.63181865, 0.22024909, 1)
 
 [node name="FrogBossUI" parent="." unique_id=406924992 node_paths=PackedStringArray("shield_health", "boss_health") instance=ExtResource("7_k5umt")]
 shield_health = NodePath("../ShieldBody/ShieldHurtbox/ShieldHealth")

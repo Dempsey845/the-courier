@@ -301,6 +301,19 @@ func apply_camera_forward_force(force: float) -> void:
 
 	knockback_timer = knockback_control_lock_time
 
+func apply_directional_force(forward_direction: Vector3, force: float) -> void:
+	forward_direction.y = 0.0
+
+	if forward_direction.is_zero_approx():
+		return
+
+	forward_direction = forward_direction.normalized()
+
+	velocity.x = forward_direction.x * force
+	velocity.z = forward_direction.z * force
+
+	knockback_timer = knockback_control_lock_time
+
 func apply_knockback(
 	source_position: Vector3,
 	force: float,

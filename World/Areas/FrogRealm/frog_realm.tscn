@@ -11,6 +11,7 @@
 [ext_resource type="PackedScene" uid="uid://es6r4xwsgwka" path="res://World/Areas/FrogRealm/frog_boss.tscn" id="9_s85ib"]
 [ext_resource type="PackedScene" uid="uid://c4qraqdt2f0hp" path="res://World/Areas/Swamp/mushroom_swamp_effect.tscn" id="10_08s18"]
 [ext_resource type="PackedScene" uid="uid://dem10o88fea0" path="res://World/cloud_platform.tscn" id="11_e7ccy"]
+[ext_resource type="PackedScene" uid="uid://cxvgjbkqlfcx7" path="res://World/Areas/SpringPlatform/spring_platform.tscn" id="13_lbc42"]
 [ext_resource type="PackedScene" uid="uid://def8xq31m44p8" path="res://World/Areas/FrogRealm/shield_turret.tscn" id="16_1xr6s"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_syi77"]
@@ -907,4 +908,16 @@ mesh = SubResource("PlaneMesh_lbc42")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15, 0, 0)
 
 [node name="ShieldTurret" parent="." unique_id=539314496 instance=ExtResource("16_1xr6s")]
-transform = Transform3D(0.23313615, 0, -0.55285406, 0, 0.59999996, 0, 0.55285406, 0, 0.23313615, -25.32935, 1.001482, -9.380882)
+transform = Transform3D(0.26357433, 0, -0.53900707, 0, 0.5999999, 0, 0.53900707, 0, 0.26357433, -24.42935, 1.001482, -12.780882)
+
+[node name="ShieldTurret4" parent="." unique_id=41114858 instance=ExtResource("16_1xr6s")]
+transform = Transform3D(-0.25392607, 0, 0.5436189, 0, 0.5999998, 0, -0.5436189, 0, -0.25392607, -79.72935, 1.001482, 12.119118)
+
+[node name="ShieldTurret2" parent="." unique_id=1160793838 instance=ExtResource("16_1xr6s")]
+transform = Transform3D(0.6, 0, 0, 0, 0.5999999, 0, 0, 0, 0.6, -52.129353, 1.001482, -30.280882)
+
+[node name="ShieldTurret3" parent="." unique_id=1042678080 instance=ExtResource("16_1xr6s")]
+transform = Transform3D(-0.6, 0, 5.2453668e-08, 0, 0.59999985, 0, -5.2453668e-08, 0, -0.6, -52.129353, 1.001482, 30.219118)
+
+[node name="SpringPlatform" parent="." unique_id=1576561160 instance=ExtResource("13_lbc42")]
+transform = Transform3D(-0.70710677, 0, 0.70710677, 0, 1, 0, -0.70710677, 0, -0.70710677, -30, 1, -21)
