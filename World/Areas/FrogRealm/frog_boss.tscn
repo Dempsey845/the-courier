@@ -9,8 +9,9 @@
 [ext_resource type="Script" uid="uid://dswhdacq2khkk" path="res://Components/hurtbox.gd" id="6_qvtow"]
 [ext_resource type="PackedScene" uid="uid://mk2ngqtci0le" path="res://World/Areas/FrogRealm/frog_boss_ui.tscn" id="7_k5umt"]
 
-[sub_resource type="SphereShape3D" id="SphereShape3D_xrivr"]
-radius = 9.415994
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_bvgwd"]
+height = 2.9625
+radius = 8.0
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_13qdw"]
 render_priority = 1
@@ -85,6 +86,9 @@ outer_radius = 3.0
 rings = 24
 ring_segments = 8
 
+[sub_resource type="SphereShape3D" id="SphereShape3D_xrivr"]
+radius = 9.415994
+
 [node name="FrogBoss" type="StaticBody3D" unique_id=1491294978 node_paths=PackedStringArray("health", "shield", "visual")]
 script = ExtResource("1_wemoa")
 health = NodePath("Health")
@@ -101,11 +105,12 @@ collision_layer = 32
 collision_mask = 64
 script = ExtResource("6_qvtow")
 health = NodePath("../Health")
+flags = Array[String](["UpwardForce"])
 metadata/_custom_type_script = "uid://dswhdacq2khkk"
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="FrogBossHurtbox" unique_id=1962529910]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 10.626251, -1.2603297)
-shape = SubResource("SphereShape3D_xrivr")
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 18.6075, -1.1603299)
+shape = SubResource("CylinderShape3D_bvgwd")
 debug_color = Color(0.24099874, 0.63181865, 0.22024909, 1)
 
 [node name="FrogBossVisual" parent="." unique_id=205895835 instance=ExtResource("3_bvgwd")]

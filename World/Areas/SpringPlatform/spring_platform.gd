@@ -1,3 +1,4 @@
+class_name SpringPlatform
 extends Node3D
 
 @export var upward_force: float = 12.0
@@ -26,3 +27,5 @@ func _on_spring_activation_area_body_entered(body: Node3D):
 	if forward_force > 0.0:
 		player.apply_directional_force(forward_pivot.global_basis.y, forward_force)
 
+func introduce():
+	animation_player.play("introduce")

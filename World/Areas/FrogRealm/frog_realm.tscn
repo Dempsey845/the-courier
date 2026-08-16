@@ -777,7 +777,7 @@ color_ramp = SubResource("Gradient_0wqet")
 seamless = true
 in_3d_space = true
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_s85ib"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_lbc42"]
 resource_local_to_scene = true
 render_priority = 0
 shader = SubResource("Shader_5gpxd")
@@ -824,9 +824,9 @@ shader_parameter/ripple_strength = 0.08
 shader_parameter/ripple_width = 0.2
 shader_parameter/ripple_frequency = 12.0
 
-[sub_resource type="PlaneMesh" id="PlaneMesh_lbc42"]
+[sub_resource type="PlaneMesh" id="PlaneMesh_h7lvl"]
 resource_local_to_scene = true
-material = SubResource("ShaderMaterial_s85ib")
+material = SubResource("ShaderMaterial_lbc42")
 size = Vector2(45, 45)
 subdivide_width = 450
 subdivide_depth = 450
@@ -879,9 +879,10 @@ portal = NodePath("../Portal")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -2, -8.940697e-08)
 shape = SubResource("BoxShape3D_lbc42")
 
-[node name="FrogBoss" parent="." unique_id=1491294978 node_paths=PackedStringArray("player") instance=ExtResource("9_s85ib")]
+[node name="FrogBoss" parent="." unique_id=1491294978 node_paths=PackedStringArray("player", "spring_platforms_owner") instance=ExtResource("9_s85ib")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -51.505283, -5.3, -0.44737053)
 player = NodePath("../Player")
+spring_platforms_owner = NodePath("../SpringPlatforms")
 
 [node name="CSGCombiner3D" type="CSGCombiner3D" parent="." unique_id=1900368148]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -52, 0, 0)
@@ -902,7 +903,7 @@ sides = 22
 
 [node name="MushroomSwampEffect" parent="CSGCombiner3D" unique_id=963275507 instance=ExtResource("10_08s18")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.41529846, 0)
-mesh = SubResource("PlaneMesh_lbc42")
+mesh = SubResource("PlaneMesh_h7lvl")
 
 [node name="CloudPlatform" parent="." unique_id=1538887151 instance=ExtResource("11_e7ccy")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15, 0, 0)
@@ -919,5 +920,13 @@ transform = Transform3D(0.6, 0, 0, 0, 0.5999999, 0, 0, 0, 0.6, -52.129353, 1.001
 [node name="ShieldTurret3" parent="." unique_id=1042678080 instance=ExtResource("16_1xr6s")]
 transform = Transform3D(-0.6, 0, 5.2453668e-08, 0, 0.59999985, 0, -5.2453668e-08, 0, -0.6, -52.129353, 1.001482, 30.219118)
 
-[node name="SpringPlatform" parent="." unique_id=1576561160 instance=ExtResource("13_lbc42")]
+[node name="SpringPlatforms" type="Node3D" parent="." unique_id=1557169294]
+
+[node name="SpringPlatform" parent="SpringPlatforms" unique_id=1576561160 instance=ExtResource("13_lbc42")]
 transform = Transform3D(-0.70710677, 0, 0.70710677, 0, 1, 0, -0.70710677, 0, -0.70710677, -30, 1, -21)
+
+[node name="SpringPlatform2" parent="SpringPlatforms" unique_id=1568562351 instance=ExtResource("13_lbc42")]
+transform = Transform3D(0.8660254, 0, 0.49999988, 0, 1, 0, -0.49999988, 0, 0.8660254, -35.6, 1, 26)
+
+[node name="SpringPlatform3" parent="SpringPlatforms" unique_id=993779301 instance=ExtResource("13_lbc42")]
+transform = Transform3D(-0.65497935, 0, -0.7556466, 0, 1, 0, 0.7556466, 0, -0.65497935, -75.73599, 1, -19.357882)

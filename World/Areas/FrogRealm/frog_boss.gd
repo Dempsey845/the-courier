@@ -18,6 +18,7 @@ enum AttackType {
 @export var player: Node3D
 @export var shield: FrogShield
 @export var visual: FrogBossVisual
+@export var spring_platforms_owner: Node3D
 
 @export_category("Encounter")
 @export var start_range: float = 45.0
@@ -35,6 +36,7 @@ enum AttackType {
 @onready var shield_shockwave_ring: GPUParticles3D = (
 	%ShieldBody/ShieldShockwaveRing
 )
+@onready var shield_body: StaticBody3D = %ShieldBody
 @onready var frog_boss_ui: FrogBossUI = $FrogBossUI
 
 var current_state: State = State.IDLE
@@ -290,5 +292,9 @@ func _on_shield_death() -> void:
 
 
 func _on_shield_lowered() -> void:
-	shield_hurtbox.set_deferred("monitorable", false)
-	shield_hurtbox.set_deferred("monitoring", false)
+	shield_body.queue_free.call_deferred()
+	for spring_platform: Node3D in spring_platforms_owner.get_children():
+		if spring_platform is not SpringPlatform:
+			continue
+		
+		spring_platform.introduce()
