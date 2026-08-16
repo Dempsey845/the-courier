@@ -5,7 +5,8 @@ enum State {
 	IDLE,
 	LOOKING_AT_PLAYER,
 	ATTACKING,
-	ATTACK_COOLDOWN
+	ATTACK_COOLDOWN,
+	DEAD
 }
 
 enum AttackType {
@@ -38,6 +39,7 @@ enum AttackType {
 )
 @onready var shield_body: StaticBody3D = %ShieldBody
 @onready var frog_boss_ui: FrogBossUI = $FrogBossUI
+@onready var frog_boss_hurtbox: Area3D = $FrogBossHurtbox
 
 var current_state: State = State.IDLE
 var current_attack: AttackType
@@ -52,6 +54,7 @@ func _ready() -> void:
 
 	if is_instance_valid(health):
 		health.damage_taken.connect(_on_health_damage_taken)
+		health.death.connect(_on_health_death)
 
 	if is_instance_valid(visual):
 		visual.attack_finished.connect(_on_attack_finished)
@@ -78,6 +81,9 @@ func _physics_process(delta: float) -> void:
 		State.ATTACK_COOLDOWN:
 			_process_attack_cooldown(delta)
 
+		State.DEAD:
+			_process_dead()
+
 
 func _process_idle() -> void:
 	if encounter_started:
@@ -88,7 +94,7 @@ func _process_idle() -> void:
 
 
 func _start_encounter() -> void:
-	if encounter_started:
+	if encounter_started or current_state == State.DEAD:
 		return
 
 	encounter_started = true
@@ -97,7 +103,6 @@ func _start_encounter() -> void:
 		frog_boss_ui.show_boss_ui()
 
 	raise_shield()
-
 	_change_state(State.LOOKING_AT_PLAYER)
 
 
@@ -127,7 +132,14 @@ func _process_attack_cooldown(delta: float) -> void:
 		_change_state(State.LOOKING_AT_PLAYER)
 
 
+func _process_dead() -> void:
+	pass
+
+
 func _change_state(new_state: State) -> void:
+	if current_state == State.DEAD and new_state != State.DEAD:
+		return
+
 	current_state = new_state
 
 	match current_state:
@@ -144,6 +156,31 @@ func _change_state(new_state: State) -> void:
 		State.ATTACK_COOLDOWN:
 			state_timer = attack_cooldown
 
+		State.DEAD:
+			_enter_death_state()
+
+
+func _enter_death_state() -> void:
+	state_timer = 0.0
+
+	if is_instance_valid(visual):
+		visual._retract_tongue()
+
+		if is_instance_valid(visual.tongue_hitbox):
+			visual.tongue_hitbox.active = false
+
+			visual.die()
+
+	if is_instance_valid(shield_hurtbox):
+		shield_hurtbox.set_deferred("monitoring", false)
+		shield_hurtbox.set_deferred("monitorable", false)
+
+	set_deferred("collision_layer", 0)
+	set_deferred("collision_mask", 0)
+
+	frog_boss_hurtbox.set_deferred("monitoring", false)
+	frog_boss_hurtbox.set_deferred("monitorable", false)
+
 
 func _choose_attack() -> void:
 	if randf() <= straight_tongue_chance:
@@ -153,6 +190,9 @@ func _choose_attack() -> void:
 
 
 func perform_attack() -> void:
+	if current_state == State.DEAD:
+		return
+
 	if not is_instance_valid(player):
 		_change_state(State.ATTACK_COOLDOWN)
 		return
@@ -175,6 +215,9 @@ func perform_attack() -> void:
 
 
 func _rotate_towards_player(delta: float) -> void:
+	if current_state == State.DEAD:
+		return
+
 	if not is_instance_valid(player):
 		return
 
@@ -201,10 +244,7 @@ func _is_player_within_range(distance: float) -> bool:
 	)
 	direction.y = 0.0
 
-	return (
-		direction.length_squared()
-		<= distance * distance
-	)
+	return direction.length_squared() <= distance * distance
 
 
 func _on_attack_finished() -> void:
@@ -219,7 +259,14 @@ func _on_health_damage_taken(
 	pass
 
 
+func _on_health_death() -> void:
+	_change_state(State.DEAD)
+
+
 func raise_shield() -> void:
+	if current_state == State.DEAD:
+		return
+
 	if is_instance_valid(shield):
 		shield.show_shield()
 
@@ -259,25 +306,20 @@ func _should_spin_left() -> bool:
 
 
 func _on_shield_hurtbox_hit(hitbox: Hitbox) -> void:
+	if current_state == State.DEAD:
+		return
+
 	var hit_position: Vector3 = hitbox.global_position
 	var shield_center: Vector3 = shield.global_position
-
-	var normal: Vector3 = (
-		hit_position - shield_center
-	).normalized()
+	var normal := (hit_position - shield_center).normalized()
 
 	var reference_axis := Vector3.UP
 
 	if abs(normal.dot(reference_axis)) > 0.99:
 		reference_axis = Vector3.RIGHT
 
-	var x_axis: Vector3 = (
-		reference_axis.cross(normal)
-	).normalized()
-
-	var z_axis: Vector3 = (
-		x_axis.cross(normal)
-	).normalized()
+	var x_axis := reference_axis.cross(normal).normalized()
+	var z_axis := x_axis.cross(normal).normalized()
 
 	shield_shockwave_ring.global_transform = Transform3D(
 		Basis(x_axis, normal, z_axis),
@@ -288,13 +330,19 @@ func _on_shield_hurtbox_hit(hitbox: Hitbox) -> void:
 
 
 func _on_shield_death() -> void:
+	if current_state == State.DEAD:
+		return
+
 	lower_shield()
 
 
 func _on_shield_lowered() -> void:
-	shield_body.queue_free.call_deferred()
+	if is_instance_valid(shield_body):
+		shield_body.queue_free.call_deferred()
+
+	if not is_instance_valid(spring_platforms_owner):
+		return
+
 	for spring_platform: Node3D in spring_platforms_owner.get_children():
-		if spring_platform is not SpringPlatform:
-			continue
-		
-		spring_platform.introduce()
+		if spring_platform is SpringPlatform:
+			spring_platform.introduce()

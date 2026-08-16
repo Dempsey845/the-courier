@@ -22,7 +22,7 @@ signal attack_finished
 var tongue_material: ShaderMaterial
 
 @onready var animation_player: AnimationPlayer = (
-	%TongueOrigin/AnimationPlayer
+	%AnimationPlayer
 )
 
 var original_scale: Vector3
@@ -116,6 +116,9 @@ func start_straight_tongue_attack(
 
 	attacking = false
 	attack_finished.emit()
+
+func die():
+	animation_player.play("Custom/Death")
 
 func _puff_up() -> void:
 	var target_scale: Vector3 = Vector3(
