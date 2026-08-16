@@ -16,7 +16,7 @@ radius = 8.0
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_13qdw"]
 render_priority = 1
 shader = ExtResource("4_w7mun")
-shader_parameter/transition = 1.0
+shader_parameter/transition = 0.0
 shader_parameter/transition_softness = 0.12
 shader_parameter/transition_edge_width = 0.06
 shader_parameter/transition_edge_brightness = 4.0
@@ -142,7 +142,7 @@ shape = SubResource("SphereShape3D_13qdw")
 
 [node name="ShieldHealth" type="Node" parent="ShieldBody/ShieldHurtbox" unique_id=1024545330]
 script = ExtResource("2_k5umt")
-max_health = 1
+max_health = 5
 metadata/_custom_type_script = "uid://dn5b8er116luc"
 
 [node name="ShieldShockwaveRing" type="GPUParticles3D" parent="ShieldBody" unique_id=1761346192]

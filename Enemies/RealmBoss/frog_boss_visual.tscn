@@ -162,7 +162,7 @@ blend_shape_mode = 0
 shadow_mesh = SubResource("ArrayMesh_grdnj")
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_xrivr"]
-size = Vector3(0.8, 0.12446594, 2.3807495)
+size = Vector3(0.8, 0.07902908, 2.3807495)
 
 [node name="FrogBossVisual" unique_id=205895835 node_paths=PackedStringArray("tongue_mesh") instance=ExtResource("1_3g56f")]
 script = ExtResource("2_8hhjs")
@@ -209,5 +209,5 @@ active = false
 metadata/_custom_type_script = "uid://deroukfpp2mia"
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="TongueHitbox" index="0" unique_id=778922688]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.9802322e-08, 0.024360657, -0.009625673)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.9802322e-08, 0.0016422272, -0.009625673)
 shape = SubResource("BoxShape3D_xrivr")

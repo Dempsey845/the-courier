@@ -42,6 +42,8 @@ func _ready() -> void:
 			"extension",
 			0.0
 		)
+		
+	tongue_hitbox.hit_hurtbox.connect(_on_tongue_hitbox_hit_hurtbox)
 
 func rotate_towards_position(
 	target_position: Vector3,
@@ -326,3 +328,12 @@ func _face_target(target_position: Vector3) -> void:
 		parent_global_y = get_parent_node_3d().global_rotation.y
 
 	rotation.y = target_global_angle - parent_global_y
+
+func _on_tongue_hitbox_hit_hurtbox(hurtbox: Hurtbox):
+	if hurtbox.get_parent() is not Player:
+		return
+
+	var player: Player = hurtbox.get_parent()
+
+	player.apply_upward_force(16.0)
+	player.apply_directional_force(global_basis.z, 8.0)
