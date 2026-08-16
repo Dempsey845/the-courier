@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://coo6aa36rl2u" path="res://World/Areas/FrogRealm/shield_turret.gd" id="1_5jma2"]
 [ext_resource type="Shader" uid="uid://8fkspr18jakr" path="res://World/Areas/FrogRealm/ammo_orb.gdshader" id="1_wqqek"]
 [ext_resource type="PackedScene" uid="uid://c3k2wf3q1n8uu" path="res://World/Areas/FrogRealm/ice_vapour_particles.tscn" id="3_0nuhs"]
+[ext_resource type="PackedScene" uid="uid://x03f4042spc7" path="res://Systems/Controller/input_prompt.tscn" id="4_cfvlj"]
 
 [sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_0nuhs"]
 points = PackedVector3Array(0.20901737, 2.4764, 0.48843598, -2.1715555, -0.0015, -2.1715555, -2.1715555, -0.0015, 2.1715555, 2.1715555, -0.0015, -2.1715555, 2.1715555, -0.0015, 2.1715555, -0.19561723, 2.393397, 0.8474024, -1.7688966, 0.58821225, -1.7692925, 1.7696967, 0.58784515, -1.7696967, -0.27898136, 2.4764, 0.5584, 0.12964022, 2.3913481, 0.9107428, 0.27854407, 2.4764, 0.5584, -2.0795236, 0.1803399, 2.0795236, 2.0795236, 0.1803399, 2.0795236, -0.06996398, 2.4764, 0.41847202, -2.0795236, 0.1803399, -2.0795236, 2.0795236, 0.1803399, -2.0795236, 1.7696967, 0.58784515, 1.7696967, -1.7688673, 0.58822274, 1.7692631, -0.13003136, 2.3911994, 0.91062707, 0.0695267, 2.4764, 0.41847202, 0.19531266, 2.3940213, 0.8478531, -1.5384947, 0.7892503, -1.5384947, 1.5384102, 0.789274, -1.5384102, -0.20945464, 2.4764, 0.48843598)
@@ -336,3 +337,7 @@ emitting = false
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1164917466]
 root_node = NodePath("../TurretBody")
 libraries/ = SubResource("AnimationLibrary_rnqs5")
+
+[node name="InputPrompt" parent="." unique_id=930064518 instance=ExtResource("4_cfvlj")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.1000001, -0.5)
+collision_mask = 4

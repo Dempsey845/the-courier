@@ -1,11 +1,12 @@
 extends StaticBody3D
 
-@export var fire_cooldown: float = 2.0
+@export var fire_cooldown: float = 10.0
 @export var ammo_drain_duration: float = 1.2
 
 @onready var ammo_orb: MeshInstance3D = $AmmoOrb
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
 @onready var fire_point: Marker3D = %FirePoint
+@onready var input_prompt: InputPrompt = $InputPrompt
 
 var projectile_scene: PackedScene = preload("uid://chmyrswmwh50o")
 
@@ -19,21 +20,13 @@ func _ready() -> void:
 
 	ammo_material.set_shader_parameter("fill_progress", 1.0)
 
-	await get_tree().create_timer(6.0).timeout
-	fire()
-	await get_tree().create_timer(6.0).timeout
-	fire()
-	await get_tree().create_timer(6.0).timeout
-	fire()
-	await get_tree().create_timer(6.0).timeout
-	fire()
-	await get_tree().create_timer(6.0).timeout
-	fire()
-
+	input_prompt.pressed.connect(_on_input_prompt_pressed)
 
 func fire() -> void:
 	if is_firing or ammo_material == null:
 		return
+
+	input_prompt.can_be_shown = false
 
 	is_firing = true
 	animation_player.play("aim_fire")
@@ -56,6 +49,8 @@ func fire() -> void:
 
 	await ammo_tween.finished
 	is_firing = false
+
+	input_prompt.can_be_shown = true
 
 func shoot_projectile():
 	var projectile: Projectile = projectile_scene.instantiate()
@@ -92,3 +87,6 @@ func _tween_fill_progress(
 
 func _set_fill_progress(value: float) -> void:
 	ammo_material.set_shader_parameter("fill_progress", value)
+
+func _on_input_prompt_pressed():
+	fire()
