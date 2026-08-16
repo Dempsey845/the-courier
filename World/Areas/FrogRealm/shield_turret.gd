@@ -19,11 +19,15 @@ func _ready() -> void:
 
 	ammo_material.set_shader_parameter("fill_progress", 1.0)
 
-	await get_tree().create_timer(4.0).timeout
+	await get_tree().create_timer(6.0).timeout
 	fire()
-	await get_tree().create_timer(4.0).timeout
+	await get_tree().create_timer(6.0).timeout
 	fire()
-	await get_tree().create_timer(4.0).timeout
+	await get_tree().create_timer(6.0).timeout
+	fire()
+	await get_tree().create_timer(6.0).timeout
+	fire()
+	await get_tree().create_timer(6.0).timeout
 	fire()
 
 

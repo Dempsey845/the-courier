@@ -18,7 +18,7 @@ func show_shield() -> void:
 	).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
 
 
-func hide_shield() -> void:
+func hide_shield(callback: Callable) -> void:
 	var tween := create_tween()
 
 	tween.tween_method(
@@ -27,6 +27,8 @@ func hide_shield() -> void:
 		0.0,
 		transition_duration
 	).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN)
+
+	tween.tween_callback(callback)
 
 
 func _set_shield_transition(value: float) -> void:

@@ -18,9 +18,6 @@ enum AttackType {
 @export var shield: FrogShield
 @export var visual: FrogBossVisual
 
-@export_category("Health")
-@export_range(0.0, 1.0) var shield_break_percentage: float = 0.5
-
 @export_category("Attack")
 @export var attack_range: float = 35.0
 @export var look_duration: float = 1.5
@@ -32,7 +29,6 @@ enum AttackType {
 
 @onready var shield_hurtbox: Hurtbox = $ShieldBody/ShieldHurtbox
 @onready var shield_shockwave_ring: GPUParticles3D = $ShieldBody/ShieldShockwaveRing
-@onready var shield_mesh: MeshInstance3D = $ShieldBody/Shield
 
 var current_state: State
 var current_attack: AttackType
@@ -56,6 +52,7 @@ func _ready() -> void:
 	_change_state(State.LOOKING_AT_PLAYER)
 
 	shield_hurtbox.hit.connect(_on_shield_hurtbox_hit)
+	shield_hurtbox.health.death.connect(_on_shield_death)
 
 
 func _on_attack_finished() -> void:
@@ -170,18 +167,9 @@ func _is_player_within_attack_range() -> bool:
 
 func _on_health_damage_taken(
 	_damage_amount: int,
-	new_health: int
+	_new_health: int
 ) -> void:
-	if not shield_active:
-		return
-
-	var shield_break_health: float = (
-		health.max_health * shield_break_percentage
-	)
-
-	if new_health <= shield_break_health:
-		shield_active = false
-		lower_shield()
+	pass
 
 
 func raise_shield() -> void:
@@ -191,7 +179,7 @@ func raise_shield() -> void:
 
 func lower_shield() -> void:
 	if is_instance_valid(shield):
-		shield.hide_shield()
+		shield.hide_shield(_on_shield_lowered)
 
 
 func _should_spin_left() -> bool:
@@ -220,11 +208,11 @@ func _should_spin_left() -> bool:
 		Vector3.UP
 	)
 
-	return angle > 0.0
+	return angle < 0.0
 
 func _on_shield_hurtbox_hit(hitbox: Hitbox) -> void:
 	var hit_position: Vector3 = hitbox.global_position
-	var shield_center: Vector3 = shield_mesh.global_position
+	var shield_center: Vector3 = shield.global_position
 
 	var normal: Vector3 = (hit_position - shield_center).normalized()
 
@@ -242,3 +230,10 @@ func _on_shield_hurtbox_hit(hitbox: Hitbox) -> void:
 	)
 
 	shield_shockwave_ring.emitting = true
+
+func _on_shield_death():
+	lower_shield()
+
+func _on_shield_lowered():
+	shield_hurtbox.set_deferred("monitorable", false)
+	shield_hurtbox.set_deferred("monitoring", false)
