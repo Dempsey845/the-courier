@@ -66,6 +66,16 @@ uniform float displacement_speed : hint_range(0.0, 5.0) = 0.55;
 
 uniform float emission_strength : hint_range(0.0, 10.0) = 2.0;
 
+// Intersection
+uniform sampler2D depth_texture : hint_depth_texture,
+	filter_nearest, repeat_disable;
+
+uniform vec4 intersection_color : source_color =
+	vec4(0.65, 0.95, 1.0, 1.0);
+
+uniform float intersection_width : hint_range(0.001, 2.0) = 0.18;
+uniform float intersection_brightness : hint_range(0.0, 20.0) = 6.0;
+uniform float intersection_opacity : hint_range(0.0, 1.0) = 0.9;
 
 varying vec3 local_position;
 
@@ -102,6 +112,25 @@ float energy_noise(vec3 position, float time) {
 	) * 0.125 + 0.5;
 }
 
+float get_linear_depth(
+	float depth,
+	vec2 screen_uv,
+	mat4 inverse_projection
+) {
+	vec3 ndc = vec3(
+		screen_uv * 2.0 - 1.0,
+		depth
+	);
+
+	vec4 view_position = inverse_projection * vec4(
+		ndc,
+		1.0
+	);
+
+	view_position.xyz /= view_position.w;
+
+	return -view_position.z;
+}
 
 void vertex() {
 	vec3 sphere_direction = normalize(VERTEX);
@@ -233,7 +262,7 @@ void fragment() {
 
 	// Bottom-to-top transition
 
-	float transition_position =
+		float transition_position =
 		sphere_direction.y * 0.5 + 0.5;
 
 	float transition_mask = smoothstep(
@@ -242,7 +271,41 @@ void fragment() {
 		transition
 	);
 
+	float raw_scene_depth = texture(
+		depth_texture,
+		SCREEN_UV
+	).r;
 
+	float scene_depth = get_linear_depth(
+		raw_scene_depth,
+		SCREEN_UV,
+		INV_PROJECTION_MATRIX
+	);
+
+	float shield_depth = get_linear_depth(
+		FRAGCOORD.z,
+		SCREEN_UV,
+		INV_PROJECTION_MATRIX
+	);
+
+	float depth_difference =
+		scene_depth - shield_depth;
+
+	float intersection =
+		1.0 -
+		smoothstep(
+			0.0,
+			intersection_width,
+			depth_difference
+		);
+
+	intersection *= step(
+		0.0,
+		depth_difference
+	);
+
+	intersection *= transition_mask;
+	
 	// Bright leading edge of the transition
 
 	float transition_distance = abs(
@@ -291,6 +354,22 @@ void fragment() {
 		transition_edge *
 		transition_edge_brightness;
 
+
+		final_color = mix(
+		final_color,
+		intersection_color.rgb,
+		intersection
+	);
+
+	final_emission += (
+		intersection *
+		intersection_brightness
+	);
+
+	alpha = max(
+		alpha,
+		intersection * intersection_opacity
+	);
 
 	ALBEDO = final_color;
 
