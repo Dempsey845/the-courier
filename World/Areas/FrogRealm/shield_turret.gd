@@ -1,10 +1,13 @@
 extends StaticBody3D
 
-@export var fire_cooldown: float = 10.0
+@export var fire_cooldown: float = 2.0
 @export var ammo_drain_duration: float = 1.2
 
 @onready var ammo_orb: MeshInstance3D = $AmmoOrb
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
+@onready var fire_point: Marker3D = %FirePoint
+
+var projectile_scene: PackedScene = preload("uid://chmyrswmwh50o")
 
 var ammo_material: ShaderMaterial
 var ammo_tween: Tween
@@ -15,6 +18,13 @@ func _ready() -> void:
 	ammo_material = ammo_orb.get_surface_override_material(0)
 
 	ammo_material.set_shader_parameter("fill_progress", 1.0)
+
+	await get_tree().create_timer(4.0).timeout
+	fire()
+	await get_tree().create_timer(4.0).timeout
+	fire()
+	await get_tree().create_timer(4.0).timeout
+	fire()
 
 
 func fire() -> void:
@@ -43,6 +53,13 @@ func fire() -> void:
 	await ammo_tween.finished
 	is_firing = false
 
+func shoot_projectile():
+	var projectile: Projectile = projectile_scene.instantiate()
+
+	fire_point.add_child(projectile)
+
+	projectile.global_position = fire_point.global_position
+	projectile.global_rotation = fire_point.global_rotation
 
 func _tween_fill_progress(
 	target: float,

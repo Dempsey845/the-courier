@@ -8,13 +8,9 @@
 [ext_resource type="Shader" uid="uid://cl0i4nn534r2d" path="res://World/Environment/Bodies/portal.gdshader" id="5_0derk"]
 [ext_resource type="Script" uid="uid://vhphkydnyccp" path="res://World/Environment/Bodies/portal.gd" id="6_x7iw1"]
 [ext_resource type="Script" uid="uid://epcpb44orgo6" path="res://World/Environment/Bodies/portal_entrance.gd" id="7_08s18"]
-[ext_resource type="Script" uid="uid://ctv4iw4ctndov" path="res://World/Areas/FrogRealm/frog_boss.gd" id="9_h7lvl"]
-[ext_resource type="PackedScene" uid="uid://bar88i5lv34bx" path="res://Enemies/RealmBoss/frog_boss_visual.tscn" id="9_x7iw1"]
+[ext_resource type="PackedScene" uid="uid://es6r4xwsgwka" path="res://World/Areas/FrogRealm/frog_boss.tscn" id="9_s85ib"]
 [ext_resource type="PackedScene" uid="uid://c4qraqdt2f0hp" path="res://World/Areas/Swamp/mushroom_swamp_effect.tscn" id="10_08s18"]
-[ext_resource type="Shader" uid="uid://dfgy7msd5o7di" path="res://Enemies/RealmBoss/frog_shield.gdshader" id="10_s85ib"]
-[ext_resource type="Script" uid="uid://dn5b8er116luc" path="res://Components/health.gd" id="10_voqia"]
 [ext_resource type="PackedScene" uid="uid://dem10o88fea0" path="res://World/cloud_platform.tscn" id="11_e7ccy"]
-[ext_resource type="Script" uid="uid://cbtrm8rq6ckg6" path="res://Enemies/RealmBoss/frog_shield.gd" id="11_lbc42"]
 [ext_resource type="PackedScene" uid="uid://def8xq31m44p8" path="res://World/Areas/FrogRealm/shield_turret.tscn" id="16_1xr6s"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_syi77"]
@@ -123,44 +119,6 @@ orientation = 0
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_lbc42"]
 size = Vector3(1, 7, 5)
-
-[sub_resource type="SphereShape3D" id="SphereShape3D_xrivr"]
-radius = 10.0
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_13qdw"]
-render_priority = 1
-shader = ExtResource("10_s85ib")
-shader_parameter/transition = 1.0
-shader_parameter/transition_softness = 0.12
-shader_parameter/transition_edge_width = 0.06
-shader_parameter/transition_edge_brightness = 4.0
-shader_parameter/shield_color = Color(0.05, 0.35, 1, 1)
-shader_parameter/energy_color = Color(0.12, 0.65, 1, 1)
-shader_parameter/highlight_color = Color(0.25, 0.85, 1, 1)
-shader_parameter/base_opacity = 0.12
-shader_parameter/edge_opacity = 0.85
-shader_parameter/back_face_opacity = 0.22
-shader_parameter/fresnel_power = 3.5
-shader_parameter/fresnel_brightness = 2.0
-shader_parameter/pattern_scale = 12.0
-shader_parameter/pattern_speed = 0.45
-shader_parameter/pattern_strength = 0.8
-shader_parameter/detail_scale = 28.0
-shader_parameter/detail_strength = 0.35
-shader_parameter/pulse_speed = 1.4
-shader_parameter/pulse_frequency = 9.0
-shader_parameter/pulse_strength = 0.65
-shader_parameter/displacement_strength = 0.15
-shader_parameter/displacement_scale = 0.8
-shader_parameter/displacement_speed = 0.7
-shader_parameter/emission_strength = 2.0
-
-[sub_resource type="SphereMesh" id="SphereMesh_xrivr"]
-radius = 20.0
-height = 40.0
-
-[sub_resource type="SphereShape3D" id="SphereShape3D_13qdw"]
-radius = 20.0
 
 [sub_resource type="Shader" id="Shader_5gpxd"]
 code = "// Magical swamp water shader for a subdivided PlaneMesh.
@@ -818,7 +776,7 @@ color_ramp = SubResource("Gradient_0wqet")
 seamless = true
 in_3d_space = true
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_1xr6s"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_lbc42"]
 resource_local_to_scene = true
 render_priority = 0
 shader = SubResource("Shader_5gpxd")
@@ -865,9 +823,9 @@ shader_parameter/ripple_strength = 0.08
 shader_parameter/ripple_width = 0.2
 shader_parameter/ripple_frequency = 12.0
 
-[sub_resource type="PlaneMesh" id="PlaneMesh_7pwk2"]
+[sub_resource type="PlaneMesh" id="PlaneMesh_h7lvl"]
 resource_local_to_scene = true
-material = SubResource("ShaderMaterial_1xr6s")
+material = SubResource("ShaderMaterial_lbc42")
 size = Vector2(45, 45)
 subdivide_width = 450
 subdivide_depth = 450
@@ -920,37 +878,9 @@ portal = NodePath("../Portal")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -2, -8.940697e-08)
 shape = SubResource("BoxShape3D_lbc42")
 
-[node name="FrogBoss" type="StaticBody3D" parent="." unique_id=271442124 node_paths=PackedStringArray("health", "player", "shield", "visual")]
+[node name="FrogBoss" parent="." unique_id=1491294978 node_paths=PackedStringArray("player") instance=ExtResource("9_s85ib")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -51.505283, -5.3, -0.44737053)
-script = ExtResource("9_h7lvl")
-health = NodePath("Health")
 player = NodePath("../Player")
-shield = NodePath("ShieldBody/Shield")
-visual = NodePath("FrogBossVisual")
-
-[node name="Health" type="Node" parent="FrogBoss" unique_id=1606034843]
-script = ExtResource("10_voqia")
-max_health = 50
-metadata/_custom_type_script = "uid://dn5b8er116luc"
-
-[node name="FrogBossVisual" parent="FrogBoss" unique_id=205895835 instance=ExtResource("9_x7iw1")]
-transform = Transform3D(10, 0, 0, 0, 10, 0, 0, 0, 10, 0, 0, 0)
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="FrogBoss" unique_id=334059668]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 10.2868805, 0)
-shape = SubResource("SphereShape3D_xrivr")
-
-[node name="ShieldBody" type="StaticBody3D" parent="FrogBoss" unique_id=256870177]
-
-[node name="Shield" type="MeshInstance3D" parent="FrogBoss/ShieldBody" unique_id=154924986]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 6.8675737, 0)
-material_override = SubResource("ShaderMaterial_13qdw")
-mesh = SubResource("SphereMesh_xrivr")
-script = ExtResource("11_lbc42")
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="FrogBoss/ShieldBody" unique_id=599463676]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 7.34784, 0)
-shape = SubResource("SphereShape3D_13qdw")
 
 [node name="CSGCombiner3D" type="CSGCombiner3D" parent="." unique_id=1900368148]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -52, 0, 0)
@@ -969,7 +899,7 @@ height = 2.442871
 
 [node name="MushroomSwampEffect" parent="CSGCombiner3D" unique_id=963275507 instance=ExtResource("10_08s18")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.41529846, 0)
-mesh = SubResource("PlaneMesh_7pwk2")
+mesh = SubResource("PlaneMesh_h7lvl")
 
 [node name="CloudPlatform" parent="." unique_id=1538887151 instance=ExtResource("11_e7ccy")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15, 0, 0)

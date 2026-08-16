@@ -30,6 +30,10 @@ enum AttackType {
 @export_category("Rotation")
 @export var rotation_speed: float = 5.0
 
+@onready var shield_hurtbox: Hurtbox = $ShieldBody/ShieldHurtbox
+@onready var shield_shockwave_ring: GPUParticles3D = $ShieldBody/ShieldShockwaveRing
+@onready var shield_mesh: MeshInstance3D = $ShieldBody/Shield
+
 var current_state: State
 var current_attack: AttackType
 var state_timer: float = 0.0
@@ -50,6 +54,8 @@ func _ready() -> void:
 	raise_shield()
 
 	_change_state(State.LOOKING_AT_PLAYER)
+
+	shield_hurtbox.hit.connect(_on_shield_hurtbox_hit)
 
 
 func _on_attack_finished() -> void:
@@ -215,3 +221,24 @@ func _should_spin_left() -> bool:
 	)
 
 	return angle > 0.0
+
+func _on_shield_hurtbox_hit(hitbox: Hitbox) -> void:
+	var hit_position: Vector3 = hitbox.global_position
+	var shield_center: Vector3 = shield_mesh.global_position
+
+	var normal: Vector3 = (hit_position - shield_center).normalized()
+
+	var reference_axis: Vector3 = Vector3.UP
+
+	if abs(normal.dot(reference_axis)) > 0.99:
+		reference_axis = Vector3.RIGHT
+
+	var x_axis: Vector3 = reference_axis.cross(normal).normalized()
+	var z_axis: Vector3 = x_axis.cross(normal).normalized()
+
+	shield_shockwave_ring.global_transform = Transform3D(
+		Basis(x_axis, normal, z_axis),
+		hit_position
+	)
+
+	shield_shockwave_ring.emitting = true

@@ -1,0 +1,136 @@
+[gd_scene format=3 uid="uid://es6r4xwsgwka"]
+
+[ext_resource type="Script" uid="uid://ctv4iw4ctndov" path="res://World/Areas/FrogRealm/frog_boss.gd" id="1_wemoa"]
+[ext_resource type="Script" uid="uid://dn5b8er116luc" path="res://Components/health.gd" id="2_k5umt"]
+[ext_resource type="PackedScene" uid="uid://bar88i5lv34bx" path="res://Enemies/RealmBoss/frog_boss_visual.tscn" id="3_bvgwd"]
+[ext_resource type="Shader" uid="uid://dfgy7msd5o7di" path="res://Enemies/RealmBoss/frog_shield.gdshader" id="4_w7mun"]
+[ext_resource type="Script" uid="uid://cbtrm8rq6ckg6" path="res://Enemies/RealmBoss/frog_shield.gd" id="5_k3i8r"]
+[ext_resource type="Script" uid="uid://dswhdacq2khkk" path="res://Components/hurtbox.gd" id="6_qvtow"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_xrivr"]
+radius = 10.0
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_13qdw"]
+render_priority = 1
+shader = ExtResource("4_w7mun")
+shader_parameter/transition = 1.0
+shader_parameter/transition_softness = 0.12
+shader_parameter/transition_edge_width = 0.06
+shader_parameter/transition_edge_brightness = 4.0
+shader_parameter/shield_color = Color(0.05, 0.35, 1, 1)
+shader_parameter/energy_color = Color(0.12, 0.65, 1, 1)
+shader_parameter/highlight_color = Color(0.25, 0.85, 1, 1)
+shader_parameter/base_opacity = 0.12
+shader_parameter/edge_opacity = 0.85
+shader_parameter/back_face_opacity = 0.22
+shader_parameter/fresnel_power = 3.5
+shader_parameter/fresnel_brightness = 2.0
+shader_parameter/pattern_scale = 12.0
+shader_parameter/pattern_speed = 0.45
+shader_parameter/pattern_strength = 0.8
+shader_parameter/detail_scale = 28.0
+shader_parameter/detail_strength = 0.35
+shader_parameter/pulse_speed = 1.4
+shader_parameter/pulse_frequency = 9.0
+shader_parameter/pulse_strength = 0.65
+shader_parameter/displacement_strength = 0.15
+shader_parameter/displacement_scale = 0.8
+shader_parameter/displacement_speed = 0.7
+shader_parameter/emission_strength = 2.0
+
+[sub_resource type="SphereMesh" id="SphereMesh_xrivr"]
+radius = 20.0
+height = 40.0
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_13qdw"]
+radius = 20.0
+
+[sub_resource type="Gradient" id="Gradient_7pwk2"]
+offsets = PackedFloat32Array(0, 0.2, 1)
+colors = PackedColorArray(1, 0.65, 1, 0, 0.75, 0.12, 1, 0.8, 0.35, 0, 0.75, 0)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture_Ring"]
+gradient = SubResource("Gradient_7pwk2")
+
+[sub_resource type="Curve" id="Curve_mncl4"]
+_data = [Vector2(0, 0.1), 0.0, 7.0, 0, 0, Vector2(0.25, 0.85), 0.0, 2.0, 0, 0, Vector2(1, 1.6), 0.8, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_RingScale"]
+curve = SubResource("Curve_mncl4")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_iw61r"]
+gravity = Vector3(0, 0, 0)
+scale_curve = SubResource("CurveTexture_RingScale")
+color_ramp = SubResource("GradientTexture_Ring")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_df1d8"]
+render_priority = 1
+transparency = 1
+blend_mode = 1
+shading_mode = 0
+vertex_color_use_as_albedo = true
+albedo_color = Color(0.22352941, 0.078431375, 1, 0.7019608)
+
+[sub_resource type="TorusMesh" id="TorusMesh_j3gm1"]
+material = SubResource("StandardMaterial3D_df1d8")
+inner_radius = 2.7
+outer_radius = 3.0
+rings = 24
+ring_segments = 8
+
+[node name="FrogBoss" type="StaticBody3D" unique_id=1491294978 node_paths=PackedStringArray("health", "shield", "visual")]
+script = ExtResource("1_wemoa")
+health = NodePath("Health")
+shield = NodePath("ShieldBody/Shield")
+visual = NodePath("FrogBossVisual")
+
+[node name="Health" type="Node" parent="." unique_id=806976795]
+script = ExtResource("2_k5umt")
+max_health = 50
+metadata/_custom_type_script = "uid://dn5b8er116luc"
+
+[node name="FrogBossVisual" parent="." unique_id=205895835 instance=ExtResource("3_bvgwd")]
+transform = Transform3D(10, 0, 0, 0, 10, 0, 0, 0, 10, 0, 0, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1776240062]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 10.2868805, 0)
+shape = SubResource("SphereShape3D_xrivr")
+
+[node name="ShieldBody" type="StaticBody3D" parent="." unique_id=784310436]
+
+[node name="Shield" type="MeshInstance3D" parent="ShieldBody" unique_id=430119447]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 6.8675737, 0)
+material_override = SubResource("ShaderMaterial_13qdw")
+mesh = SubResource("SphereMesh_xrivr")
+script = ExtResource("5_k3i8r")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="ShieldBody" unique_id=1310605752]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 7.34784, 0)
+shape = SubResource("SphereShape3D_13qdw")
+
+[node name="ShieldHurtbox" type="Area3D" parent="ShieldBody" unique_id=2125586642 node_paths=PackedStringArray("health")]
+collision_layer = 32
+collision_mask = 64
+script = ExtResource("6_qvtow")
+health = NodePath("ShieldHealth")
+metadata/_custom_type_script = "uid://dswhdacq2khkk"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="ShieldBody/ShieldHurtbox" unique_id=1408684132]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 7.34784, 0)
+shape = SubResource("SphereShape3D_13qdw")
+
+[node name="ShieldHealth" type="Node" parent="ShieldBody/ShieldHurtbox" unique_id=1024545330]
+script = ExtResource("2_k5umt")
+metadata/_custom_type_script = "uid://dn5b8er116luc"
+
+[node name="ShieldShockwaveRing" type="GPUParticles3D" parent="ShieldBody" unique_id=1761346192]
+transform = Transform3D(0, 0.99999994, 3.1391644e-07, 0, 3.1391647e-07, -1, -0.99999994, 0, 0, 19.999998, 11, 0)
+emitting = false
+amount = 3
+lifetime = 0.45
+one_shot = true
+fixed_fps = 60
+visibility_aabb = AABB(-8, -8, -8, 16, 16, 16)
+process_material = SubResource("ParticleProcessMaterial_iw61r")
+draw_pass_1 = SubResource("TorusMesh_j3gm1")

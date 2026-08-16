@@ -1,0 +1,89 @@
+[gd_scene format=3 uid="uid://chfn573ul0yku"]
+
+[sub_resource type="ParticleProcessMaterial" id="Process_Core"]
+emission_shape = 3
+emission_box_extents = Vector3(0.18, 0.2, 0.025)
+use_rotation_3d = true
+rotation_3d_min = Vector3(-90, 0, 0)
+rotation_3d_max = Vector3(-90, 0, 0)
+direction = Vector3(0, 0, 1)
+spread = 4.0
+initial_velocity_min = 1.5
+initial_velocity_max = 2.5
+gravity = Vector3(0, 0, 0)
+damping_min = 1.0
+damping_max = 1.5
+
+[sub_resource type="Curve" id="Curve_CoreWidth"]
+_data = [Vector2(0, 0), 0.0, 4.0, 0, 0, Vector2(0.08, 1), 0.0, 0.0, 0, 0, Vector2(0.65, 0.55), 0.0, -0.8, 0, 0, Vector2(1, 0), -1.5, 0.0, 0, 0]
+point_count = 4
+
+[sub_resource type="StandardMaterial3D" id="Material_Core"]
+render_priority = 1
+transparency = 1
+shading_mode = 0
+vertex_color_use_as_albedo = true
+albedo_color = Color(0.91632825, 0.31583604, 0.9999991, 0.9490196)
+
+[sub_resource type="TubeTrailMesh" id="Mesh_Core"]
+material = SubResource("Material_Core")
+radius = 0.045
+radial_steps = 6
+sections = 6
+section_length = 0.12
+curve = SubResource("Curve_CoreWidth")
+
+[sub_resource type="ParticleProcessMaterial" id="Process_Glow"]
+emission_shape = 3
+emission_box_extents = Vector3(0.25, 0.3, 0.02)
+angle_min = 1.0728835e-05
+angle_max = 1.0728835e-05
+use_rotation_3d = true
+rotation_3d_min = Vector3(-90, 0, 0)
+rotation_3d_max = Vector3(-90, 0, 0)
+direction = Vector3(0, 0, 1)
+spread = 8.0
+initial_velocity_min = 0.8
+initial_velocity_max = 1.5
+gravity = Vector3(0, 0, 0)
+damping_min = 0.5
+damping_max = 1.0
+
+[sub_resource type="Curve" id="Curve_GlowWidth"]
+_data = [Vector2(0, 0), 0.0, 4.0, 0, 0, Vector2(0.1, 1), 0.0, 0.0, 0, 0, Vector2(0.55, 0.7), 0.0, -0.6, 0, 0, Vector2(1, 0), -1.0, 0.0, 0, 0]
+point_count = 4
+
+[sub_resource type="StandardMaterial3D" id="Material_Glow"]
+transparency = 1
+shading_mode = 0
+vertex_color_use_as_albedo = true
+albedo_color = Color(0.45901495, 0.0020391075, 0.7218779, 0.21960784)
+
+[sub_resource type="TubeTrailMesh" id="Mesh_Glow"]
+material = SubResource("Material_Glow")
+radius = 0.12
+radial_steps = 6
+sections = 6
+section_length = 0.15
+curve = SubResource("Curve_GlowWidth")
+
+[node name="ProjectileTrail" type="Node3D" unique_id=183348020]
+
+[node name="CoreTrail" type="GPUParticles3D" parent="." unique_id=1254930289]
+lifetime = 0.35
+fixed_fps = 60
+visibility_aabb = AABB(-5, -5, -10, 10, 10, 20)
+trail_enabled = true
+trail_lifetime = 0.22
+process_material = SubResource("Process_Core")
+draw_pass_1 = SubResource("Mesh_Core")
+
+[node name="GlowTrail" type="GPUParticles3D" parent="." unique_id=129618712]
+amount = 10
+lifetime = 0.45
+fixed_fps = 60
+visibility_aabb = AABB(-5, -5, -10, 10, 10, 20)
+local_coords = true
+trail_enabled = true
+process_material = SubResource("Process_Glow")
+draw_pass_1 = SubResource("Mesh_Glow")

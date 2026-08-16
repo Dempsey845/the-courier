@@ -1,0 +1,52 @@
+[gd_scene format=3 uid="uid://chmyrswmwh50o"]
+
+[ext_resource type="Script" uid="uid://dmhua8gd74nqr" path="res://Components/projectile.gd" id="1_sskt7"]
+[ext_resource type="PackedScene" uid="uid://cuw3gmy360p0h" path="res://World/Areas/FrogRealm/projectile_explosion.tscn" id="2_53boq"]
+[ext_resource type="Shader" uid="uid://8fkspr18jakr" path="res://World/Areas/FrogRealm/ammo_orb.gdshader" id="2_qo2bi"]
+[ext_resource type="PackedScene" uid="uid://chfn573ul0yku" path="res://World/Areas/FrogRealm/projectile_trail_particles.tscn" id="3_53boq"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_13qdw"]
+render_priority = 0
+shader = ExtResource("2_qo2bi")
+shader_parameter/fill_progress = 1.0
+shader_parameter/fill_bottom = -0.5
+shader_parameter/fill_top = 1.0
+shader_parameter/surface_softness = 0.015
+shader_parameter/surface_wobble = 0.025
+shader_parameter/wobble_speed = 1.5
+shader_parameter/liquid_colour = Color(0.32, 0.035, 0.72, 0.82)
+shader_parameter/energy_colour = Color(0.78, 0.18, 1, 1)
+shader_parameter/highlight_colour = Color(0.95, 0.62, 1, 1)
+shader_parameter/emission_strength = 2.0
+shader_parameter/fresnel_strength = 1.5
+shader_parameter/swirl_scale = 5.0
+shader_parameter/swirl_speed = 0.8
+shader_parameter/bubble_scale = 14.0
+shader_parameter/bubble_strength = 0.3
+
+[sub_resource type="SphereMesh" id="SphereMesh_xrivr"]
+material = SubResource("ShaderMaterial_13qdw")
+radial_segments = 12
+rings = 6
+is_hemisphere = true
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_xrivr"]
+
+[node name="FrogShieldProjectile" type="Area3D" unique_id=755927576]
+top_level = true
+collision_layer = 64
+collision_mask = 32
+script = ExtResource("1_sskt7")
+speed = 15.0
+explosion_effect_scene = ExtResource("2_53boq")
+metadata/_custom_type_script = "uid://deroukfpp2mia"
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1913516265]
+transform = Transform3D(-4.3711385e-08, 4.371139e-08, 1, 1, 0, 4.371139e-08, 0, 1, -4.371139e-08, -1.7484556e-08, 0, -0.4)
+mesh = SubResource("SphereMesh_xrivr")
+
+[node name="ProjectileTrailParticles" parent="." unique_id=1736068983 instance=ExtResource("3_53boq")]
+transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, 3.4969112e-08, 0, -0.9)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=586137279]
+shape = SubResource("SphereShape3D_xrivr")

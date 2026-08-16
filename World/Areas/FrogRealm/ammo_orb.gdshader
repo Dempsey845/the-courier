@@ -1,6 +1,6 @@
 shader_type spatial;
 
-render_mode cull_disabled, depth_draw_opaque,
+render_mode cull_back, depth_draw_always,
 	diffuse_burley, specular_schlick_ggx;
 
 
