@@ -25,7 +25,7 @@ enum AttackType {
 @export_range(0.0, 1.0) var straight_tongue_chance: float = 0.4
 
 @export_category("Rotation")
-@export var rotation_speed: float = 5.0
+@export var rotation_speed: float = 2.5
 
 @onready var shield_hurtbox: Hurtbox = $ShieldBody/ShieldHurtbox
 @onready var shield_shockwave_ring: GPUParticles3D = $ShieldBody/ShieldShockwaveRing
@@ -208,7 +208,7 @@ func _should_spin_left() -> bool:
 		Vector3.UP
 	)
 
-	return angle < 0.0
+	return angle > 0.0
 
 func _on_shield_hurtbox_hit(hitbox: Hitbox) -> void:
 	var hit_position: Vector3 = hitbox.global_position

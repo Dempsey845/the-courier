@@ -5,6 +5,8 @@ signal attack_finished
 
 @export_category("Spin")
 @export var spin_duration: float = 3.0
+@export_range(0.0, 1.0) var initial_spin_speed: float = 0.15
+@export_range(0.05, 0.9) var spin_ramp_fraction: float = 0.3
 
 @export_category("Charge")
 @export var puff_scale_multiplier: float = 1.25
@@ -163,15 +165,18 @@ func _spin_towards_target(
 	tween.set_trans(Tween.TRANS_LINEAR)
 
 	tween.tween_method(
-		func(progress: float) -> void:
+		func(linear_progress: float) -> void:
 			if not is_instance_valid(target):
 				return
+
+			var spin_progress := _get_accelerated_spin_progress(
+				linear_progress
+			)
 
 			var target_local_y: float = _get_local_angle_to(
 				target.global_position
 			)
 
-		
 			var target_correction: float = wrapf(
 				target_local_y - starting_rotation,
 				-PI,
@@ -180,8 +185,8 @@ func _spin_towards_target(
 
 			rotation.y = (
 				starting_rotation
-				+ spin_direction * TAU * progress
-				+ target_correction * progress
+				+ spin_direction * TAU * spin_progress
+				+ target_correction * spin_progress
 			),
 		0.0,
 		1.0,
@@ -196,6 +201,52 @@ func _spin_towards_target(
 		)
 
 	rotation.y = wrapf(rotation.y, -PI, PI)
+
+func _get_accelerated_spin_progress(
+	linear_progress: float
+) -> float:
+	var ramp: float = clampf(
+		spin_ramp_fraction,
+		0.001,
+		0.999
+	)
+
+	var starting_speed: float = clampf(
+		initial_spin_speed,
+		0.0,
+		1.0
+	)
+
+	var distance: float
+
+	if linear_progress < ramp:
+		var ramp_progress: float = linear_progress / ramp
+
+		distance = (
+			starting_speed * linear_progress
+			+ (1.0 - starting_speed)
+			* ramp
+			* ramp_progress
+			* ramp_progress
+			* 0.5
+		)
+	else:
+		var ramp_distance: float = (
+			ramp * (starting_speed + 1.0) * 0.5
+		)
+
+		distance = (
+			ramp_distance
+			+ linear_progress
+			- ramp
+		)
+
+	var total_distance: float = (
+		1.0
+		- ramp * (1.0 - starting_speed) * 0.5
+	)
+
+	return distance / total_distance
 
 func _get_local_angle_to(
 	target_position: Vector3
