@@ -6,6 +6,7 @@
 [ext_resource type="Shader" uid="uid://dfgy7msd5o7di" path="res://Enemies/RealmBoss/frog_shield.gdshader" id="4_w7mun"]
 [ext_resource type="Script" uid="uid://cbtrm8rq6ckg6" path="res://Enemies/RealmBoss/frog_shield.gd" id="5_k3i8r"]
 [ext_resource type="Script" uid="uid://dswhdacq2khkk" path="res://Components/hurtbox.gd" id="6_qvtow"]
+[ext_resource type="PackedScene" uid="uid://mk2ngqtci0le" path="res://World/Areas/FrogRealm/frog_boss_ui.tscn" id="7_k5umt"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_xrivr"]
 radius = 10.0
@@ -91,7 +92,7 @@ visual = NodePath("FrogBossVisual")
 
 [node name="Health" type="Node" parent="." unique_id=806976795]
 script = ExtResource("2_k5umt")
-max_health = 50
+max_health = 1
 metadata/_custom_type_script = "uid://dn5b8er116luc"
 
 [node name="FrogBossHurtbox" type="Area3D" parent="." unique_id=781144187 node_paths=PackedStringArray("health")]
@@ -137,6 +138,7 @@ shape = SubResource("SphereShape3D_13qdw")
 
 [node name="ShieldHealth" type="Node" parent="ShieldBody/ShieldHurtbox" unique_id=1024545330]
 script = ExtResource("2_k5umt")
+max_health = 1
 metadata/_custom_type_script = "uid://dn5b8er116luc"
 
 [node name="ShieldShockwaveRing" type="GPUParticles3D" parent="ShieldBody" unique_id=1761346192]
@@ -149,3 +151,7 @@ fixed_fps = 60
 visibility_aabb = AABB(-8, -8, -8, 16, 16, 16)
 process_material = SubResource("ParticleProcessMaterial_iw61r")
 draw_pass_1 = SubResource("TorusMesh_j3gm1")
+
+[node name="FrogBossUI" parent="." unique_id=406924992 node_paths=PackedStringArray("shield_health", "boss_health") instance=ExtResource("7_k5umt")]
+shield_health = NodePath("../ShieldBody/ShieldHurtbox/ShieldHealth")
+boss_health = NodePath("../Health")

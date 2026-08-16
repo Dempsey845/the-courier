@@ -1,0 +1,312 @@
+[gd_scene format=3 uid="uid://mk2ngqtci0le"]
+
+[ext_resource type="Script" uid="uid://hhmbu1kwowdg" path="res://World/Areas/FrogRealm/frog_boss_ui.gd" id="1_script"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBox_panel"]
+bg_color = Color(0.055, 0.018, 0.105, 0.94)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.49, 0.17, 0.76, 1)
+corner_radius_top_left = 12
+corner_radius_top_right = 12
+corner_radius_bottom_right = 12
+corner_radius_bottom_left = 12
+shadow_color = Color(0.025, 0.005, 0.05, 0.8)
+shadow_size = 6
+
+[sub_resource type="StyleBoxFlat" id="StyleBox_gem"]
+bg_color = Color(0.44, 0.08, 0.72, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.85, 0.54, 1, 1)
+corner_radius_top_left = 15
+corner_radius_top_right = 15
+corner_radius_bottom_right = 15
+corner_radius_bottom_left = 15
+shadow_color = Color(0.48, 0.08, 0.8, 0.65)
+shadow_size = 4
+
+[sub_resource type="LabelSettings" id="LabelSettings_icon"]
+font_color = Color(0.83, 0.62, 1, 1)
+outline_size = 3
+outline_color = Color(0.09, 0.01, 0.17, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_title"]
+font_size = 19
+font_color = Color(0.94, 0.83, 1, 1)
+outline_size = 5
+outline_color = Color(0.12, 0.015, 0.22, 1)
+shadow_size = 2
+shadow_color = Color(0, 0, 0, 0.65)
+
+[sub_resource type="LabelSettings" id="LabelSettings_stage"]
+font_size = 10
+font_color = Color(0.69, 0.5, 0.95, 1)
+outline_size = 3
+outline_color = Color(0.08, 0.01, 0.14, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBox_health_background"]
+bg_color = Color(0.075, 0.012, 0.035, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.55, 0.08, 0.25, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[sub_resource type="StyleBoxFlat" id="StyleBox_health_fill"]
+bg_color = Color(0.88, 0.055, 0.17, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(1, 0.37, 0.5, 1)
+corner_radius_top_left = 7
+corner_radius_top_right = 7
+corner_radius_bottom_right = 7
+corner_radius_bottom_left = 7
+expand_margin_left = -2.0
+expand_margin_top = -2.0
+expand_margin_right = -2.0
+expand_margin_bottom = -2.0
+
+[sub_resource type="LabelSettings" id="LabelSettings_bar"]
+font_size = 12
+outline_size = 3
+outline_color = Color(0.025, 0.005, 0.05, 0.95)
+
+[sub_resource type="StyleBoxFlat" id="StyleBox_shield_background"]
+bg_color = Color(0.015, 0.025, 0.09, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.2, 0.55, 1, 0.9)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[sub_resource type="StyleBoxFlat" id="StyleBox_shield_fill"]
+bg_color = Color(0.05, 0.48, 1, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.55, 0.94, 1, 1)
+corner_radius_top_left = 7
+corner_radius_top_right = 7
+corner_radius_bottom_right = 7
+corner_radius_bottom_left = 7
+expand_margin_left = -2.0
+expand_margin_top = -2.0
+expand_margin_right = -2.0
+expand_margin_bottom = -2.0
+
+[node name="FrogBossUI" type="CanvasLayer" unique_id=406924992]
+layer = 8
+script = ExtResource("1_script")
+
+[node name="BossPanel" type="PanelContainer" parent="." unique_id=481637532]
+unique_name_in_owner = true
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -200.0
+offset_right = 200.0
+offset_bottom = 92.0
+grow_horizontal = 2
+theme_override_styles/panel = SubResource("StyleBox_panel")
+
+[node name="Margin" type="MarginContainer" parent="BossPanel" unique_id=1650864738]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 6
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 8
+
+[node name="Content" type="VBoxContainer" parent="BossPanel/Margin" unique_id=194355580]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="TitleRow" type="HBoxContainer" parent="BossPanel/Margin/Content" unique_id=284600972]
+custom_minimum_size = Vector2(0, 34)
+layout_mode = 2
+theme_override_constants/separation = 6
+
+[node name="LeftGem" type="PanelContainer" parent="BossPanel/Margin/Content/TitleRow" unique_id=49351431]
+custom_minimum_size = Vector2(30, 30)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBox_gem")
+
+[node name="Icon" type="Label" parent="BossPanel/Margin/Content/TitleRow/LeftGem" unique_id=1646734391]
+layout_mode = 2
+text = "✦"
+label_settings = SubResource("LabelSettings_icon")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Titles" type="VBoxContainer" parent="BossPanel/Margin/Content/TitleRow" unique_id=501941409]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = -5
+
+[node name="BossName" type="Label" parent="BossPanel/Margin/Content/TitleRow/Titles" unique_id=1589121178]
+layout_mode = 2
+text = "THE ENCHANTED FROG"
+label_settings = SubResource("LabelSettings_title")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="StageLabel" type="Label" parent="BossPanel/Margin/Content/TitleRow/Titles" unique_id=180716068]
+unique_name_in_owner = true
+layout_mode = 2
+text = "ARCANE SHIELD"
+label_settings = SubResource("LabelSettings_stage")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="RightGem" type="PanelContainer" parent="BossPanel/Margin/Content/TitleRow" unique_id=538667837]
+custom_minimum_size = Vector2(30, 30)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBox_gem")
+
+[node name="Icon" type="Label" parent="BossPanel/Margin/Content/TitleRow/RightGem" unique_id=11798169]
+layout_mode = 2
+text = "✦"
+label_settings = SubResource("LabelSettings_icon")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Bars" type="Control" parent="BossPanel/Margin/Content" unique_id=1882522677]
+custom_minimum_size = Vector2(0, 26)
+layout_mode = 2
+
+[node name="HealthStage" type="Control" parent="BossPanel/Margin/Content/Bars" unique_id=668603396]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="HealthBar" type="ProgressBar" parent="BossPanel/Margin/Content/Bars/HealthStage" unique_id=50759683]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/background = SubResource("StyleBox_health_background")
+theme_override_styles/fill = SubResource("StyleBox_health_fill")
+value = 100.0
+show_percentage = false
+
+[node name="HealthFlash" type="ColorRect" parent="BossPanel/Margin/Content/Bars/HealthStage" unique_id=907409551]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(1, 0.18, 0.32, 0)
+
+[node name="HealthIcon" type="Label" parent="BossPanel/Margin/Content/Bars/HealthStage" unique_id=1640491668]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = 7.0
+offset_top = -10.0
+offset_right = 30.0
+offset_bottom = 10.0
+grow_vertical = 2
+text = "♥"
+label_settings = SubResource("LabelSettings_bar")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="HealthValueLabel" type="Label" parent="BossPanel/Margin/Content/Bars/HealthStage" unique_id=67824660]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "100 / 100"
+label_settings = SubResource("LabelSettings_bar")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ShieldStage" type="Control" parent="BossPanel/Margin/Content/Bars" unique_id=1586974852]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ShieldBar" type="ProgressBar" parent="BossPanel/Margin/Content/Bars/ShieldStage" unique_id=1278261861]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/background = SubResource("StyleBox_shield_background")
+theme_override_styles/fill = SubResource("StyleBox_shield_fill")
+value = 100.0
+show_percentage = false
+
+[node name="ShieldFlash" type="ColorRect" parent="BossPanel/Margin/Content/Bars/ShieldStage" unique_id=1147809840]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0.45, 0.95, 1, 0)
+
+[node name="ShieldIcon" type="Label" parent="BossPanel/Margin/Content/Bars/ShieldStage" unique_id=1843974267]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = 7.0
+offset_top = -10.0
+offset_right = 30.0
+offset_bottom = 10.0
+grow_vertical = 2
+text = "◆"
+label_settings = SubResource("LabelSettings_bar")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ShieldValueLabel" type="Label" parent="BossPanel/Margin/Content/Bars/ShieldStage" unique_id=296543461]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "100 / 100"
+label_settings = SubResource("LabelSettings_bar")
+horizontal_alignment = 1
+vertical_alignment = 1
