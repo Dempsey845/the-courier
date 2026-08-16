@@ -168,7 +168,10 @@ size = Vector3(0.8, 0.12446594, 2.3807495)
 script = ExtResource("2_8hhjs")
 tongue_mesh = NodePath("Armature/Skeleton3D/BoneAttachment3D/TongueOrigin/MeshInstance3D")
 
-[node name="Skeleton3D" parent="Armature" parent_id_path=PackedInt32Array(1973317045) index="0" unique_id=184584735]
+[node name="Armature" parent="." index="0" unique_id=1973317045]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.10000001)
+
+[node name="Skeleton3D" parent="Armature" index="0" unique_id=184584735]
 bones/1/rotation = Quaternion(-7.649265e-07, -2.2579148e-07, -0.8084415, 0.5885766)
 bones/2/rotation = Quaternion(-7.649265e-07, 2.2579148e-07, 0.8084415, 0.5885766)
 
@@ -198,7 +201,7 @@ mesh = SubResource("ArrayMesh_jx2j8")
 autoplay = &"Idle"
 
 [node name="TongueHitbox" type="Area3D" parent="." index="3" unique_id=449866112]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.8, 2.1000001)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.8, 2.0000002)
 collision_layer = 128
 collision_mask = 16
 script = ExtResource("4_6ouje")

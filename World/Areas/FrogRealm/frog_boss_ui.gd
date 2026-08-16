@@ -26,6 +26,8 @@ extends CanvasLayer
 
 var shield_depleted: bool = false
 var ui_hiding: bool = false
+var shown_panel_position: Vector2
+var visibility_tween: Tween
 
 var shield_bar_tween: Tween
 var health_bar_tween: Tween
@@ -34,13 +36,15 @@ var flash_tween: Tween
 
 
 func _ready() -> void:
-	boss_panel.modulate.a = 0.0
-	boss_panel.position.y += 14.0
+	shown_panel_position = boss_panel.position
 
 	_setup_health_bars()
 	_connect_health_signals()
 	_update_stage_immediately()
-	_show_ui()
+
+	boss_panel.position = shown_panel_position + Vector2(0.0, 14.0)
+	boss_panel.modulate.a = 0.0
+	visible = false
 
 
 func _setup_health_bars() -> void:
@@ -83,25 +87,34 @@ func _update_stage_immediately() -> void:
 	)
 
 
-func _show_ui() -> void:
-	var final_position := boss_panel.position
-	boss_panel.position.y -= 14.0
+func show_boss_ui() -> void:
+	if visibility_tween and visibility_tween.is_valid():
+		visibility_tween.kill()
 
-	var tween := create_tween()
-	tween.set_parallel()
+	ui_hiding = false
+	visible = true
 
-	tween.tween_property(
+	boss_panel.position = (
+		shown_panel_position
+		+ Vector2(0.0, 14.0)
+	)
+	boss_panel.modulate.a = 0.0
+
+	visibility_tween = create_tween()
+	visibility_tween.set_parallel()
+
+	visibility_tween.tween_property(
 		boss_panel,
 		"modulate:a",
 		1.0,
-		0.35
+		0.3
 	)
 
-	tween.tween_property(
+	visibility_tween.tween_property(
 		boss_panel,
 		"position",
-		final_position,
-		0.45
+		shown_panel_position,
+		0.4
 	).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
 
 
@@ -130,8 +143,6 @@ func _on_boss_damage_taken(
 	)
 
 	if new_health <= 0.0 and not ui_hiding:
-		ui_hiding = true
-
 		await get_tree().create_timer(
 			bar_update_duration
 		).timeout
@@ -245,26 +256,32 @@ func _update_health_label(value: float) -> void:
 
 
 func hide_boss_ui() -> void:
+	if ui_hiding:
+		return
+
 	ui_hiding = true
 
-	var tween := create_tween()
-	tween.set_parallel()
+	if visibility_tween and visibility_tween.is_valid():
+		visibility_tween.kill()
 
-	tween.tween_property(
+	visibility_tween = create_tween()
+	visibility_tween.set_parallel()
+
+	visibility_tween.tween_property(
 		boss_panel,
 		"modulate:a",
 		0.0,
 		0.3
 	)
 
-	tween.tween_property(
+	visibility_tween.tween_property(
 		boss_panel,
-		"position:y",
-		boss_panel.position.y + 14.0,
+		"position",
+		shown_panel_position + Vector2(0.0, 14.0),
 		0.3
 	).set_trans(Tween.TRANS_QUART).set_ease(Tween.EASE_IN)
 
-	tween.chain().tween_callback(
+	visibility_tween.chain().tween_callback(
 		func() -> void:
 			visible = false
 	)

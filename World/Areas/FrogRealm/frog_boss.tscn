@@ -4,6 +4,7 @@
 [ext_resource type="Script" uid="uid://dn5b8er116luc" path="res://Components/health.gd" id="2_k5umt"]
 [ext_resource type="PackedScene" uid="uid://bar88i5lv34bx" path="res://Enemies/RealmBoss/frog_boss_visual.tscn" id="3_bvgwd"]
 [ext_resource type="Shader" uid="uid://dfgy7msd5o7di" path="res://Enemies/RealmBoss/frog_shield.gdshader" id="4_w7mun"]
+[ext_resource type="Script" uid="uid://c6geflmkp70q5" path="res://World/Areas/FrogRealm/shield_body.gd" id="5_bvgwd"]
 [ext_resource type="Script" uid="uid://cbtrm8rq6ckg6" path="res://Enemies/RealmBoss/frog_shield.gd" id="5_k3i8r"]
 [ext_resource type="Script" uid="uid://dswhdacq2khkk" path="res://Components/hurtbox.gd" id="6_qvtow"]
 [ext_resource type="PackedScene" uid="uid://mk2ngqtci0le" path="res://World/Areas/FrogRealm/frog_boss_ui.tscn" id="7_k5umt"]
@@ -44,11 +45,11 @@ shader_parameter/intersection_brightness = 6.0
 shader_parameter/intersection_opacity = 0.9
 
 [sub_resource type="SphereMesh" id="SphereMesh_xrivr"]
-radius = 20.0
-height = 40.0
+radius = 15.0
+height = 30.0
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_13qdw"]
-radius = 20.0
+radius = 15.0
 
 [sub_resource type="Gradient" id="Gradient_7pwk2"]
 offsets = PackedFloat32Array(0, 0.2, 1)
@@ -109,20 +110,18 @@ shape = SubResource("SphereShape3D_xrivr")
 [node name="FrogBossVisual" parent="." unique_id=205895835 instance=ExtResource("3_bvgwd")]
 transform = Transform3D(10, 0, 0, 0, 10, 0, 0, 0, 10, 0, 0, 0)
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1776240062]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 10.2868805, 0)
-shape = SubResource("SphereShape3D_xrivr")
-
-[node name="ShieldBody" type="StaticBody3D" parent="." unique_id=784310436]
+[node name="ShieldBody" type="StaticBody3D" parent="." unique_id=784310436 node_paths=PackedStringArray("visual")]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 8.945, 0)
+script = ExtResource("5_bvgwd")
+visual = NodePath("../FrogBossVisual")
 
 [node name="Shield" type="MeshInstance3D" parent="ShieldBody" unique_id=430119447]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 6.8675737, 0)
 material_override = SubResource("ShaderMaterial_13qdw")
 mesh = SubResource("SphereMesh_xrivr")
 script = ExtResource("5_k3i8r")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="ShieldBody" unique_id=1310605752]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 7.34784, 0)
 shape = SubResource("SphereShape3D_13qdw")
 
 [node name="ShieldHurtbox" type="Area3D" parent="ShieldBody" unique_id=2125586642 node_paths=PackedStringArray("health")]
@@ -133,7 +132,6 @@ health = NodePath("ShieldHealth")
 metadata/_custom_type_script = "uid://dswhdacq2khkk"
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="ShieldBody/ShieldHurtbox" unique_id=1408684132]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 7.34784, 0)
 shape = SubResource("SphereShape3D_13qdw")
 
 [node name="ShieldHealth" type="Node" parent="ShieldBody/ShieldHurtbox" unique_id=1024545330]
@@ -151,6 +149,10 @@ fixed_fps = 60
 visibility_aabb = AABB(-8, -8, -8, 16, 16, 16)
 process_material = SubResource("ParticleProcessMaterial_iw61r")
 draw_pass_1 = SubResource("TorusMesh_j3gm1")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1776240062]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 10.2868805, 0)
+shape = SubResource("SphereShape3D_xrivr")
 
 [node name="FrogBossUI" parent="." unique_id=406924992 node_paths=PackedStringArray("shield_health", "boss_health") instance=ExtResource("7_k5umt")]
 shield_health = NodePath("../ShieldBody/ShieldHurtbox/ShieldHealth")

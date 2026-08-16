@@ -2,6 +2,7 @@ class_name FrogBoss
 extends StaticBody3D
 
 enum State {
+	IDLE,
 	LOOKING_AT_PLAYER,
 	ATTACKING,
 	ATTACK_COOLDOWN
@@ -18,6 +19,9 @@ enum AttackType {
 @export var shield: FrogShield
 @export var visual: FrogBossVisual
 
+@export_category("Encounter")
+@export var start_range: float = 45.0
+
 @export_category("Attack")
 @export var attack_range: float = 35.0
 @export var look_duration: float = 1.5
@@ -27,19 +31,23 @@ enum AttackType {
 @export_category("Rotation")
 @export var rotation_speed: float = 2.5
 
-@onready var shield_hurtbox: Hurtbox = $ShieldBody/ShieldHurtbox
-@onready var shield_shockwave_ring: GPUParticles3D = $ShieldBody/ShieldShockwaveRing
+@onready var shield_hurtbox: Hurtbox = %ShieldBody/ShieldHurtbox
+@onready var shield_shockwave_ring: GPUParticles3D = (
+	%ShieldBody/ShieldShockwaveRing
+)
+@onready var frog_boss_ui: FrogBossUI = $FrogBossUI
 
-var current_state: State
+var current_state: State = State.IDLE
 var current_attack: AttackType
 var state_timer: float = 0.0
 
 var shield_active: bool = true
+var encounter_started: bool = false
 
 
 func _ready() -> void:
 	rotation.y = 0.0
-	
+
 	if is_instance_valid(health):
 		health.damage_taken.connect(_on_health_damage_taken)
 
@@ -47,21 +55,18 @@ func _ready() -> void:
 		visual.attack_finished.connect(_on_attack_finished)
 
 	shield_active = true
-	raise_shield()
-
-	_change_state(State.LOOKING_AT_PLAYER)
 
 	shield_hurtbox.hit.connect(_on_shield_hurtbox_hit)
 	shield_hurtbox.health.death.connect(_on_shield_death)
 
-
-func _on_attack_finished() -> void:
-	if current_state == State.ATTACKING:
-		_change_state(State.ATTACK_COOLDOWN)
+	_change_state(State.IDLE)
 
 
 func _physics_process(delta: float) -> void:
 	match current_state:
+		State.IDLE:
+			_process_idle()
+
 		State.LOOKING_AT_PLAYER:
 			_process_looking_at_player(delta)
 
@@ -70,6 +75,28 @@ func _physics_process(delta: float) -> void:
 
 		State.ATTACK_COOLDOWN:
 			_process_attack_cooldown(delta)
+
+
+func _process_idle() -> void:
+	if encounter_started:
+		return
+
+	if _is_player_within_range(start_range):
+		_start_encounter()
+
+
+func _start_encounter() -> void:
+	if encounter_started:
+		return
+
+	encounter_started = true
+
+	if is_instance_valid(frog_boss_ui):
+		frog_boss_ui.show_boss_ui()
+
+	raise_shield()
+
+	_change_state(State.LOOKING_AT_PLAYER)
 
 
 func _process_looking_at_player(delta: float) -> void:
@@ -102,6 +129,9 @@ func _change_state(new_state: State) -> void:
 	current_state = new_state
 
 	match current_state:
+		State.IDLE:
+			state_timer = 0.0
+
 		State.LOOKING_AT_PLAYER:
 			state_timer = look_duration
 
@@ -141,6 +171,7 @@ func perform_attack() -> void:
 				player.global_position
 			)
 
+
 func _rotate_towards_player(delta: float) -> void:
 	if not is_instance_valid(player):
 		return
@@ -156,13 +187,27 @@ func _rotate_towards_player(delta: float) -> void:
 
 
 func _is_player_within_attack_range() -> bool:
+	return _is_player_within_range(attack_range)
+
+
+func _is_player_within_range(distance: float) -> bool:
 	if not is_instance_valid(player):
 		return false
 
-	var direction: Vector3 = player.global_position - global_position
+	var direction: Vector3 = (
+		player.global_position - global_position
+	)
 	direction.y = 0.0
 
-	return direction.length_squared() <= attack_range * attack_range
+	return (
+		direction.length_squared()
+		<= distance * distance
+	)
+
+
+func _on_attack_finished() -> void:
+	if current_state == State.ATTACKING:
+		_change_state(State.ATTACK_COOLDOWN)
 
 
 func _on_health_damage_taken(
@@ -210,19 +255,27 @@ func _should_spin_left() -> bool:
 
 	return angle > 0.0
 
+
 func _on_shield_hurtbox_hit(hitbox: Hitbox) -> void:
 	var hit_position: Vector3 = hitbox.global_position
 	var shield_center: Vector3 = shield.global_position
 
-	var normal: Vector3 = (hit_position - shield_center).normalized()
+	var normal: Vector3 = (
+		hit_position - shield_center
+	).normalized()
 
-	var reference_axis: Vector3 = Vector3.UP
+	var reference_axis := Vector3.UP
 
 	if abs(normal.dot(reference_axis)) > 0.99:
 		reference_axis = Vector3.RIGHT
 
-	var x_axis: Vector3 = reference_axis.cross(normal).normalized()
-	var z_axis: Vector3 = x_axis.cross(normal).normalized()
+	var x_axis: Vector3 = (
+		reference_axis.cross(normal)
+	).normalized()
+
+	var z_axis: Vector3 = (
+		x_axis.cross(normal)
+	).normalized()
 
 	shield_shockwave_ring.global_transform = Transform3D(
 		Basis(x_axis, normal, z_axis),
@@ -231,9 +284,11 @@ func _on_shield_hurtbox_hit(hitbox: Hitbox) -> void:
 
 	shield_shockwave_ring.emitting = true
 
-func _on_shield_death():
+
+func _on_shield_death() -> void:
 	lower_shield()
 
-func _on_shield_lowered():
+
+func _on_shield_lowered() -> void:
 	shield_hurtbox.set_deferred("monitorable", false)
 	shield_hurtbox.set_deferred("monitoring", false)
