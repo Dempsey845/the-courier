@@ -171,7 +171,7 @@ func _enter_death_state() -> void:
 		if is_instance_valid(visual.tongue_hitbox):
 			visual.tongue_hitbox.active = false
 
-			visual.die()
+		visual.die()
 
 	if is_instance_valid(shield_hurtbox):
 		shield_hurtbox.set_deferred("monitoring", false)

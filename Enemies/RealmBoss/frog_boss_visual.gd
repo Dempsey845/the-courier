@@ -27,7 +27,8 @@ var tongue_material: ShaderMaterial
 
 var original_scale: Vector3
 var attacking: bool = false
-
+var dead: bool = false
+var spin_tween: Tween
 
 func _ready() -> void:
 	original_scale = scale
@@ -64,7 +65,7 @@ func start_attack(
 	spin_left: bool,
 	target: Node3D
 ) -> void:
-	if attacking:
+	if dead or attacking:
 		return
 
 	if not is_instance_valid(target):
@@ -95,7 +96,7 @@ func start_attack(
 func start_straight_tongue_attack(
 	target_position: Vector3
 ) -> void:
-	if attacking:
+	if dead or attacking:
 		return
 
 	attacking = true
@@ -117,7 +118,25 @@ func start_straight_tongue_attack(
 	attacking = false
 	attack_finished.emit()
 
-func die():
+func die() -> void:
+	if dead:
+		return
+
+	dead = true
+	attacking = false
+
+	if is_instance_valid(spin_tween):
+		spin_tween.kill()
+		spin_tween = null
+
+	tongue_hitbox.active = false
+
+	if is_instance_valid(tongue_material):
+		tongue_material.set_shader_parameter(
+			"extension",
+			0.0
+		)
+
 	animation_player.play("Custom/Death")
 
 func _puff_up() -> void:
@@ -160,18 +179,18 @@ func _spin_towards_target(
 	spin_left: bool,
 	target: Node3D
 ) -> void:
-	if not is_instance_valid(target):
+	if dead or not is_instance_valid(target):
 		return
 
 	var starting_rotation: float = rotation.y
 	var spin_direction: float = 1.0 if spin_left else -1.0
 
-	var tween := create_tween()
-	tween.set_trans(Tween.TRANS_LINEAR)
+	spin_tween = create_tween()
+	spin_tween.set_trans(Tween.TRANS_LINEAR)
 
-	tween.tween_method(
+	spin_tween.tween_method(
 		func(linear_progress: float) -> void:
-			if not is_instance_valid(target):
+			if dead or not is_instance_valid(target):
 				return
 
 			var spin_progress := _get_accelerated_spin_progress(
@@ -198,7 +217,12 @@ func _spin_towards_target(
 		spin_duration
 	)
 
-	await tween.finished
+	await spin_tween.finished
+
+	if dead:
+		return
+
+	spin_tween = null
 
 	if is_instance_valid(target):
 		rotation.y = _get_local_angle_to(
