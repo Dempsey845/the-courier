@@ -1,4 +1,45 @@
-[gd_scene format=3 uid="uid://c5g8qvskyw78n"]
+[gd_scene format=4 uid="uid://c5g8qvskyw78n"]
+
+[ext_resource type="Shader" uid="uid://b8mw40gwerxyi" path="res://World/Areas/FrogRealm/frog_realm_galaxy_surface.gdshader" id="1_jupvc"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_1xr6s"]
+render_priority = 0
+shader = ExtResource("1_jupvc")
+shader_parameter/deep_space_colour = Color(0.008, 0.002, 0.035, 1)
+shader_parameter/purple_colour = Color(0.25, 0.015, 0.65, 1)
+shader_parameter/nebula_colour = Color(0.8, 0.08, 1, 1)
+shader_parameter/energy_colour = Color(0.25, 0.3, 1, 1)
+shader_parameter/star_colour = Color(0.9, 0.75, 1, 1)
+shader_parameter/roughness = 0.3
+shader_parameter/metallic = 0.15
+shader_parameter/emission_strength = 2.5
+shader_parameter/pattern_world_size = 8.0
+shader_parameter/triplanar_sharpness = 6.0
+shader_parameter/galaxy_scale = 1.5
+shader_parameter/nebula_detail = 4.0
+shader_parameter/swirl_strength = 0.35
+shader_parameter/animation_speed = 0.08
+shader_parameter/star_scale = 18.0
+shader_parameter/star_density = 0.985
+shader_parameter/star_brightness = 4.0
+shader_parameter/twinkle_speed = 2.0
+shader_parameter/edge_glow_strength = 1.5
+shader_parameter/edge_glow_power = 3.0
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_6s05b"]
+_surfaces = [{
+"aabb": AABB(-0.85, -0.5, -2.5, 1.7, 1, 5),
+"attribute_data": PackedByteArray("AACAPwAAgD8AAIA/AAAAAAAAAAAAAAAAAACAPwAAgD8AAIA/AAAAAAAAAAAAAAAAAACAPwAAgD8AAIA/AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAPwAAgD8AAIA/AACAPwAAgD8AAIA/AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAPwAAgD8AAIA/AAAAAAAAAAAAAAAAAACAPwAAgD8AAIA/AAAAAAAAAAAAAAAAAACAPwAAgD8AAIA/AACAPwAAgD8AAIA/AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAPwAAgD8AAIA/AACAPwAAgD8AAIA/AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAPwAAgD8AAIA/"),
+"format": 34359738391,
+"material": SubResource("ShaderMaterial_1xr6s"),
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 36,
+"vertex_data": PackedByteArray("mplZvwAAAL8AACBAmplZvwAAAL8AACDAmplZvwAAAD8AACDAmplZPwAAAL8AACDAmplZvwAAAL8AACDAmplZvwAAAL8AACBAmplZvwAAAD8AACDAmplZvwAAAL8AACDAmplZPwAAAL8AACDAmplZvwAAAD8AACDAmplZvwAAAD8AACBAmplZvwAAAL8AACBAmplZvwAAAL8AACBAmplZvwAAAD8AACBAmplZPwAAAD8AACBAmplZPwAAAD8AACBAmplZvwAAAD8AACBAmplZvwAAAD8AACDAmplZvwAAAL8AACBAmplZPwAAAL8AACBAmplZPwAAAL8AACDAmplZPwAAAD8AACBAmplZPwAAAL8AACBAmplZvwAAAL8AACBAmplZPwAAAL8AACDAmplZPwAAAL8AACBAmplZPwAAAD8AACBAmplZPwAAAL8AACDAmplZPwAAAD8AACDAmplZvwAAAD8AACDAmplZvwAAAD8AACDAmplZPwAAAD8AACDAmplZPwAAAD8AACBAmplZPwAAAD8AACBAmplZPwAAAD8AACDAmplZPwAAAL8AACDAAAD/f/9//n8AAP9//3/+fwAA/3//f/5//38AAP//AAD/fwAA//8AAP9/AAD//wAA/////wAA/z//////AAD/P/////8AAP8/AAD/f/9//n8AAP9//3/+fwAA/3//f/5//3//fwAA/z//f/9/AAD/P/9//38AAP8//3//////AAD/f/////8AAP9//////wAA/38AAP//AAD/fwAA//8AAP9/AAD//wAA/3//fwAA/z//f/9/AAD/P/9//38AAP8/////f/9//n////9//3/+f////3//f/5//////wAA/z//////AAD/P/////8AAP8//3//////AAD/f/////8AAP9//////wAA////f/9//n////9//3/+f////3//f/5/")
+}]
+
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_juu2f"]
+data = PackedVector3Array(-0.85, -0.5, 2.5, -0.85, -0.5, -2.5, -0.85, 0.5, -2.5, 0.85, -0.5, -2.5, -0.85, -0.5, -2.5, -0.85, -0.5, 2.5, -0.85, 0.5, -2.5, -0.85, -0.5, -2.5, 0.85, -0.5, -2.5, -0.85, 0.5, -2.5, -0.85, 0.5, 2.5, -0.85, -0.5, 2.5, -0.85, -0.5, 2.5, -0.85, 0.5, 2.5, 0.85, 0.5, 2.5, 0.85, 0.5, 2.5, -0.85, 0.5, 2.5, -0.85, 0.5, -2.5, -0.85, -0.5, 2.5, 0.85, -0.5, 2.5, 0.85, -0.5, -2.5, 0.85, 0.5, 2.5, 0.85, -0.5, 2.5, -0.85, -0.5, 2.5, 0.85, -0.5, -2.5, 0.85, -0.5, 2.5, 0.85, 0.5, 2.5, 0.85, -0.5, -2.5, 0.85, 0.5, -2.5, -0.85, 0.5, -2.5, -0.85, 0.5, -2.5, 0.85, 0.5, -2.5, 0.85, 0.5, 2.5, 0.85, 0.5, 2.5, 0.85, 0.5, -2.5, 0.85, -0.5, -2.5)
 
 [sub_resource type="Animation" id="Animation_ogmea"]
 length = 0.001
@@ -43,10 +84,15 @@ _data = {
 [node name="ScalePivot" type="Node3D" parent="." unique_id=71910914]
 transform = Transform3D(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
 
-[node name="CSGBox3D" type="CSGBox3D" parent="ScalePivot" unique_id=20540862]
+[node name="CSGBakedMeshInstance3D" type="MeshInstance3D" parent="ScalePivot" unique_id=1063743736]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.049995422, 0, 0)
-use_collision = true
-size = Vector3(1.7, 1, 5)
+mesh = SubResource("ArrayMesh_6s05b")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="ScalePivot" unique_id=2117176198]
+
+[node name="CSGBakedCollisionShape3D" type="CollisionShape3D" parent="ScalePivot/StaticBody3D" unique_id=643813540]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.049995422, 0, 0)
+shape = SubResource("ConcavePolygonShape3D_juu2f")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=559125189]
 libraries/ = SubResource("AnimationLibrary_6s05b")
