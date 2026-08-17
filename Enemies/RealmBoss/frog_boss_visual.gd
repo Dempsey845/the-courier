@@ -13,6 +13,9 @@ signal attack_finished
 @export var puff_up_duration: float = 0.8
 @export var puff_down_duration: float = 0.5
 
+@export_category("Galaxy Charge")
+@export var frog_mesh: MeshInstance3D
+
 @export_category("Tongue")
 @export var tongue_mesh: MeshInstance3D
 @export var tongue_extend_duration: float = 3.0
@@ -20,15 +23,15 @@ signal attack_finished
 @onready var tongue_hitbox: Hitbox = $TongueHitbox
 
 var tongue_material: ShaderMaterial
+var dissolve_material: ShaderMaterial
 
-@onready var animation_player: AnimationPlayer = (
-	%AnimationPlayer
-)
+@onready var animation_tree: AnimationTree = $AnimationTree
 
 var original_scale: Vector3
 var attacking: bool = false
 var dead: bool = false
 var spin_tween: Tween
+var affected_galaxy_materials: Array[ShaderMaterial]
 
 func _ready() -> void:
 	original_scale = scale
@@ -45,6 +48,11 @@ func _ready() -> void:
 		)
 		
 	tongue_hitbox.hit_hurtbox.connect(_on_tongue_hitbox_hit_hurtbox)
+
+	dissolve_material = frog_mesh.material_overlay
+
+	affected_galaxy_materials.append(frog_mesh.get_surface_override_material(1))
+	affected_galaxy_materials.append(frog_mesh.get_surface_override_material(6))
 
 func rotate_towards_position(
 	target_position: Vector3,
@@ -137,7 +145,10 @@ func die() -> void:
 			0.0
 		)
 
-	animation_player.play("Custom/Death")
+	animation_tree.set("parameters/DeathOneShot/request", 
+		AnimationNodeOneShot.OneShotRequest.ONE_SHOT_REQUEST_FIRE)
+
+	_start_dissolve()
 
 func _puff_up() -> void:
 	var target_scale: Vector3 = Vector3(
@@ -364,3 +375,78 @@ func _on_tongue_hitbox_hit_hurtbox(hurtbox: Hurtbox):
 
 	player.apply_upward_force(16.0)
 	player.apply_directional_force(global_basis.z, 8.0)
+
+func _start_dissolve() -> void:
+	await get_tree().create_timer(0.3).timeout
+
+	const DISSOLVE_DURATION: float = 2.0
+
+	dissolve_material.set_shader_parameter(
+		"progress",
+		0.0
+	)
+
+	var tween := create_tween()
+
+	tween.tween_property(
+		dissolve_material,
+		"shader_parameter/progress",
+		1.0,
+		DISSOLVE_DURATION
+	).set_trans(Tween.TRANS_QUAD).set_ease(
+		Tween.EASE_IN_OUT
+	)
+
+	await tween.finished
+
+	await get_tree().create_timer(3.0).timeout
+	frog_mesh.hide()
+
+	
+
+func _charge_galaxy_effect() -> void:
+	if affected_galaxy_materials.is_empty():
+		return
+
+	animation_tree.set("parameters/OpenMouthOneShot/request", 
+		AnimationNodeOneShot.OneShotRequest.ONE_SHOT_REQUEST_FIRE)
+
+	var tween := create_tween()
+
+	# Animate from 0 to 1 over 0.4 seconds.
+	tween.set_parallel(true)
+
+	for material: ShaderMaterial in affected_galaxy_materials:
+		if not is_instance_valid(material):
+			continue
+
+		material.set_shader_parameter("progress", 0.0)
+
+		tween.tween_property(
+			material,
+			"shader_parameter/progress",
+			1.0,
+			0.4
+		).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
+
+	await tween.finished
+
+	# Hold at full strength for 0.8 seconds.
+	await get_tree().create_timer(0.8).timeout
+
+	# Animate from 1 to 0 over 0.3 seconds.
+	tween = create_tween()
+	tween.set_parallel(true)
+
+	for material: ShaderMaterial in affected_galaxy_materials:
+		if not is_instance_valid(material):
+			continue
+
+		tween.tween_property(
+			material,
+			"shader_parameter/progress",
+			0.0,
+			0.3
+		).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN)
+
+	await tween.finished
