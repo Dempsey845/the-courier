@@ -1,6 +1,8 @@
 class_name FrogBoss
 extends StaticBody3D
 
+signal death
+
 enum State {
 	IDLE,
 	LOOKING_AT_PLAYER,
@@ -181,6 +183,7 @@ func _enter_death_state() -> void:
 	frog_boss_hurtbox.set_deferred("monitoring", false)
 	frog_boss_hurtbox.set_deferred("monitorable", false)
 
+	death.emit()
 
 func _choose_attack() -> void:
 	if randf() <= straight_tongue_chance:

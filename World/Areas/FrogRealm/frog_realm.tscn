@@ -12,6 +12,8 @@
 [ext_resource type="PackedScene" uid="uid://c4qraqdt2f0hp" path="res://World/Areas/Swamp/mushroom_swamp_effect.tscn" id="10_08s18"]
 [ext_resource type="PackedScene" uid="uid://dem10o88fea0" path="res://World/cloud_platform.tscn" id="11_e7ccy"]
 [ext_resource type="PackedScene" uid="uid://cxvgjbkqlfcx7" path="res://World/Areas/SpringPlatform/spring_platform.tscn" id="13_lbc42"]
+[ext_resource type="PackedScene" uid="uid://c5g8qvskyw78n" path="res://World/Areas/FrogRealm/bridge_platform.tscn" id="14_h7lvl"]
+[ext_resource type="Script" uid="uid://dsu4vgrs4ckci" path="res://World/Areas/FrogRealm/bridge_platforms.gd" id="14_voqia"]
 [ext_resource type="PackedScene" uid="uid://def8xq31m44p8" path="res://World/Areas/FrogRealm/shield_turret.tscn" id="16_1xr6s"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_syi77"]
@@ -777,7 +779,7 @@ color_ramp = SubResource("Gradient_0wqet")
 seamless = true
 in_3d_space = true
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_lbc42"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_1xr6s"]
 resource_local_to_scene = true
 render_priority = 0
 shader = SubResource("Shader_5gpxd")
@@ -824,16 +826,18 @@ shader_parameter/ripple_strength = 0.08
 shader_parameter/ripple_width = 0.2
 shader_parameter/ripple_frequency = 12.0
 
-[sub_resource type="PlaneMesh" id="PlaneMesh_h7lvl"]
+[sub_resource type="PlaneMesh" id="PlaneMesh_7pwk2"]
 resource_local_to_scene = true
-material = SubResource("ShaderMaterial_lbc42")
+material = SubResource("ShaderMaterial_1xr6s")
 size = Vector2(45, 45)
 subdivide_width = 450
 subdivide_depth = 450
 
-[node name="FrogRealm" type="Node3D" unique_id=1350201666 node_paths=PackedStringArray("player")]
+[node name="FrogRealm" type="Node3D" unique_id=1350201666 node_paths=PackedStringArray("player", "frog_boss", "bridge_platforms")]
 script = ExtResource("1_0derk")
 player = NodePath("Player")
+frog_boss = NodePath("FrogBoss")
+bridge_platforms = NodePath("BridgePlatforms")
 
 [node name="DialogueManager" type="Node" parent="." unique_id=1954538742]
 script = ExtResource("1_7argv")
@@ -903,7 +907,7 @@ sides = 22
 
 [node name="MushroomSwampEffect" parent="CSGCombiner3D" unique_id=963275507 instance=ExtResource("10_08s18")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.41529846, 0)
-mesh = SubResource("PlaneMesh_h7lvl")
+mesh = SubResource("PlaneMesh_7pwk2")
 
 [node name="CloudPlatform" parent="." unique_id=1538887151 instance=ExtResource("11_e7ccy")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15, 0, 0)
@@ -930,3 +934,60 @@ transform = Transform3D(0.8660254, 0, 0.49999988, 0, 1, 0, -0.49999988, 0, 0.866
 
 [node name="SpringPlatform3" parent="SpringPlatforms" unique_id=993779301 instance=ExtResource("13_lbc42")]
 transform = Transform3D(-0.65497935, 0, -0.7556466, 0, 1, 0, 0.7556466, 0, -0.65497935, -75.73599, 1, -19.357882)
+
+[node name="BridgePlatforms" type="Node3D" parent="." unique_id=1734965754]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -86.8, 0, 0)
+script = ExtResource("14_voqia")
+
+[node name="BridgePlatform" parent="BridgePlatforms" unique_id=1673276838 instance=ExtResource("14_h7lvl")]
+
+[node name="BridgePlatform2" parent="BridgePlatforms" unique_id=806197350 instance=ExtResource("14_h7lvl")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3, 0, 0)
+
+[node name="BridgePlatform3" parent="BridgePlatforms" unique_id=1608191307 instance=ExtResource("14_h7lvl")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, 0, 0)
+
+[node name="BridgePlatform4" parent="BridgePlatforms" unique_id=671279324 instance=ExtResource("14_h7lvl")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9, 0, 0)
+
+[node name="BridgePlatform5" parent="BridgePlatforms" unique_id=189543384 instance=ExtResource("14_h7lvl")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12, 0, 0)
+
+[node name="BridgePlatform6" parent="BridgePlatforms" unique_id=393875039 instance=ExtResource("14_h7lvl")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15, 0, 0)
+
+[node name="BridgePlatform7" parent="BridgePlatforms" unique_id=1136088374 instance=ExtResource("14_h7lvl")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -18, 0, 0)
+
+[node name="BridgePlatform8" parent="BridgePlatforms" unique_id=754066498 instance=ExtResource("14_h7lvl")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -21, 0, 0)
+
+[node name="BridgePlatform9" parent="BridgePlatforms" unique_id=19952833 instance=ExtResource("14_h7lvl")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -24, 0, 0)
+
+[node name="BridgePlatform10" parent="BridgePlatforms" unique_id=179277974 instance=ExtResource("14_h7lvl")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -27, 0, 0)
+
+[node name="BridgePlatform11" parent="BridgePlatforms" unique_id=290255391 instance=ExtResource("14_h7lvl")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -30, 0, 0)
+
+[node name="BridgePlatform12" parent="BridgePlatforms" unique_id=1643630284 instance=ExtResource("14_h7lvl")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -33, 0, 0)
+
+[node name="BridgePlatform13" parent="BridgePlatforms" unique_id=1707974323 instance=ExtResource("14_h7lvl")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -36, 0, 0)
+
+[node name="BridgePlatform14" parent="BridgePlatforms" unique_id=46297902 instance=ExtResource("14_h7lvl")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -39, 0, 0)
+
+[node name="BridgePlatform15" parent="BridgePlatforms" unique_id=1657850482 instance=ExtResource("14_h7lvl")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -42, 0, 0)
+
+[node name="BridgePlatform16" parent="BridgePlatforms" unique_id=1389698033 instance=ExtResource("14_h7lvl")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -45, 0, 0)
+
+[node name="BridgePlatform17" parent="BridgePlatforms" unique_id=1635465602 instance=ExtResource("14_h7lvl")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -48, 0, 0)
+
+[node name="BridgePlatform18" parent="BridgePlatforms" unique_id=132329973 instance=ExtResource("14_h7lvl")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -51, 0, 0)

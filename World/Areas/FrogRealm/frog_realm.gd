@@ -1,6 +1,8 @@
 extends Node3D
 
 @export var player: Player
+@export var frog_boss: FrogBoss
+@export var bridge_platforms: BridgePlatforms
 
 @onready var portal: Portal = $Arc2/Portal
 
@@ -17,6 +19,11 @@ func _ready() -> void:
     portal.portal_entered.connect(_on_portal_entered)
 
     player.gravity /= 1.5
+
+    frog_boss.death.connect(_on_frog_boss_death)
     
 func _on_portal_entered():
     portal_transition.enter_portal("res://World/world.tscn")
+
+func _on_frog_boss_death():
+    bridge_platforms.show_bridge_platforms()
