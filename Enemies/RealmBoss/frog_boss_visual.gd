@@ -9,8 +9,9 @@ signal attack_finished
 @export_range(0.05, 0.9) var spin_ramp_fraction: float = 0.3
 
 @export_category("Charge")
-@export var puff_scale_multiplier: float = 1.1
-@export var puff_up_duration: float = 0.8
+@export var puff_scale_multiplier: float = 1.2
+
+@export var puff_up_duration: float = 1.2
 @export var puff_down_duration: float = 0.5
 
 @export_category("Galaxy Charge")
@@ -376,6 +377,25 @@ func _on_tongue_hitbox_hit_hurtbox(hurtbox: Hurtbox):
 	player.apply_upward_force(16.0)
 	player.apply_directional_force(global_basis.z, 8.0)
 
+func hit():
+	const DISSOLVE_DURATION: float = 1.0
+
+	dissolve_material.set_shader_parameter(
+		"progress",
+		0.0
+	)
+
+	var tween := create_tween()
+
+	tween.tween_property(
+		dissolve_material,
+		"shader_parameter/progress",
+		1.0,
+		DISSOLVE_DURATION
+	).set_trans(Tween.TRANS_QUAD).set_ease(
+		Tween.EASE_OUT
+	)
+
 func _start_dissolve() -> void:
 	await get_tree().create_timer(0.3).timeout
 
@@ -413,7 +433,7 @@ func _charge_galaxy_effect() -> void:
 
 	var tween := create_tween()
 
-	# Animate from 0 to 1 over 0.4 seconds.
+	# Animate from 0 to 1.
 	tween.set_parallel(true)
 
 	for material: ShaderMaterial in affected_galaxy_materials:
@@ -426,15 +446,15 @@ func _charge_galaxy_effect() -> void:
 			material,
 			"shader_parameter/progress",
 			1.0,
-			0.4
+			1.0
 		).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
 
 	await tween.finished
 
-	# Hold at full strength for 0.8 seconds.
-	await get_tree().create_timer(0.8).timeout
+	# Hold at full strength.
+	await get_tree().create_timer(0.3).timeout
 
-	# Animate from 1 to 0 over 0.3 seconds.
+	# Animate from 1 to 0.
 	tween = create_tween()
 	tween.set_parallel(true)
 
@@ -446,7 +466,9 @@ func _charge_galaxy_effect() -> void:
 			material,
 			"shader_parameter/progress",
 			0.0,
-			0.3
+			1.0
 		).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN)
 
 	await tween.finished
+
+	attack_finished.emit()

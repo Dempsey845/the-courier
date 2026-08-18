@@ -1,5 +1,5 @@
 class_name FrogBoss
-extends StaticBody3D
+extends CharacterBody3D
 
 signal death
 
@@ -13,7 +13,8 @@ enum State {
 
 enum AttackType {
 	SPIN,
-	STRAIGHT_TONGUE
+	STRAIGHT_TONGUE,
+	GALAXY_PROJECTILE
 }
 
 @export_category("References")
@@ -31,6 +32,7 @@ enum AttackType {
 @export var look_duration: float = 1.5
 @export var attack_cooldown: float = 3.0
 @export_range(0.0, 1.0) var straight_tongue_chance: float = 0.4
+@export var max_prediction_time: float = 1.5
 
 @export_category("Rotation")
 @export var rotation_speed: float = 2.5
@@ -42,6 +44,9 @@ enum AttackType {
 @onready var shield_body: StaticBody3D = %ShieldBody
 @onready var frog_boss_ui: FrogBossUI = $FrogBossUI
 @onready var frog_boss_hurtbox: Area3D = $FrogBossHurtbox
+@onready var projectile_spawn_point: Marker3D = %ProjectileSpawnPoint
+
+var projectile_scene: PackedScene = preload("uid://cs2qnuvdl8jo8")
 
 var current_state: State = State.IDLE
 var current_attack: AttackType
@@ -121,8 +126,9 @@ func _process_looking_at_player(delta: float) -> void:
 		_change_state(State.ATTACKING)
 
 
-func _process_attacking(_delta: float) -> void:
-	pass
+func _process_attacking(delta: float) -> void:
+	if current_attack == AttackType.GALAXY_PROJECTILE:
+		_rotate_towards_player(delta)
 
 
 func _process_attack_cooldown(delta: float) -> void:
@@ -191,6 +197,9 @@ func _choose_attack() -> void:
 	else:
 		current_attack = AttackType.SPIN
 
+	if health.current_health < 3 and randf() <= 0.5:
+		current_attack = AttackType.GALAXY_PROJECTILE 
+
 
 func perform_attack() -> void:
 	if current_state == State.DEAD:
@@ -216,6 +225,40 @@ func perform_attack() -> void:
 				player.global_position
 			)
 
+		AttackType.GALAXY_PROJECTILE:
+			visual._charge_galaxy_effect()
+			await get_tree().create_timer(0.5).timeout
+			shoot_projectile_at_player()
+
+
+func shoot_projectile_at_player() -> void:
+	if not is_instance_valid(player):
+		return
+
+	var projectile: Projectile = projectile_scene.instantiate()
+
+	var target_position := _get_predicted_player_position(projectile.speed)
+
+	# Rotate only horizontally toward the predicted position.
+	var flat_target := target_position
+	flat_target.y = projectile_spawn_point.global_position.y
+	projectile_spawn_point.look_at(flat_target, Vector3.UP, true)
+
+	get_tree().current_scene.add_child(projectile)
+
+	projectile.global_position = projectile_spawn_point.global_position
+	projectile.global_rotation = projectile_spawn_point.global_rotation
+
+
+func _get_predicted_player_position(projectile_speed: float) -> Vector3:
+	var distance: float = projectile_spawn_point.global_position.distance_to(
+		player.global_position
+	)
+
+	var travel_time = distance / max(projectile_speed, 0.001)
+	travel_time = min(travel_time, max_prediction_time)
+
+	return player.global_position + player.velocity * travel_time
 
 func _rotate_towards_player(delta: float) -> void:
 	if current_state == State.DEAD:
@@ -257,9 +300,10 @@ func _on_attack_finished() -> void:
 
 func _on_health_damage_taken(
 	_damage_amount: int,
-	_new_health: int
+	new_health: int
 ) -> void:
-	pass
+	if new_health > 0:
+		visual.hit()
 
 
 func _on_health_death() -> void:

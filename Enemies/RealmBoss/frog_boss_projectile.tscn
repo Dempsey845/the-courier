@@ -1,0 +1,46 @@
+[gd_scene format=3 uid="uid://cs2qnuvdl8jo8"]
+
+[ext_resource type="PackedScene" uid="uid://chmyrswmwh50o" path="res://World/Areas/FrogRealm/frog_shield_projectile.tscn" id="1_en0ky"]
+[ext_resource type="Shader" uid="uid://8fkspr18jakr" path="res://World/Areas/FrogRealm/ammo_orb.gdshader" id="2_087yg"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_13qdw"]
+render_priority = 0
+shader = ExtResource("2_087yg")
+shader_parameter/fill_progress = 1.0
+shader_parameter/fill_bottom = -0.5
+shader_parameter/fill_top = 1.0
+shader_parameter/surface_softness = 0.015
+shader_parameter/surface_wobble = 0.025
+shader_parameter/wobble_speed = 1.5
+shader_parameter/liquid_colour = Color(0.32, 0.035, 0.72, 0.82)
+shader_parameter/energy_colour = Color(0.78, 0.18, 1, 1)
+shader_parameter/highlight_colour = Color(0.95, 0.62, 1, 1)
+shader_parameter/emission_strength = 2.0
+shader_parameter/fresnel_strength = 1.5
+shader_parameter/swirl_scale = 5.0
+shader_parameter/swirl_speed = 0.8
+shader_parameter/bubble_scale = 14.0
+shader_parameter/bubble_strength = 0.3
+
+[sub_resource type="SphereMesh" id="SphereMesh_elcdp"]
+material = SubResource("ShaderMaterial_13qdw")
+radial_segments = 12
+rings = 6
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_eo1ja"]
+radius = 2.5
+
+[node name="FrogBossProjectile" unique_id=755927576 instance=ExtResource("1_en0ky")]
+collision_layer = 128
+collision_mask = 16
+
+[node name="MeshInstance3D" parent="." index="0" unique_id=1913516265]
+transform = Transform3D(-2.185569e-07, 2.1855696e-07, 5, 5, -2.1855695e-07, 2.1855692e-07, 2.1855696e-07, 5, -2.1855695e-07, -1.7484556e-08, 0, -0.4)
+mesh = SubResource("SphereMesh_elcdp")
+
+[node name="ProjectileTrailParticles" parent="." index="1" unique_id=1736068983]
+transform = Transform3D(-4, 0, 6.039832e-07, 0, 4, 0, -6.039832e-07, 0, -4, 2.9420332e-07, -0.25480843, -2.6168306)
+
+[node name="CollisionShape3D" parent="." index="2" unique_id=586137279]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.4)
+shape = SubResource("SphereShape3D_eo1ja")

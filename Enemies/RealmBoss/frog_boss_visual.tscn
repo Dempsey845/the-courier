@@ -10,7 +10,7 @@
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_4js4a"]
 render_priority = 0
 shader = ExtResource("3_cric2")
-shader_parameter/progress = 1.0
+shader_parameter/progress = 0.0
 shader_parameter/dissolve_softness = 0.08
 shader_parameter/noise_scale = 3.0
 shader_parameter/noise_strength = 0.3
@@ -80,11 +80,11 @@ shader_parameter/progress = 0.0
 shader_parameter/progress_softness = 0.08
 shader_parameter/effect_scale = 0.400000019
 shader_parameter/dissolve_scale = 1.5
-shader_parameter/crack_scale = 16.0
+shader_parameter/crack_scale = 5.0
 shader_parameter/crack_width = 0.02000000095
 shader_parameter/crack_softness = 0.025
-shader_parameter/secondary_crack_scale = 11.0
-shader_parameter/secondary_crack_strength = 0.3
+shader_parameter/secondary_crack_scale = 2.00000007125
+shader_parameter/secondary_crack_strength = 0.1610000076475
 shader_parameter/deep_purple = Color(0.055, 0.005, 0.15, 1)
 shader_parameter/galaxy_purple = Color(0.36, 0.025, 0.85, 1)
 shader_parameter/galaxy_magenta = Color(0.95, 0.06, 0.8, 1)
@@ -311,7 +311,7 @@ filter_enabled = true
 filters = ["Armature/Skeleton3D:mouth", "Armature/Skeleton3D:mouth_lower"]
 
 [sub_resource type="AnimationNodeBlendTree" id="AnimationNodeBlendTree_xrivr"]
-graph_offset = Vector2(-273.21637, 139.93538)
+graph_offset = Vector2(-165.3628, -68.42462)
 nodes/output/position = Vector2(860, 240)
 nodes/Idle/node = SubResource("AnimationNodeAnimation_6ouje")
 nodes/Idle/position = Vector2(-200, 140)
@@ -334,8 +334,9 @@ tongue_mesh = NodePath("Armature/Skeleton3D/BoneAttachment3D/TongueOrigin/MeshIn
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.10000001)
 
 [node name="Skeleton3D" parent="Armature" index="0" unique_id=1509642810]
-bones/1/rotation = Quaternion(-7.649265e-07, -2.2579148e-07, -0.8084415, 0.5885766)
-bones/2/rotation = Quaternion(-7.649265e-07, 2.2579148e-07, 0.8084415, 0.5885766)
+bones/0/scale = Vector3(1.0394255, 1.0394255, 1.0394255)
+bones/1/rotation = Quaternion(-7.9377816e-07, -1.11072026e-07, -0.8850768, 0.46544504)
+bones/2/rotation = Quaternion(-7.9512364e-07, 1.03223634e-07, 0.8895637, 0.45681107)
 
 [node name="Frog" parent="Armature/Skeleton3D" index="0" unique_id=2090836483]
 material_overlay = SubResource("ShaderMaterial_4js4a")
@@ -343,7 +344,7 @@ surface_material_override/1 = SubResource("ShaderMaterial_jeujm")
 surface_material_override/6 = SubResource("ShaderMaterial_cric2")
 
 [node name="BoneAttachment3D" type="BoneAttachment3D" parent="Armature/Skeleton3D" index="1" unique_id=816660318]
-transform = Transform3D(1, 0, 2.3841858e-07, 0, 1, 0, -2.3841858e-07, 0, 1, 0, 0.6636543, 0)
+transform = Transform3D(1.0394255, 0, 2.4781835e-07, 0, 1.0394255, 0, -2.4781835e-07, 0, 1.0394255, 0, 0.6636543, 0)
 bone_name = "root"
 bone_idx = 0
 

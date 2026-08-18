@@ -234,8 +234,10 @@ script = ExtResource("7_vtle1")
 player = NodePath("..")
 
 [node name="FeetHitbox" type="Area3D" parent="." unique_id=513194322]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.020822734, 0)
 collision_layer = 64
 collision_mask = 32
+priority = 5
 script = ExtResource("8_od3ui")
 metadata/_custom_type_script = "uid://deroukfpp2mia"
 

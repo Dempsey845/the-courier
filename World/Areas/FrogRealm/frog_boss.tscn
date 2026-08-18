@@ -89,32 +89,38 @@ ring_segments = 8
 [sub_resource type="SphereShape3D" id="SphereShape3D_xrivr"]
 radius = 9.415994
 
-[node name="FrogBoss" type="StaticBody3D" unique_id=1491294978 node_paths=PackedStringArray("health", "shield", "visual")]
+[node name="FrogBoss" type="CharacterBody3D" unique_id=1099630481 node_paths=PackedStringArray("health", "shield", "visual")]
 script = ExtResource("1_wemoa")
 health = NodePath("Health")
 shield = NodePath("ShieldBody/Shield")
 visual = NodePath("FrogBossVisual")
+metadata/_custom_type_script = "uid://ctv4iw4ctndov"
 
 [node name="Health" type="Node" parent="." unique_id=806976795]
 script = ExtResource("2_k5umt")
-max_health = 1
+max_health = 5
 metadata/_custom_type_script = "uid://dn5b8er116luc"
 
 [node name="FrogBossHurtbox" type="Area3D" parent="." unique_id=781144187 node_paths=PackedStringArray("health")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 19, 0)
 collision_layer = 32
 collision_mask = 64
+priority = 3
 script = ExtResource("6_qvtow")
 health = NodePath("../Health")
 flags = Array[String](["UpwardForce"])
 metadata/_custom_type_script = "uid://dswhdacq2khkk"
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="FrogBossHurtbox" unique_id=1962529910]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 18.6075, -1.1603299)
 shape = SubResource("CylinderShape3D_bvgwd")
 debug_color = Color(0.24099874, 0.63181865, 0.22024909, 1)
 
 [node name="FrogBossVisual" parent="." unique_id=205895835 instance=ExtResource("3_bvgwd")]
 transform = Transform3D(10, 0, 0, 0, 10, 0, 0, 0, 10, 0, 0, 0)
+
+[node name="ProjectileSpawnPoint" type="Marker3D" parent="FrogBossVisual" unique_id=1648068317]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.8, 0.8)
 
 [node name="ShieldBody" type="StaticBody3D" parent="." unique_id=784310436 node_paths=PackedStringArray("visual")]
 unique_name_in_owner = true
