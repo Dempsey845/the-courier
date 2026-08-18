@@ -34,6 +34,12 @@ var dead: bool = false
 var spin_tween: Tween
 var affected_galaxy_materials: Array[ShaderMaterial]
 
+var puff_tween: Tween
+var tongue_tween: Tween
+var galaxy_tween: Tween
+
+var galaxy_charge_active: bool = false
+
 func _ready() -> void:
 	original_scale = scale
 
@@ -127,64 +133,104 @@ func start_straight_tongue_attack(
 	attacking = false
 	attack_finished.emit()
 
-func die() -> void:
+func cancel_current_attack() -> void:
 	if dead:
 		return
 
-	dead = true
 	attacking = false
+	galaxy_charge_active = false
 
+	_kill_attack_tweens()
+
+	if is_instance_valid(tongue_hitbox):
+		tongue_hitbox.active = false
+
+	if is_instance_valid(tongue_material):
+		_retract_tongue()
+		
+	for material: ShaderMaterial in affected_galaxy_materials:
+		if is_instance_valid(material):
+			material.set_shader_parameter("progress", 0.0)
+
+	scale = original_scale
+
+	animation_tree.set(
+		"parameters/OpenMouthOneShot/request",
+		AnimationNodeOneShot.OneShotRequest.ONE_SHOT_REQUEST_ABORT
+	)
+
+func _kill_attack_tweens() -> void:
 	if is_instance_valid(spin_tween):
 		spin_tween.kill()
 		spin_tween = null
 
-	tongue_hitbox.active = false
+	if is_instance_valid(puff_tween):
+		puff_tween.kill()
+		puff_tween = null
 
-	if is_instance_valid(tongue_material):
-		tongue_material.set_shader_parameter(
-			"extension",
-			0.0
-		)
+	if is_instance_valid(tongue_tween):
+		tongue_tween.kill()
+		tongue_tween = null
 
-	animation_tree.set("parameters/DeathOneShot/request", 
-		AnimationNodeOneShot.OneShotRequest.ONE_SHOT_REQUEST_FIRE)
+	if is_instance_valid(galaxy_tween):
+		galaxy_tween.kill()
+		galaxy_tween = null
+
+func die() -> void:
+	if dead:
+		return
+
+	cancel_current_attack()
+
+	dead = true
+	attacking = false
+
+	animation_tree.set(
+		"parameters/DeathOneShot/request",
+		AnimationNodeOneShot.OneShotRequest.ONE_SHOT_REQUEST_FIRE
+	)
 
 	_start_dissolve()
 
 func _puff_up() -> void:
-	var target_scale: Vector3 = Vector3(
+	var target_scale := Vector3(
 		original_scale.x * puff_scale_multiplier,
 		original_scale.y,
 		original_scale.z * puff_scale_multiplier
 	)
 
-	var tween := create_tween()
-	tween.set_trans(Tween.TRANS_BACK)
-	tween.set_ease(Tween.EASE_OUT)
+	puff_tween = create_tween()
+	puff_tween.set_trans(Tween.TRANS_BACK)
+	puff_tween.set_ease(Tween.EASE_OUT)
 
-	tween.tween_property(
+	puff_tween.tween_property(
 		self,
 		"scale",
 		target_scale,
 		puff_up_duration
 	)
 
-	await tween.finished
+	await puff_tween.finished
+	puff_tween = null
 
 
 func _puff_down() -> void:
-	var tween := create_tween()
-	tween.set_trans(Tween.TRANS_BACK)
-	tween.set_ease(Tween.EASE_IN_OUT)
+	if is_instance_valid(puff_tween):
+		puff_tween.kill()
 
-	tween.tween_property(
+	puff_tween = create_tween()
+	puff_tween.set_trans(Tween.TRANS_BACK)
+	puff_tween.set_ease(Tween.EASE_IN_OUT)
+
+	puff_tween.tween_property(
 		self,
 		"scale",
 		original_scale,
 		puff_down_duration
 	)
 
-	await tween.finished
+	await puff_tween.finished
+	puff_tween = null
 
 
 func _spin_towards_target(
@@ -319,35 +365,44 @@ func _extend_tongue() -> void:
 	if not is_instance_valid(tongue_material):
 		return
 
-	var tween := create_tween()
-	tween.set_trans(Tween.TRANS_ELASTIC)
-	tween.set_ease(Tween.EASE_OUT)
+	if is_instance_valid(tongue_tween):
+		tongue_tween.kill()
 
-	tween.tween_property(
+	tongue_tween = create_tween()
+	tongue_tween.set_trans(Tween.TRANS_ELASTIC)
+	tongue_tween.set_ease(Tween.EASE_OUT)
+
+	tongue_tween.tween_property(
 		tongue_material,
 		"shader_parameter/extension",
 		1.0,
 		tongue_extend_duration
 	)
 
-	await tween.finished
+	await tongue_tween.finished
+	tongue_tween = null
+
 
 func _retract_tongue() -> void:
 	if not is_instance_valid(tongue_material):
 		return
 
-	var tween := create_tween()
-	tween.set_trans(Tween.TRANS_QUAD)
-	tween.set_ease(Tween.EASE_IN)
+	if is_instance_valid(tongue_tween):
+		tongue_tween.kill()
 
-	tween.tween_property(
+	tongue_tween = create_tween()
+	tongue_tween.set_trans(Tween.TRANS_QUAD)
+	tongue_tween.set_ease(Tween.EASE_IN)
+
+	tongue_tween.tween_property(
 		tongue_material,
 		"shader_parameter/extension",
 		0.0,
 		tongue_retract_duration
 	)
 
-	await tween.finished
+	await tongue_tween.finished
+	tongue_tween = null
 
 func _face_target(target_position: Vector3) -> void:
 	var direction: Vector3 = target_position - global_position
@@ -425,16 +480,18 @@ func _start_dissolve() -> void:
 	
 
 func _charge_galaxy_effect() -> void:
-	if affected_galaxy_materials.is_empty():
+	if dead or affected_galaxy_materials.is_empty():
 		return
 
-	animation_tree.set("parameters/OpenMouthOneShot/request", 
-		AnimationNodeOneShot.OneShotRequest.ONE_SHOT_REQUEST_FIRE)
+	galaxy_charge_active = true
 
-	var tween := create_tween()
+	animation_tree.set(
+		"parameters/OpenMouthOneShot/request",
+		AnimationNodeOneShot.OneShotRequest.ONE_SHOT_REQUEST_FIRE
+	)
 
-	# Animate from 0 to 1.
-	tween.set_parallel(true)
+	galaxy_tween = create_tween()
+	galaxy_tween.set_parallel(true)
 
 	for material: ShaderMaterial in affected_galaxy_materials:
 		if not is_instance_valid(material):
@@ -442,33 +499,47 @@ func _charge_galaxy_effect() -> void:
 
 		material.set_shader_parameter("progress", 0.0)
 
-		tween.tween_property(
+		galaxy_tween.tween_property(
 			material,
 			"shader_parameter/progress",
 			1.0,
 			1.0
-		).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
+		).set_trans(Tween.TRANS_QUAD).set_ease(
+			Tween.EASE_OUT
+		)
 
-	await tween.finished
+	await galaxy_tween.finished
+	galaxy_tween = null
 
-	# Hold at full strength.
+	if not galaxy_charge_active or dead:
+		return
+
 	await get_tree().create_timer(0.3).timeout
 
-	# Animate from 1 to 0.
-	tween = create_tween()
-	tween.set_parallel(true)
+	if not galaxy_charge_active or dead:
+		return
+
+	galaxy_tween = create_tween()
+	galaxy_tween.set_parallel(true)
 
 	for material: ShaderMaterial in affected_galaxy_materials:
 		if not is_instance_valid(material):
 			continue
 
-		tween.tween_property(
+		galaxy_tween.tween_property(
 			material,
 			"shader_parameter/progress",
 			0.0,
 			1.0
-		).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN)
+		).set_trans(Tween.TRANS_QUAD).set_ease(
+			Tween.EASE_IN
+		)
 
-	await tween.finished
+	await galaxy_tween.finished
+	galaxy_tween = null
 
+	if not galaxy_charge_active or dead:
+		return
+
+	galaxy_charge_active = false
 	attack_finished.emit()

@@ -33,6 +33,7 @@ enum AttackType {
 @export var attack_cooldown: float = 3.0
 @export_range(0.0, 1.0) var straight_tongue_chance: float = 0.4
 @export var max_prediction_time: float = 1.5
+@export var maximum_player_attack_height: float = 10.0
 
 @export_category("Rotation")
 @export var rotation_speed: float = 2.5
@@ -75,6 +76,14 @@ func _ready() -> void:
 
 
 func _physics_process(delta: float) -> void:
+	if current_state == State.DEAD:
+		_process_dead()
+		return
+
+	if not _can_attack_player():
+		if current_state == State.ATTACKING:
+			_cancel_current_attack()
+
 	match current_state:
 		State.IDLE:
 			_process_idle()
@@ -87,9 +96,6 @@ func _physics_process(delta: float) -> void:
 
 		State.ATTACK_COOLDOWN:
 			_process_attack_cooldown(delta)
-
-		State.DEAD:
-			_process_dead()
 
 
 func _process_idle() -> void:
@@ -116,6 +122,10 @@ func _start_encounter() -> void:
 func _process_looking_at_player(delta: float) -> void:
 	_rotate_towards_player(delta)
 
+	if not _can_attack_player():
+		state_timer = look_duration
+		return
+
 	if not _is_player_within_attack_range():
 		state_timer = look_duration
 		return
@@ -139,6 +149,21 @@ func _process_attack_cooldown(delta: float) -> void:
 	if state_timer <= 0.0:
 		_change_state(State.LOOKING_AT_PLAYER)
 
+func _can_attack_player() -> bool:
+	if not is_instance_valid(player):
+		return false
+
+	return player.global_position.y <= maximum_player_attack_height
+
+
+func _cancel_current_attack() -> void:
+	if current_state != State.ATTACKING:
+		return
+
+	if is_instance_valid(visual):
+		visual.cancel_current_attack()
+
+	_change_state(State.LOOKING_AT_PLAYER)
 
 func _process_dead() -> void:
 	pass
@@ -205,8 +230,8 @@ func perform_attack() -> void:
 	if current_state == State.DEAD:
 		return
 
-	if not is_instance_valid(player):
-		_change_state(State.ATTACK_COOLDOWN)
+	if not _can_attack_player():
+		_change_state(State.LOOKING_AT_PLAYER)
 		return
 
 	if not is_instance_valid(visual):
@@ -228,6 +253,17 @@ func perform_attack() -> void:
 		AttackType.GALAXY_PROJECTILE:
 			visual._charge_galaxy_effect()
 			await get_tree().create_timer(0.5).timeout
+
+			if current_state != State.ATTACKING:
+				return
+
+			if current_attack != AttackType.GALAXY_PROJECTILE:
+				return
+
+			if not _can_attack_player():
+				_cancel_current_attack()
+				return
+
 			shoot_projectile_at_player()
 
 
