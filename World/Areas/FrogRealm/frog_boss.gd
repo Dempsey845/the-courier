@@ -197,7 +197,7 @@ func _choose_attack() -> void:
 	else:
 		current_attack = AttackType.SPIN
 
-	if health.current_health < 3 and randf() <= 0.5:
+	if health.current_health < 6 and randf() <= 0.5:
 		current_attack = AttackType.GALAXY_PROJECTILE 
 
 

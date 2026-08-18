@@ -16,6 +16,9 @@ signal landed
 
 var slow_movement_enabled: bool = false
 
+@export_category("Camera")
+@export var current_camera: Camera3D
+
 @export_category("Jumping")
 @export var gravity: float = 18.0
 @export var jump_velocity: float = 10.0
@@ -178,8 +181,8 @@ func handle_movement(delta: float) -> void:
 	)
 
 	# Flatten the camera directions so movement remains horizontal.
-	var camera_forward: Vector3 = -camera.global_basis.z
-	var camera_right: Vector3 = camera.global_basis.x
+	var camera_forward: Vector3 = -current_camera.global_basis.z
+	var camera_right: Vector3 = current_camera.global_basis.x
 
 	camera_forward.y = 0.0
 	camera_right.y = 0.0

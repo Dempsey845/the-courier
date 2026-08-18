@@ -151,9 +151,10 @@ shader_parameter/final_darkening = 0.82
 shader_parameter/use_texture = false
 shader_parameter/texture_influence = 0.2
 
-[node name="Player" type="CharacterBody3D" unique_id=67220391]
+[node name="Player" type="CharacterBody3D" unique_id=67220391 node_paths=PackedStringArray("current_camera")]
 collision_layer = 5
 script = ExtResource("1_4ntmi")
+current_camera = NodePath("CameraController/SpringArm3D/Camera3D")
 
 [node name="PlayerItemManager" type="Node" parent="." unique_id=1145519169]
 script = ExtResource("2_pisgm")
@@ -195,6 +196,7 @@ script = ExtResource("3_btcbx")
 spring_length = 5.0
 
 [node name="Camera3D" type="Camera3D" parent="CameraController/SpringArm3D" unique_id=612801696]
+current = true
 far = 950.0
 
 [node name="LandingShadowRay" type="RayCast3D" parent="." unique_id=1160867193]
