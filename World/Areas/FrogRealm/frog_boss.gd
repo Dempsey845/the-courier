@@ -2,6 +2,7 @@ class_name FrogBoss
 extends CharacterBody3D
 
 signal death
+signal encounter
 
 enum State {
 	IDLE,
@@ -111,6 +112,8 @@ func _start_encounter() -> void:
 		return
 
 	encounter_started = true
+
+	encounter.emit()
 
 	if is_instance_valid(frog_boss_ui):
 		frog_boss_ui.show_boss_ui()

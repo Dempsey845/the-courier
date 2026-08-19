@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dr1cw73f3oua2"
-path="res://.godot/imported/xbox_a.png-4372d24def6578094dd778d64bac2bd5.ctex"
+uid="uid://b6prk568fit8w"
+path="res://.godot/imported/ps_r3.png-855803113378e281f9c6b7777ea7009e.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Systems/Controller/InputIcons/xbox_a.png"
-dest_files=["res://.godot/imported/xbox_a.png-4372d24def6578094dd778d64bac2bd5.ctex"]
+source_file="res://Systems/Controller/InputIcons/Playstation/ps_r3.png"
+dest_files=["res://.godot/imported/ps_r3.png-855803113378e281f9c6b7777ea7009e.ctex"]
 
 [params]
 

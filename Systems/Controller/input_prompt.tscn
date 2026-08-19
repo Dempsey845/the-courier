@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://x03f4042spc7"]
 
 [ext_resource type="Script" uid="uid://c7i7r2vk4ghbu" path="res://Systems/Controller/input_prompt.gd" id="1_kjugh"]
-[ext_resource type="Texture2D" uid="uid://esthnx0fvqrm" path="res://Systems/Controller/InputIcons/key_e.png" id="2_12js8"]
+[ext_resource type="Texture2D" uid="uid://esthnx0fvqrm" path="res://Systems/Controller/InputIcons/Keyboard/key_e.png" id="2_12js8"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_13qdw"]
 transparency = 1

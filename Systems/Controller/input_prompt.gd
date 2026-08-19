@@ -11,10 +11,6 @@ signal pressed
 @onready var key_input_mesh: MeshInstance3D = $MeshInstance3D
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
 
-var input_actions: Dictionary[ControllerManager.InputAction, String] = {
-	ControllerManager.InputAction.Interact: "interact"
-}
-
 var material: StandardMaterial3D
 var followed_parent: Node3D
 var parent_offset: Vector3
@@ -42,20 +38,10 @@ func _ready() -> void:
 
 	material = key_input_mesh.mesh.material
 
-	var connected_joypads: Array[int] = Input.get_connected_joypads()
-	var start_controller_type: ControllerManager.ControllerType = (
-		ControllerManager.ControllerType.UNKNOWN
-	)
-
-	if not connected_joypads.is_empty():
-		start_controller_type = ControllerManager.get_controller_type(
-			connected_joypads[0]
-		)
-
-		ControllerManager._set_using_controller(true, connected_joypads[0])
+	var start_controller_type: ControllerManager.ControllerType = ControllerManager.refresh()
 
 	var icon_texture: Texture = (
-		ControllerManager.input_action_icons[input_action][start_controller_type]
+		ControllerManager.input_icons[input_action][start_controller_type]
 	)
 	material.albedo_texture = icon_texture
 
@@ -89,7 +75,7 @@ func _process(delta: float) -> void:
 	_follow_parent(delta)
 
 	if shown:
-		var action: String = input_actions[input_action]
+		var action: String = ControllerManager.input_actions[input_action]
 
 		if (
 			not is_pressing
@@ -119,7 +105,7 @@ func _on_input_device_change(
 	controller_type: ControllerManager.ControllerType
 ) -> void:
 	var icon_texture: Texture = (
-		ControllerManager.input_action_icons[input_action][controller_type]
+		ControllerManager.input_icons[input_action][controller_type]
 	)
 	material.albedo_texture = icon_texture
 

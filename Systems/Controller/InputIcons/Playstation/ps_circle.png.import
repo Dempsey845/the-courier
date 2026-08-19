@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dvrs2lty4tn63"
-path="res://.godot/imported/ps_square.png-42e2751bb38aeabae614497aec7261d2.ctex"
+uid="uid://dqa6ga7556a8o"
+path="res://.godot/imported/ps_circle.png-255fd886a70872eab4a699f091b643f1.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Systems/Controller/InputIcons/ps_square.png"
-dest_files=["res://.godot/imported/ps_square.png-42e2751bb38aeabae614497aec7261d2.ctex"]
+source_file="res://Systems/Controller/InputIcons/Playstation/ps_circle.png"
+dest_files=["res://.godot/imported/ps_circle.png-255fd886a70872eab4a699f091b643f1.ctex"]
 
 [params]
 
