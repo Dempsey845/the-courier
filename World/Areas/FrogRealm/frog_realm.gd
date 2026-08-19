@@ -27,7 +27,7 @@ func _ready() -> void:
 
 	portal.portal_entered.connect(_on_portal_entered)
 
-	player.gravity /= 1.5
+	player.gravity /= 1.2
 
 	frog_boss.death.connect(_on_frog_boss_death)
 

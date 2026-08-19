@@ -19,7 +19,7 @@ func _physics_process(_delta: float) -> void:
 
 func _hit_hurtbox(hurtbox: Hurtbox) -> void:
 	if hurtbox.get_parent() is FrogBoss:
-		player.apply_upward_force(upward_force * 2)
+		player.apply_upward_force(upward_force * 1.5)
 		player.apply_forward_force(22)
 	elif hurtbox.flags.has("UpwardForce"):
 		player.apply_upward_force(upward_force)

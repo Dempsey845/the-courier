@@ -34,7 +34,7 @@ enum AttackType {
 @export var attack_cooldown: float = 3.0
 @export_range(0.0, 1.0) var straight_tongue_chance: float = 0.4
 @export var max_prediction_time: float = 1.5
-@export var maximum_player_attack_height: float = 10.0
+@export var maximum_player_attack_height: float = 12.0
 
 @export_category("Rotation")
 @export var rotation_speed: float = 2.5

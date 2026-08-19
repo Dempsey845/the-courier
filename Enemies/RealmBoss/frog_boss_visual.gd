@@ -9,7 +9,7 @@ signal attack_finished
 @export_range(0.05, 0.9) var spin_ramp_fraction: float = 0.3
 
 @export_category("Charge")
-@export var puff_scale_multiplier: float = 1.2
+@export var puff_scale_multiplier: float = 1.15
 
 @export var puff_up_duration: float = 1.2
 @export var puff_down_duration: float = 0.5
