@@ -22,8 +22,8 @@
 [ext_resource type="PackedScene" uid="uid://cxwq4wbv8xooa" path="res://World/Areas/FrogRealm/frog_realm_cloud_particles.tscn" id="17_7pwk2"]
 
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_xrivr"]
-height = 8.0
-radius = 35.0
+height = 10.0
+radius = 40.0
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_syi77"]
 shader = ExtResource("3_syi77")
@@ -930,16 +930,17 @@ metadata/_custom_type_script = "uid://dh6q176dnlgbu"
 [node name="InputUIPrompt" parent="CanvasLayer" unique_id=1308566607 instance=ExtResource("3_df1d8")]
 input_action = 1
 
-[node name="CameraSwitchArea" type="Area3D" parent="." unique_id=1529543208 node_paths=PackedStringArray("camera_switch_prompt", "frog_boss")]
+[node name="CameraSwitchArea" type="Area3D" parent="." unique_id=1529543208 node_paths=PackedStringArray("camera_switch_prompt", "frog_boss", "player")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -51.505283, 4.0999994, -0.44737053)
 collision_layer = 0
 collision_mask = 4
 script = ExtResource("3_iw61r")
 camera_switch_prompt = NodePath("../CanvasLayer/InputUIPrompt")
 frog_boss = NodePath("../FrogBoss")
+player = NodePath("../Player")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="CameraSwitchArea" unique_id=128240906]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.9250002, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.9250002, 0)
 shape = SubResource("CylinderShape3D_xrivr")
 
 [node name="SwitchCooldownTimer" type="Timer" parent="CameraSwitchArea" unique_id=1481078980]
@@ -950,6 +951,7 @@ one_shot = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -51.505283, 4.8999996, -0.44737053)
 script = ExtResource("3_mncl4")
 player = NodePath("../Player")
+too_far_distance = 10.0
 
 [node name="Camera3D" type="Camera3D" parent="FrogBossCameraPivot" unique_id=1325048650]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 40)

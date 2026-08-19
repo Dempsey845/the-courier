@@ -2,12 +2,12 @@ extends Area3D
 
 @export var camera_switch_prompt: InputUIPrompt
 @export var frog_boss: FrogBoss
+@export var player: Player
 
 @onready var frog_realm: FrogRealm = get_parent()
 @onready var switch_cooldown_timer: Timer = $SwitchCooldownTimer
 
 var is_player_camera: bool = true
-var auto_switch: bool = true
 
 func _ready() -> void:
 	body_entered.connect(_on_body_entered)
@@ -22,26 +22,32 @@ func _ready() -> void:
 	frog_boss.encounter.connect(_on_frog_boss_encounter)
 	frog_boss.death.connect(_on_frog_boss_death)
 
-func switch_to_player_camera():
-	if !switch_cooldown_timer.is_stopped():
-		return
+func switch_to_player_camera() -> bool:
+	if not switch_cooldown_timer.is_stopped():
+		return false
 
 	frog_realm.switch_to_player_camera()
 	is_player_camera = true
 
 	switch_cooldown_timer.start()
+	return true
 
-func switch_to_frog_boss_camera():
-	if !switch_cooldown_timer.is_stopped():
-		return
+
+func switch_to_frog_boss_camera() -> bool:
+	if not switch_cooldown_timer.is_stopped():
+		return false
+
+	if player.global_position.y > frog_boss.maximum_player_attack_height:
+		return false
 
 	frog_realm.switch_to_frog_boss_camera()
 	is_player_camera = false
 
 	switch_cooldown_timer.start()
+	return true
 
 func _on_body_entered(body: Node3D):
-	if body is not Player or !auto_switch or !is_player_camera:
+	if body is not Player or !is_player_camera:
 		return
 	
 	switch_to_frog_boss_camera()
@@ -52,20 +58,22 @@ func _on_body_exited(body: Node3D):
 	
 	switch_to_player_camera()
 	
-func _on_camera_switch_input():
-	auto_switch = false
+func _on_camera_switch_input() -> void:
+	var switched: bool
 
 	if is_player_camera:
-		switch_to_frog_boss_camera()
+		switched = switch_to_frog_boss_camera()
 	else:
-		switch_to_player_camera()
+		switched = switch_to_player_camera()
 
-	camera_switch_prompt.can_press = false
+	if switched:
+		camera_switch_prompt.can_press = false
 
 func _on_frog_boss_encounter():
 	camera_switch_prompt.show_prompt()
 
 func _on_frog_boss_death():
 	camera_switch_prompt.hide_prompt()
-	frog_realm.switch_to_player_camera()
+	if !is_player_camera:
+		frog_realm.switch_to_player_camera()
 	queue_free()
