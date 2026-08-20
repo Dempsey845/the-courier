@@ -12,7 +12,6 @@
 [ext_resource type="Shader" uid="uid://cl0i4nn534r2d" path="res://World/Environment/Bodies/portal.gdshader" id="5_0derk"]
 [ext_resource type="Script" uid="uid://vhphkydnyccp" path="res://World/Environment/Bodies/portal.gd" id="6_x7iw1"]
 [ext_resource type="Script" uid="uid://epcpb44orgo6" path="res://World/Environment/Bodies/portal_entrance.gd" id="7_08s18"]
-[ext_resource type="PackedScene" uid="uid://es6r4xwsgwka" path="res://World/Areas/FrogRealm/frog_boss.tscn" id="9_s85ib"]
 [ext_resource type="Shader" uid="uid://b8mw40gwerxyi" path="res://World/Areas/FrogRealm/frog_realm_galaxy_surface.gdshader" id="10_1xr6s"]
 [ext_resource type="PackedScene" uid="uid://c4qraqdt2f0hp" path="res://World/Areas/Swamp/mushroom_swamp_effect.tscn" id="10_08s18"]
 [ext_resource type="PackedScene" uid="uid://dem10o88fea0" path="res://World/cloud_platform.tscn" id="11_e7ccy"]
@@ -818,7 +817,7 @@ color_ramp = SubResource("Gradient_0wqet")
 seamless = true
 in_3d_space = true
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_ithx4"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_coksb"]
 resource_local_to_scene = true
 render_priority = 0
 shader = SubResource("Shader_5gpxd")
@@ -865,9 +864,9 @@ shader_parameter/ripple_strength = 0.08
 shader_parameter/ripple_width = 0.2
 shader_parameter/ripple_frequency = 12.0
 
-[sub_resource type="PlaneMesh" id="PlaneMesh_ugnrj"]
+[sub_resource type="PlaneMesh" id="PlaneMesh_ithx4"]
 resource_local_to_scene = true
-material = SubResource("ShaderMaterial_ithx4")
+material = SubResource("ShaderMaterial_coksb")
 size = Vector2(45, 45)
 subdivide_width = 450
 subdivide_depth = 450
@@ -943,12 +942,11 @@ point_count = 4
 [sub_resource type="Gradient" id="Gradient_wi6ju"]
 colors = PackedColorArray(1, 0.5921569, 0, 1, 1, 1, 0, 1)
 
-[node name="FrogRealm" type="Node3D" unique_id=1350201666 node_paths=PackedStringArray("player", "frog_boss_camera", "frog_boss_camera_pivot", "frog_boss", "bridge_platforms")]
+[node name="FrogRealm" type="Node3D" unique_id=1350201666 node_paths=PackedStringArray("player", "frog_boss_camera", "frog_boss_camera_pivot", "bridge_platforms")]
 script = ExtResource("1_0derk")
 player = NodePath("Player")
 frog_boss_camera = NodePath("FrogBossCameraPivot/Camera3D")
 frog_boss_camera_pivot = NodePath("FrogBossCameraPivot")
-frog_boss = NodePath("FrogBoss")
 bridge_platforms = NodePath("BridgePlatforms")
 
 [node name="DialogueManager" type="Node" parent="." unique_id=1954538742]
@@ -962,13 +960,12 @@ input_action = 1
 
 [node name="DialogueUI" parent="CanvasLayer" unique_id=1916400925 instance=ExtResource("4_coksb")]
 
-[node name="CameraSwitchArea" type="Area3D" parent="." unique_id=1529543208 node_paths=PackedStringArray("camera_switch_prompt", "frog_boss", "player")]
+[node name="CameraSwitchArea" type="Area3D" parent="." unique_id=1529543208 node_paths=PackedStringArray("camera_switch_prompt", "player")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -51.505283, 4.0999994, -0.44737053)
 collision_layer = 0
 collision_mask = 4
 script = ExtResource("3_iw61r")
 camera_switch_prompt = NodePath("../CanvasLayer/InputUIPrompt")
-frog_boss = NodePath("../FrogBoss")
 player = NodePath("../Player")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="CameraSwitchArea" unique_id=128240906]
@@ -989,7 +986,7 @@ too_far_distance = 10.0
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 40)
 
 [node name="Player" parent="." unique_id=67220391 instance=ExtResource("1_6d5p3")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -143, 3, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 1, 0)
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1350030308]
 environment = SubResource("Environment_syi77")
@@ -1036,14 +1033,13 @@ portal = NodePath("../Portal")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -2, -8.940697e-08)
 shape = SubResource("BoxShape3D_lbc42")
 
-[node name="FrogBoss" parent="." unique_id=1491294978 node_paths=PackedStringArray("player", "spring_platforms_owner") instance=ExtResource("9_s85ib")]
+[node name="FrogBossSpawnPoint" type="Marker3D" parent="." unique_id=875731427]
+unique_name_in_owner = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -51.505283, -5.3, -0.44737053)
-player = NodePath("../Player")
-spring_platforms_owner = NodePath("../SpringPlatforms")
 
 [node name="MushroomSwampEffect" parent="." unique_id=963275507 instance=ExtResource("10_08s18")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -52, -0.41529846, 0)
-mesh = SubResource("PlaneMesh_ugnrj")
+mesh = SubResource("PlaneMesh_ithx4")
 
 [node name="StaticBody3D" type="StaticBody3D" parent="." unique_id=1387991623]
 
@@ -1271,3 +1267,6 @@ transform = Transform3D(-1.8646249, 0.4996246, 1.9304014, 0.7065759, 2.6369772, 
 
 [node name="FrogNPC" parent="FrogNPCArea" unique_id=870401761 instance=ExtResource("25_ix4ct")]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -16.5, 0, 0)
+
+[node name="PlayerSecondSpawnPoint" type="Marker3D" parent="." unique_id=2106332007]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -80, 1.3000001, 0)

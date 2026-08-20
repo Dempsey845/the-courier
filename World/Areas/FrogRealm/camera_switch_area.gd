@@ -1,15 +1,20 @@
 extends Area3D
 
 @export var camera_switch_prompt: InputUIPrompt
-@export var frog_boss: FrogBoss
 @export var player: Player
 
 @onready var frog_realm: FrogRealm = get_parent()
 @onready var switch_cooldown_timer: Timer = $SwitchCooldownTimer
 
 var is_player_camera: bool = true
+var frog_boss: FrogBoss
 
 func _ready() -> void:
+	frog_realm.frog_boss_spawned.connect(_on_frog_boss_spawned)
+
+func _on_frog_boss_spawned():
+	frog_boss = frog_realm.frog_boss
+
 	body_entered.connect(_on_body_entered)
 	body_exited.connect(_on_body_exited)
 
@@ -23,6 +28,9 @@ func _ready() -> void:
 	frog_boss.death.connect(_on_frog_boss_death)
 
 func switch_to_player_camera() -> bool:
+	if !is_instance_valid(switch_cooldown_timer):
+		return false
+
 	if not switch_cooldown_timer.is_stopped():
 		return false
 
@@ -34,6 +42,9 @@ func switch_to_player_camera() -> bool:
 
 
 func switch_to_frog_boss_camera() -> bool:
+	if !is_instance_valid(switch_cooldown_timer):
+		return false
+		
 	if not switch_cooldown_timer.is_stopped():
 		return false
 

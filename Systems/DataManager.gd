@@ -6,3 +6,5 @@ var player_world_start_position: Vector3 = Vector3(-191.144, 2, -25.8)
 var world_started: bool
 
 var player_items: Dictionary[PlayerItemManager.Item, int] = {}
+
+var player_killed_frog_boss: bool

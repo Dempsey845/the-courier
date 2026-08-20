@@ -1,6 +1,10 @@
 class_name BridgePlatforms
 extends Node3D
 
+func _ready() -> void:
+    if DataManager.player_killed_frog_boss:
+        show_bridge_platforms()
+
 func show_bridge_platform(bridge_platform: Node3D):
     if !bridge_platform.has_node("AnimationPlayer"):
         return

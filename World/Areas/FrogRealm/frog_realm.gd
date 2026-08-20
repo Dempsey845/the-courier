@@ -1,22 +1,43 @@
 class_name FrogRealm
 extends Node3D
 
+signal frog_boss_spawned
+
 @export var player: Player
 @export var frog_boss_camera: Camera3D
 @export var frog_boss_camera_pivot: Marker3D
-@export var frog_boss: FrogBoss
 @export var camera_transition_duration: float = 1.25
 @export var bridge_platforms: BridgePlatforms
 
 @onready var portal: Portal = $Arc2/Portal
+@onready var frog_boss_spawn_point: Marker3D = %FrogBossSpawnPoint
+@onready var spring_platforms: Node3D = $SpringPlatforms
 
 var portal_transition: PortalTransitionUI
 
 var camera_transition_tween: Tween
 var frog_boss_camera_local_transform: Transform3D
 
+var frog_boss: FrogBoss
+
 func _ready() -> void:
-	DataManager.player_world_start_position = Vector3(0, 8.9, -152.0)
+	if DataManager.player_killed_frog_boss:
+		DataManager.player_world_start_position = Vector3(-80.0, 1.3, 0.0)
+	else:
+		frog_boss = preload("uid://es6r4xwsgwka").instantiate()
+		frog_boss.player = player
+		frog_boss.spring_platforms_owner = spring_platforms
+
+		add_child(frog_boss)
+		frog_boss.global_position = frog_boss_spawn_point.global_position
+
+		DataManager.player_world_start_position = Vector3(0.0, 0.0, 0.0)
+
+		frog_boss.death.connect(_on_frog_boss_death)
+
+		frog_boss_spawned.emit()
+
+	player.global_position = DataManager.player_world_start_position
 
 	frog_boss_camera_local_transform = frog_boss_camera.transform
 
@@ -29,7 +50,6 @@ func _ready() -> void:
 
 	player.gravity /= 1.2
 
-	frog_boss.death.connect(_on_frog_boss_death)
 
 	
 func switch_to_frog_boss_camera() -> void:
@@ -122,3 +142,4 @@ func _on_portal_entered():
 
 func _on_frog_boss_death():
 	bridge_platforms.show_bridge_platforms()
+	DataManager.player_killed_frog_boss = true
