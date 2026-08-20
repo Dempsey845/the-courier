@@ -11,8 +11,8 @@ var world_scene: PackedScene = preload("uid://bj3ripvo7qsjp")
 func _ready() -> void:
 	get_viewport().scaling_3d_scale = scale_3d
 
+	DataManager.player_world_start_position = Vector3(0, 1, -25.0)
 	player.global_position = DataManager.player_world_start_position
-	DataManager.player_world_start_position = Vector3(0, 0, -25.0)
 
 	var canvas_layer = player.get_node("CanvasLayer")
 	portal_transition = canvas_layer.get_node("Container/PortalTransitionUI")

@@ -13,6 +13,7 @@ script = ExtResource("2_47qgu")
 metadata/_custom_type_script = "uid://dn5b8er116luc"
 
 [node name="NavigationAgent3D" type="NavigationAgent3D" parent="." unique_id=1961274634]
+debug_enabled = true
 
 [node name="Hurtbox" type="Area3D" parent="." unique_id=1172596633 node_paths=PackedStringArray("health")]
 collision_layer = 32

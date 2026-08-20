@@ -28,6 +28,7 @@ enum State {
 @export var move_speed: float = 4.0
 @export var acceleration: float = 12.0
 @export var rotation_speed: float = 8.0
+@export var gravity: float = 20.0
 
 @export_category("Chase")
 @export var can_chase: bool = true
@@ -90,6 +91,8 @@ func _ready() -> void:
 
 
 func _physics_process(delta: float) -> void:
+	apply_gravity(delta)
+
 	# Death is handled separately because it is a terminal state.
 	if current_state == State.DEATH:
 		update_death(delta)
@@ -105,6 +108,11 @@ func _physics_process(delta: float) -> void:
 
 	move_and_slide()
 
+func apply_gravity(delta: float) -> void:
+	if not is_on_floor():
+		velocity.y -= gravity * delta
+	else:
+		velocity.y = 0.0
 
 func update_timers(delta: float) -> void:
 	cooldown_remaining = maxf(cooldown_remaining - delta, 0.0)
