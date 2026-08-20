@@ -15,6 +15,9 @@ func _ready() -> void:
 	instance = self
 
 func start(dialogue: Dialogue, dialogue_ui: DialogueUI, icon_texture: CompressedTexture2D, npc: NPC) -> void:
+	if in_dialogue:
+		return
+		
 	dialogue_started.emit(npc)
 
 	current_dialogue = dialogue

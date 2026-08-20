@@ -10,7 +10,7 @@ curve = SubResource("Curve_htycm")
 
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_cloud"]
 emission_shape = 3
-emission_box_extents = Vector3(200, 2, 100)
+emission_box_extents = Vector3(150, 2, 100)
 spread = 180.0
 initial_velocity_min = 0.15
 initial_velocity_max = 0.45

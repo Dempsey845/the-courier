@@ -7,6 +7,7 @@
 [ext_resource type="Script" uid="uid://w43tgbmw470m" path="res://World/Areas/FrogRealm/camera_switch_area.gd" id="3_iw61r"]
 [ext_resource type="Script" uid="uid://demtrmg8wyb7o" path="res://World/Areas/FrogRealm/frog_boss_camera_pivot.gd" id="3_mncl4"]
 [ext_resource type="Shader" uid="uid://dn6qb8lp60ekd" path="res://World/Areas/FrogRealm/frog_realm_sky.gdshader" id="3_syi77"]
+[ext_resource type="PackedScene" uid="uid://b4yyn7ah5o6it" path="res://Systems/Dialogue/dialogue_ui.tscn" id="4_coksb"]
 [ext_resource type="PackedScene" uid="uid://c58sildkevbgv" path="res://World/Environment/Arc.glb" id="4_eu6gw"]
 [ext_resource type="Shader" uid="uid://cl0i4nn534r2d" path="res://World/Environment/Bodies/portal.gdshader" id="5_0derk"]
 [ext_resource type="Script" uid="uid://vhphkydnyccp" path="res://World/Environment/Bodies/portal.gd" id="6_x7iw1"]
@@ -24,6 +25,7 @@
 [ext_resource type="PackedScene" uid="uid://ci133bgc6mjlo" path="res://World/Campfire.tscn" id="22_d75fr"]
 [ext_resource type="PackedScene" uid="uid://dxffamdf7vshk" path="res://World/Environment/Bodies/rock_pillar.tscn" id="23_jxr16"]
 [ext_resource type="PackedScene" uid="uid://c6dyymkyd7kee" path="res://World/Areas/FrogRealm/floating_rock.tscn" id="24_r6kl6"]
+[ext_resource type="PackedScene" uid="uid://citv7t8lb4ali" path="res://NPC/Frog/frog_npc.tscn" id="25_ix4ct"]
 
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_xrivr"]
 height = 10.0
@@ -816,7 +818,7 @@ color_ramp = SubResource("Gradient_0wqet")
 seamless = true
 in_3d_space = true
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_r6kl6"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ithx4"]
 resource_local_to_scene = true
 render_priority = 0
 shader = SubResource("Shader_5gpxd")
@@ -863,9 +865,9 @@ shader_parameter/ripple_strength = 0.08
 shader_parameter/ripple_width = 0.2
 shader_parameter/ripple_frequency = 12.0
 
-[sub_resource type="PlaneMesh" id="PlaneMesh_ix4ct"]
+[sub_resource type="PlaneMesh" id="PlaneMesh_ugnrj"]
 resource_local_to_scene = true
-material = SubResource("ShaderMaterial_r6kl6")
+material = SubResource("ShaderMaterial_ithx4")
 size = Vector2(45, 45)
 subdivide_width = 450
 subdivide_depth = 450
@@ -917,6 +919,9 @@ _surfaces = [{
 "vertex_data": PackedByteArray("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0JhaQQCwuL/JxnJB6CWEQQCwuL+7BUBB0JhaQQAAgD/JxnJB0JhaQQCwuL/JxnJB0JhaQQAAgD/JxnJBD1gjQQAAgD/GdY1B6CWEQQCwuL+7BUBB6CWEQQAAgD+7BUBB0JhaQQAAgD/JxnJBvJcIQACwuL/+cqJBfufJQACwuL9xWZtBvJcIQAAAgD/+cqJBvJcIQACwuL/+cqJBvJcIQAAAgD/+cqJBxJcIwAAAgD/+cqJBfufJQACwuL9xWZtBD1gjQQCwuL/GdY1BfufJQAAAgD9xWZtBfufJQACwuL9xWZtBfufJQAAAgD9xWZtBvJcIQAAAgD/+cqJBD1gjQQCwuL/GdY1B0JhaQQCwuL/JxnJBD1gjQQAAgD/GdY1BD1gjQQCwuL/GdY1BD1gjQQAAgD/GdY1BfufJQAAAgD9xWZtBEFijQQCwuL8AAAAASMafQQAAgD8y2IdASMafQQCwuL8y2IdASMafQQCwuL8y2IdA3ziVQQAAgD9A4ARB3ziVQQCwuL9A4ARBEFijQQCwuL8AAAAAEFijQQAAgD8AAAAASMafQQAAgD8y2IdASMafQQCwuL8y2IdASMafQQAAgD8y2IdA3ziVQQAAgD9A4ARB3ziVQQCwuL9A4ARB6CWEQQAAgD+7BUBB6CWEQQCwuL+7BUBB3ziVQQCwuL9A4ARB3ziVQQAAgD9A4ARB6CWEQQAAgD+7BUBB2cf/f///EhwG1v9////8FHHM/3///8YZBtb/f////BQr2/9///9pEnHM/3///8YZBtb/f////BRx5v9////GDCvb/3///2kSceb/f///xgyp+/9///8qAtLs/3///5YJceb/f///xgzS7P9///+WCSvb/3///2kSqfv/f///KgL//1SEAAAqAtLs/3///5YJY7r/f///zSI6sf9///9iJ2ys/3///8kpbKz/f///ySk6sf9///9iJymi/3///+oubKz/f///ySkpov9////qLoOc/3///70xg5z/f///vTEpov9////qLsiP/3///xs4g5z/f///vTHIj/9///8bOFmI/3///9I7WYj/f///0jvIj/9///8bOKV3/3+k9/8/2cf/f///Ehzjvv9///+NIGO6/3///80i2cf/f///EhxxzP9////GGeO+/3///40gY7r/f///zSLjvv9///+NIDqx/3///2In/3//////EOX/f/////9R3v9////+//+//3//////R+z/f////v//v/9//////8b0/3//////xvT/f////v//v/9//////+j5/3//////EOX/f////v//v/9//////0fs/3//////bNf/f/////+xz/9////+//+//3//////Ud7/f/////9s1/9////+//+//3//////sc//f/////8Vxv9////+//+/qfv/f///KgL//yyTAACWCf//VIQAACoC//8skwAAlgn//9KkAABpEv//jZkAAMYM//8skwAAlgn//42ZAADGDP//VIQAACoC///SpAAAaRL///epAAD8FP//jZkAAMYM///SpAAAaRL//4yzAADGGf//96kAAPwU//+MswAAxhn//yW4AAASHP//96kAAPwU/3///yuM/z//f////v//P/9///9vlv8//3///2+W/z//f////v//P/9///9up/8//3///26n/z//f////v//P/9////ctf8///+MswAAxhn//xvBAACNIP//JbgAABIc//8bwQAAjSD//8POAABiJ///msUAAM0i//8bwQAAjSD//5rFAADNIv//JbgAABIc/3///9y1/z//f////v//P/9///9Zw/8//3///1nD/z//f////v//P/9///8l0f8//3///yXR/z//f////v//P/9///+b4P8//3///5vg/z//f////v//P/9////S8/8//3///9Lz/z//f////v//P/9//////+k5///DzgAAYif//9TdAADqLv//ktMAAMkp///DzgAAYif//5LTAADJKf//msUAAM0i///U3QAA6i7//zbwAAAbOP//e+MAAL0x///U3QAA6i7//3vjAAC9Mf//ktMAAMkp//828AAAGzgAAKT3Wgj/P///pPcAANI7//828AAAGzj//6T3AADSO///e+MAAL0xWYj/f///0juld/9/pPf/PzZw/3828P8/NnD/fzbw/z+ld/9/pPf/P3tj/3974/8/NnD/fzbw/z97Y/9/e+P/P9Vd/3/U3f8/1V3/f9Td/z97Y/9/e+P/P5JT/3+S0/8/1V3/f9Td/z+SU/9/ktP/P8RO/3/Dzv8/xE7/f8PO/z+SU/9/ktP/P5tF/3+axf8//3//////Fcb/f///0vP/v/9////+//+//3///9Lz/7//f///m+D/v/9////+//+//3///5vg/7//f///JdH/v/9////+//+//3///yXR/7//f///WcP/v/9////+//+//3///1nD/7//f///3LX/v/9////+//+/xE7/f8PO/z+bRf9/msX/PxtB/38bwf8/G0H/fxvB/z8lOP9/Jbj/P40z/3+Ms/8/G0H/fxvB/z+bRf9/msX/PyU4/38luP8//3///9y1/7//f///bqf/v/9////+//+//3///26n/7//f///b5b/v/9////+//+//3///2+W/7//f///K4z/v/9////+//+/jTP/f4yz/z/4Kf9/96n/P9Mk/3/SpP8/jTP/f4yz/z8lOP9/Jbj/P/gp/3/3qf8/0yT/f9Kk/z+NGf9/jZn/PywT/38sk/8/LBP/fwAAaPZVBP9/AADU/QAAVIT//9T90yT/f9Kk/z/4Kf9/96n/P40Z/3+Nmf8/LBP/fwAAaPaNGf9/AAA481UE/38AANT9/3////7//z//f/////9NMP9//////+k5/3////7//z//f/////+tIf9//////5Io/3////7//z//f/////+SKP9//////00w/3////7//z//f/////+3E/9//////+4a/3////7//z//f/////8WBv9//////zgL/3////7//z//f/////84C/9//////7cT/3////7//z//f//////uGv9//////60hAACaxWQ6/z8AACW42Uf/PwAAG8HjPv8/AACaxWQ6/z8AABvB4z7/PwAAw847Mf8/AAAluNlH/z8AAIyzckz/PwAAG8HjPv8/AACk91oI/z8AAHvjgxz/PwAANvDID/8/AACk91oI/z8AADbwyA//P///pPcAANI7AAB744Mc/z8AAJLTbCz/PwAA1N0qIv8/AAB744Mc/z8AANTdKiL/PwAANvDID/8/AACS02ws/z8AAJrFZDr/PwAAw847Mf8/AACS02ws/z8AAMPOOzH/PwAA1N0qIv8/AABUhKp7/z8AACyT0mz/PwAAjZlxZv8/AACNmXFm/z8AANKkLFv/PwAA96kHVv8/AABUhKp7/z9VBP9/VIT/PwAALJPSbP8/AACNmXFm/z8AACyT0mz/PwAA0qQsW/8/AAD3qQdW/z8AAIyzckz/PwAAJbjZR/8/AAD3qQdW/z8AANKkLFv/PwAAjLNyTP8/")
 }]
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_r6kl6"]
+albedo_color = Color(0.45452422, 0.45452428, 0.45452422, 1)
+
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_b1lj4"]
 transparency = 1
 vertex_color_use_as_albedo = true
@@ -955,6 +960,8 @@ metadata/_custom_type_script = "uid://dh6q176dnlgbu"
 [node name="InputUIPrompt" parent="CanvasLayer" unique_id=1308566607 instance=ExtResource("3_df1d8")]
 input_action = 1
 
+[node name="DialogueUI" parent="CanvasLayer" unique_id=1916400925 instance=ExtResource("4_coksb")]
+
 [node name="CameraSwitchArea" type="Area3D" parent="." unique_id=1529543208 node_paths=PackedStringArray("camera_switch_prompt", "frog_boss", "player")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -51.505283, 4.0999994, -0.44737053)
 collision_layer = 0
@@ -982,7 +989,7 @@ too_far_distance = 10.0
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 40)
 
 [node name="Player" parent="." unique_id=67220391 instance=ExtResource("1_6d5p3")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 3, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -143, 3, 0)
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1350030308]
 environment = SubResource("Environment_syi77")
@@ -1036,7 +1043,7 @@ spring_platforms_owner = NodePath("../SpringPlatforms")
 
 [node name="MushroomSwampEffect" parent="." unique_id=963275507 instance=ExtResource("10_08s18")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -52, -0.41529846, 0)
-mesh = SubResource("PlaneMesh_ix4ct")
+mesh = SubResource("PlaneMesh_ugnrj")
 
 [node name="StaticBody3D" type="StaticBody3D" parent="." unique_id=1387991623]
 
@@ -1132,30 +1139,35 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -48, 0, 0)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -51, 0, 0)
 
 [node name="FrogRealmCloudParticles" parent="." unique_id=929183039 instance=ExtResource("17_7pwk2")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -166, -26.200003, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -125.8, -26.200003, 0)
 amount = 150
 
 [node name="Marker3D" type="Marker3D" parent="." unique_id=1528901833]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -137.8, 0, 0)
 
-[node name="CSGCombiner3D" type="CSGCombiner3D" parent="." unique_id=1288140437]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -156.8, 0, 0)
+[node name="FrogNPCArea" type="Node3D" parent="." unique_id=1590476371]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -131.5, 0, 0)
 
-[node name="CSGCylinder3D" type="CSGCylinder3D" parent="CSGCombiner3D" unique_id=605247537]
+[node name="CSGCombiner3D" type="CSGCombiner3D" parent="FrogNPCArea" unique_id=1288140437]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -19, 0, 0)
+material_override = SubResource("StandardMaterial3D_r6kl6")
+use_collision = true
+
+[node name="CSGCylinder3D" type="CSGCylinder3D" parent="FrogNPCArea/CSGCombiner3D" unique_id=605247537]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -117.5, 0)
 radius = 10.0
 height = 235.0
 
-[node name="FrogHut" parent="." unique_id=943294458 instance=ExtResource("21_j3gm1")]
-transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -160, 0, 1.1920929e-07)
+[node name="FrogHut" parent="FrogNPCArea" unique_id=943294458 instance=ExtResource("21_j3gm1")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -22.199997, 0, 1.1920929e-07)
 
-[node name="Campfire" parent="." unique_id=497855993 instance=ExtResource("22_d75fr")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -160, 0, 0)
+[node name="Campfire" parent="FrogNPCArea" unique_id=497855993 instance=ExtResource("22_d75fr")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -22.199997, 0, 0)
 
-[node name="RockPillar" parent="." unique_id=861066469 instance=ExtResource("23_jxr16")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -158, 0, 7)
+[node name="RockPillar" parent="FrogNPCArea" unique_id=861066469 instance=ExtResource("23_jxr16")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -20.199997, 0, 7)
 
-[node name="Campfire" type="CPUParticles3D" parent="RockPillar" unique_id=2111587979]
+[node name="Campfire" type="CPUParticles3D" parent="FrogNPCArea/RockPillar" unique_id=2111587979]
 cast_shadow = 0
 mesh = SubResource("SphereMesh_xrivr")
 emission_shape = 1
@@ -1168,7 +1180,7 @@ scale_amount_min = 0.5
 scale_amount_curve = SubResource("Curve_njqwk")
 color_initial_ramp = SubResource("Gradient_wi6ju")
 
-[node name="OmniLight3D" type="OmniLight3D" parent="RockPillar/Campfire" unique_id=1345049822]
+[node name="OmniLight3D" type="OmniLight3D" parent="FrogNPCArea/RockPillar/Campfire" unique_id=1345049822]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
 light_color = Color(0.9848661, 0.8663973, 0.37135237, 1)
 light_energy = 2.0
@@ -1176,10 +1188,10 @@ light_bake_mode = 1
 omni_range = 3.0
 omni_attenuation = 3.0
 
-[node name="RockPillar2" parent="." unique_id=1845712077 instance=ExtResource("23_jxr16")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -150.5, 0, -4.8)
+[node name="RockPillar2" parent="FrogNPCArea" unique_id=1845712077 instance=ExtResource("23_jxr16")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12.699997, 0, -4.8)
 
-[node name="Campfire" type="CPUParticles3D" parent="RockPillar2" unique_id=2089690826]
+[node name="Campfire" type="CPUParticles3D" parent="FrogNPCArea/RockPillar2" unique_id=2089690826]
 cast_shadow = 0
 mesh = SubResource("SphereMesh_xrivr")
 emission_shape = 1
@@ -1192,7 +1204,7 @@ scale_amount_min = 0.5
 scale_amount_curve = SubResource("Curve_njqwk")
 color_initial_ramp = SubResource("Gradient_wi6ju")
 
-[node name="OmniLight3D" type="OmniLight3D" parent="RockPillar2/Campfire" unique_id=827682285]
+[node name="OmniLight3D" type="OmniLight3D" parent="FrogNPCArea/RockPillar2/Campfire" unique_id=827682285]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
 light_color = Color(0.9848661, 0.8663973, 0.37135237, 1)
 light_energy = 2.0
@@ -1200,10 +1212,10 @@ light_bake_mode = 1
 omni_range = 3.0
 omni_attenuation = 1.8
 
-[node name="RockPillar3" parent="." unique_id=410885061 instance=ExtResource("23_jxr16")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -157, 0, -8)
+[node name="RockPillar3" parent="FrogNPCArea" unique_id=410885061 instance=ExtResource("23_jxr16")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -19.199997, 0, -8)
 
-[node name="Campfire" type="CPUParticles3D" parent="RockPillar3" unique_id=701714341]
+[node name="Campfire" type="CPUParticles3D" parent="FrogNPCArea/RockPillar3" unique_id=701714341]
 cast_shadow = 0
 mesh = SubResource("SphereMesh_xrivr")
 emission_shape = 1
@@ -1216,7 +1228,7 @@ scale_amount_min = 0.5
 scale_amount_curve = SubResource("Curve_njqwk")
 color_initial_ramp = SubResource("Gradient_wi6ju")
 
-[node name="OmniLight3D" type="OmniLight3D" parent="RockPillar3/Campfire" unique_id=275795915]
+[node name="OmniLight3D" type="OmniLight3D" parent="FrogNPCArea/RockPillar3/Campfire" unique_id=275795915]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
 light_color = Color(0.9848661, 0.8663973, 0.37135237, 1)
 light_energy = 2.0
@@ -1224,10 +1236,10 @@ light_bake_mode = 1
 omni_range = 3.0
 omni_attenuation = 1.8
 
-[node name="RockPillar4" parent="." unique_id=1325654053 instance=ExtResource("23_jxr16")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -151, 0, 6)
+[node name="RockPillar4" parent="FrogNPCArea" unique_id=1325654053 instance=ExtResource("23_jxr16")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -13.199997, 0, 6)
 
-[node name="Campfire" type="CPUParticles3D" parent="RockPillar4" unique_id=742484815]
+[node name="Campfire" type="CPUParticles3D" parent="FrogNPCArea/RockPillar4" unique_id=742484815]
 cast_shadow = 0
 mesh = SubResource("SphereMesh_xrivr")
 emission_shape = 1
@@ -1240,7 +1252,7 @@ scale_amount_min = 0.5
 scale_amount_curve = SubResource("Curve_njqwk")
 color_initial_ramp = SubResource("Gradient_wi6ju")
 
-[node name="OmniLight3D" type="OmniLight3D" parent="RockPillar4/Campfire" unique_id=1260462571]
+[node name="OmniLight3D" type="OmniLight3D" parent="FrogNPCArea/RockPillar4/Campfire" unique_id=1260462571]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
 light_color = Color(0.9848661, 0.8663973, 0.37135237, 1)
 light_energy = 2.0
@@ -1248,11 +1260,14 @@ light_bake_mode = 1
 omni_range = 3.0
 omni_attenuation = 1.8
 
-[node name="FloatingRock" parent="." unique_id=968772839 instance=ExtResource("24_r6kl6")]
-transform = Transform3D(-3.090862e-08, 3.090862e-08, 1, 0.70710677, 0.70710677, 0, -0.70710677, 0.70710677, -4.371139e-08, -181, 21.556347, 31.556347)
+[node name="FloatingRock" parent="FrogNPCArea" unique_id=968772839 instance=ExtResource("24_r6kl6")]
+transform = Transform3D(-3.090862e-08, 3.090862e-08, 1, 0.70710677, 0.70710677, 0, -0.70710677, 0.70710677, -4.371139e-08, -43.199997, 21.556347, 31.556347)
 
-[node name="FloatingRock2" parent="." unique_id=45321780 instance=ExtResource("24_r6kl6")]
-transform = Transform3D(0.16823235, 0.291387, 1.2557036, -1.125833, 0.6499999, 0, -0.6278518, -1.0874712, 0.3364647, -180.22192, 15.099998, -31.25278)
+[node name="FloatingRock2" parent="FrogNPCArea" unique_id=45321780 instance=ExtResource("24_r6kl6")]
+transform = Transform3D(0.16823235, 0.291387, 1.2557036, -1.125833, 0.6499999, 0, -0.6278518, -1.0874712, 0.3364647, -42.42192, 15.099998, -31.25278)
 
-[node name="FloatingRock3" parent="." unique_id=131975422 instance=ExtResource("24_r6kl6")]
-transform = Transform3D(-1.8646249, 0.4996246, 1.9304014, 0.7065759, 2.6369772, 2.9802322e-08, -1.8646244, 0.49962458, -1.9304014, -207.26944, 6, 3.3888516)
+[node name="FloatingRock3" parent="FrogNPCArea" unique_id=131975422 instance=ExtResource("24_r6kl6")]
+transform = Transform3D(-1.8646249, 0.4996246, 1.9304014, 0.7065759, 2.6369772, 2.9802322e-08, -1.8646244, 0.49962458, -1.9304014, -69.46944, 6, 3.3888516)
+
+[node name="FrogNPC" parent="FrogNPCArea" unique_id=870401761 instance=ExtResource("25_ix4ct")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -16.5, 0, 0)

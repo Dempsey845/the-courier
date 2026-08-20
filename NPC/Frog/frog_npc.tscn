@@ -1,0 +1,32 @@
+[gd_scene format=3 uid="uid://citv7t8lb4ali"]
+
+[ext_resource type="PackedScene" uid="uid://bmi57avorlix8" path="res://NPC/npc.tscn" id="1_8b7kt"]
+[ext_resource type="Resource" uid="uid://bxc41uapwm3s6" path="res://Systems/Dialogue/Wisp/wisp_dialogue.res" id="2_hxeso"]
+[ext_resource type="PackedScene" uid="uid://figabrd6448n" path="res://NPC/Frog/Frog.glb" id="2_n8cs3"]
+[ext_resource type="Texture2D" uid="uid://c0xdd3hyq7yrh" path="res://Systems/Controller/InputIcons/Xbox/xbox_a.png" id="3_1ran6"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_xrivr"]
+radius = 2.6000001
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_hxeso"]
+radius = 2.6000001
+
+[node name="FrogNPC" unique_id=870401761 instance=ExtResource("1_8b7kt")]
+
+[node name="DialogueController" parent="." index="0" unique_id=1124534431]
+dialogue = ExtResource("2_hxeso")
+icon_texture = ExtResource("3_1ran6")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="InteractZone" parent_id_path=PackedInt32Array(362051573) index="0" unique_id=1412786686]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+shape = SubResource("SphereShape3D_xrivr")
+
+[node name="Frog2" parent="." index="2" unique_id=69992081 instance=ExtResource("2_n8cs3")]
+
+[node name="InputPrompt" parent="." index="3" unique_id=930064518]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+
+[node name="CollisionShape3D" parent="InputPrompt" index="1" unique_id=239407888]
+shape = SubResource("SphereShape3D_hxeso")
+
+[editable path="InputPrompt"]
