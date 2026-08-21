@@ -2,7 +2,8 @@ extends Node
 
 enum WorldType {
     World,
-    FrogRealm
+    FrogRealm,
+    Dungeon
 }
 
 var world_portal_activated: bool

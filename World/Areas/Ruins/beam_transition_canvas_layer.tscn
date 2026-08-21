@@ -1,0 +1,38 @@
+[gd_scene format=3 uid="uid://dond6uq6w7y2w"]
+
+[ext_resource type="Script" uid="uid://cwt4swv7rvk2n" path="res://World/Areas/Ruins/beam_transition_canvas_layer.gd" id="1_6gcmx"]
+[ext_resource type="Shader" uid="uid://k5koh6e72sch" path="res://World/Areas/Ruins/beam_transition.gdshader" id="1_tshxv"]
+[ext_resource type="Script" uid="uid://cukvmytqbejcv" path="res://World/Areas/Ruins/beam_transition_rect.gd" id="2_6gcmx"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_xrivr"]
+shader = ExtResource("1_tshxv")
+shader_parameter/transition = 0.0
+shader_parameter/edge_softness = 0.025
+shader_parameter/wave_height = 0.045
+shader_parameter/wave_speed = 2.0
+shader_parameter/base_colour = Color(0.01, 0.12, 0.35, 1)
+shader_parameter/beam_colour = Color(0.02, 0.45, 1, 1)
+shader_parameter/swirl_colour = Color(0.15, 0.85, 1, 1)
+shader_parameter/brightness = 1.5
+shader_parameter/swirl_amount = 0.45
+shader_parameter/swirl_count = 5.0
+shader_parameter/swirl_tightness = 10.0
+shader_parameter/swirl_speed = 1.5
+shader_parameter/swirl_sharpness = 5.0
+shader_parameter/edge_width = 0.055
+shader_parameter/edge_brightness = 4.0
+
+[node name="BeamTransitionCanvasLayer" type="CanvasLayer" unique_id=245948341]
+layer = 2
+script = ExtResource("1_6gcmx")
+
+[node name="BeamTransitionRect" type="ColorRect" parent="." unique_id=262413796]
+visible = false
+material = SubResource("ShaderMaterial_xrivr")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("2_6gcmx")

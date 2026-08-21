@@ -13,10 +13,13 @@ func _ready() -> void:
 
 	DataManager.current_world_type = DataManager.WorldType.World
 
-	if DataManager.previous_world_type == DataManager.WorldType.FrogRealm:
-		DataManager.player_world_start_position = Vector3(0.0, 8.9, -152.0)
-	else:
-		DataManager.player_world_start_position = Vector3(0, 1, -25.0)
+	match DataManager.previous_world_type:
+		DataManager.WorldType.FrogRealm:
+			DataManager.player_world_start_position = Vector3(0.0, 8.9, -152.0)
+		DataManager.WorldType.Dungeon:
+			DataManager.player_world_start_position = Vector3(-208.1, 2.7, -26.8)
+		DataManager.WorldType.World:
+			DataManager.player_world_start_position = Vector3(0, 1, -25.0)
 
 	DataManager.previous_world_type = DataManager.WorldType.World
 

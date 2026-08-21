@@ -133,43 +133,6 @@ cell_height = 0.5
 [sub_resource type="BoxShape3D" id="BoxShape3D_xrivr"]
 size = Vector3(12, 1, 12)
 
-[sub_resource type="Animation" id="Animation_rw02v"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("ColorRect:color")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Color(0, 0, 0, 0)]
-}
-
-[sub_resource type="Animation" id="Animation_3sd22"]
-resource_name = "fade_out"
-length = 0.5
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("ColorRect:color")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.5),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [Color(0, 0, 0, 0), Color(0, 0, 0, 1)]
-}
-
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_s5a7k"]
-_data = {
-&"RESET": SubResource("Animation_rw02v"),
-&"fade_out": SubResource("Animation_3sd22")
-}
-
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_njqwk"]
 shading_mode = 0
 albedo_color = Color(0, 0, 0, 1)
@@ -858,7 +821,7 @@ color_ramp = SubResource("Gradient_0wqet")
 seamless = true
 in_3d_space = true
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_w08tj"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_3ql07"]
 resource_local_to_scene = true
 render_priority = 0
 shader = SubResource("Shader_5gpxd")
@@ -905,9 +868,9 @@ shader_parameter/ripple_strength = 0.08
 shader_parameter/ripple_width = 0.2
 shader_parameter/ripple_frequency = 12.0
 
-[sub_resource type="PlaneMesh" id="PlaneMesh_spf4h"]
+[sub_resource type="PlaneMesh" id="PlaneMesh_w08tj"]
 resource_local_to_scene = true
-material = SubResource("ShaderMaterial_w08tj")
+material = SubResource("ShaderMaterial_3ql07")
 size = Vector2(45, 45)
 subdivide_width = 450
 subdivide_depth = 450
@@ -1094,21 +1057,6 @@ script = ExtResource("7_rw02v")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, 0, -0.5)
 shape = SubResource("BoxShape3D_xrivr")
 
-[node name="CanvasLayer" type="CanvasLayer" parent="NavigationRegion3D/RuinsArea/DungeonEntrance/DungeonEntranceArea" unique_id=1796465444]
-layer = 3
-
-[node name="ColorRect" type="ColorRect" parent="NavigationRegion3D/RuinsArea/DungeonEntrance/DungeonEntranceArea/CanvasLayer" unique_id=1153336627]
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-mouse_filter = 2
-color = Color(0, 0, 0, 0)
-
-[node name="AnimationPlayer" type="AnimationPlayer" parent="NavigationRegion3D/RuinsArea/DungeonEntrance/DungeonEntranceArea/CanvasLayer" unique_id=246279701]
-libraries/ = SubResource("AnimationLibrary_s5a7k")
-
 [node name="MeshInstance3D" type="MeshInstance3D" parent="NavigationRegion3D/RuinsArea/DungeonEntrance" unique_id=1541946043]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 23.4, 0.5)
 material_override = SubResource("StandardMaterial3D_njqwk")
@@ -1117,6 +1065,10 @@ mesh = SubResource("BoxMesh_xrivr")
 [node name="MeshInstance3D2" type="MeshInstance3D" parent="NavigationRegion3D/RuinsArea/DungeonEntrance" unique_id=554520714]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 28.7, 0)
 mesh = SubResource("PlaneMesh_b1lj4")
+
+[node name="Marker3D" type="Marker3D" parent="NavigationRegion3D/RuinsArea/DungeonEntrance/MeshInstance3D2" unique_id=303305502]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -208.1, 2.7000008, -26.800001)
+top_level = true
 
 [node name="EnemySpawner" type="Marker3D" parent="NavigationRegion3D" unique_id=1936923661]
 transform = Transform3D(0.258819, 0, -0.9659258, 0, 1, 0, 0.9659258, 0, 0.258819, -1.9396057, 2.3999999, -77.86061)
@@ -1160,7 +1112,7 @@ transform = Transform3D(0.49609634, 0.060223475, -0.788083, -0.13249165, 0.90199
 
 [node name="MushroomSwampEffect" parent="NavigationRegion3D/SwampArea" unique_id=963275507 instance=ExtResource("3_oe8m4")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 24.600002, 0)
-mesh = SubResource("PlaneMesh_spf4h")
+mesh = SubResource("PlaneMesh_w08tj")
 
 [node name="DirtPillarWide" parent="NavigationRegion3D/SwampArea" unique_id=2051397190 node_paths=PackedStringArray("water") instance=ExtResource("4_h2aik")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15.6, 24, 16.099998)

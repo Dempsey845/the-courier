@@ -4,6 +4,9 @@
 [ext_resource type="Script" uid="uid://cmrsoxp6a3xq3" path="res://World/lava.gd" id="2_5nb3c"]
 [ext_resource type="PackedScene" uid="uid://bp6pkgigbquhx" path="res://Enemies/Golem/golem_enemy.tscn" id="2_120db"]
 [ext_resource type="Script" uid="uid://dh6q176dnlgbu" path="res://Systems/Dialogue/dialogue_manager.gd" id="2_a8hmm"]
+[ext_resource type="PackedScene" uid="uid://x03f4042spc7" path="res://Systems/Controller/input_prompt.tscn" id="2_w41ql"]
+[ext_resource type="Shader" uid="uid://db22n6rb1te2v" path="res://World/Areas/Ruins/rune_beam.gdshader" id="3_4amun"]
+[ext_resource type="Script" uid="uid://cp650b3omh5io" path="res://World/Areas/Ruins/rune_beam.gd" id="4_dx7le"]
 [ext_resource type="Script" uid="uid://deroukfpp2mia" path="res://Components/hitbox.gd" id="5_ta6tj"]
 
 [sub_resource type="Environment" id="DungeonEnvironment"]
@@ -77,6 +80,31 @@ roughness = 0.3
 emission_enabled = true
 emission = Color(0.02, 0.58, 0.85, 1)
 emission_energy_multiplier = 4.0
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_w41ql"]
+radius = 2.7
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_13qdw"]
+render_priority = 0
+shader = ExtResource("3_4amun")
+shader_parameter/transition = 0.0
+shader_parameter/bottom_y = -5.0
+shader_parameter/beam_colour = Color(0.02, 0.45, 1, 1)
+shader_parameter/swirl_colour = Color(0.15, 0.85, 1, 1)
+shader_parameter/brightness = 2.5
+shader_parameter/swirl_amount = 0.35
+shader_parameter/swirl_count = 4.0
+shader_parameter/swirl_tightness = 6.0
+shader_parameter/swirl_speed = 1.5
+shader_parameter/swirl_sharpness = 5.0
+shader_parameter/opacity = 0.2000000095
+shader_parameter/edge_glow = 0.5
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_xrivr"]
+top_radius = 2.7
+bottom_radius = 2.7
+height = 9.55
+radial_segments = 15
 
 [sub_resource type="StandardMaterial3D" id="Lava"]
 albedo_color = Color(0.42, 0.025, 0.008, 1)
@@ -155,6 +183,9 @@ metadata/_custom_type_script = "uid://dh6q176dnlgbu"
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=75955960]
 environment = SubResource("DungeonEnvironment")
+
+[node name="Player" parent="." unique_id=67220391 instance=ExtResource("1_88aow")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.2, 36)
 
 [node name="SpawnPoint" type="Marker3D" parent="." unique_id=61641641]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.2, 36)
@@ -422,6 +453,18 @@ height = 0.12
 sides = 24
 material = SubResource("Rune")
 
+[node name="InputPrompt" parent="NavigationRegion3D/Geometry/ShrineRoom/ShrineRune" unique_id=930064518 instance=ExtResource("2_w41ql")]
+
+[node name="CollisionShape3D" parent="NavigationRegion3D/Geometry/ShrineRoom/ShrineRune/InputPrompt" index="1" unique_id=239407888]
+shape = SubResource("SphereShape3D_w41ql")
+
+[node name="RuneBeam" type="MeshInstance3D" parent="NavigationRegion3D/Geometry/ShrineRoom/ShrineRune" unique_id=1800162981 node_paths=PackedStringArray("input_prompt")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.7749996, 0)
+material_override = SubResource("ShaderMaterial_13qdw")
+mesh = SubResource("CylinderMesh_xrivr")
+script = ExtResource("4_dx7le")
+input_prompt = NodePath("../InputPrompt")
+
 [node name="ShrinePillarLeft" type="CSGCylinder3D" parent="NavigationRegion3D/Geometry/ShrineRoom" unique_id=1273996571]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7, 13, -64)
 use_collision = true
@@ -680,9 +723,6 @@ material = SubResource("Rune")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -6)
 target = NodePath("../../Player")
 
-[node name="Player" parent="." unique_id=67220391 instance=ExtResource("1_88aow")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 32.054626)
-
 [node name="Killbox" type="Area3D" parent="." unique_id=1485001141]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -5.7, 0)
 collision_layer = 128
@@ -694,3 +734,5 @@ metadata/_custom_type_script = "uid://deroukfpp2mia"
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Killbox" unique_id=1406742002]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -12)
 shape = SubResource("BoxShape3D_xrivr")
+
+[editable path="NavigationRegion3D/Geometry/ShrineRoom/ShrineRune/InputPrompt"]

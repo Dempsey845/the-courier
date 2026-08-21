@@ -21,6 +21,7 @@ DataManager="*uid://046v31w0q4br"
 WorldEnemies="*uid://b1o3sontcatfx"
 WorldCollectibles="*uid://bcdb3sbvjlxos"
 ControllerManager="*uid://c3af2nrvgarby"
+BeamTransitionCanvasLayer="*uid://dond6uq6w7y2w"
 
 [display]
 
