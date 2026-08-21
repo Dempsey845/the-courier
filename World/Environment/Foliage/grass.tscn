@@ -1,6 +1,7 @@
 [gd_scene format=4 uid="uid://cnxvt8i3eaqk4"]
 
 [ext_resource type="PackedScene" uid="uid://cnsy0hs8aergs" path="res://World/Environment/Grass.glb" id="1_20sh0"]
+[ext_resource type="Script" uid="uid://cmqhol2mdkidv" path="res://World/Environment/Foliage/grass.gd" id="1_51k78"]
 [ext_resource type="Material" uid="uid://dt077i7htfiy4" path="res://World/green_gradient.tres" id="2_51k78"]
 
 [sub_resource type="ArrayMesh" id="ArrayMesh_0b7m0"]
@@ -37,6 +38,7 @@ shadow_mesh = SubResource("ArrayMesh_0b7m0")
 
 [node name="Grass" type="Node3D" unique_id=507273567]
 transform = Transform3D(0.7, 0, 0, 0, 0.7, 0, 0, 0, 0.7, 0, 0, 0)
+script = ExtResource("1_51k78")
 
 [node name="Grass2" parent="." unique_id=1537058150 instance=ExtResource("1_20sh0")]
 

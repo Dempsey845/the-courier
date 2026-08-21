@@ -3,8 +3,8 @@ shader_type spatial;
 uniform vec4 bottom_color : source_color = vec4(0.15, 0.35, 0.12, 1.0);
 uniform vec4 top_color : source_color = vec4(0.55, 0.85, 0.35, 1.0);
 
-uniform float gradient_bottom = -1.0;
-uniform float gradient_top = 1.0;
+uniform float gradient_bottom = -0.15;
+uniform float gradient_top = 2.5;
 
 varying float height;
 

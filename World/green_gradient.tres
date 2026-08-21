@@ -1,11 +1,18 @@
 [gd_resource type="ShaderMaterial" format=3 uid="uid://dt077i7htfiy4"]
 
-[ext_resource type="Shader" uid="uid://ccpnef7870xq1" path="res://World/gradient.gdshader" id="1_ew8po"]
+[ext_resource type="Shader" uid="uid://do46elniy6aq5" path="res://World/Environment/Foliage/grass.gdshader" id="1_ew8po"]
 
 [resource]
+resource_local_to_scene = true
 render_priority = 0
 shader = ExtResource("1_ew8po")
 shader_parameter/bottom_color = Color(0.15, 0.35, 0.12, 1)
 shader_parameter/top_color = Color(0.55, 0.85, 0.35, 1)
 shader_parameter/gradient_bottom = -0.15
 shader_parameter/gradient_top = 2.57
+shader_parameter/player_position = Vector3(0, 0, 0)
+shader_parameter/interaction_radius = 2.00000009174012
+shader_parameter/interaction_strength = 2.0
+shader_parameter/wind_strength = 0.08
+shader_parameter/wind_speed = 2.0
+shader_parameter/wind_scale = 0.8
