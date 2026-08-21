@@ -2,7 +2,7 @@ extends Area3D
 
 @onready var animation_player: AnimationPlayer = $"CanvasLayer/AnimationPlayer"
 
-var dungeon_scene: PackedScene = preload("uid://bvswcq67w3glb")
+var dungeon_scene: PackedScene = preload("uid://bdtphcf1wm32j")
 
 func _ready() -> void:
     body_entered.connect(_on_body_entered)

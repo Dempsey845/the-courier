@@ -23,6 +23,7 @@
 [ext_resource type="PackedScene" uid="uid://fmmropord2sc" path="res://World/Environment/Bodies/frog_base.tscn" id="10_5xkvv"]
 [ext_resource type="Script" uid="uid://uaatf3j3db7p" path="res://Systems/enemy_spawner.gd" id="11_3ql07"]
 [ext_resource type="PackedScene" uid="uid://g6qjr8aewopi" path="res://World/Areas/Swamp/lillypad.tscn" id="11_lo5ox"]
+[ext_resource type="Shader" uid="uid://cl0i4nn534r2d" path="res://World/Environment/Bodies/portal.gdshader" id="11_w08tj"]
 [ext_resource type="PackedScene" uid="uid://gitm3rb6yty2" path="res://World/Environment/Bodies/cloud_carrier.tscn" id="13_kcyjf"]
 [ext_resource type="Shader" uid="uid://c48cwtn0k43tk" path="res://World/water.gdshader" id="19_xw5lg"]
 [ext_resource type="Script" uid="uid://cw2emsu8y2j2l" path="res://World/water_plane.gd" id="20_0lysu"]
@@ -129,12 +130,6 @@ polygons = [PackedInt32Array(3, 2, 0), PackedInt32Array(0, 2, 1), PackedInt32Arr
 cell_size = 0.5
 cell_height = 0.5
 
-[sub_resource type="FogMaterial" id="FogMaterial_13qdw"]
-albedo = Color(0.41215247, 0.41215247, 0.41215247, 1)
-emission = Color(0.18000486, 0.18000486, 0.18000486, 1)
-height_falloff = 0.08122542
-edge_fade = 0.18660665
-
 [sub_resource type="BoxShape3D" id="BoxShape3D_xrivr"]
 size = Vector3(12, 1, 12)
 
@@ -181,6 +176,31 @@ albedo_color = Color(0, 0, 0, 1)
 
 [sub_resource type="BoxMesh" id="BoxMesh_xrivr"]
 size = Vector3(12, 9, 12)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_koyeq"]
+render_priority = 0
+shader = ExtResource("11_w08tj")
+shader_parameter/inner_color = Color(0, 0.24797127, 0.6053987, 1)
+shader_parameter/energy_color = Color(0.26670972, 0.33435228, 0.9915109, 1)
+shader_parameter/highlight_color = Color(0.5253551, 0.7461767, 0.99818164, 1)
+shader_parameter/transition_progress = 1.0
+shader_parameter/portal_radius = 0.46
+shader_parameter/edge_softness = 0.04
+shader_parameter/rim_width = 0.11
+shader_parameter/oval_width = 1.0
+shader_parameter/oval_height = 1.0
+shader_parameter/animation_speed = 1.0
+shader_parameter/swirl_strength = 4.0
+shader_parameter/distortion_strength = 0.035
+shader_parameter/interaction_distortion = 0.045
+shader_parameter/interaction_ring_width = 0.025
+shader_parameter/interaction_brightness = 3.0
+shader_parameter/brightness = 2.5
+shader_parameter/detail_scale = 8.0
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_b1lj4"]
+material = SubResource("ShaderMaterial_koyeq")
+size = Vector2(12, 12)
 
 [sub_resource type="Shader" id="Shader_5gpxd"]
 code = "// Magical swamp water shader for a subdivided PlaneMesh.
@@ -838,7 +858,7 @@ color_ramp = SubResource("Gradient_0wqet")
 seamless = true
 in_3d_space = true
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_koyeq"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_w08tj"]
 resource_local_to_scene = true
 render_priority = 0
 shader = SubResource("Shader_5gpxd")
@@ -885,9 +905,9 @@ shader_parameter/ripple_strength = 0.08
 shader_parameter/ripple_width = 0.2
 shader_parameter/ripple_frequency = 12.0
 
-[sub_resource type="PlaneMesh" id="PlaneMesh_3ql07"]
+[sub_resource type="PlaneMesh" id="PlaneMesh_spf4h"]
 resource_local_to_scene = true
-material = SubResource("ShaderMaterial_koyeq")
+material = SubResource("ShaderMaterial_w08tj")
 size = Vector2(45, 45)
 subdivide_width = 450
 subdivide_depth = 450
@@ -1064,13 +1084,8 @@ transform = Transform3D(2.9802322e-08, 0, 1, 0, 1, 0, -1, 0, 2.9802322e-08, -99.
 [node name="DungeonEntrance" parent="NavigationRegion3D/RuinsArea" unique_id=2036434863 instance=ExtResource("6_jf64p")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -150, -27, 0)
 
-[node name="FogVolume" type="FogVolume" parent="NavigationRegion3D/RuinsArea/DungeonEntrance" unique_id=1630295336]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, 13.5, 0)
-size = Vector3(13, 29, 14)
-material = SubResource("FogMaterial_13qdw")
-
 [node name="DungeonEntranceArea" type="Area3D" parent="NavigationRegion3D/RuinsArea/DungeonEntrance" unique_id=877694126]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 19.5, 0.5)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 28.5, 0.5)
 collision_layer = 0
 collision_mask = 4
 script = ExtResource("7_rw02v")
@@ -1095,9 +1110,13 @@ color = Color(0, 0, 0, 0)
 libraries/ = SubResource("AnimationLibrary_s5a7k")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="NavigationRegion3D/RuinsArea/DungeonEntrance" unique_id=1541946043]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 17.4, 0.5)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 23.4, 0.5)
 material_override = SubResource("StandardMaterial3D_njqwk")
 mesh = SubResource("BoxMesh_xrivr")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="NavigationRegion3D/RuinsArea/DungeonEntrance" unique_id=554520714]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 28.7, 0)
+mesh = SubResource("PlaneMesh_b1lj4")
 
 [node name="EnemySpawner" type="Marker3D" parent="NavigationRegion3D" unique_id=1936923661]
 transform = Transform3D(0.258819, 0, -0.9659258, 0, 1, 0, 0.9659258, 0, 0.258819, -1.9396057, 2.3999999, -77.86061)
@@ -1141,7 +1160,7 @@ transform = Transform3D(0.49609634, 0.060223475, -0.788083, -0.13249165, 0.90199
 
 [node name="MushroomSwampEffect" parent="NavigationRegion3D/SwampArea" unique_id=963275507 instance=ExtResource("3_oe8m4")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 24.600002, 0)
-mesh = SubResource("PlaneMesh_3ql07")
+mesh = SubResource("PlaneMesh_spf4h")
 
 [node name="DirtPillarWide" parent="NavigationRegion3D/SwampArea" unique_id=2051397190 node_paths=PackedStringArray("water") instance=ExtResource("4_h2aik")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15.6, 24, 16.099998)
@@ -1294,10 +1313,10 @@ sides = 10
 material = SubResource("StandardMaterial3D_jf64p")
 
 [node name="CloudPlatform" parent="NavigationRegion3D/CSGCombiner3D" unique_id=160592578 instance=ExtResource("4_dg1ng")]
-transform = Transform3D(0.9659258, 0, -0.25881904, 0, 1, 0, 0.25881904, 0, 0.9659258, -18.5, 0, 2.7999992)
+transform = Transform3D(0.9659258, 0, -0.25881907, 0, 1, 0, 0.25881907, 0, 0.9659258, -18.5, 0, 2.7999992)
 
 [node name="CloudPlatform2" parent="NavigationRegion3D/CSGCombiner3D" unique_id=1312280435 instance=ExtResource("4_dg1ng")]
-transform = Transform3D(0.9659258, 0, -0.25881904, 0, 1, 0, 0.25881904, 0, 0.9659258, -24.5, 0, -4.200001)
+transform = Transform3D(0.9659258, 0, -0.25881907, 0, 1, 0, 0.25881907, 0, 0.9659258, -24.5, 0, -4.200001)
 
 [node name="Player" parent="." unique_id=67220391 instance=ExtResource("1_62w18")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, -8)
