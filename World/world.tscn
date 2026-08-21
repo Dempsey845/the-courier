@@ -892,8 +892,8 @@ size = Vector2(45, 45)
 subdivide_width = 450
 subdivide_depth = 450
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_b1lj4"]
-albedo_color = Color(0.3363669, 0.4494772, 0.131769, 1)
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_koyeq"]
+albedo_color = Color(0.38805488, 0.3892832, 0.3926402, 1)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_wi6ju"]
 albedo_color = Color(0.39688927, 0.39688927, 0.39688924, 1)
@@ -1263,7 +1263,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 23.300001, -30.199997)
 [node name="CloudCarrier" parent="NavigationRegion3D/SwampArea/Carrier" unique_id=3395600 instance=ExtResource("13_kcyjf")]
 
 [node name="CSGCombiner3D2" type="CSGCombiner3D" parent="NavigationRegion3D/SwampArea" unique_id=420214343]
-material_override = SubResource("StandardMaterial3D_b1lj4")
+material_override = SubResource("StandardMaterial3D_koyeq")
 use_collision = true
 
 [node name="CSGBox3D" type="CSGBox3D" parent="NavigationRegion3D/SwampArea/CSGCombiner3D2" unique_id=497769013]
@@ -1294,7 +1294,10 @@ sides = 10
 material = SubResource("StandardMaterial3D_jf64p")
 
 [node name="CloudPlatform" parent="NavigationRegion3D/CSGCombiner3D" unique_id=160592578 instance=ExtResource("4_dg1ng")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -20, 0, 0)
+transform = Transform3D(0.9659258, 0, -0.25881907, 0, 1, 0, 0.25881907, 0, 0.9659258, -18.5, 0, 2.7999992)
+
+[node name="CloudPlatform2" parent="NavigationRegion3D/CSGCombiner3D" unique_id=1312280435 instance=ExtResource("4_dg1ng")]
+transform = Transform3D(0.9659258, 0, -0.25881907, 0, 1, 0, 0.25881907, 0, 0.9659258, -24.5, 0, -4.200001)
 
 [node name="Player" parent="." unique_id=67220391 instance=ExtResource("1_62w18")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 3, -23)

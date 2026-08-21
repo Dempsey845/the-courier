@@ -91,13 +91,13 @@ func _ready() -> void:
 
 
 func _physics_process(delta: float) -> void:
-	apply_gravity(delta)
-
 	# Death is handled separately because it is a terminal state.
 	if current_state == State.DEATH:
 		update_death(delta)
 		move_and_slide()
 		return
+
+	apply_gravity(delta)
 
 	update_timers(delta)
 
