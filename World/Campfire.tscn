@@ -25,7 +25,9 @@ colors = PackedColorArray(1, 0.5921569, 0, 1, 1, 1, 0, 1)
 albedo_color = Color(0.6542321, 0.6542321, 0.654232, 1)
 
 [sub_resource type="SphereMesh" id="SphereMesh_13qdw"]
+lightmap_size_hint = Vector2i(17, 9)
 material = SubResource("StandardMaterial3D_njqwk")
+add_uv2 = true
 radial_segments = 5
 rings = 3
 

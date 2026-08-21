@@ -1,0 +1,668 @@
+[gd_scene format=3 uid="uid://bdtphcf1wm32j"]
+
+[ext_resource type="PackedScene" uid="uid://dmc36oojdry5d" path="res://Player/player.tscn" id="1_88aow"]
+[ext_resource type="Script" uid="uid://cmrsoxp6a3xq3" path="res://World/lava.gd" id="2_5nb3c"]
+[ext_resource type="PackedScene" uid="uid://bp6pkgigbquhx" path="res://Enemies/Golem/golem_enemy.tscn" id="2_120db"]
+[ext_resource type="Script" uid="uid://dh6q176dnlgbu" path="res://Systems/Dialogue/dialogue_manager.gd" id="2_a8hmm"]
+
+[sub_resource type="Environment" id="DungeonEnvironment"]
+background_mode = 1
+background_color = Color(0.02, 0.035, 0.05, 1)
+ambient_light_source = 3
+ambient_light_color = Color(0.22, 0.31, 0.37, 1)
+ambient_light_energy = 0.58
+reflected_light_source = 2
+tonemap_mode = 2
+tonemap_exposure = 1.3
+tonemap_white = 2.5
+ssao_enabled = true
+ssao_radius = 2.4
+ssao_intensity = 1.7
+ssao_power = 1.45
+ssao_detail = 0.65
+ssil_enabled = true
+ssil_radius = 2.6
+ssil_intensity = 0.65
+glow_enabled = true
+glow_normalized = true
+glow_intensity = 0.8
+glow_strength = 0.9
+glow_bloom = 0.1
+fog_enabled = true
+fog_light_color = Color(0.06, 0.12, 0.15, 1)
+fog_light_energy = 0.62
+fog_density = 0.0022
+fog_height = -6.0
+fog_height_density = 0.09
+fog_depth_begin = 12.0
+fog_depth_end = 130.0
+volumetric_fog_enabled = true
+volumetric_fog_density = 0.007
+volumetric_fog_albedo = Color(0.2, 0.3, 0.34, 1)
+volumetric_fog_emission = Color(0.003, 0.01, 0.015, 1)
+volumetric_fog_emission_energy = 0.04
+volumetric_fog_anisotropy = 0.45
+volumetric_fog_length = 72.0
+volumetric_fog_detail_spread = 1.8
+volumetric_fog_ambient_inject = 0.6
+adjustment_enabled = true
+adjustment_brightness = 1.07
+adjustment_contrast = 1.06
+adjustment_saturation = 1.08
+
+[sub_resource type="NavigationMesh" id="NavigationMesh_xrivr"]
+vertices = PackedVector3Array(-10.5, 22.5, -67.5, -10.5, 22.5, -66.5, 10.5, 22.5, -66.5, 10.5, 22.5, -67.5, -3.5, 8.5, -65.25, -5.5, 8.5, -65.25, -5, 8.5, -64.5, -4.75, 8.5, -63, -5.25, 8.5, -63, -7.5, 8.5, -62, -9, 8.5, -63.5, -9.5, 8.5, -54, -8.5, 8.5, -65.25, -9.5, 8.5, -65.25, -6.5, 8.5, -62, -4.5, 8.5, -60, 0, 8.5, -54, -2.5, 8.5, -57.75, 0, 8.5, -57.25, -3.25, 9.5, -60, -2, 9.5, -58.75, -0.5, 9.5, -58.25, 2, 9.5, -58.75, 3.25, 9.5, -60, 3.75, 9.5, -61.5, -2, 9.5, -65.25, -3.25, 9.5, -64, -3.75, 9.5, -62.5, 3.5, 9.5, -63.5, 2, 9.5, -65.25, 9.5, 8.5, -65.25, 8.5, 8.5, -65.25, 9, 8.5, -64.5, 5, 8.5, -63.5, 5.5, 8.5, -65.25, 3.5, 8.5, -65.25, 4.75, 8.5, -63, 3.75, 8.5, -54, 8, 8.5, -53.75, 9.5, 8.5, -54, 7.5, 8.5, -62, 4.5, 8.5, -60, 2.5, 8.5, -57.75, 6.5, 8.5, -62, 8.75, 8.5, -63, 4, 8.25, -51.75, 8, 8.25, -51.75, -7.75, 19, -64.5, -7.5, 19, -63.25, -6.25, 19, -63.5, -6.5, 19, -64.75, 6.25, 19, -64.5, 6.5, 19, -63.25, 7.75, 19, -63.5, 7.5, 19, -64.75, -7.5, 8.5, -64.25, -7.25, 8.5, -63.5, -6.5, 8.5, -63.75, -6.75, 8.5, -64.5, 6.5, 8.5, -64.25, 6.75, 8.5, -63.5, 7.5, 8.5, -63.75, 7.25, 8.5, -64.5, -1, 7, -50.75, -1, 7, -48.25, 3, 7, -48.25, 3, 7, -50.75, -7.5, 5.75, -47.25, -7.5, 5.75, -44.75, -3.5, 5.75, -44.75, -3.5, 5.75, -47.25, -12.25, 11.5, -41.75, -12.5, 11.5, -44.5, -13.5, 11.5, -44.5, -13.5, 11.5, -19.25, -12.25, 11.5, -19.5, 12.5, 11.5, -44.5, 12.5, 11.5, -19.5, 13.5, 11.5, -19.5, 13.5, 11.5, -44.5, -11.25, -3, -26.5, -2.25, -3, -26.5, -1, -3, -27.5, 0, -3, -41.5, -11.25, -3, -41.5, 0, -3, -27.5, 1.5, -3, -27.25, 2.5, -3, -25.75, 11.5, -3, -25.75, 11.5, -3, -41.5, 4.25, 4, -40.5, 4.25, 4, -36.75, 7.75, 4, -36.75, 7.75, 4, -40.5, -7.75, 2, -33.5, -7.75, 2, -29.75, -4.25, 2, -29.75, -4.25, 2, -33.5, 0, -3, -18.5, 0, -3, -22.5, -1, -3, -22.5, -2.25, -3, -23.5, -10.25, -3, -18.5, -11.25, -3, -19.5, -10.5, -3, -19.5, -1, 2, -26.25, -1.5, 2, -25.5, -1.5, 2, -24.5, -0.5, 2, -23.5, 0.5, 2, -23.5, 1.5, 2, -24.5, 0.5, 2, -26.5, 1.25, 2, -26, 1, -3, -25.75, -0.75, -3, -26, -1, -3, -24.25, -0.25, -3, -23.75, 0.75, -3, -24, 1.25, -3, -24.75, -1.25, -3, -25.25, 0.25, -3, -26.25, 1, -3, -22.5, 2.25, -3, -23.5, 10.5, -3, -18.5, 10.5, -3, -19.25, 11.5, -3, -19.5, -8.5, 1.5, -21.5, -8.5, 1.5, -16.5, 8.5, 1.5, -16.5, 8.5, 1.5, -21.5, -12.5, 12.5, 4.5, -11.25, 12.5, 4.5, -11.5, 12.5, -18.5, -12.5, 12.5, -18.5, 12.75, 12.5, -15.25, 12.75, 12.5, -18.5, 11.5, 12.5, -18.5, 11.5, 12.5, 4.5, 12.5, 12.5, 4.5, -9.25, 0.5, -15.25, -9.5, 0.5, -16.5, -10.25, 0.5, -16.5, -10.25, 0.5, -12.75, -9.25, 0.5, -13.75, 10.5, 0.5, -16.5, 9.75, 0.5, -16.5, 9.25, 0.5, -15.25, 8.75, 0.5, -13.75, 10.5, 0.5, -13.5, -7.25, 0.5, -13.5, -6.75, 0.5, -12.75, -3.75, 0.5, -10.75, 4.25, 0.5, -10.5, 8, 0.5, -13.25, -3, 0.5, -10.25, -7, 0.5, -11, -5.75, 0.5, -10.5, -2.75, 0.5, -9, 3.75, 0.5, -9, 6.75, 0.5, -10.5, 8, 0.5, -11, -9.25, 8.5, -12.25, -8.75, 8.5, -11.25, -7.75, 8.5, -11.75, -8.25, 8.5, -12.75, 8.75, 8.5, -12.25, 9.25, 8.5, -11.25, 10.25, 8.5, -11.75, 9.75, 8.5, -12.75, -7.25, 5, -10.75, -6.5, 5, -9.5, -6.5, 5, -12.5, -8.75, 0.5, -12.25, -8.75, 0.5, -11.75, -8.25, 0.5, -11.75, -8.25, 0.5, -12.25, -8.75, 5, -12.25, -8.75, 5, -11.75, -8.25, 5, -11.75, -8.25, 5, -12.25, 9.25, 0.5, -12.25, 9.25, 0.5, -11.75, 9.75, 0.5, -11.75, 9.75, 0.5, -12.25, -7, 0.5, -1, -5.75, 0.5, -1.5, -6.25, 0.5, -2.25, -6.25, 0.5, -9.75, -7.75, 0.5, -10.25, -6.25, 0.5, -8.25, -7.75, 0.5, -1.75, -6.25, 0.5, -3.75, -5.75, 0.5, -4.5, -9.25, 0.5, -10.25, -10.25, 0.5, -11.25, -9.25, 0.5, -1.75, -5.75, 0.5, -7.5, -4.5, 0.5, -4.75, -4.5, 0.5, -7.25, -10.25, 0.5, -0.75, -10.25, 5, -11.25, -10.25, 5, -10.25, -9.75, 5, -10.5, 7.25, 0.5, -9.75, 8.75, 0.5, -10.25, 7.25, 0.5, -8.25, 6, 0.5, 1.5, 8.25, 0.5, 1.5, 7.75, 0.5, 0.75, 6.75, 0.5, -7.5, 5.5, 0.5, -7.25, 5.5, 0.5, -4.75, 6.75, 0.5, -4.5, 6, 0.5, -1.25, 8, 0.5, -1.25, 7, 0.5, -1.75, 7.25, 0.5, -3.75, 8.75, 0.5, -1.75, 10.5, 0.5, -1.5, 10.5, 0.5, -10.5, -9.25, 6, -9.75, -9.25, 6, -8.25, -7.75, 6, -8.25, -7.75, 6, -9.75, -5.25, 3, -9.25, -4.75, 3, -8.25, -3.75, 3, -8.75, -4.25, 3, -9.75, 4.75, 3, -9.25, 5.25, 3, -8.25, 6.25, 3, -8.75, 5.75, 3, -9.75, -4.75, 0.5, -9.25, -4.75, 0.5, -8.75, -4.25, 0.5, -8.75, -4.25, 0.5, -9.25, 5.25, 0.5, -9.25, 5.25, 0.5, -8.75, 5.75, 0.5, -8.75, 5.75, 0.5, -9.25, -3.25, 0.5, -4.5, -3.25, 0.5, -7.5, -2.75, 0.5, -3.5, 3.75, 0.5, -3.5, 4, 0.5, -7.75, 4.25, 0.5, -4.5, -6.5, 5, -3.5, -6.5, 5, -8.5, -7.25, 5, -7.25, -8, 5, -7, -10.25, 5, -3.5, -10.25, 5, -7.75, -5.25, 3, -3.25, -4.75, 3, -2.25, -3.75, 3, -2.75, -4.25, 3, -3.75, 4.75, 3, -3.25, 5.25, 3, -2.25, 6.25, 3, -2.75, 5.75, 3, -3.75, -6.75, 0.5, 0, -5.75, 0.5, 0.25, -3.25, 0.5, -1.5, 4, 0.5, -1.75, -5.75, 0.5, 1.5, -4.75, 0.5, -3.25, -4.75, 0.5, -2.75, -4.25, 0.5, -2.75, -4.25, 0.5, -3.25, 5.25, 0.5, -3.25, 5.25, 0.5, -2.75, 5.75, 0.5, -2.75, 5.75, 0.5, -3.25, -10.25, 3.5, -2.25, -10.25, 3.5, -1, -9.25, 3.5, -1.75, -7.5, 3.5, -1.5, -7.5, 3.5, -2.25, -9.25, 8.5, -0.25, -8.75, 8.5, 0.75, -7.75, 8.5, 0.25, -8.25, 8.5, -0.75, 8.75, 8.5, -0.25, 9.25, 8.5, 0.75, 10.25, 8.5, 0.25, 9.75, 8.5, -0.75, 9.25, 0.5, -0.25, 9.25, 0.5, 0.25, 9.75, 0.5, 0.25, 9.75, 0.5, -0.25, -6.75, 2, 2.5, -7, 2, 1.25, -7.75, 2, 1.75, -9.25, 2, 1.75, -10, 2, 1.25, -10, 2, 3, -7.5, 2, 3.25, -7.5, 1.5, 7.5, -4.25, 1.5, 6.25, -2.5, 1.5, 2.5, -7.5, 1.5, 4.666664, -5.333333, 1.5, 2.5, -2.5, 1.5, 6.5, -4.75, 1.5, 7.5, 8.75, 0.5, 1.75, 8.75, 0.5, 2.5, 10.5, 0.5, 2.5, 10.5, 0.5, 1.5, 1, 1.5, 7.5, 7.5, 1.5, 7.5, 7.75, 1.5, 2.5, -8.5, -1.25, 22.5, -8.25, -1.25, 23.5, -7.5, -1.25, 23.5, -7.5, -1.25, 20.25, -6.5, -1.25, 20, -6.75, -1.25, 18.25, -0.25, -1.25, 12, 3.5, -1.25, 8.75, -8.25, -1.25, 8.75, -6, -1.25, 15.5, -10.5, -1.25, 22.5, -0.5, -1.25, 16, 0.25, -1.25, 15.5, 3.5, -1.25, 11, -10.25, -1.25, 4, -8.5, -1.25, 4, 5.25, -1.25, 11.25, 8.25, -1.25, 8.75, 5.75, -1.25, 13.25, 5.5, -1.25, 15.25, 10.5, -1.25, 15.5, 8.75, -1.25, 8.25, 10.5, -1.25, 4, 8.75, -1.25, 4, -1.25, 2, 10.5, -0.25, 2, 10.25, 0, 2, 9, -3.5, 2, 7.5, -4, 2, 9, -3.75, 2, 10, -0.25, 2, 8, 1.25, 1.5, 15, 4.75, 1.5, 14.5, 4.25, 1.5, 12, 1, 1.5, 12.5, 0.5, -1.25, 16, -0.25, -1.25, 17.75, 7.75, -1.25, 23.5, 8.5, -1.25, 23.5, 8.75, -1.25, 22.5, 7.5, -1.25, 20, 10.5, -1.25, 22.5, 2.5, -1.25, 16, -0.75, -1.25, 20, -1.75, 0.75, 19.5, -1.25, 0.75, 17.25, -5.25, 0.75, 16.5, -5.75, 0.75, 18.75, 4.25, 0.5, 23.5, 6.5, 0.5, 23.5, 6.5, 0.5, 21, -6.5, 0.5, 21, -6.5, 0.5, 23.5, -4, 0.5, 23.5, -3.75, 0.5, 25, 4, 0.5, 25, 10.5, 9.5, 23.5, 9.5, 9.5, 23.5, 9.25, 9.5, 24.5, 9.25, 9.5, 25.5, 9.5, 9.5, 38.5, 10.5, 9.5, 38.5, -9.25, 9.5, 24.5, -9.5, 9.5, 23.5, -10.5, 9.5, 23.5, -10.5, 9.5, 38.75, -9.5, 9.5, 38.5, -9.25, 9.5, 25.5, -8.25, 0.5, 28.5, -8.25, 0.5, 31.25, -7.75, 0.5, 30.75, -6.25, 0.5, 30.75, -5.75, 0.5, 31.25, 6.25, 0.5, 30.75, 8.5, 0.5, 28.5, -7.75, 0.5, 33.25, -8.25, 0.5, 32.75, -8.25, 0.5, 38.5, -6.25, 0.5, 33.25, -5.75, 0.5, 32.75, 8.5, 0.5, 38.5, 6.25, 0.5, 33.25, 5.75, 0.5, 32.75, 5.75, 0.5, 31.25, 8.25, 0.5, 32.75, 7.75, 0.5, 33.25, 8.25, 0.5, 31.25, 7.75, 0.5, 30.75, -9.5, 11.5, 39.5, -9.5, 11.5, 40.5, 9.75, 11.5, 40.5, 9.75, 11.5, 39.5)
+polygons = [PackedInt32Array(3, 2, 0), PackedInt32Array(0, 2, 1), PackedInt32Array(6, 5, 4), PackedInt32Array(8, 6, 7), PackedInt32Array(7, 6, 4), PackedInt32Array(9, 11, 10), PackedInt32Array(13, 12, 10), PackedInt32Array(8, 7, 14), PackedInt32Array(14, 7, 15), PackedInt32Array(10, 11, 13), PackedInt32Array(14, 15, 9), PackedInt32Array(9, 15, 17), PackedInt32Array(9, 17, 16), PackedInt32Array(9, 16, 11), PackedInt32Array(17, 18, 16), PackedInt32Array(21, 20, 19), PackedInt32Array(23, 22, 24), PackedInt32Array(24, 22, 21), PackedInt32Array(27, 26, 25), PackedInt32Array(29, 28, 24), PackedInt32Array(19, 27, 21), PackedInt32Array(21, 27, 25), PackedInt32Array(21, 25, 29), PackedInt32Array(21, 29, 24), PackedInt32Array(32, 31, 30), PackedInt32Array(33, 36, 34), PackedInt32Array(34, 36, 35), PackedInt32Array(38, 37, 39), PackedInt32Array(39, 37, 42), PackedInt32Array(39, 42, 41), PackedInt32Array(39, 41, 40), PackedInt32Array(33, 43, 36), PackedInt32Array(36, 43, 41), PackedInt32Array(32, 30, 44), PackedInt32Array(44, 30, 39), PackedInt32Array(18, 42, 16), PackedInt32Array(16, 42, 37), PackedInt32Array(41, 43, 40), PackedInt32Array(46, 45, 38), PackedInt32Array(38, 45, 37), PackedInt32Array(39, 40, 44), PackedInt32Array(50, 49, 47), PackedInt32Array(47, 49, 48), PackedInt32Array(54, 53, 51), PackedInt32Array(51, 53, 52), PackedInt32Array(58, 57, 55), PackedInt32Array(55, 57, 56), PackedInt32Array(62, 61, 59), PackedInt32Array(59, 61, 60), PackedInt32Array(66, 65, 63), PackedInt32Array(63, 65, 64), PackedInt32Array(70, 69, 67), PackedInt32Array(67, 69, 68), PackedInt32Array(72, 71, 73), PackedInt32Array(73, 71, 75), PackedInt32Array(73, 75, 74), PackedInt32Array(79, 78, 76), PackedInt32Array(76, 78, 77), PackedInt32Array(81, 80, 82), PackedInt32Array(82, 80, 84), PackedInt32Array(82, 84, 83), PackedInt32Array(83, 85, 82), PackedInt32Array(88, 87, 86), PackedInt32Array(86, 85, 88), PackedInt32Array(88, 85, 83), PackedInt32Array(88, 83, 89), PackedInt32Array(93, 92, 90), PackedInt32Array(90, 92, 91), PackedInt32Array(97, 96, 94), PackedInt32Array(94, 96, 95), PackedInt32Array(100, 99, 98), PackedInt32Array(100, 98, 101), PackedInt32Array(101, 98, 102), PackedInt32Array(104, 103, 80), PackedInt32Array(104, 80, 102), PackedInt32Array(102, 80, 101), PackedInt32Array(101, 80, 81), PackedInt32Array(107, 106, 105), PackedInt32Array(108, 107, 109), PackedInt32Array(109, 107, 110), PackedInt32Array(110, 107, 105), PackedInt32Array(110, 105, 111), PackedInt32Array(110, 111, 112), PackedInt32Array(118, 117, 113), PackedInt32Array(113, 117, 116), PackedInt32Array(113, 116, 115), PackedInt32Array(113, 115, 114), PackedInt32Array(115, 119, 114), PackedInt32Array(114, 120, 113), PackedInt32Array(98, 99, 121), PackedInt32Array(121, 122, 98), PackedInt32Array(98, 122, 124), PackedInt32Array(98, 124, 123), PackedInt32Array(125, 124, 88), PackedInt32Array(88, 124, 122), PackedInt32Array(88, 122, 87), PackedInt32Array(129, 128, 126), PackedInt32Array(126, 128, 127), PackedInt32Array(133, 132, 130), PackedInt32Array(130, 132, 131), PackedInt32Array(135, 134, 136), PackedInt32Array(136, 134, 138), PackedInt32Array(136, 138, 137), PackedInt32Array(140, 139, 141), PackedInt32Array(141, 139, 143), PackedInt32Array(141, 143, 142), PackedInt32Array(145, 144, 146), PackedInt32Array(146, 144, 147), PackedInt32Array(147, 144, 148), PackedInt32Array(149, 151, 150), PackedInt32Array(153, 152, 146), PackedInt32Array(146, 152, 154), PackedInt32Array(146, 154, 149), PackedInt32Array(146, 149, 139), PackedInt32Array(153, 146, 147), PackedInt32Array(155, 150, 156), PackedInt32Array(156, 150, 151), PackedInt32Array(154, 151, 149), PackedInt32Array(157, 154, 158), PackedInt32Array(158, 154, 152), PackedInt32Array(149, 143, 139), PackedInt32Array(160, 159, 153), PackedInt32Array(153, 159, 152), PackedInt32Array(164, 163, 161), PackedInt32Array(161, 163, 162), PackedInt32Array(168, 167, 165), PackedInt32Array(165, 167, 166), PackedInt32Array(171, 170, 169), PackedInt32Array(175, 174, 172), PackedInt32Array(172, 174, 173), PackedInt32Array(179, 178, 176), PackedInt32Array(176, 178, 177), PackedInt32Array(183, 182, 180), PackedInt32Array(180, 182, 181), PackedInt32Array(186, 185, 184), PackedInt32Array(155, 156, 187), PackedInt32Array(155, 187, 188), PackedInt32Array(188, 187, 189), PackedInt32Array(184, 190, 186), PackedInt32Array(186, 190, 191), PackedInt32Array(191, 190, 192), PackedInt32Array(192, 190, 195), PackedInt32Array(192, 195, 193), PackedInt32Array(193, 195, 194), PackedInt32Array(189, 196, 188), PackedInt32Array(188, 196, 193), PackedInt32Array(193, 196, 192), PackedInt32Array(197, 192, 198), PackedInt32Array(198, 192, 196), PackedInt32Array(195, 199, 194), PackedInt32Array(202, 201, 200), PackedInt32Array(203, 159, 160), PackedInt32Array(160, 204, 203), PackedInt32Array(203, 204, 205), PackedInt32Array(206, 208, 207), PackedInt32Array(210, 209, 211), PackedInt32Array(211, 209, 212), PackedInt32Array(215, 214, 213), PackedInt32Array(213, 214, 208), PackedInt32Array(213, 208, 206), PackedInt32Array(209, 205, 204), PackedInt32Array(217, 216, 212), PackedInt32Array(214, 215, 217), PackedInt32Array(217, 215, 216), PackedInt32Array(204, 219, 209), PackedInt32Array(209, 219, 212), PackedInt32Array(212, 219, 217), PackedInt32Array(217, 219, 218), PackedInt32Array(223, 222, 220), PackedInt32Array(220, 222, 221), PackedInt32Array(227, 226, 224), PackedInt32Array(224, 226, 225), PackedInt32Array(231, 230, 228), PackedInt32Array(228, 230, 229), PackedInt32Array(235, 234, 232), PackedInt32Array(232, 234, 233), PackedInt32Array(239, 238, 236), PackedInt32Array(236, 238, 237), PackedInt32Array(198, 241, 197), PackedInt32Array(197, 241, 240), PackedInt32Array(244, 243, 158), PackedInt32Array(158, 243, 242), PackedInt32Array(158, 242, 241), PackedInt32Array(158, 241, 157), PackedInt32Array(210, 211, 245), PackedInt32Array(210, 245, 244), PackedInt32Array(244, 245, 243), PackedInt32Array(242, 240, 241), PackedInt32Array(248, 247, 246), PackedInt32Array(249, 248, 246), PackedInt32Array(251, 249, 250), PackedInt32Array(250, 249, 246), PackedInt32Array(255, 254, 252), PackedInt32Array(252, 254, 253), PackedInt32Array(259, 258, 256), PackedInt32Array(256, 258, 257), PackedInt32Array(260, 184, 261), PackedInt32Array(261, 184, 185), PackedInt32Array(261, 185, 262), PackedInt32Array(243, 263, 242), PackedInt32Array(242, 263, 262), PackedInt32Array(261, 262, 264), PackedInt32Array(264, 262, 263), PackedInt32Array(264, 263, 213), PackedInt32Array(264, 213, 206), PackedInt32Array(268, 267, 265), PackedInt32Array(265, 267, 266), PackedInt32Array(272, 271, 269), PackedInt32Array(269, 271, 270), PackedInt32Array(275, 274, 273), PackedInt32Array(276, 275, 277), PackedInt32Array(277, 275, 273), PackedInt32Array(281, 280, 278), PackedInt32Array(278, 280, 279), PackedInt32Array(285, 284, 282), PackedInt32Array(282, 284, 283), PackedInt32Array(289, 288, 286), PackedInt32Array(286, 288, 287), PackedInt32Array(292, 291, 290), PackedInt32Array(295, 294, 293), PackedInt32Array(290, 296, 292), PackedInt32Array(292, 296, 293), PackedInt32Array(293, 296, 295), PackedInt32Array(296, 290, 300), PackedInt32Array(300, 290, 301), PackedInt32Array(300, 301, 299), PackedInt32Array(300, 299, 298), PackedInt32Array(300, 298, 297), PackedInt32Array(299, 302, 298), PackedInt32Array(298, 303, 297), PackedInt32Array(305, 304, 306), PackedInt32Array(306, 304, 307), PackedInt32Array(302, 299, 308), PackedInt32Array(308, 299, 309), PackedInt32Array(309, 299, 310), PackedInt32Array(312, 311, 313), PackedInt32Array(313, 311, 314), PackedInt32Array(316, 315, 314), PackedInt32Array(320, 319, 317), PackedInt32Array(317, 319, 318), PackedInt32Array(314, 311, 321), PackedInt32Array(323, 322, 317), PackedInt32Array(317, 322, 320), PackedInt32Array(318, 324, 317), PackedInt32Array(316, 314, 320), PackedInt32Array(320, 314, 321), PackedInt32Array(320, 321, 319), PackedInt32Array(319, 321, 325), PackedInt32Array(325, 326, 319), PackedInt32Array(324, 318, 327), PackedInt32Array(327, 318, 328), PackedInt32Array(328, 332, 329), PackedInt32Array(329, 332, 330), PackedInt32Array(330, 332, 331), PackedInt32Array(334, 333, 332), PackedInt32Array(332, 333, 331), PackedInt32Array(329, 327, 328), PackedInt32Array(337, 336, 335), PackedInt32Array(339, 338, 340), PackedInt32Array(340, 338, 335), PackedInt32Array(335, 338, 337), PackedInt32Array(337, 338, 341), PackedInt32Array(345, 344, 342), PackedInt32Array(342, 344, 343), PackedInt32Array(323, 346, 322), PackedInt32Array(322, 346, 347), PackedInt32Array(349, 348, 350), PackedInt32Array(350, 348, 351), PackedInt32Array(350, 351, 352), PackedInt32Array(352, 351, 331), PackedInt32Array(331, 351, 330), PackedInt32Array(347, 353, 354), PackedInt32Array(354, 353, 330), PackedInt32Array(354, 330, 351), PackedInt32Array(347, 346, 353), PackedInt32Array(358, 357, 355), PackedInt32Array(355, 357, 356), PackedInt32Array(361, 360, 359), PackedInt32Array(364, 363, 362), PackedInt32Array(365, 364, 366), PackedInt32Array(366, 364, 359), PackedInt32Array(359, 364, 361), PackedInt32Array(361, 364, 362), PackedInt32Array(368, 367, 369), PackedInt32Array(369, 367, 370), PackedInt32Array(370, 367, 371), PackedInt32Array(371, 367, 372), PackedInt32Array(374, 373, 375), PackedInt32Array(375, 373, 378), PackedInt32Array(375, 378, 377), PackedInt32Array(375, 377, 376), PackedInt32Array(373, 369, 378), PackedInt32Array(378, 369, 370), PackedInt32Array(379, 381, 380), PackedInt32Array(382, 381, 379), PackedInt32Array(382, 379, 383), PackedInt32Array(383, 379, 384), PackedInt32Array(384, 379, 385), PackedInt32Array(386, 388, 387), PackedInt32Array(388, 386, 389), PackedInt32Array(389, 390, 388), PackedInt32Array(388, 390, 393), PackedInt32Array(388, 393, 392), PackedInt32Array(388, 392, 391), PackedInt32Array(390, 383, 393), PackedInt32Array(393, 383, 394), PackedInt32Array(396, 395, 391), PackedInt32Array(384, 394, 383), PackedInt32Array(397, 385, 395), PackedInt32Array(395, 385, 391), PackedInt32Array(385, 397, 398), PackedInt32Array(392, 396, 391), PackedInt32Array(398, 384, 385), PackedInt32Array(402, 401, 399), PackedInt32Array(399, 401, 400)]
+
+[sub_resource type="StandardMaterial3D" id="Stone"]
+albedo_color = Color(0.19, 0.225, 0.245, 1)
+metallic = 0.08
+roughness = 0.82
+
+[sub_resource type="StandardMaterial3D" id="StoneTrim"]
+albedo_color = Color(0.29, 0.35, 0.37, 1)
+metallic = 0.18
+roughness = 0.62
+
+[sub_resource type="StandardMaterial3D" id="AncientGold"]
+albedo_color = Color(0.31, 0.19, 0.055, 1)
+metallic = 0.72
+roughness = 0.34
+
+[sub_resource type="StandardMaterial3D" id="Rune"]
+albedo_color = Color(0.025, 0.18, 0.25, 1)
+metallic = 0.25
+roughness = 0.3
+emission_enabled = true
+emission = Color(0.02, 0.58, 0.85, 1)
+emission_energy_multiplier = 4.0
+
+[sub_resource type="StandardMaterial3D" id="Lava"]
+albedo_color = Color(0.42, 0.025, 0.008, 1)
+roughness = 0.3
+emission_enabled = true
+emission = Color(1, 0.075, 0.008, 1)
+emission_energy_multiplier = 5.5
+
+[sub_resource type="BoxShape3D" id="LavaEntryShape"]
+size = Vector3(22, 1.2, 22)
+
+[sub_resource type="BoxShape3D" id="LavaChasmShape"]
+size = Vector3(26, 1.2, 24)
+
+[sub_resource type="BoxMesh" id="MovingPlatformMesh"]
+material = SubResource("StoneTrim")
+size = Vector3(4.4, 0.7, 4.4)
+
+[sub_resource type="BoxShape3D" id="MovingPlatformShape"]
+size = Vector3(4.4, 0.7, 4.4)
+
+[sub_resource type="Animation" id="ResetAnimation"]
+length = 0.1
+
+[sub_resource type="Animation" id="MovingPlatformsAnimation"]
+resource_name = "moving_platforms"
+length = 6.0
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("MovingPlatforms/MovingPlatformA:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 2.5, 3, 5.5, 6),
+"transitions": PackedFloat32Array(0.5, 0.5, 0.5, 0.5, 0.5),
+"update": 0,
+"values": [Vector3(-6, 1.2, -27), Vector3(6, 1.2, -27), Vector3(6, 1.2, -27), Vector3(-6, 1.2, -27), Vector3(-6, 1.2, -27)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("MovingPlatforms/MovingPlatformB:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 2.5, 3, 5.5, 6),
+"transitions": PackedFloat32Array(0.5, 0.5, 0.5, 0.5, 0.5),
+"update": 0,
+"values": [Vector3(6, 3.2, -34), Vector3(-6, 3.2, -34), Vector3(-6, 3.2, -34), Vector3(6, 3.2, -34), Vector3(6, 3.2, -34)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary"]
+_data = {
+&"RESET": SubResource("ResetAnimation"),
+&"moving_platforms": SubResource("MovingPlatformsAnimation")
+}
+
+[sub_resource type="StandardMaterial3D" id="HotMetal"]
+albedo_color = Color(0.16, 0.06, 0.025, 1)
+metallic = 0.65
+roughness = 0.38
+emission_enabled = true
+emission = Color(1, 0.18, 0.015, 1)
+emission_energy_multiplier = 2.2
+
+[node name="DungeonAreaCSG" type="Node3D" unique_id=503712800]
+
+[node name="DialogueManager" type="Node" parent="." unique_id=533687984]
+script = ExtResource("2_a8hmm")
+metadata/_custom_type_script = "uid://dh6q176dnlgbu"
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=75955960]
+environment = SubResource("DungeonEnvironment")
+
+[node name="SpawnPoint" type="Marker3D" parent="." unique_id=61641641]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.2, 36)
+
+[node name="ExitPoint" type="Marker3D" parent="." unique_id=615036890]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 10, -64)
+
+[node name="NavigationRegion3D" type="NavigationRegion3D" parent="." unique_id=1538584911]
+navigation_mesh = SubResource("NavigationMesh_xrivr")
+
+[node name="Geometry" type="Node3D" parent="NavigationRegion3D" unique_id=434259425]
+
+[node name="EntryChamber" type="Node3D" parent="NavigationRegion3D/Geometry" unique_id=1467052698]
+
+[node name="EntryFloor" type="CSGBox3D" parent="NavigationRegion3D/Geometry/EntryChamber" unique_id=1369378813]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 34)
+use_collision = true
+size = Vector3(18, 2, 12)
+material = SubResource("Stone")
+
+[node name="EntryBackWall" type="CSGBox3D" parent="NavigationRegion3D/Geometry/EntryChamber" unique_id=663449281]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5, 40)
+use_collision = true
+size = Vector3(20, 12, 2)
+material = SubResource("Stone")
+
+[node name="EntryLeftWall" type="CSGBox3D" parent="NavigationRegion3D/Geometry/EntryChamber" unique_id=689148408]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10, 4, 32)
+use_collision = true
+size = Vector3(2, 10, 18)
+material = SubResource("Stone")
+
+[node name="EntryRightWall" type="CSGBox3D" parent="NavigationRegion3D/Geometry/EntryChamber" unique_id=1361361502]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 4, 32)
+use_collision = true
+size = Vector3(2, 10, 18)
+material = SubResource("Stone")
+
+[node name="EntryArchLeft" type="CSGBox3D" parent="NavigationRegion3D/Geometry/EntryChamber" unique_id=1479984067]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7, 3.5, 25)
+use_collision = true
+size = Vector3(5, 9, 2)
+material = SubResource("StoneTrim")
+
+[node name="EntryArchRight" type="CSGBox3D" parent="NavigationRegion3D/Geometry/EntryChamber" unique_id=393896815]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7, 3.5, 25)
+use_collision = true
+size = Vector3(5, 9, 2)
+material = SubResource("StoneTrim")
+
+[node name="EntryArchTop" type="CSGBox3D" parent="NavigationRegion3D/Geometry/EntryChamber" unique_id=2033558315]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 8, 25)
+use_collision = true
+size = Vector3(18, 2, 2)
+material = SubResource("StoneTrim")
+
+[node name="EntryCrossing" type="Node3D" parent="NavigationRegion3D/Geometry" unique_id=1372847317]
+
+[node name="CrossingLedgeStart" type="CSGBox3D" parent="NavigationRegion3D/Geometry/EntryCrossing" unique_id=807636809]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 23)
+use_collision = true
+size = Vector3(14, 1, 5)
+material = SubResource("Stone")
+
+[node name="SteppingStone1" type="CSGBox3D" parent="NavigationRegion3D/Geometry/EntryCrossing" unique_id=437110200]
+transform = Transform3D(0.99026805, 0, -0.1391731, 0, 1, 0, 0.1391731, 0, 0.99026805, -3.5, -0.2, 18)
+use_collision = true
+size = Vector3(4.8, 1.1, 3.2)
+material = SubResource("StoneTrim")
+
+[node name="SteppingStone2" type="CSGBox3D" parent="NavigationRegion3D/Geometry/EntryCrossing" unique_id=1498064276]
+transform = Transform3D(0.98162717, 0, 0.190809, 0, 1, 0, -0.190809, 0, 0.98162717, 2.8, 0.5, 13.5)
+use_collision = true
+size = Vector3(4.3, 1.1, 3.2)
+material = SubResource("StoneTrim")
+
+[node name="SteppingStone3" type="CSGBox3D" parent="NavigationRegion3D/Geometry/EntryCrossing" unique_id=999961782]
+transform = Transform3D(0.9781476, 0, -0.2079117, 0, 1, 0, 0.2079117, 0, 0.9781476, -2, 1.1, 9)
+use_collision = true
+size = Vector3(4.5, 1.1, 3.2)
+material = SubResource("StoneTrim")
+
+[node name="CrossingLanding" type="CSGBox3D" parent="NavigationRegion3D/Geometry/EntryCrossing" unique_id=1178153463]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 5)
+use_collision = true
+size = Vector3(16, 2, 6)
+material = SubResource("Stone")
+
+[node name="GreatHall" type="Node3D" parent="NavigationRegion3D/Geometry" unique_id=1615396778]
+
+[node name="HallFloor" type="CSGBox3D" parent="NavigationRegion3D/Geometry/GreatHall" unique_id=1667092863]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, -7)
+use_collision = true
+size = Vector3(22, 2, 20)
+material = SubResource("Stone")
+
+[node name="HallLeftWall" type="CSGBox3D" parent="NavigationRegion3D/Geometry/GreatHall" unique_id=2077858058]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12, 5, -7)
+use_collision = true
+size = Vector3(2, 14, 24)
+material = SubResource("Stone")
+
+[node name="HallRightWall" type="CSGBox3D" parent="NavigationRegion3D/Geometry/GreatHall" unique_id=1176612825]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12, 5, -7)
+use_collision = true
+size = Vector3(2, 14, 24)
+material = SubResource("Stone")
+
+[node name="HallColumnLeftA" type="CSGCylinder3D" parent="NavigationRegion3D/Geometry/GreatHall" unique_id=443985937]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.5, 3.5, 0)
+use_collision = true
+radius = 1.2
+height = 9.0
+material = SubResource("StoneTrim")
+
+[node name="HallColumnRightA" type="CSGCylinder3D" parent="NavigationRegion3D/Geometry/GreatHall" unique_id=1024741892]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.5, 3.5, 0)
+use_collision = true
+radius = 1.2
+height = 9.0
+material = SubResource("StoneTrim")
+
+[node name="HallColumnLeftB" type="CSGCylinder3D" parent="NavigationRegion3D/Geometry/GreatHall" unique_id=999545481]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.5, 3.5, -12)
+use_collision = true
+radius = 1.2
+height = 9.0
+material = SubResource("StoneTrim")
+
+[node name="HallColumnRightB" type="CSGCylinder3D" parent="NavigationRegion3D/Geometry/GreatHall" unique_id=2067924303]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.5, 3.5, -12)
+use_collision = true
+radius = 1.2
+height = 9.0
+material = SubResource("StoneTrim")
+
+[node name="HallColumnRightB2" type="CSGCylinder3D" parent="NavigationRegion3D/Geometry/GreatHall" unique_id=1250675969]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.5, 0.75, -9)
+use_collision = true
+radius = 1.2
+height = 3.5
+material = SubResource("StoneTrim")
+
+[node name="HallColumnRightB3" type="CSGCylinder3D" parent="NavigationRegion3D/Geometry/GreatHall" unique_id=817183334]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.5, 0.75, -3)
+use_collision = true
+radius = 1.2
+height = 3.5
+material = SubResource("StoneTrim")
+
+[node name="HallColumnRightB4" type="CSGCylinder3D" parent="NavigationRegion3D/Geometry/GreatHall" unique_id=1137571597]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.5, 0.75, -9)
+use_collision = true
+radius = 1.2
+height = 3.5
+material = SubResource("StoneTrim")
+
+[node name="HallColumnRightB5" type="CSGCylinder3D" parent="NavigationRegion3D/Geometry/GreatHall" unique_id=2136930668]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.5, 0.75, -3)
+use_collision = true
+radius = 1.2
+height = 3.5
+material = SubResource("StoneTrim")
+
+[node name="OptionalRoute" type="Node3D" parent="NavigationRegion3D/Geometry/GreatHall" unique_id=988628750]
+
+[node name="OptionalStep1" type="CSGBox3D" parent="NavigationRegion3D/Geometry/GreatHall/OptionalRoute" unique_id=56320725]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.5, 1, 2)
+use_collision = true
+size = Vector3(4, 1, 3)
+material = SubResource("StoneTrim")
+
+[node name="OptionalStep2" type="CSGBox3D" parent="NavigationRegion3D/Geometry/GreatHall/OptionalRoute" unique_id=331784610]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9, 2.5, -2)
+use_collision = true
+size = Vector3(4, 1, 3)
+material = SubResource("StoneTrim")
+
+[node name="OptionalBalcony" type="CSGBox3D" parent="NavigationRegion3D/Geometry/GreatHall/OptionalRoute" unique_id=1131305054]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.5, 4, -8)
+use_collision = true
+size = Vector3(5, 1, 10)
+material = SubResource("StoneTrim")
+
+[node name="OptionalRewardPedestal" type="CSGCylinder3D" parent="NavigationRegion3D/Geometry/GreatHall/OptionalRoute" unique_id=1612704726]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.5, 5, -9)
+use_collision = true
+radius = 1.35
+height = 1.2
+material = SubResource("AncientGold")
+
+[node name="ChasmRoom" type="Node3D" parent="NavigationRegion3D/Geometry" unique_id=121275113]
+
+[node name="ChasmStart" type="CSGBox3D" parent="NavigationRegion3D/Geometry/ChasmRoom" unique_id=1190719624]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -19)
+use_collision = true
+size = Vector3(18, 2, 6)
+material = SubResource("Stone")
+
+[node name="ChasmLeftWall" type="CSGBox3D" parent="NavigationRegion3D/Geometry/ChasmRoom" unique_id=1978106354]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -13, 3, -30)
+use_collision = true
+size = Vector3(2, 16, 30)
+material = SubResource("Stone")
+
+[node name="ChasmRightWall" type="CSGBox3D" parent="NavigationRegion3D/Geometry/ChasmRoom" unique_id=2124469081]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13, 3, -30)
+use_collision = true
+size = Vector3(2, 16, 30)
+material = SubResource("Stone")
+
+[node name="FallbackPillar1" type="CSGCylinder3D" parent="NavigationRegion3D/Geometry/ChasmRoom" unique_id=566016075]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, -25)
+use_collision = true
+radius = 2.0
+height = 5.0
+material = SubResource("StoneTrim")
+
+[node name="Ascent" type="Node3D" parent="NavigationRegion3D/Geometry" unique_id=999229932]
+
+[node name="AscentStep1" type="CSGBox3D" parent="NavigationRegion3D/Geometry/Ascent" unique_id=1951269022]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.5, 4.8, -46)
+use_collision = true
+size = Vector3(5, 1.2, 3.5)
+material = SubResource("StoneTrim")
+
+[node name="AscentStep2" type="CSGBox3D" parent="NavigationRegion3D/Geometry/Ascent" unique_id=249695432]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 6, -49.5)
+use_collision = true
+size = Vector3(5, 1.2, 3.5)
+material = SubResource("StoneTrim")
+
+[node name="AscentStep3" type="CSGBox3D" parent="NavigationRegion3D/Geometry/Ascent" unique_id=213419634]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 7.3, -53)
+use_collision = true
+size = Vector3(5, 1.2, 3.5)
+material = SubResource("StoneTrim")
+
+[node name="ShrineRoom" type="Node3D" parent="NavigationRegion3D/Geometry" unique_id=830123609]
+
+[node name="ShrineFloor" type="CSGBox3D" parent="NavigationRegion3D/Geometry/ShrineRoom" unique_id=2101234548]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 7, -60)
+use_collision = true
+size = Vector3(20, 2, 13)
+material = SubResource("Stone")
+
+[node name="ShrineBackWall" type="CSGBox3D" parent="NavigationRegion3D/Geometry/ShrineRoom" unique_id=746429747]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 14, -67)
+use_collision = true
+size = Vector3(22, 16, 2)
+material = SubResource("Stone")
+
+[node name="ShrineDais" type="CSGCylinder3D" parent="NavigationRegion3D/Geometry/ShrineRoom" unique_id=1215748194]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 8.5, -62)
+use_collision = true
+radius = 4.2
+height = 1.1
+sides = 12
+material = SubResource("AncientGold")
+
+[node name="ShrineRune" type="CSGCylinder3D" parent="NavigationRegion3D/Geometry/ShrineRoom" unique_id=1006093523]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 9.1, -62)
+radius = 2.7
+height = 0.12
+sides = 24
+material = SubResource("Rune")
+
+[node name="ShrinePillarLeft" type="CSGCylinder3D" parent="NavigationRegion3D/Geometry/ShrineRoom" unique_id=1273996571]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7, 13, -64)
+use_collision = true
+radius = 1.3
+height = 11.0
+material = SubResource("StoneTrim")
+
+[node name="ShrinePillarRight" type="CSGCylinder3D" parent="NavigationRegion3D/Geometry/ShrineRoom" unique_id=1051246475]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7, 13, -64)
+use_collision = true
+radius = 1.3
+height = 11.0
+material = SubResource("StoneTrim")
+
+[node name="Hazards" type="Node3D" parent="NavigationRegion3D" unique_id=627480289]
+
+[node name="EntryLavaVisual" type="CSGBox3D" parent="NavigationRegion3D/Hazards" unique_id=54152541]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -2.2, 14.5)
+size = Vector3(22, 1, 22)
+material = SubResource("Lava")
+
+[node name="EntryLava" type="Area3D" parent="NavigationRegion3D/Hazards" unique_id=2032606537]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.9, 14.5)
+collision_layer = 128
+collision_mask = 16
+script = ExtResource("2_5nb3c")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="NavigationRegion3D/Hazards/EntryLava" unique_id=1520747341]
+shape = SubResource("LavaEntryShape")
+
+[node name="ChasmLavaVisual" type="CSGBox3D" parent="NavigationRegion3D/Hazards" unique_id=107126067]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -4, -30)
+size = Vector3(26, 1, 24)
+material = SubResource("Lava")
+
+[node name="ChasmLava" type="Area3D" parent="NavigationRegion3D/Hazards" unique_id=1595971580]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -3.7, -30)
+collision_layer = 128
+collision_mask = 16
+script = ExtResource("2_5nb3c")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="NavigationRegion3D/Hazards/ChasmLava" unique_id=1632758050]
+shape = SubResource("LavaChasmShape")
+
+[node name="Traversal" type="Node3D" parent="NavigationRegion3D" unique_id=456181938]
+
+[node name="MovingPlatforms" type="Node3D" parent="NavigationRegion3D/Traversal" unique_id=430006442]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -4.6205482)
+
+[node name="MovingPlatformA" type="AnimatableBody3D" parent="NavigationRegion3D/Traversal/MovingPlatforms" unique_id=1272375555]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, 1.2, -27)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="NavigationRegion3D/Traversal/MovingPlatforms/MovingPlatformA" unique_id=1999882669]
+mesh = SubResource("MovingPlatformMesh")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="NavigationRegion3D/Traversal/MovingPlatforms/MovingPlatformA" unique_id=466048643]
+shape = SubResource("MovingPlatformShape")
+
+[node name="MovingPlatformB" type="AnimatableBody3D" parent="NavigationRegion3D/Traversal/MovingPlatforms" unique_id=1533337235]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 3.2, -34)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="NavigationRegion3D/Traversal/MovingPlatforms/MovingPlatformB" unique_id=1600012330]
+mesh = SubResource("MovingPlatformMesh")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="NavigationRegion3D/Traversal/MovingPlatforms/MovingPlatformB" unique_id=377288773]
+shape = SubResource("MovingPlatformShape")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="NavigationRegion3D/Traversal" unique_id=1264126024]
+libraries/ = SubResource("AnimationLibrary")
+autoplay = &"moving_platforms"
+
+[node name="Lighting" type="Node3D" parent="NavigationRegion3D" unique_id=800675663]
+
+[node name="MoonFill" type="DirectionalLight3D" parent="NavigationRegion3D/Lighting" unique_id=838374481]
+transform = Transform3D(0.88294756, 0.3488854, -0.3141378, 0, 0.66913056, 0.74314487, 0.46947157, -0.656158, 0.5908072, 0, 0, 0)
+light_color = Color(0.38, 0.55, 0.68, 1)
+light_energy = 0.42
+light_indirect_energy = 0.65
+light_volumetric_fog_energy = 0.35
+shadow_enabled = true
+shadow_blur = 2.0
+
+[node name="EntryLavaGlow" type="OmniLight3D" parent="NavigationRegion3D/Lighting" unique_id=735099161]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.2, 14)
+light_color = Color(1, 0.16, 0.025, 1)
+light_energy = 3.4
+light_indirect_energy = 1.4
+light_volumetric_fog_energy = 1.5
+shadow_enabled = true
+omni_range = 18.0
+omni_attenuation = 1.45
+
+[node name="EntryGameplayFill" type="OmniLight3D" parent="NavigationRegion3D/Lighting" unique_id=1588504601]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 6, 29)
+light_color = Color(0.56, 0.72, 0.8, 1)
+light_energy = 1.55
+light_indirect_energy = 0.8
+light_volumetric_fog_energy = 0.25
+omni_range = 19.0
+omni_attenuation = 1.2
+
+[node name="HallKeyLight" type="SpotLight3D" parent="NavigationRegion3D/Lighting" unique_id=948984098]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 11, -7)
+light_color = Color(0.24, 0.62, 0.78, 1)
+light_energy = 4.2
+light_volumetric_fog_energy = 2.3
+shadow_enabled = true
+shadow_bias = 0.12
+spot_range = 22.0
+spot_angle = 34.0
+
+[node name="HallGameplayFill" type="OmniLight3D" parent="NavigationRegion3D/Lighting" unique_id=1766371194]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5.5, -7)
+light_color = Color(0.42, 0.65, 0.74, 1)
+light_energy = 1.9
+light_indirect_energy = 0.9
+light_volumetric_fog_energy = 0.35
+omni_range = 21.0
+omni_attenuation = 1.25
+
+[node name="RewardLight" type="OmniLight3D" parent="NavigationRegion3D/Lighting" unique_id=1237455790]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.5, 7, -11)
+light_color = Color(1, 0.52, 0.12, 1)
+light_energy = 2.1
+light_indirect_energy = 1.1
+light_volumetric_fog_energy = 1.1
+omni_range = 9.0
+omni_attenuation = 1.6
+
+[node name="ChasmLavaGlow" type="OmniLight3D" parent="NavigationRegion3D/Lighting" unique_id=27958681]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, -30)
+light_color = Color(1, 0.095, 0.012, 1)
+light_energy = 4.6
+light_indirect_energy = 1.6
+light_volumetric_fog_energy = 1.9
+shadow_enabled = true
+omni_range = 22.0
+omni_attenuation = 1.4
+
+[node name="ChasmRimLight" type="SpotLight3D" parent="NavigationRegion3D/Lighting" unique_id=1916082249]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 14, -34)
+light_color = Color(0.12, 0.48, 0.72, 1)
+light_energy = 3.2
+light_volumetric_fog_energy = 2.0
+shadow_enabled = true
+shadow_bias = 0.12
+spot_range = 25.0
+spot_angle = 24.0
+
+[node name="ChasmGameplayFill" type="OmniLight3D" parent="NavigationRegion3D/Lighting" unique_id=919378177]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 7, -30)
+light_color = Color(0.38, 0.62, 0.72, 1)
+light_energy = 2.15
+light_indirect_energy = 0.85
+light_volumetric_fog_energy = 0.4
+omni_range = 23.0
+omni_attenuation = 1.25
+
+[node name="AscentGameplayFill" type="OmniLight3D" parent="NavigationRegion3D/Lighting" unique_id=1708847938]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 11, -49)
+light_color = Color(0.46, 0.68, 0.78, 1)
+light_energy = 1.9
+light_indirect_energy = 0.9
+light_volumetric_fog_energy = 0.35
+omni_range = 20.0
+omni_attenuation = 1.3
+
+[node name="ShrineBeam" type="SpotLight3D" parent="NavigationRegion3D/Lighting" unique_id=1569584428]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 25, -62)
+light_color = Color(0.08, 0.68, 1, 1)
+light_energy = 6.0
+light_indirect_energy = 1.2
+light_volumetric_fog_energy = 3.5
+shadow_enabled = true
+shadow_bias = 0.1
+spot_range = 26.0
+spot_angle = 21.0
+
+[node name="ShrineGameplayFill" type="OmniLight3D" parent="NavigationRegion3D/Lighting" unique_id=1701172562]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 14, -60)
+light_color = Color(0.36, 0.62, 0.74, 1)
+light_energy = 2.0
+light_indirect_energy = 0.95
+light_volumetric_fog_energy = 0.3
+omni_range = 20.0
+omni_attenuation = 1.25
+
+[node name="ShrineWarmRimLeft" type="OmniLight3D" parent="NavigationRegion3D/Lighting" unique_id=2085238937]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7, 11, -61)
+light_color = Color(1, 0.34, 0.07, 1)
+light_energy = 1.8
+light_volumetric_fog_energy = 0.8
+omni_range = 10.0
+
+[node name="ShrineWarmRimRight" type="OmniLight3D" parent="NavigationRegion3D/Lighting" unique_id=1772434132]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7, 11, -61)
+light_color = Color(1, 0.34, 0.07, 1)
+light_energy = 1.8
+light_volumetric_fog_energy = 0.8
+omni_range = 10.0
+
+[node name="SetDressing" type="Node3D" parent="NavigationRegion3D" unique_id=773819527]
+
+[node name="BrazierLeft" type="CSGCylinder3D" parent="NavigationRegion3D/SetDressing" unique_id=774684111]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7, 1.2, 32)
+use_collision = true
+radius = 0.65
+height = 2.4
+material = SubResource("AncientGold")
+
+[node name="BrazierFlameLeft" type="CSGSphere3D" parent="NavigationRegion3D/SetDressing" unique_id=1456312168]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7, 2.7, 32)
+radius = 0.48
+material = SubResource("HotMetal")
+
+[node name="BrazierRight" type="CSGCylinder3D" parent="NavigationRegion3D/SetDressing" unique_id=1523052820]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7, 1.2, 32)
+use_collision = true
+radius = 0.65
+height = 2.4
+material = SubResource("AncientGold")
+
+[node name="BrazierFlameRight" type="CSGSphere3D" parent="NavigationRegion3D/SetDressing" unique_id=1116850]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7, 2.7, 32)
+radius = 0.48
+material = SubResource("HotMetal")
+
+[node name="RuneMarkerA" type="CSGBox3D" parent="NavigationRegion3D/SetDressing" unique_id=1129581857]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -11.05, 4, -2)
+size = Vector3(0.12, 3.5, 1.2)
+material = SubResource("Rune")
+
+[node name="RuneMarkerB" type="CSGBox3D" parent="NavigationRegion3D/SetDressing" unique_id=19880774]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11.95, 5, -30)
+size = Vector3(0.12, 4.5, 1.1)
+material = SubResource("Rune")
+
+[node name="RuneMarkerC" type="CSGBox3D" parent="NavigationRegion3D/SetDressing" unique_id=1723096711]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -11.95, 7, -38)
+size = Vector3(0.12, 4, 1.1)
+material = SubResource("Rune")
+
+[node name="GolemEnemy" parent="NavigationRegion3D" unique_id=1009641960 node_paths=PackedStringArray("target") instance=ExtResource("2_120db")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -6)
+target = NodePath("../../Player")
+
+[node name="Player" parent="." unique_id=67220391 instance=ExtResource("1_88aow")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 32.054626)

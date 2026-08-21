@@ -1,19 +1,18 @@
 [gd_scene format=3 uid="uid://gyy51fh2c0o3"]
 
 [ext_resource type="Script" uid="uid://deroukfpp2mia" path="res://Components/hitbox.gd" id="1_ww0m6"]
-[ext_resource type="Shader" uid="uid://bxwxcde66qdm1" path="res://World/Areas/Ruins/cracked_rock.gdshader" id="2_ww0m6"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_b5b2l"]
 albedo_color = Color(0.50534403, 0.5053441, 0.50534403, 1)
 
 [sub_resource type="BoxMesh" id="BoxMesh_xrivr"]
-lightmap_size_hint = Vector2i(54, 181)
+lightmap_size_hint = Vector2i(134, 221)
 material = SubResource("StandardMaterial3D_b5b2l")
 add_uv2 = true
-size = Vector3(5, 15, 5)
+size = Vector3(13, 15, 13)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_13qdw"]
-size = Vector3(4.6047363, 1, 4.663086)
+size = Vector3(11, 0.3, 11)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_i5ew2"]
 albedo_color = Color(0.5689727, 0.56897277, 0.5689727, 1)
@@ -56,7 +55,7 @@ tracks/1/keys = {
 
 [sub_resource type="Animation" id="Animation_qpj7e"]
 resource_name = "loop"
-length = 2.5000000000000004
+length = 4.0
 loop_mode = 1
 tracks/0/type = "value"
 tracks/0/imported = false
@@ -65,7 +64,7 @@ tracks/0/path = NodePath("MeshInstance3D:position")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.46666667),
+"times": PackedFloat32Array(0, 1.5),
 "transitions": PackedFloat32Array(1, 1),
 "update": 0,
 "values": [Vector3(0, 12.016457, 0), Vector3(0, 7, 0)]
@@ -77,7 +76,7 @@ tracks/1/path = NodePath("CPUParticles3D:emitting")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
-"times": PackedFloat32Array(0.65),
+"times": PackedFloat32Array(1.4),
 "transitions": PackedFloat32Array(1),
 "update": 1,
 "values": [true]
@@ -90,24 +89,7 @@ _data = {
 }
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_b1lj4"]
-size = Vector3(5, 12.405579, 5)
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_i5ew2"]
-render_priority = 0
-shader = ExtResource("2_ww0m6")
-shader_parameter/rock_color = Color(0.26666668, 0.26666668, 0.26666668, 1)
-shader_parameter/rock_highlight = Color(0.42365062, 0.42365065, 0.42365062, 1)
-shader_parameter/crack_color = Color(0.20511743, 0.20511743, 0.20511743, 1)
-shader_parameter/texture_scale = 8.0
-shader_parameter/crack_width = 0.065
-shader_parameter/crack_softness = 0.015
-shader_parameter/crack_depth = 0.0
-shader_parameter/color_variation = 0.25
-shader_parameter/normal_strength = 0.0
-shader_parameter/roughness = 0.9
-
-[sub_resource type="PlaneMesh" id="PlaneMesh_xrivr"]
-size = Vector2(5, 5)
+size = Vector3(13, 12.406, 13)
 
 [node name="Press" type="StaticBody3D" unique_id=1094818044]
 
@@ -124,7 +106,7 @@ source = "press"
 metadata/_custom_type_script = "uid://deroukfpp2mia"
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="MeshInstance3D/Hitbox" unique_id=719002484]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.00012207031, 0, -0.0053710938)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.10224581, -0.3499999, 0.013086319)
 shape = SubResource("BoxShape3D_13qdw")
 
 [node name="CPUParticles3D" type="CPUParticles3D" parent="." unique_id=1492436964]
@@ -134,7 +116,7 @@ explosiveness = 1.0
 local_coords = true
 mesh = SubResource("SphereMesh_xrivr")
 emission_shape = 3
-emission_box_extents = Vector3(2, 0.1, 2)
+emission_box_extents = Vector3(8, 0.1, 8)
 direction = Vector3(0, 1, 0)
 spread = 15.0
 flatness = 1.0
@@ -154,7 +136,3 @@ autoplay = &"loop"
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=988197456]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 8.279877, 0)
 shape = SubResource("BoxShape3D_b1lj4")
-
-[node name="MeshInstance3D2" type="MeshInstance3D" parent="." unique_id=210335545]
-material_override = SubResource("ShaderMaterial_i5ew2")
-mesh = SubResource("PlaneMesh_xrivr")

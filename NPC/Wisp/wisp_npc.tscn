@@ -47,3 +47,6 @@ scale_amount_min = 0.1
 scale_amount_max = 0.2
 scale_amount_curve = SubResource("Curve_wi6ju")
 color_initial_ramp = SubResource("Gradient_7f2x3")
+
+[node name="InputPrompt" parent="." index="4" unique_id=930064518]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)

@@ -103,53 +103,56 @@ radius = 1.4
 
 [sub_resource type="Environment" id="Environment_cb8pf"]
 ambient_light_source = 2
-ambient_light_color = Color(0.41548955, 0.51511467, 0.4453544, 1)
-ambient_light_sky_contribution = 0.35
-ambient_light_energy = 0.2
+ambient_light_color = Color(0.105, 0.145, 0.18, 1)
+ambient_light_sky_contribution = 0.12
+ambient_light_energy = 0.14
 reflected_light_source = 2
 tonemap_mode = 2
-tonemap_exposure = 1.05
-tonemap_white = 2.0
+tonemap_exposure = 1.12
+tonemap_white = 2.4
 ssao_enabled = true
-ssao_radius = 1.8
-ssao_intensity = 1.3
-ssao_power = 1.25
-ssao_detail = 0.45
-ssao_sharpness = 0.8
+ssao_radius = 2.2
+ssao_intensity = 1.65
+ssao_power = 1.45
+ssao_detail = 0.65
+ssao_sharpness = 0.72
 ssil_enabled = true
-ssil_radius = 3.0
-ssil_intensity = 0.55
-ssil_sharpness = 0.8
+ssil_radius = 2.5
+ssil_intensity = 0.7
+ssil_sharpness = 0.75
 sdfgi_y_scale = 0
 glow_enabled = true
 glow_normalized = true
-glow_intensity = 0.6
-glow_strength = 0.7
-glow_bloom = 0.08
+glow_intensity = 0.75
+glow_strength = 0.85
+glow_bloom = 0.12
 glow_blend_mode = 0
-glow_hdr_threshold = 1.15
-glow_hdr_scale = 1.5
+glow_hdr_scale = 1.35
 fog_mode = 1
-fog_light_color = Color(0.6431373, 0.7254902, 0.6039216, 1)
-fog_light_energy = 0.65
-fog_sun_scatter = 0.18
-fog_density = 0.0025
-fog_sky_affect = 0.45
-fog_depth_curve = 8.282087
-fog_depth_end = 200.0
+fog_light_color = Color(0.105, 0.16, 0.19, 1)
+fog_light_energy = 0.45
+fog_sun_scatter = 0.08
+fog_density = 0.0038
+fog_sky_affect = 0.18
+fog_depth_curve = 3.5
+fog_depth_begin = 18.0
+fog_depth_end = 145.0
 volumetric_fog_enabled = true
-volumetric_fog_albedo = Color(0.40696374, 0.47204792, 0.35534862, 1)
-volumetric_fog_emission = Color(0.02927509, 0.054966018, 0.038387954, 1)
-volumetric_fog_emission_energy = 0.1
-volumetric_fog_gi_inject = 0.5
-volumetric_fog_anisotropy = 0.25
-volumetric_fog_length = 90.0
+volumetric_fog_density = 0.018
+volumetric_fog_albedo = Color(0.17, 0.235, 0.255, 1)
+volumetric_fog_emission = Color(0.008, 0.016, 0.022, 1)
+volumetric_fog_emission_energy = 0.04
+volumetric_fog_gi_inject = 0.35
+volumetric_fog_anisotropy = 0.42
+volumetric_fog_length = 72.0
+volumetric_fog_detail_spread = 1.7
+volumetric_fog_ambient_inject = 0.35
 volumetric_fog_sky_affect = 0.0
 volumetric_fog_temporal_reprojection_amount = 0.85
 adjustment_enabled = true
-adjustment_brightness = 1.02
-adjustment_contrast = 1.08
-adjustment_saturation = 1.12
+adjustment_brightness = 0.98
+adjustment_contrast = 1.16
+adjustment_saturation = 1.08
 
 [sub_resource type="Animation" id="Animation_rw02v"]
 length = 0.001
@@ -333,7 +336,7 @@ use_collision = true
 mesh = SubResource("BoxMesh_xrivr")
 
 [node name="Press" parent="NavigationRegion3D" unique_id=1691642139 instance=ExtResource("6_b5b2l")]
-transform = Transform3D(1.9000003, 0, 0, 0, 1.9000003, 0, 0, 0, 1.9000001, -24.595709, -18.149727, 0.13167709)
+transform = Transform3D(1.9000003, 0, 0, 0, 1.9000003, 0, 0, 0, 1.9000001, -24.601477, -18.168646, 0.13166279)
 
 [node name="Fan6" parent="NavigationRegion3D" unique_id=278888985 instance=ExtResource("4_fcrmi")]
 transform = Transform3D(0, -8.305166e-08, -1.9000001, -1.9000003, 0, 0, 0, 1.9000003, -8.305164e-08, -46.5, -15.200001, -8.6)
@@ -356,13 +359,13 @@ environment = SubResource("Environment_cb8pf")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=539872350]
 transform = Transform3D(0.81915206, 0.4055798, -0.40557978, 0, 0.70710677, 0.7071068, 0.57357645, -0.579228, 0.5792279, 0, 0, 0)
-light_color = Color(1, 0.8901961, 0.7019608, 1)
-light_energy = 0.5
-light_indirect_energy = 0.2
-light_volumetric_fog_energy = 0.75
-light_angular_distance = 1.0
+light_color = Color(0.42, 0.56, 0.68, 1)
+light_energy = 0.16
+light_indirect_energy = 0.35
+light_volumetric_fog_energy = 0.25
+light_angular_distance = 1.8
 shadow_enabled = true
-shadow_blur = 1.5
+shadow_blur = 2.2
 
 [node name="Player" parent="." unique_id=67220391 instance=ExtResource("1_ni6kf")]
 
@@ -448,68 +451,136 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -32.41815, -19.477333, 0)
 [node name="SpotLight3D" type="SpotLight3D" parent="CeilingLights" unique_id=1997880023]
 transform = Transform3D(1, 0, 0, 0, -4.3711385e-08, 0.99999994, 0, -0.99999994, -4.3711385e-08, 0, 0, 0)
 light_color = Color(1, 0.9082013, 0.6330468, 1)
-light_energy = 4.0
-light_volumetric_fog_energy = 10.0
+light_energy = 2.8
+light_indirect_energy = 1.35
+light_volumetric_fog_energy = 2.4
 light_bake_mode = 1
-shadow_bias = 7.769
+shadow_enabled = true
+shadow_bias = 0.12
 spot_range = 15.726216
 spot_angle = 31.019934
 
 [node name="SpotLight3D6" type="SpotLight3D" parent="CeilingLights" unique_id=1371146439]
 transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 14, 0)
 light_color = Color(1, 0.9082013, 0.6330468, 1)
-light_energy = 5.0
-light_volumetric_fog_energy = 10.0
+light_energy = 3.2
+light_indirect_energy = 1.35
+light_volumetric_fog_energy = 2.6
 light_bake_mode = 1
-shadow_bias = 7.769
+shadow_enabled = true
+shadow_bias = 0.12
 spot_range = 15.726216
 spot_angle = 31.019934
 
 [node name="SpotLight3D5" type="SpotLight3D" parent="CeilingLights" unique_id=717978440]
 transform = Transform3D(1, 0, 0, 0, -4.3711385e-08, 0.99999994, 0, -0.99999994, -4.3711385e-08, 19.079178, 18.381403, -8.0347655e-07)
 light_color = Color(1, 0.9082013, 0.6330468, 1)
-light_energy = 4.0
-light_volumetric_fog_energy = 10.0
+light_energy = 3.0
+light_indirect_energy = 1.4
+light_volumetric_fog_energy = 2.8
 light_bake_mode = 1
-shadow_bias = 7.769
+shadow_enabled = true
+shadow_bias = 0.1
 spot_range = 33.806564
 spot_angle = 11.749397
 
 [node name="SpotLight3D2" type="SpotLight3D" parent="CeilingLights" unique_id=890858789]
 transform = Transform3D(1, 0, 0, 0, -4.3711385e-08, 0.99999994, 0, -0.99999994, -4.3711385e-08, -10.44162, 0, 0)
 light_color = Color(1, 0.9082013, 0.6330468, 1)
-light_energy = 4.0
-light_volumetric_fog_energy = 10.0
+light_energy = 2.8
+light_indirect_energy = 1.35
+light_volumetric_fog_energy = 2.4
 light_bake_mode = 1
-shadow_bias = 7.769
+shadow_enabled = true
+shadow_bias = 0.12
 spot_range = 15.726216
 spot_angle = 31.019934
 
 [node name="SpotLight3D4" type="SpotLight3D" parent="CeilingLights" unique_id=1252748234]
 transform = Transform3D(1, 0, 0, 0, -4.3711385e-08, 0.99999994, 0, -0.99999994, -4.3711385e-08, -10.44162, 14.771553, -6.456851e-07)
 light_color = Color(1, 0.9082013, 0.6330468, 1)
-light_energy = 4.0
-light_volumetric_fog_energy = 10.0
+light_energy = 2.8
+light_indirect_energy = 1.35
+light_volumetric_fog_energy = 2.4
 light_bake_mode = 1
-shadow_bias = 7.769
+shadow_enabled = true
+shadow_bias = 0.12
 spot_range = 15.726216
 spot_angle = 31.019934
 
 [node name="SpotLight3D3" type="SpotLight3D" parent="CeilingLights" unique_id=375472669]
 transform = Transform3D(1, 0, 0, 0, -4.3711385e-08, 0.99999994, 0, -0.99999994, -4.3711385e-08, -20.732143, 0, 0)
 light_color = Color(1, 0.9082013, 0.6330468, 1)
-light_energy = 4.0
-light_volumetric_fog_energy = 10.0
+light_energy = 2.8
+light_indirect_energy = 1.35
+light_volumetric_fog_energy = 2.4
 light_bake_mode = 1
-shadow_bias = 7.769
+shadow_enabled = true
+shadow_bias = 0.12
 spot_range = 15.726216
 spot_angle = 31.019934
 
+[node name="AccentLights" type="Node3D" parent="." unique_id=1119629331]
+
+[node name="LavaGlowCentre" type="OmniLight3D" parent="AccentLights" unique_id=984025279]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -42.2, -28.7, -0.7)
+light_color = Color(1, 0.205, 0.045, 1)
+light_energy = 3.6
+light_indirect_energy = 1.5
+light_volumetric_fog_energy = 1.7
+light_bake_mode = 1
+shadow_enabled = true
+shadow_bias = 0.18
+omni_range = 18.0
+omni_attenuation = 1.35
+
+[node name="LavaGlowWest" type="OmniLight3D" parent="AccentLights" unique_id=1715178007]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -25.5, -28.9, -0.5)
+light_color = Color(1, 0.265, 0.055, 1)
+light_energy = 2.5
+light_indirect_energy = 1.4
+light_volumetric_fog_energy = 1.25
+light_bake_mode = 1
+omni_range = 12.0
+omni_attenuation = 1.5
+
+[node name="LavaGlowEast" type="OmniLight3D" parent="AccentLights" unique_id=1526216059]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -59, -28.9, -0.5)
+light_color = Color(1, 0.265, 0.055, 1)
+light_energy = 2.5
+light_indirect_energy = 1.4
+light_volumetric_fog_energy = 1.25
+light_bake_mode = 1
+omni_range = 12.0
+omni_attenuation = 1.5
+
+[node name="FanChamberRim" type="OmniLight3D" parent="AccentLights" unique_id=916553052]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -68, -17, 0)
+light_color = Color(0.16, 0.52, 0.72, 1)
+light_energy = 1.8
+light_indirect_energy = 0.8
+light_volumetric_fog_energy = 1.2
+light_bake_mode = 1
+omni_range = 11.0
+omni_attenuation = 1.6
+
+[node name="UpperPassageRim" type="OmniLight3D" parent="AccentLights" unique_id=426463201]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -41.5, -5.5, 0)
+light_color = Color(0.18, 0.46, 0.62, 1)
+light_energy = 1.45
+light_indirect_energy = 0.75
+light_volumetric_fog_energy = 0.9
+light_bake_mode = 1
+omni_range = 10.0
+omni_attenuation = 1.7
+
 [node name="LightmapGI" type="LightmapGI" parent="." unique_id=1684020137]
+quality = 2
 bounces = 4
 directional = true
 interior = true
-max_texture_size = 4096
+texel_scale = 1.25
+max_texture_size = 8192
 light_data = ExtResource("11_ijylj")
 
 [editable path="NavigationRegion3D/Fan5"]
