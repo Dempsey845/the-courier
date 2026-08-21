@@ -169,9 +169,10 @@ player = NodePath("..")
 [node name="PlayerDebug" type="Node" parent="." unique_id=1475136395]
 script = ExtResource("3_lfmf2")
 
-[node name="PlayerHealthManager" type="Node" parent="." unique_id=2089549425 node_paths=PackedStringArray("health")]
+[node name="PlayerHealthManager" type="Node" parent="." unique_id=2089549425 node_paths=PackedStringArray("health", "camera_controller")]
 script = ExtResource("3_dkpta")
 health = NodePath("../Health")
+camera_controller = NodePath("../CameraController")
 
 [node name="ProtectionTimer" type="Timer" parent="PlayerHealthManager" unique_id=2037783561]
 wait_time = 1.5

@@ -4,6 +4,7 @@
 [ext_resource type="Script" uid="uid://cmrsoxp6a3xq3" path="res://World/lava.gd" id="2_5nb3c"]
 [ext_resource type="PackedScene" uid="uid://bp6pkgigbquhx" path="res://Enemies/Golem/golem_enemy.tscn" id="2_120db"]
 [ext_resource type="Script" uid="uid://dh6q176dnlgbu" path="res://Systems/Dialogue/dialogue_manager.gd" id="2_a8hmm"]
+[ext_resource type="Script" uid="uid://deroukfpp2mia" path="res://Components/hitbox.gd" id="5_ta6tj"]
 
 [sub_resource type="Environment" id="DungeonEnvironment"]
 background_mode = 1
@@ -142,6 +143,9 @@ roughness = 0.38
 emission_enabled = true
 emission = Color(1, 0.18, 0.015, 1)
 emission_energy_multiplier = 2.2
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_xrivr"]
+size = Vector3(75, 1, 125)
 
 [node name="DungeonAreaCSG" type="Node3D" unique_id=503712800]
 
@@ -448,10 +452,22 @@ script = ExtResource("2_5nb3c")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="NavigationRegion3D/Hazards/EntryLava" unique_id=1520747341]
 shape = SubResource("LavaEntryShape")
 
+[node name="EntryLavaBody" type="StaticBody3D" parent="NavigationRegion3D/Hazards" unique_id=27401120]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -2.1, 14.5)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="NavigationRegion3D/Hazards/EntryLavaBody" unique_id=1993127912]
+shape = SubResource("LavaEntryShape")
+
 [node name="ChasmLavaVisual" type="CSGBox3D" parent="NavigationRegion3D/Hazards" unique_id=107126067]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -4, -30)
 size = Vector3(26, 1, 24)
 material = SubResource("Lava")
+
+[node name="ChasmLavaBody" type="StaticBody3D" parent="NavigationRegion3D/Hazards" unique_id=845749656]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -3.9, -30)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="NavigationRegion3D/Hazards/ChasmLavaBody" unique_id=1086899535]
+shape = SubResource("LavaChasmShape")
 
 [node name="ChasmLava" type="Area3D" parent="NavigationRegion3D/Hazards" unique_id=1595971580]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -3.7, -30)
@@ -666,3 +682,15 @@ target = NodePath("../../Player")
 
 [node name="Player" parent="." unique_id=67220391 instance=ExtResource("1_88aow")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 32.054626)
+
+[node name="Killbox" type="Area3D" parent="." unique_id=1485001141]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -5.7, 0)
+collision_layer = 128
+collision_mask = 16
+script = ExtResource("5_ta6tj")
+damage = 100
+metadata/_custom_type_script = "uid://deroukfpp2mia"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Killbox" unique_id=1406742002]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -12)
+shape = SubResource("BoxShape3D_xrivr")

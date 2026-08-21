@@ -814,26 +814,6 @@ uniform float eye_angle :
 	hint_range(0.0, 1.2, 0.01) = 0.32;
 
 
-// Mouth
-
-uniform vec4 mouth_color : source_color =
-	vec4(0.8, 0.0, 0.0, 1.0);
-
-uniform float mouth_emission :
-	hint_range(0.0, 20.0, 0.1) = 5.0;
-
-uniform float mouth_vertical_offset :
-	hint_range(-0.5, 0.5, 0.001) = 0.105;
-
-uniform float mouth_width :
-	hint_range(0.001, 0.5, 0.001) = 0.14;
-
-uniform float mouth_curve :
-	hint_range(0.0, 0.3, 0.001) = 0.045;
-
-uniform float mouth_thickness :
-	hint_range(0.001, 0.1, 0.001) = 0.012;
-
 
 // Face edges
 
@@ -928,47 +908,6 @@ float get_right_eye(vec2 face_uv) {
 }
 
 
-float get_angry_mouth(vec2 face_uv) {
-	vec2 mouth_position =
-		face_uv -
-		vec2(
-			0.0,
-			mouth_vertical_offset
-		);
-
-	float horizontal_mask =
-		1.0 - smoothstep(
-			mouth_width,
-			mouth_width + face_softness,
-			abs(mouth_position.x)
-		);
-
-	float normalized_x =
-		abs(mouth_position.x) /
-		max(mouth_width, 0.0001);
-
-	// The corners descend to create a frown.
-	float target_y =
-		mouth_curve * normalized_x;
-
-	float distance_to_mouth =
-		abs(
-			mouth_position.y -
-			target_y
-		);
-
-	float line_mask =
-		1.0 - smoothstep(
-			mouth_thickness,
-			mouth_thickness +
-				face_softness,
-			distance_to_mouth
-		);
-
-	return horizontal_mask * line_mask;
-}
-
-
 void vertex() {
 	UV =
 		UV * uv1_scale.xy +
@@ -1042,16 +981,7 @@ void fragment() {
 		right_eye
 	);
 
-	float mouth =
-		get_angry_mouth(face_uv);
-
-	float face_mask = max(
-		eyes,
-		mouth
-	);
-
-
-	// Optional subtle glow pulse.
+		// Optional subtle glow pulse.
 
 	float pulse = 1.0;
 
@@ -1062,39 +992,30 @@ void fragment() {
 	}
 
 
-	vec3 face_albedo =
-		eye_color.rgb * eyes +
-		mouth_color.rgb * mouth;
-
-	vec3 face_emission =
-		eye_color.rgb *
-		eyes *
-		eye_emission +
-		mouth_color.rgb *
-		mouth *
-		mouth_emission;
-
+	// Blend the red eyes over the original material.
 
 	ALBEDO = mix(
 		ALBEDO,
-		face_albedo,
-		face_mask
+		eye_color.rgb,
+		eyes
 	);
 
 	EMISSION =
-		face_emission *
+		eye_color.rgb *
+		eyes *
+		eye_emission *
 		pulse;
 
 	ROUGHNESS = mix(
 		ROUGHNESS,
 		0.22,
-		face_mask
+		eyes
 	);
 
 	METALLIC = mix(
 		METALLIC,
 		0.0,
-		face_mask
+		eyes
 	);
 }"
 
@@ -1112,20 +1033,14 @@ shader_parameter/uv1_scale = Vector3(1, 1, 1)
 shader_parameter/uv1_offset = Vector3(0, 0, 0)
 shader_parameter/uv2_scale = Vector3(1, 1, 1)
 shader_parameter/uv2_offset = Vector3(0, 0, 0)
-shader_parameter/face_center = Vector2(0.175, 0.71)
-shader_parameter/face_scale = Vector2(0.8, 0.8)
+shader_parameter/face_center = Vector2(0.175, 0.735)
+shader_parameter/face_scale = Vector2(0.8, 1)
 shader_parameter/eye_color = Color(1, 0.005, 0, 1)
 shader_parameter/eye_emission = 8.0
 shader_parameter/eye_spacing = 0.105
 shader_parameter/eye_size = Vector2(0.075, 0.032)
 shader_parameter/eye_vertical_offset = -0.045
 shader_parameter/eye_angle = 0.32
-shader_parameter/mouth_color = Color(0.8, 0, 0, 1)
-shader_parameter/mouth_emission = 5.0
-shader_parameter/mouth_vertical_offset = 0.105
-shader_parameter/mouth_width = 0.14
-shader_parameter/mouth_curve = 0.045
-shader_parameter/mouth_thickness = 0.012
 shader_parameter/face_softness = 0.006
 shader_parameter/pulse_enabled = true
 shader_parameter/pulse_speed = 2.5
@@ -1186,7 +1101,7 @@ bones/0/parent = -1
 bones/0/rest = Transform3D(1, 4.973799e-14, 2.384186e-07, 2.384186e-07, -1.1920929e-07, -0.99999994, 0, 0.99999994, -1.1920929e-07, 0, 0, 0.006584863)
 bones/0/enabled = true
 bones/0/position = Vector3(0, 0, 0.006584863)
-bones/0/rotation = Quaternion(0.69979596, 8.3422194e-08, 8.515631e-08, 0.7143427)
+bones/0/rotation = Quaternion(0.68337715, 8.146492e-08, 8.703062e-08, 0.7300656)
 bones/0/scale = Vector3(1, 1, 1)
 bones/1/name = "Root_end"
 bones/1/parent = 0
@@ -1200,7 +1115,7 @@ bones/2/parent = -1
 bones/2/rest = Transform3D(1, 0, 0, 0, -1.1920929e-07, -0.99999994, 0, 0.99999994, -1.1920929e-07, 0.005723122, 0.00012586158, 0.0003879379)
 bones/2/enabled = true
 bones/2/position = Vector3(0.005723122, 0.00012586158, 0.0003879379)
-bones/2/rotation = Quaternion(0.7069291, 0.015853083, 0.015853083, 0.7069291)
+bones/2/rotation = Quaternion(0.7052747, 0.050869025, 0.05086901, 0.7052746)
 bones/2/scale = Vector3(1, 0.99999994, 0.99999994)
 bones/3/name = "Foot.L_end"
 bones/3/parent = 2
@@ -1214,7 +1129,7 @@ bones/4/parent = -1
 bones/4/rest = Transform3D(1, 0, 0, 0, -1.1920929e-07, -0.99999994, 0, 0.99999994, -1.1920929e-07, 0.009826254, -1.2688058e-09, 0.009443412)
 bones/4/enabled = true
 bones/4/position = Vector3(0.009826254, -1.2688058e-09, 0.009443412)
-bones/4/rotation = Quaternion(0.70699704, 0.012464032, -0.012464033, 0.7069969)
+bones/4/rotation = Quaternion(0.70597464, 0.039998937, -0.03999894, 0.7059745)
 bones/4/scale = Vector3(1, 1, 1)
 bones/5/name = "Hand.L_end"
 bones/5/parent = 4
@@ -1242,7 +1157,7 @@ bones/8/parent = -1
 bones/8/rest = Transform3D(1, 0, 0, 0, -1.1920929e-07, -0.99999994, 0, 0.99999994, -1.1920929e-07, -0.005723122, 0.00012586158, 0.0003879379)
 bones/8/enabled = true
 bones/8/position = Vector3(-0.005723122, 0.00012586158, 0.0003879379)
-bones/8/rotation = Quaternion(0.7068702, -0.018292952, -0.01829295, 0.7068701)
+bones/8/rotation = Quaternion(0.70466673, -0.05869214, -0.058692135, 0.70466673)
 bones/8/scale = Vector3(1, 0.99999994, 0.99999994)
 bones/9/name = "Foot.R_end"
 bones/9/parent = 8
@@ -1256,7 +1171,7 @@ bones/10/parent = -1
 bones/10/rest = Transform3D(1, 0, 0, 0, -1.1920929e-07, -0.99999994, 0, 0.99999994, -1.1920929e-07, -0.009826254, -1.2688058e-09, 0.009443412)
 bones/10/enabled = true
 bones/10/position = Vector3(-0.009826254, -1.2688058e-09, 0.009443412)
-bones/10/rotation = Quaternion(0.70691687, -0.016389601, 0.016389607, 0.70691675)
+bones/10/rotation = Quaternion(0.7051485, -0.05258949, 0.05258949, 0.7051484)
 bones/10/scale = Vector3(1, 1, 1)
 bones/11/name = "Hand.R_end"
 bones/11/parent = 10
