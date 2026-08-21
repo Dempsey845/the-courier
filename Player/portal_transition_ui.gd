@@ -8,7 +8,7 @@ extends Control
 var transition_running: bool = false
 
 
-func enter_portal(next_scene_path: String) -> void:
+func enter_portal(next_scene_path: String, previous_world_type: DataManager.WorldType) -> void:
 	if transition_running:
 		return
 
@@ -47,9 +47,7 @@ func enter_portal(next_scene_path: String) -> void:
 
 	await tween.finished
 
-	var error := get_tree().change_scene_to_file(
-		next_scene_path
-	)
+	var error := DataManager.change_world(next_scene_path, previous_world_type)
 
 	if error != OK:
 		transition_running = false

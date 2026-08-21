@@ -311,7 +311,7 @@ void fragment() {
 }"
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_aoxjx"]
-render_priority = 0
+render_priority = 1
 shader = SubResource("Shader_q5i1o")
 shader_parameter/albedo = Color(0.8156863, 0.63529414, 1, 1)
 shader_parameter/secondary_color = Color(0.08, 0.28, 0.06, 1)
@@ -332,7 +332,7 @@ shader_parameter/dissolve_softness = 0.15
 shader_parameter/emission_strength = 5.0000002375
 shader_parameter/highlight_threshold = 0.68
 shader_parameter/intersection_color = Color(0.9800175, 0.6676896, 0.7609926, 1)
-shader_parameter/intersection_width = 0.0006999999825000001
+shader_parameter/intersection_width = 0.0006999999825
 shader_parameter/intersection_emission = 2.500000037253
 shader_parameter/intersection_alpha = 0.85
 shader_parameter/uv1_scale = Vector3(1, 1, 1)

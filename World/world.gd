@@ -11,7 +11,15 @@ var world_scene: PackedScene = preload("uid://bj3ripvo7qsjp")
 func _ready() -> void:
 	get_viewport().scaling_3d_scale = scale_3d
 
-	DataManager.player_world_start_position = Vector3(0, 1, -25.0)
+	DataManager.current_world_type = DataManager.WorldType.World
+
+	if DataManager.previous_world_type == DataManager.WorldType.FrogRealm:
+		DataManager.player_world_start_position = Vector3(0.0, 8.9, -152.0)
+	else:
+		DataManager.player_world_start_position = Vector3(0, 1, -25.0)
+
+	DataManager.previous_world_type = DataManager.WorldType.World
+
 	player.global_position = DataManager.player_world_start_position
 
 	var canvas_layer = player.get_node("CanvasLayer")

@@ -36,7 +36,7 @@ func _on_interacted(player: Player):
 func _on_portal_entered(player: Player):
     var canvas_layer = player.get_node("CanvasLayer")
     var portal_transition: PortalTransitionUI = canvas_layer.get_node("Container/PortalTransitionUI")
-    portal_transition.enter_portal("res://World/Areas/FrogRealm/frog_realm.tscn")
+    portal_transition.enter_portal("res://World/Areas/FrogRealm/frog_realm.tscn", DataManager.WorldType.World)
 
 func _on_player_entered():
     if !portal.shown:

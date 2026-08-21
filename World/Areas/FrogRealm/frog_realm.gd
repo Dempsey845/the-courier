@@ -21,8 +21,11 @@ var frog_boss_camera_local_transform: Transform3D
 var frog_boss: FrogBoss
 
 func _ready() -> void:
+	DataManager.current_world_type = DataManager.WorldType.FrogRealm
+
 	if DataManager.player_killed_frog_boss:
-		DataManager.player_world_start_position = Vector3(-80.0, 1.3, 0.0)
+		if DataManager.previous_world_type != DataManager.WorldType.World:
+			DataManager.player_world_start_position = Vector3(-80.0, 1.3, 0.0)
 	else:
 		frog_boss = preload("uid://es6r4xwsgwka").instantiate()
 		frog_boss.player = player
@@ -36,6 +39,8 @@ func _ready() -> void:
 		frog_boss.death.connect(_on_frog_boss_death)
 
 		frog_boss_spawned.emit()
+
+	DataManager.previous_world_type = DataManager.WorldType.FrogRealm
 
 	player.global_position = DataManager.player_world_start_position
 
@@ -138,7 +143,7 @@ func switch_to_player_camera() -> void:
 	camera_transition_tween = null
 
 func _on_portal_entered():
-	portal_transition.enter_portal("res://World/world.tscn")
+	portal_transition.enter_portal("res://World/world.tscn", DataManager.WorldType.FrogRealm)
 
 func _on_frog_boss_death():
 	bridge_platforms.show_bridge_platforms()
