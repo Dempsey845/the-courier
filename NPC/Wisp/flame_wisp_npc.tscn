@@ -1,0 +1,37 @@
+[gd_scene format=3 uid="uid://ce0bx6o8uq262"]
+
+[ext_resource type="PackedScene" uid="uid://bmi57avorlix8" path="res://NPC/npc.tscn" id="1_bwlqy"]
+[ext_resource type="Script" uid="uid://bortownhkblxi" path="res://NPC/Wisp/flame_wisp_agent.gd" id="2_ajhsx"]
+[ext_resource type="PackedScene" uid="uid://dm3ne2653a5kn" path="res://NPC/Wisp/flame_wisp_model.tscn" id="2_l6ubf"]
+[ext_resource type="Texture2D" uid="uid://dwxkta3a4jacn" path="res://NPC/Wisp/Wisp_Flame.png" id="3_6cvfr"]
+[ext_resource type="Resource" uid="uid://bxc41uapwm3s6" path="res://Systems/Dialogue/Wisp/wisp_dialogue.res" id="3_eddex"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_ajhsx"]
+radius = 2.0
+
+[node name="FlameWispNPC" unique_id=870401761 instance=ExtResource("1_bwlqy")]
+
+[node name="FlameWispAgent" type="Node" parent="." index="0" unique_id=2068213769 node_paths=PackedStringArray("dialogue_controller", "flame_wisp_model")]
+script = ExtResource("2_ajhsx")
+dialogue_controller = NodePath("../DialogueController")
+flame_wisp_model = NodePath("../FlameWispModel")
+
+[node name="DialogueController" parent="." index="1" unique_id=1124534431]
+dialogue = ExtResource("3_eddex")
+icon_texture = ExtResource("3_6cvfr")
+
+[node name="InteractZone" parent="." index="2" unique_id=362051573]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.8, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="InteractZone" index="0" unique_id=1610048475]
+shape = SubResource("SphereShape3D_ajhsx")
+
+[node name="InputPrompt" parent="." index="3" unique_id=930064518]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.8, 0)
+
+[node name="CollisionShape3D" parent="InputPrompt" index="1" unique_id=239407888]
+shape = SubResource("SphereShape3D_ajhsx")
+
+[node name="FlameWispModel" parent="." index="4" unique_id=76251156 instance=ExtResource("2_l6ubf")]
+
+[editable path="InputPrompt"]

@@ -1,6 +1,8 @@
 class_name NPC
 extends Node3D
 
+signal interact
+
 @onready var interact_zone: Area3D = $InteractZone
 @onready var dialogue_controller: DialogueController = $DialogueController
 @onready var input_prompt: InputPrompt = $InputPrompt
@@ -17,6 +19,7 @@ func _ready() -> void:
 func _process(_delta: float) -> void:
 	if is_in_area and Input.is_action_just_pressed("interact"):
 		dialogue_controller.start()
+		interact.emit()
 
 func _on_area_entered(area: Area3D):
 	if area.get_parent() is Player:

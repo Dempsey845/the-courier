@@ -143,9 +143,9 @@ size = Vector3(12, 9, 12)
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_koyeq"]
 render_priority = 0
 shader = ExtResource("11_w08tj")
-shader_parameter/inner_color = Color(0, 0.24797127, 0.6053987, 1)
-shader_parameter/energy_color = Color(0.26670972, 0.33435228, 0.9915109, 1)
-shader_parameter/highlight_color = Color(0.5253551, 0.7461767, 0.99818164, 1)
+shader_parameter/inner_color = Color(2.5027991e-06, 0.39848542, 0.93424505, 1)
+shader_parameter/energy_color = Color(0.43564615, 0.544676, 0.9981225, 1)
+shader_parameter/highlight_color = Color(0.78763735, 0.8846902, 1, 1)
 shader_parameter/transition_progress = 1.0
 shader_parameter/portal_radius = 0.46
 shader_parameter/edge_softness = 0.04

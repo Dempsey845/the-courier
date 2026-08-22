@@ -9,6 +9,8 @@ extends Node
 
 @export var start_on_ready: bool = false
 
+var can_start: bool = true
+
 func _ready() -> void:
 	await get_tree().process_frame
 	
@@ -19,5 +21,8 @@ func _ready() -> void:
 		start()
 
 func start():
+	if !can_start:
+		return
+	
 	DialogueManager.instance.start(dialogue, dialogue_ui, icon_texture, npc)
 	

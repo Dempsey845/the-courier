@@ -8,6 +8,8 @@
 [ext_resource type="Shader" uid="uid://db22n6rb1te2v" path="res://World/Areas/Ruins/rune_beam.gdshader" id="3_4amun"]
 [ext_resource type="Script" uid="uid://cp650b3omh5io" path="res://World/Areas/Ruins/rune_beam.gd" id="4_dx7le"]
 [ext_resource type="Script" uid="uid://deroukfpp2mia" path="res://Components/hitbox.gd" id="5_ta6tj"]
+[ext_resource type="PackedScene" uid="uid://ce0bx6o8uq262" path="res://NPC/Wisp/flame_wisp_npc.tscn" id="9_vugli"]
+[ext_resource type="PackedScene" uid="uid://b4yyn7ah5o6it" path="res://Systems/Dialogue/dialogue_ui.tscn" id="10_273lu"]
 
 [sub_resource type="Environment" id="DungeonEnvironment"]
 background_mode = 1
@@ -180,6 +182,10 @@ size = Vector3(75, 1, 125)
 [node name="DialogueManager" type="Node" parent="." unique_id=533687984]
 script = ExtResource("2_a8hmm")
 metadata/_custom_type_script = "uid://dh6q176dnlgbu"
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=515574374]
+
+[node name="DialogueUI" parent="CanvasLayer" unique_id=1916400925 instance=ExtResource("10_273lu")]
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=75955960]
 environment = SubResource("DungeonEnvironment")
@@ -734,5 +740,8 @@ metadata/_custom_type_script = "uid://deroukfpp2mia"
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Killbox" unique_id=1406742002]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -12)
 shape = SubResource("BoxShape3D_xrivr")
+
+[node name="FlameWispNPC" parent="." unique_id=870401761 instance=ExtResource("9_vugli")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 31)
 
 [editable path="NavigationRegion3D/Geometry/ShrineRoom/ShrineRune/InputPrompt"]

@@ -15,6 +15,8 @@ var player_items: Dictionary[PlayerItemManager.Item, int] = {}
 
 var player_killed_frog_boss: bool
 
+var player_has_depetrification_device: bool
+
 var previous_world_type: WorldType
 var current_world_type: WorldType
 
