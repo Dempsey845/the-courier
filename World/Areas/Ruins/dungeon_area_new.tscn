@@ -7,6 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://x03f4042spc7" path="res://Systems/Controller/input_prompt.tscn" id="2_w41ql"]
 [ext_resource type="Shader" uid="uid://db22n6rb1te2v" path="res://World/Areas/Ruins/rune_beam.gdshader" id="3_4amun"]
 [ext_resource type="Script" uid="uid://cp650b3omh5io" path="res://World/Areas/Ruins/rune_beam.gd" id="4_dx7le"]
+[ext_resource type="PackedScene" uid="uid://bjahowk36y25d" path="res://NPC/Wisp/depetrification_device.tscn" id="4_i36jy"]
 [ext_resource type="Script" uid="uid://deroukfpp2mia" path="res://Components/hitbox.gd" id="5_ta6tj"]
 [ext_resource type="PackedScene" uid="uid://ce0bx6o8uq262" path="res://NPC/Wisp/flame_wisp_npc.tscn" id="9_vugli"]
 [ext_resource type="PackedScene" uid="uid://b4yyn7ah5o6it" path="res://Systems/Dialogue/dialogue_ui.tscn" id="10_273lu"]
@@ -335,6 +336,13 @@ radius = 1.2
 height = 3.5
 material = SubResource("StoneTrim")
 
+[node name="HallColumnRightB6" type="CSGCylinder3D" parent="NavigationRegion3D/Geometry/GreatHall" unique_id=1353514081]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.5, -2.25, -25)
+use_collision = true
+radius = 1.2
+height = 3.5
+material = SubResource("StoneTrim")
+
 [node name="HallColumnRightB3" type="CSGCylinder3D" parent="NavigationRegion3D/Geometry/GreatHall" unique_id=817183334]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.5, 0.75, -3)
 use_collision = true
@@ -382,6 +390,9 @@ use_collision = true
 radius = 1.35
 height = 1.2
 material = SubResource("AncientGold")
+
+[node name="DepetrificationDevice" parent="NavigationRegion3D/Geometry/GreatHall/OptionalRoute/OptionalRewardPedestal" unique_id=1316792693 instance=ExtResource("4_i36jy")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.6, 0)
 
 [node name="ChasmRoom" type="Node3D" parent="NavigationRegion3D/Geometry" unique_id=121275113]
 
@@ -603,15 +614,6 @@ light_volumetric_fog_energy = 0.35
 omni_range = 21.0
 omni_attenuation = 1.25
 
-[node name="RewardLight" type="OmniLight3D" parent="NavigationRegion3D/Lighting" unique_id=1237455790]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.5, 7, -11)
-light_color = Color(1, 0.52, 0.12, 1)
-light_energy = 2.1
-light_indirect_energy = 1.1
-light_volumetric_fog_energy = 1.1
-omni_range = 9.0
-omni_attenuation = 1.6
-
 [node name="ChasmLavaGlow" type="OmniLight3D" parent="NavigationRegion3D/Lighting" unique_id=27958681]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, -30)
 light_color = Color(1, 0.095, 0.012, 1)
@@ -742,6 +744,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -12)
 shape = SubResource("BoxShape3D_xrivr")
 
 [node name="FlameWispNPC" parent="." unique_id=870401761 instance=ExtResource("9_vugli")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 31)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.099999905, 7.9, -56.399998)
 
 [editable path="NavigationRegion3D/Geometry/ShrineRoom/ShrineRune/InputPrompt"]

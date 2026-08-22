@@ -13,9 +13,9 @@ func _ready() -> void:
     npc.interact.connect(_on_npc_interact)
 
 func _on_npc_interact():
-    if dialogue_controller.can_start or is_depetrifying:
+    if dialogue_controller.can_start or is_depetrifying or !DataManager.player_has_depetrification_device:
         return
-    
+
     is_depetrifying = true
     await flame_wisp_model.depetrify()
 

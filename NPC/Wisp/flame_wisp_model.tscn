@@ -7,6 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://bglxp30a52mbp" path="res://NPC/Wisp/fire_particles.tscn" id="3_5ukb1"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_5ukb1"]
+resource_local_to_scene = true
 render_priority = 0
 shader = ExtResource("2_ba274")
 shader_parameter/progress = 1.0
