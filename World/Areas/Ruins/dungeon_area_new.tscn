@@ -414,6 +414,12 @@ use_collision = true
 size = Vector3(2, 16, 30)
 material = SubResource("Stone")
 
+[node name="ChasmRightWall2" type="CSGBox3D" parent="NavigationRegion3D/Geometry/ChasmRoom" unique_id=1777098739]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, -43.5)
+use_collision = true
+size = Vector3(24, 8, 3)
+material = SubResource("Stone")
+
 [node name="FallbackPillar1" type="CSGCylinder3D" parent="NavigationRegion3D/Geometry/ChasmRoom" unique_id=566016075]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, -25)
 use_collision = true

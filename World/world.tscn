@@ -33,6 +33,7 @@
 [ext_resource type="Script" uid="uid://bmpi2qgjq8pdg" path="res://World/zone_area.gd" id="31_s5a7k"]
 [ext_resource type="PackedScene" uid="uid://c255fa1gv5vfc" path="res://World/Environment/Foliage/flower.tscn" id="31_w08tj"]
 [ext_resource type="PackedScene" uid="uid://cnxvt8i3eaqk4" path="res://World/Environment/Foliage/grass.tscn" id="32_spf4h"]
+[ext_resource type="PackedScene" uid="uid://6aiuwb2feg0x" path="res://World/Areas/EnchantedForest/bakery.tscn" id="34_w08tj"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_syi77"]
 shader = ExtResource("5_3ql07")
@@ -821,7 +822,7 @@ color_ramp = SubResource("Gradient_0wqet")
 seamless = true
 in_3d_space = true
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_3ql07"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_spf4h"]
 resource_local_to_scene = true
 render_priority = 0
 shader = SubResource("Shader_5gpxd")
@@ -868,9 +869,9 @@ shader_parameter/ripple_strength = 0.08
 shader_parameter/ripple_width = 0.2
 shader_parameter/ripple_frequency = 12.0
 
-[sub_resource type="PlaneMesh" id="PlaneMesh_w08tj"]
+[sub_resource type="PlaneMesh" id="PlaneMesh_or3hn"]
 resource_local_to_scene = true
-material = SubResource("ShaderMaterial_3ql07")
+material = SubResource("ShaderMaterial_spf4h")
 size = Vector2(45, 45)
 subdivide_width = 450
 subdivide_depth = 450
@@ -1112,7 +1113,7 @@ transform = Transform3D(0.49609634, 0.060223475, -0.788083, -0.13249165, 0.90199
 
 [node name="MushroomSwampEffect" parent="NavigationRegion3D/SwampArea" unique_id=963275507 instance=ExtResource("3_oe8m4")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 24.600002, 0)
-mesh = SubResource("PlaneMesh_w08tj")
+mesh = SubResource("PlaneMesh_or3hn")
 
 [node name="DirtPillarWide" parent="NavigationRegion3D/SwampArea" unique_id=2051397190 node_paths=PackedStringArray("water") instance=ExtResource("4_h2aik")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15.6, 24, 16.099998)
@@ -1270,8 +1271,26 @@ transform = Transform3D(0.9659258, 0, -0.25881907, 0, 1, 0, 0.25881907, 0, 0.965
 [node name="CloudPlatform2" parent="NavigationRegion3D/CSGCombiner3D" unique_id=1312280435 instance=ExtResource("4_dg1ng")]
 transform = Transform3D(0.9659258, 0, -0.25881907, 0, 1, 0, 0.25881907, 0, 0.9659258, -24.5, 0, -4.200001)
 
+[node name="CSGCombiner3D2" type="CSGCombiner3D" parent="NavigationRegion3D" unique_id=497005768]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 65, 0, -27)
+use_collision = true
+
+[node name="CSGCylinder3D" type="CSGCylinder3D" parent="NavigationRegion3D/CSGCombiner3D2" unique_id=2133055800]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, -40.38716, 8)
+radius = 40.0
+height = 79.36777
+sides = 10
+material = SubResource("StandardMaterial3D_wi6ju")
+
+[node name="CSGCylinder3D2" type="CSGCylinder3D" parent="NavigationRegion3D/CSGCombiner3D2" unique_id=322113654]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0.09818554, 8)
+radius = 40.0
+height = 1.7521176
+sides = 10
+material = SubResource("StandardMaterial3D_jf64p")
+
 [node name="Player" parent="." unique_id=67220391 instance=ExtResource("1_62w18")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, -8)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.4000001, 13.599999, -25.4)
 
 [node name="GolemEnemy" parent="." unique_id=890047339 node_paths=PackedStringArray("target") instance=ExtResource("2_8a836")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -41, 0, -28)
@@ -1469,3 +1488,6 @@ transform = Transform3D(0.95262796, 0, 0.55, 0, 1.1, 0, -0.55, 0, 0.95262796, 12
 
 [node name="Tree8" parent="StartArea" unique_id=52910223 instance=ExtResource("22_koyeq")]
 transform = Transform3D(1.2, 0, 0, 0, 1.2, 0, 0, 0, 1.2, -3, 1, -2)
+
+[node name="Bakery" parent="." unique_id=1089983184 instance=ExtResource("34_w08tj")]
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 68, 8, -17)
