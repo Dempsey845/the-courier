@@ -129,3 +129,5 @@ camera_switch={
 [rendering]
 
 rendering_device/driver.windows="d3d12"
+environment/volumetric_fog/volume_size=128
+environment/volumetric_fog/volume_depth=128
