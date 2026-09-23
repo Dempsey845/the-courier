@@ -1,6 +1,18 @@
 [gd_scene format=3 uid="uid://6aiuwb2feg0x"]
 
 [ext_resource type="PackedScene" uid="uid://bknfxx30ryt7c" path="res://World/Areas/EnchantedForest/Bakery.glb" id="1_25dcv"]
+[ext_resource type="Shader" uid="uid://xjmbsbfojfkv" path="res://World/Environment/wood_wrap.gdshader" id="2_4d7v8"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_05jqx"]
+render_priority = 0
+shader = ExtResource("2_4d7v8")
+shader_parameter/light_color = Color(0.66, 0.4, 0.21, 1)
+shader_parameter/mid_color = Color(0.48, 0.27, 0.13, 1)
+shader_parameter/dark_color = Color(0.3, 0.16, 0.09, 1)
+shader_parameter/grain_scale = 1.0
+shader_parameter/grain_warp = 0.35
+shader_parameter/color_variation = 0.8
+shader_parameter/end_grain_blend = 0.65
 
 [sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_4d7v8"]
 points = PackedVector3Array(-5.1924186, 6.1780076, -0.32259914, 3.9957585, 11.980499, 0.64336056, 3.8340993, 11.980499, 2.4141145, 3.7532012, 6.1320353, 3.7711604, 3.753357, 6.13193, -3.7712953, -3.7297676, 11.980499, -3.7018442, -3.7297676, 11.980499, 3.7018442, -0.3496704, 6.1692586, 5.181187, 3.673338, 11.980499, -3.7018442, -0.34966952, 6.169248, -5.1812057, 0.29285875, 11.980499, 5.150918, -3.7719975, 6.147295, 3.751662, 0.29285875, 11.980499, -5.150918, -5.179314, 11.980499, 0.32168028, -3.772053, 6.1472435, -3.7517276, 3.673338, 11.980499, 3.7018442, 4.05934, 6.14613, -0.6522773, -5.179314, 11.980499, -0.32168028, -0.3510848, 11.980499, -5.150918, -0.3510848, 11.980499, 5.150918, 0.30147213, 6.158075, 5.201071, 0.3014747, 6.1580667, -5.2010856, -5.192338, 6.178058, 0.3225935, 3.9957585, 11.980499, -0.64336056, 4.0593214, 6.146142, 0.65227467, -3.085824, 11.980499, 4.022516, -3.085824, 11.980499, -4.022516, -4.0521884, 11.980499, -3.0574753, -4.0521884, 11.980499, 3.0574753, 3.0293944, 11.980499, 4.022516, 3.0293944, 11.980499, -4.022516, 3.8340993, 11.980499, -2.4141145)
@@ -75,8 +87,14 @@ radius = 7.183
 
 [node name="Bakery" unique_id=1089983184 instance=ExtResource("1_25dcv")]
 
+[node name="TreeBase" parent="." index="0" unique_id=1621313200]
+material_override = SubResource("ShaderMaterial_05jqx")
+
 [node name="TreeBaseSupport" parent="." index="1" unique_id=734104248]
 transform = Transform3D(0.9, 0, 0, 0, 0.9, 0, 0, 0, 0.9, 0, 0.63, 0)
+
+[node name="TreeBranch" parent="." index="11" unique_id=1003279306]
+surface_material_override/1 = SubResource("ShaderMaterial_05jqx")
 
 [node name="StaticBody3D" type="StaticBody3D" parent="." index="29" unique_id=1066565131]
 

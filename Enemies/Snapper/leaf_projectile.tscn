@@ -46,7 +46,7 @@ radius = 0.3
 
 [node name="LeafProjectile" type="Area3D" unique_id=371901397]
 collision_layer = 128
-collision_mask = 16
+collision_mask = 17
 script = ExtResource("1_38rhs")
 metadata/_custom_type_script = "uid://deroukfpp2mia"
 
@@ -60,3 +60,5 @@ mesh = SubResource("ArrayMesh_hpo26")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=146262429]
 shape = SubResource("SphereShape3D_xrivr")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
