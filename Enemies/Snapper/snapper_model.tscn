@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://kr7ji63qxdwi" path="res://Enemies/Snapper/snapper_model.gd" id="2_b6eq4"]
 [ext_resource type="Texture2D" uid="uid://bykq80niksq06" path="res://Enemies/Snapper/Snapper_SnapperHeadTexture.png" id="2_oljqf"]
+[ext_resource type="Shader" uid="uid://c5i1sgv026nlh" path="res://World/Environment/grass_ground.gdshader" id="3_b6eq4"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_gbg5h"]
 resource_name = "Head"
@@ -105,6 +106,15 @@ bind/9/pose = Transform3D(0.61129093, -0.13800749, -0.77928007, -0.7256781, -0.4
 bind/10/name = &"Foot.R"
 bind/10/bone = -1
 bind/10/pose = Transform3D(-0.3996294, -0.5820177, -0.7082031, -0.722947, -0.27489293, 0.63386256, -0.56359917, 0.7653034, -0.3109127, 0.01810757, 0.017131114, -0.17387113)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_1kv4o"]
+render_priority = 0
+shader = ExtResource("3_b6eq4")
+shader_parameter/light_color = Color(0.4321142, 0.6127634, 0.25147298, 1)
+shader_parameter/mid_color = Color(0.33115125, 0.62273747, 0.27992618, 1)
+shader_parameter/dark_color = Color(0.31885272, 0.5407848, 0.23708719, 1)
+shader_parameter/patch_size = 0.25
+shader_parameter/color_variation = 0.75
 
 [sub_resource type="Animation" id="Animation_nmjm0"]
 resource_name = "Idle"
@@ -456,7 +466,7 @@ bones/1/parent = 0
 bones/1/rest = Transform3D(0.99831915, 0.055583965, 0.016407263, -0.055880368, 0.99827164, 0.01819629, -0.015367482, -0.01908255, 0.99969983, 0, 0.5359771, 0)
 bones/1/enabled = true
 bones/1/position = Vector3(0, 0.5359771, 0)
-bones/1/rotation = Quaternion(-0.008272395, 0.009036914, -0.15097259, 0.98846203)
+bones/1/rotation = Quaternion(-0.009977836, 0.007109231, 0.058868043, 0.9981906)
 bones/1/scale = Vector3(0.99999994, 1, 1)
 bones/2/name = "MidHead"
 bones/2/parent = 1
@@ -470,7 +480,7 @@ bones/3/parent = 2
 bones/3/rest = Transform3D(0.99897385, 0.042890973, -0.014546055, -0.044492457, 0.98940414, -0.13820235, 0.008464294, 0.13870773, 0.9902973, 1.6431924e-10, 0.23487668, -5.2264424e-09)
 bones/3/enabled = true
 bones/3/position = Vector3(1.6431924e-10, 0.23487668, -5.2264424e-09)
-bones/3/rotation = Quaternion(0.07628578, 0.062152714, 0.0055779405, 0.9951314)
+bones/3/rotation = Quaternion(-0.048106484, 0.036232777, -0.0108379135, 0.9981261)
 bones/3/scale = Vector3(1, 1, 1.0000001)
 bones/4/name = "HeadTip"
 bones/4/parent = 3
@@ -526,6 +536,7 @@ bones/10/scale = Vector3(1, 0.99999994, 1)
 mesh = SubResource("ArrayMesh_cek86")
 skin = SubResource("Skin_7b7su")
 skeleton = NodePath("..")
+surface_material_override/2 = SubResource("ShaderMaterial_1kv4o")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1269852238]
 libraries/ = SubResource("AnimationLibrary_ij8bg")

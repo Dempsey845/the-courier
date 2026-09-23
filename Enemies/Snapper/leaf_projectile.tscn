@@ -41,6 +41,9 @@ _surfaces = [{
 blend_shape_mode = 0
 shadow_mesh = SubResource("ArrayMesh_rpmj1")
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_kpe35"]
+albedo_color = Color(0.31764707, 0.5411765, 0.23529412, 1)
+
 [sub_resource type="SphereShape3D" id="SphereShape3D_xrivr"]
 radius = 0.3
 
@@ -53,10 +56,12 @@ metadata/_custom_type_script = "uid://deroukfpp2mia"
 [node name="LeafProjectile" type="MeshInstance3D" parent="." unique_id=192754685]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.168, 0, 0)
 mesh = SubResource("ArrayMesh_hpo26")
+surface_material_override/0 = SubResource("StandardMaterial3D_kpe35")
 
 [node name="LeafProjectile2" type="MeshInstance3D" parent="." unique_id=1818977298]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.187, 0, 0)
 mesh = SubResource("ArrayMesh_hpo26")
+surface_material_override/0 = SubResource("StandardMaterial3D_kpe35")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=146262429]
 shape = SubResource("SphereShape3D_xrivr")
