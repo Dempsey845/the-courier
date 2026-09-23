@@ -601,9 +601,6 @@ states/Walk/position = Vector2(470, -40)
 transitions = ["Start", "Idle", SubResource("AnimationNodeStateMachineTransition_so5yf"), "Idle", "Walk", SubResource("AnimationNodeStateMachineTransition_tcut3"), "Walk", "Idle", SubResource("AnimationNodeStateMachineTransition_w3o0w"), "Idle", "Attack", SubResource("AnimationNodeStateMachineTransition_l403x"), "Attack", "Idle", SubResource("AnimationNodeStateMachineTransition_e8k2g"), "Idle", "Hit", SubResource("AnimationNodeStateMachineTransition_x3j3j"), "Hit", "Idle", SubResource("AnimationNodeStateMachineTransition_682jx"), "Walk", "Hit", SubResource("AnimationNodeStateMachineTransition_8kll2"), "Attack", "Hit", SubResource("AnimationNodeStateMachineTransition_w83pk")]
 graph_offset = Vector2(89, 11)
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_120db"]
-albedo_color = Color(0.52906674, 0.5290667, 0.5290667, 1)
-
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_1bu21"]
 resource_name = "Stone"
 vertex_color_use_as_albedo = true
@@ -731,321 +728,6 @@ _surfaces = [{
 }]
 blend_shape_mode = 0
 
-[sub_resource type="Shader" id="Shader_x3j3j"]
-code = "// NOTE: Shader automatically converted from
-// Godot Engine 4.7 StandardMaterial3D.
-
-shader_type spatial;
-
-render_mode blend_mix, depth_draw_opaque, cull_back,
-	diffuse_burley, specular_schlick_ggx;
-
-
-// Standard material
-
-uniform vec4 albedo : source_color =
-	vec4(1.0);
-
-uniform sampler2D texture_albedo :
-	source_color,
-	filter_linear_mipmap,
-	repeat_enable;
-
-uniform ivec2 albedo_texture_size;
-
-uniform float point_size :
-	hint_range(0.1, 128.0, 0.1) = 1.0;
-
-uniform float roughness :
-	hint_range(0.0, 1.0) = 1.0;
-
-uniform sampler2D texture_metallic :
-	hint_default_white,
-	filter_linear_mipmap,
-	repeat_enable;
-
-uniform vec4 metallic_texture_channel =
-	vec4(1.0, 0.0, 0.0, 0.0);
-
-uniform sampler2D texture_roughness :
-	hint_roughness_r,
-	filter_linear_mipmap,
-	repeat_enable;
-
-uniform float specular :
-	hint_range(0.0, 1.0, 0.01) = 0.5;
-
-uniform float metallic :
-	hint_range(0.0, 1.0, 0.01) = 0.0;
-
-uniform vec3 uv1_scale = vec3(1.0);
-uniform vec3 uv1_offset = vec3(0.0);
-
-uniform vec3 uv2_scale = vec3(1.0);
-uniform vec3 uv2_offset = vec3(0.0);
-
-
-// Face placement
-
-// UV position at the centre of the face.
-uniform vec2 face_center = vec2(0.5, 0.5);
-
-// Scales the entire expression.
-uniform vec2 face_scale = vec2(1.0, 1.0);
-
-
-// Eyes
-
-uniform vec4 eye_color : source_color =
-	vec4(1.0, 0.005, 0.0, 1.0);
-
-uniform float eye_emission :
-	hint_range(0.0, 20.0, 0.1) = 8.0;
-
-uniform float eye_spacing :
-	hint_range(0.001, 0.5, 0.001) = 0.105;
-
-uniform vec2 eye_size = vec2(0.075, 0.032);
-
-uniform float eye_vertical_offset :
-	hint_range(-0.5, 0.5, 0.001) = -0.045;
-
-uniform float eye_angle :
-	hint_range(0.0, 1.2, 0.01) = 0.32;
-
-
-
-// Face edges
-
-uniform float face_softness :
-	hint_range(0.0001, 0.1, 0.0001) = 0.006;
-
-
-// Optional glow animation
-
-uniform bool pulse_enabled = true;
-
-uniform float pulse_speed :
-	hint_range(0.0, 10.0, 0.1) = 2.5;
-
-uniform float pulse_amount :
-	hint_range(0.0, 1.0, 0.01) = 0.15;
-
-
-vec2 rotate_2d(
-	vec2 position,
-	float angle
-) {
-	float cosine = cos(angle);
-	float sine = sin(angle);
-
-	return vec2(
-		cosine * position.x -
-			sine * position.y,
-
-		sine * position.x +
-			cosine * position.y
-	);
-}
-
-
-float ellipse_mask(
-	vec2 position,
-	vec2 ellipse_size
-) {
-	float distance_to_ellipse = length(
-		position / max(
-			ellipse_size,
-			vec2(0.0001)
-		)
-	);
-
-	return 1.0 - smoothstep(
-		1.0,
-		1.0 + face_softness * 20.0,
-		distance_to_ellipse
-	);
-}
-
-
-float get_left_eye(vec2 face_uv) {
-	vec2 eye_position =
-		face_uv -
-		vec2(
-			-eye_spacing,
-			eye_vertical_offset
-		);
-
-	eye_position = rotate_2d(
-		eye_position,
-		-eye_angle
-	);
-
-	return ellipse_mask(
-		eye_position,
-		eye_size
-	);
-}
-
-
-float get_right_eye(vec2 face_uv) {
-	vec2 eye_position =
-		face_uv -
-		vec2(
-			eye_spacing,
-			eye_vertical_offset
-		);
-
-	eye_position = rotate_2d(
-		eye_position,
-		eye_angle
-	);
-
-	return ellipse_mask(
-		eye_position,
-		eye_size
-	);
-}
-
-
-void vertex() {
-	UV =
-		UV * uv1_scale.xy +
-		uv1_offset.xy;
-}
-
-
-void fragment() {
-	vec2 base_uv = UV;
-
-	vec4 albedo_tex = texture(
-		texture_albedo,
-		base_uv
-	);
-
-	ALBEDO =
-		albedo.rgb *
-		albedo_tex.rgb;
-
-
-	float metallic_tex = dot(
-		texture(
-			texture_metallic,
-			base_uv
-		),
-		metallic_texture_channel
-	);
-
-	METALLIC =
-		metallic_tex *
-		metallic;
-
-	SPECULAR = specular;
-
-
-	vec4 roughness_texture_channel =
-		vec4(1.0, 0.0, 0.0, 0.0);
-
-	float roughness_tex = dot(
-		texture(
-			texture_roughness,
-			base_uv
-		),
-		roughness_texture_channel
-	);
-
-	ROUGHNESS =
-		roughness_tex *
-		roughness;
-
-
-	// Convert UV into coordinates relative
-	// to the configurable face centre.
-
-	vec2 face_uv = (
-		base_uv - face_center
-	) / max(
-		face_scale,
-		vec2(0.0001)
-	);
-
-
-	float left_eye =
-		get_left_eye(face_uv);
-
-	float right_eye =
-		get_right_eye(face_uv);
-
-	float eyes = max(
-		left_eye,
-		right_eye
-	);
-
-		// Optional subtle glow pulse.
-
-	float pulse = 1.0;
-
-	if (pulse_enabled) {
-		pulse +=
-			sin(TIME * pulse_speed) *
-			pulse_amount;
-	}
-
-
-	// Blend the red eyes over the original material.
-
-	ALBEDO = mix(
-		ALBEDO,
-		eye_color.rgb,
-		eyes
-	);
-
-	EMISSION =
-		eye_color.rgb *
-		eyes *
-		eye_emission *
-		pulse;
-
-	ROUGHNESS = mix(
-		ROUGHNESS,
-		0.22,
-		eyes
-	);
-
-	METALLIC = mix(
-		METALLIC,
-		0.0,
-		eyes
-	);
-}"
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_682jx"]
-render_priority = 0
-shader = SubResource("Shader_x3j3j")
-shader_parameter/albedo = Color(0.52906674, 0.5290667, 0.5290667, 1)
-shader_parameter/albedo_texture_size = Vector2i(0, 0)
-shader_parameter/point_size = 1.0
-shader_parameter/roughness = 1.0
-shader_parameter/metallic_texture_channel = Vector4(1, 0, 0, 0)
-shader_parameter/specular = 0.5
-shader_parameter/metallic = 0.0
-shader_parameter/uv1_scale = Vector3(1, 1, 1)
-shader_parameter/uv1_offset = Vector3(0, 0, 0)
-shader_parameter/uv2_scale = Vector3(1, 1, 1)
-shader_parameter/uv2_offset = Vector3(0, 0, 0)
-shader_parameter/face_center = Vector2(0.175, 0.735)
-shader_parameter/face_scale = Vector2(0.8, 1)
-shader_parameter/eye_color = Color(1, 0.005, 0, 1)
-shader_parameter/eye_emission = 8.0
-shader_parameter/eye_spacing = 0.105
-shader_parameter/eye_size = Vector2(0.075, 0.032)
-shader_parameter/eye_vertical_offset = -0.045
-shader_parameter/eye_angle = 0.32
-shader_parameter/face_softness = 0.006
-shader_parameter/pulse_enabled = true
-shader_parameter/pulse_speed = 2.5
-shader_parameter/pulse_amount = 0.15
-
 [sub_resource type="ArrayMesh" id="ArrayMesh_tsug3"]
 resource_name = "Sphere"
 _surfaces = [{
@@ -1101,7 +783,7 @@ bones/0/parent = -1
 bones/0/rest = Transform3D(1, 4.973799e-14, 2.384186e-07, 2.384186e-07, -1.1920929e-07, -0.99999994, 0, 0.99999994, -1.1920929e-07, 0, 0, 0.006584863)
 bones/0/enabled = true
 bones/0/position = Vector3(0, 0, 0.006584863)
-bones/0/rotation = Quaternion(0.68337715, 8.146492e-08, 8.703062e-08, 0.7300656)
+bones/0/rotation = Quaternion(0.7069354, 8.4273296e-08, 8.431416e-08, 0.70727825)
 bones/0/scale = Vector3(1, 1, 1)
 bones/1/name = "Root_end"
 bones/1/parent = 0
@@ -1115,7 +797,7 @@ bones/2/parent = -1
 bones/2/rest = Transform3D(1, 0, 0, 0, -1.1920929e-07, -0.99999994, 0, 0.99999994, -1.1920929e-07, 0.005723122, 0.00012586158, 0.0003879379)
 bones/2/enabled = true
 bones/2/position = Vector3(0.005723122, 0.00012586158, 0.0003879379)
-bones/2/rotation = Quaternion(0.7052747, 0.050869025, 0.05086901, 0.7052746)
+bones/2/rotation = Quaternion(0.7071067, 0.0003734417, 0.00037344164, 0.7071066)
 bones/2/scale = Vector3(1, 0.99999994, 0.99999994)
 bones/3/name = "Foot.L_end"
 bones/3/parent = 2
@@ -1129,7 +811,7 @@ bones/4/parent = -1
 bones/4/rest = Transform3D(1, 0, 0, 0, -1.1920929e-07, -0.99999994, 0, 0.99999994, -1.1920929e-07, 0.009826254, -1.2688058e-09, 0.009443412)
 bones/4/enabled = true
 bones/4/position = Vector3(0.009826254, -1.2688058e-09, 0.009443412)
-bones/4/rotation = Quaternion(0.70597464, 0.039998937, -0.03999894, 0.7059745)
+bones/4/rotation = Quaternion(0.7071068, 0.00029369546, -0.00029369548, 0.7071067)
 bones/4/scale = Vector3(1, 1, 1)
 bones/5/name = "Hand.L_end"
 bones/5/parent = 4
@@ -1157,7 +839,7 @@ bones/8/parent = -1
 bones/8/rest = Transform3D(1, 0, 0, 0, -1.1920929e-07, -0.99999994, 0, 0.99999994, -1.1920929e-07, -0.005723122, 0.00012586158, 0.0003879379)
 bones/8/enabled = true
 bones/8/position = Vector3(-0.005723122, 0.00012586158, 0.0003879379)
-bones/8/rotation = Quaternion(0.70466673, -0.05869214, -0.058692135, 0.70466673)
+bones/8/rotation = Quaternion(0.70710665, -0.00043083486, -0.00043083483, 0.70710665)
 bones/8/scale = Vector3(1, 0.99999994, 0.99999994)
 bones/9/name = "Foot.R_end"
 bones/9/parent = 8
@@ -1171,7 +853,7 @@ bones/10/parent = -1
 bones/10/rest = Transform3D(1, 0, 0, 0, -1.1920929e-07, -0.99999994, 0, 0.99999994, -1.1920929e-07, -0.009826254, -1.2688058e-09, 0.009443412)
 bones/10/enabled = true
 bones/10/position = Vector3(-0.009826254, -1.2688058e-09, 0.009443412)
-bones/10/rotation = Quaternion(0.7051485, -0.05258949, 0.05258949, 0.7051484)
+bones/10/rotation = Quaternion(0.7071067, -0.00038608708, 0.00038608708, 0.7071066)
 bones/10/scale = Vector3(1, 1, 1)
 bones/11/name = "Hand.R_end"
 bones/11/parent = 10
@@ -1183,42 +865,36 @@ bones/11/scale = Vector3(1, 1, 1)
 
 [node name="Body" type="MeshInstance3D" parent="Armature/Skeleton3D" unique_id=1021747304]
 transform = Transform3D(1.0000004, 0, 0, 0, 1.0000005, -1.4210855e-14, 0, 1.4210855e-14, 1.0000005, 0, 2.646978e-23, -2.3841862e-09)
-material_override = SubResource("StandardMaterial3D_120db")
 mesh = SubResource("ArrayMesh_y3qgr")
 skin = SubResource("Skin_g7vlx")
 skeleton = NodePath("..")
 
 [node name="Foot_L" type="MeshInstance3D" parent="Armature/Skeleton3D" unique_id=828903086]
 transform = Transform3D(1.0000004, 0, 0, 0, 1.0000002, -2.842171e-14, 0, 2.842171e-14, 1.0000002, -5.960465e-10, -3.5527143e-17, -4.235166e-24)
-material_override = SubResource("StandardMaterial3D_120db")
 mesh = SubResource("ArrayMesh_s0jbg")
 skin = SubResource("Skin_g7vlx")
 skeleton = NodePath("..")
 
 [node name="Foot_R" type="MeshInstance3D" parent="Armature/Skeleton3D" unique_id=59687568]
 transform = Transform3D(1.0000004, 0, 0, 0, 1.0000004, -2.842171e-14, 0, 2.842171e-14, 1.0000004, 5.960465e-10, 3.5527146e-17, -2.9802327e-10)
-material_override = SubResource("StandardMaterial3D_120db")
 mesh = SubResource("ArrayMesh_sxw1p")
 skin = SubResource("Skin_g7vlx")
 skeleton = NodePath("..")
 
 [node name="Hand_L" type="MeshInstance3D" parent="Armature/Skeleton3D" unique_id=249109191]
 transform = Transform3D(1.0000004, 0, 0, 0, 1.0000004, -2.842171e-14, 0, 2.842171e-14, 1.0000004, 5.960465e-10, 1.4210857e-16, 1.6940663e-23)
-material_override = SubResource("StandardMaterial3D_120db")
 mesh = SubResource("ArrayMesh_8xy8q")
 skin = SubResource("Skin_g7vlx")
 skeleton = NodePath("..")
 
 [node name="Hand_R" type="MeshInstance3D" parent="Armature/Skeleton3D" unique_id=1042314263]
 transform = Transform3D(1.0000004, 0, 0, 0, 1.0000005, -1.4210855e-14, 0, 1.4210855e-14, 1.0000005, 5.960465e-10, 1.323489e-23, -1.1920931e-09)
-material_override = SubResource("StandardMaterial3D_120db")
 mesh = SubResource("ArrayMesh_560dc")
 skin = SubResource("Skin_g7vlx")
 skeleton = NodePath("..")
 
 [node name="Sphere" type="MeshInstance3D" parent="Armature/Skeleton3D" unique_id=1399549432]
 transform = Transform3D(1.0000004, 0, 0, 0, 1.0000004, -2.842171e-14, 0, 2.842171e-14, 1.0000004, 3.7252906e-11, 5.684343e-16, -2.3841862e-09)
-material_override = SubResource("ShaderMaterial_682jx")
 mesh = SubResource("ArrayMesh_tsug3")
 skin = SubResource("Skin_g7vlx")
 skeleton = NodePath("..")

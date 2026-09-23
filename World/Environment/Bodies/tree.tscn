@@ -1,20 +1,29 @@
 [gd_scene format=4 uid="uid://cjtuq4am582u0"]
 
 [ext_resource type="PackedScene" uid="uid://d0e03uxowx1y1" path="res://World/Environment/Tree.glb" id="1_fb3s3"]
-[ext_resource type="Shader" uid="uid://ccpnef7870xq1" path="res://World/gradient.gdshader" id="2_fb3s3"]
+[ext_resource type="Shader" uid="uid://bj04hi556i8oi" path="res://World/Environment/wood.gdshader" id="2_fciuo"]
+[ext_resource type="Shader" uid="uid://dex7ja7i5umsj" path="res://World/Environment/tree_leaf.gdshader" id="3_fciuo"]
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_cmsdg"]
-resource_name = "Wood"
-cull_mode = 2
-albedo_color = Color(0.35434294, 0.17693348, 0.03939828, 1)
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ggg75"]
+render_priority = 0
+shader = ExtResource("2_fciuo")
+shader_parameter/light_color = Color(0.66, 0.4, 0.21, 1)
+shader_parameter/mid_color = Color(0.48, 0.27, 0.13, 1)
+shader_parameter/dark_color = Color(0.3, 0.16, 0.09, 1)
+shader_parameter/grain_scale = 9.0
+shader_parameter/grain_warp = 0.35
+shader_parameter/color_variation = 0.7
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_fciuo"]
 render_priority = 0
-shader = ExtResource("2_fb3s3")
-shader_parameter/bottom_color = Color(0.18701082, 0.42614213, 0.15418646, 1)
-shader_parameter/top_color = Color(0.55, 0.85, 0.35, 1)
-shader_parameter/gradient_bottom = 2.09
-shader_parameter/gradient_top = 6.665
+shader = ExtResource("3_fciuo")
+shader_parameter/light_color = Color(0.44, 0.67, 0.29, 1)
+shader_parameter/mid_color = Color(0.32886964, 0.6181856, 0.27718312, 1)
+shader_parameter/dark_color = Color(0.3204988, 0.5465098, 0.23997808, 1)
+shader_parameter/pattern_scale = 2.00000007125
+shader_parameter/color_variation = 0.8
+shader_parameter/wind_strength = 0.0400000019
+shader_parameter/wind_speed = 1.2
 
 [sub_resource type="ArrayMesh" id="ArrayMesh_qorfo"]
 _surfaces = [{
@@ -49,7 +58,7 @@ _surfaces = [{
 "format": 34896613399,
 "index_count": 48,
 "index_data": PackedByteArray("AAABAAIAAAACAAMAAAAEAAEAAAADAAUABAAGAAEABQADAAcABAAIAAYABQAHAAkACgAGAAgACwAJAAcACgAMAAYACwAHAA0ADgAMAAoADgALAA0ADgAPAAwADgANAA8A"),
-"material": SubResource("StandardMaterial3D_cmsdg"),
+"material": SubResource("ShaderMaterial_ggg75"),
 "name": "Wood",
 "primitive": 3,
 "uv_scale": Vector4(0, 0, 0, 0),
@@ -84,6 +93,7 @@ radius = 2.0
 [node name="Tree2" parent="." unique_id=1855673330 instance=ExtResource("1_fb3s3")]
 
 [node name="Tree" parent="Tree2" index="0" unique_id=1121941094]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.05224806, 0)
 mesh = SubResource("ArrayMesh_1pnpg")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=2045943472]

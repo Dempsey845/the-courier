@@ -1,0 +1,45 @@
+[gd_scene format=3 uid="uid://btq4lttb40s54"]
+
+[ext_resource type="Shader" uid="uid://nv4e7vi3x4uo" path="res://World/Environment/rock.gdshader" id="1_pfhdh"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_13qdw"]
+size = Vector3(6, 10, 5)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_84yts"]
+render_priority = 0
+shader = ExtResource("1_pfhdh")
+shader_parameter/light_color = Color(0.62, 0.58, 0.52, 1)
+shader_parameter/dark_color = Color(0.23, 0.25, 0.25, 1)
+shader_parameter/highlight_color = Color(0.78, 0.73, 0.64, 1)
+shader_parameter/pattern_scale = 2.00000007125
+shader_parameter/color_variation = 0.35
+shader_parameter/roughness_value = 0.95
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_yx8qi"]
+points = PackedVector3Array(-3, -5, -2.5, -3, -5, 2.5, -3, 5, -2.5, 3, -5, -2.5, 3, -5, 2.5, -3, 5, 2.5, 3, 5, -2.5, 3, 5, 2.5)
+
+[sub_resource type="BoxMesh" id="BoxMesh_pfhdh"]
+size = Vector3(6, 7, 7)
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_pf8de"]
+points = PackedVector3Array(3, 3.5, 3.5, -3, 3.5, 3.5, 3, -3.5, 3.5, 3, 3.5, -3.5, -3, 3.5, -3.5, -3, -3.5, 3.5, 3, -3.5, -3.5, -3, -3.5, -3.5)
+
+[node name="RockFormationTall" type="StaticBody3D" unique_id=89727439]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1855518162]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, 5, 0)
+mesh = SubResource("BoxMesh_13qdw")
+surface_material_override/0 = SubResource("ShaderMaterial_84yts")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1946934064]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, 5, 0)
+shape = SubResource("ConvexPolygonShape3D_yx8qi")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="." unique_id=2068075109]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 3.5, 0)
+material_override = SubResource("ShaderMaterial_84yts")
+mesh = SubResource("BoxMesh_pfhdh")
+
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="." unique_id=1901623985]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 3.5, 0)
+shape = SubResource("ConvexPolygonShape3D_pf8de")

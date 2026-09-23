@@ -1,0 +1,45 @@
+[gd_scene format=3 uid="uid://covfywbn4sacp"]
+
+[ext_resource type="Shader" uid="uid://nv4e7vi3x4uo" path="res://World/Environment/rock.gdshader" id="1_vuc6s"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_xrivr"]
+size = Vector3(10, 10, 8.6)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_f2s4e"]
+render_priority = 0
+shader = ExtResource("1_vuc6s")
+shader_parameter/light_color = Color(0.62, 0.58, 0.52, 1)
+shader_parameter/dark_color = Color(0.23, 0.25, 0.25, 1)
+shader_parameter/highlight_color = Color(0.78, 0.73, 0.64, 1)
+shader_parameter/pattern_scale = 2.00000007125
+shader_parameter/color_variation = 0.35
+shader_parameter/roughness_value = 0.95
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_nhctx"]
+points = PackedVector3Array(5, 5, 4.3, 5, 5, -4.3, -5, 5, 4.3, 5, -5, 4.3, 5, -5, -4.3, -5, 5, -4.3, -5, -5, 4.3, -5, -5, -4.3)
+
+[sub_resource type="BoxMesh" id="BoxMesh_vuc6s"]
+size = Vector3(8.900001, 7.8, 10)
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_f2s4e"]
+points = PackedVector3Array(4.4500003, 3.9, 5, 4.4500003, -3.9, 5, 4.4500003, 3.9, -5, -4.4500003, 3.9, 5, -4.4500003, -3.9, 5, 4.4500003, -3.9, -5, -4.4500003, 3.9, -5, -4.4500003, -3.9, -5)
+
+[node name="RockFormation" type="StaticBody3D" unique_id=535785373]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1173357691]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.8000002)
+mesh = SubResource("BoxMesh_xrivr")
+surface_material_override/0 = SubResource("ShaderMaterial_f2s4e")
+
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="." unique_id=299047448]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.8000002)
+shape = SubResource("ConvexPolygonShape3D_nhctx")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="." unique_id=1103830315]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.05, -1.0999999, 1.5)
+mesh = SubResource("BoxMesh_vuc6s")
+surface_material_override/0 = SubResource("ShaderMaterial_f2s4e")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=931258750]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.05, -1.0999999, 1.5)
+shape = SubResource("ConvexPolygonShape3D_f2s4e")
