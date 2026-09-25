@@ -1,6 +1,13 @@
 [gd_scene format=4 uid="uid://cahnx3e1k3wqg"]
 
 [ext_resource type="Script" uid="uid://dmhua8gd74nqr" path="res://Components/projectile.gd" id="1_38rhs"]
+[ext_resource type="Shader" uid="uid://diein7yogyxnn" path="res://Shaders/outline.gdshader" id="2_76dhn"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_u4115"]
+render_priority = 0
+shader = ExtResource("2_76dhn")
+shader_parameter/outline_color = Color(0.38424665, 0.6675222, 0.317491, 1)
+shader_parameter/outline_thickness = 0.02
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_yrfd6"]
 resource_name = "Leaf.001"
@@ -55,11 +62,13 @@ metadata/_custom_type_script = "uid://deroukfpp2mia"
 
 [node name="LeafProjectile" type="MeshInstance3D" parent="." unique_id=192754685]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.168, 0, 0)
+material_overlay = SubResource("ShaderMaterial_u4115")
 mesh = SubResource("ArrayMesh_hpo26")
 surface_material_override/0 = SubResource("StandardMaterial3D_kpe35")
 
 [node name="LeafProjectile2" type="MeshInstance3D" parent="." unique_id=1818977298]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.187, 0, 0)
+material_overlay = SubResource("ShaderMaterial_u4115")
 mesh = SubResource("ArrayMesh_hpo26")
 surface_material_override/0 = SubResource("StandardMaterial3D_kpe35")
 
