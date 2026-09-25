@@ -1,0 +1,162 @@
+[gd_scene format=3 uid="uid://d128q3a0imf8r"]
+
+[ext_resource type="PackedScene" uid="uid://c11t3f4ui7lly" path="res://Enemies/ForestGuardian/TreeSpike.glb" id="1_5e5xw"]
+[ext_resource type="Shader" uid="uid://xjmbsbfojfkv" path="res://World/Environment/wood_wrap.gdshader" id="2_a0vaq"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_rsmm3"]
+render_priority = 0
+shader = ExtResource("2_a0vaq")
+shader_parameter/light_color = Color(0.66, 0.4, 0.21, 1)
+shader_parameter/mid_color = Color(0.48, 0.27, 0.13, 1)
+shader_parameter/dark_color = Color(0.3, 0.16, 0.09, 1)
+shader_parameter/grain_scale = 3.686000127585
+shader_parameter/grain_warp = 0.35
+shader_parameter/color_variation = 0.8
+shader_parameter/end_grain_blend = 0.65
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_xrivr"]
+height = 2.5
+radius = 0.75927734
+
+[sub_resource type="Animation" id="Animation_5e5xw"]
+resource_name = "Enter"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("TreeSpike2:scale")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.53333336),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(0.2, 0.2, 0.2), Vector3(1, 1, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:position")
+tracks/1/interp = 2
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(0, 0, 0), Vector3(0, 0, 10)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath(".:rotation")
+tracks/2/interp = 2
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.56666666, 0.8333333, 1),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Vector3(0.34906584, 0, 0), Vector3(0, 0, 0), Vector3(-0.17453292, 0, 0), Vector3(0, 0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_rsmm3"]
+resource_name = "Exit"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.23333333, 0.6),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector3(0, 0, 10), Vector3(0, 0, 10), Vector3(0, -3, 10)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:rotation")
+tracks/1/interp = 2
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.23333333),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(0, 0, 0), Vector3(0, 0, 0)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("TreeSpike2:scale")
+tracks/2/interp = 2
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.23333333, 0.76666665),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector3(1, 1, 1), Vector3(1, 1, 1), Vector3(0, 0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_a0vaq"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("TreeSpike2:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0.2, 0.2, 0.2)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0, 0)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath(".:rotation")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0.15707964, 0, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_rsmm3"]
+_data = {
+&"Enter": SubResource("Animation_5e5xw"),
+&"Exit": SubResource("Animation_rsmm3"),
+&"RESET": SubResource("Animation_a0vaq")
+}
+
+[node name="TreeSpike" type="Area3D" unique_id=471837814]
+transform = Transform3D(1, 0, 0, 0, 0.98768836, -0.15643448, 0, 0.15643448, 0.98768836, 0, 0, 0)
+
+[node name="TreeSpike2" parent="." unique_id=101438320 instance=ExtResource("1_5e5xw")]
+transform = Transform3D(0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 0, 0, 0)
+
+[node name="TreeSpike" parent="TreeSpike2" index="0" unique_id=195398751]
+surface_material_override/0 = SubResource("ShaderMaterial_rsmm3")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1774915248]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.25, 0)
+shape = SubResource("CylinderShape3D_xrivr")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1030050405]
+libraries/ = SubResource("AnimationLibrary_rsmm3")
+autoplay = &"Enter"
+
+[editable path="TreeSpike2"]

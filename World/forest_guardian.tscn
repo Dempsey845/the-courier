@@ -1,0 +1,29 @@
+[gd_scene format=3 uid="uid://c1stxvnbhbhei"]
+
+[ext_resource type="PackedScene" uid="uid://cjtuq4am582u0" path="res://World/Environment/Bodies/tree.tscn" id="1_6pxtk"]
+[ext_resource type="PackedScene" uid="uid://d215syjefqyyg" path="res://Enemies/ForestGuardian/GuardianFace.glb" id="2_cnqif"]
+[ext_resource type="PackedScene" uid="uid://d128q3a0imf8r" path="res://Enemies/ForestGuardian/tree_spike.tscn" id="3_cnqif"]
+
+[node name="ForestGuardian" type="Node3D" unique_id=348014229]
+
+[node name="Tree18" parent="." unique_id=1093363344 instance=ExtResource("1_6pxtk")]
+transform = Transform3D(2.8588562, 0, 0, 0, 2.8588564, 0, 0, 0, 2.8588562, 0, 0, 0)
+
+[node name="GuardianFace2" parent="." unique_id=1073475866 instance=ExtResource("2_cnqif")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 7.274396, 1.8627081)
+
+[node name="SpikePoint" type="Marker3D" parent="." unique_id=265738127]
+
+[node name="TreeSpike" parent="SpikePoint" unique_id=471837814 instance=ExtResource("3_cnqif")]
+
+[node name="SpikePoint2" type="Marker3D" parent="." unique_id=561609952]
+transform = Transform3D(0.49999997, 0, 0.8660253, 0, 1, 0, -0.8660253, 0, 0.49999997, 0, 0, 0)
+
+[node name="TreeSpike" parent="SpikePoint2" unique_id=489376337 instance=ExtResource("3_cnqif")]
+transform = Transform3D(1, 0, 0, 0, 0.9876883, -0.15643446, 0, 0.15643446, 0.9876883, 0, 0, 0)
+
+[node name="SpikePoint3" type="Marker3D" parent="." unique_id=391293482]
+transform = Transform3D(0.7071067, 0, -0.7071067, 0, 1, 0, 0.7071067, 0, 0.7071067, 0, 0, 0)
+
+[node name="TreeSpike" parent="SpikePoint3" unique_id=459182247 instance=ExtResource("3_cnqif")]
+transform = Transform3D(1, 0, 0, 0, 0.9876883, -0.15643446, 0, 0.15643446, 0.9876883, 0, 0, 0)
