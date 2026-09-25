@@ -829,7 +829,7 @@ color_ramp = SubResource("Gradient_0wqet")
 seamless = true
 in_3d_space = true
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_yxuth"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_05jqx"]
 resource_local_to_scene = true
 render_priority = 0
 shader = SubResource("Shader_5gpxd")
@@ -876,9 +876,9 @@ shader_parameter/ripple_strength = 0.08
 shader_parameter/ripple_width = 0.2
 shader_parameter/ripple_frequency = 12.0
 
-[sub_resource type="PlaneMesh" id="PlaneMesh_05jqx"]
+[sub_resource type="PlaneMesh" id="PlaneMesh_s5cut"]
 resource_local_to_scene = true
-material = SubResource("ShaderMaterial_yxuth")
+material = SubResource("ShaderMaterial_05jqx")
 size = Vector2(45, 45)
 subdivide_width = 450
 subdivide_depth = 450
@@ -1100,7 +1100,7 @@ transform = Transform3D(0.49609634, 0.060223475, -0.788083, -0.13249165, 0.90199
 
 [node name="MushroomSwampEffect" parent="NavigationRegion3D/SwampArea" unique_id=963275507 instance=ExtResource("3_oe8m4")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 24.600002, 0)
-mesh = SubResource("PlaneMesh_05jqx")
+mesh = SubResource("PlaneMesh_s5cut")
 
 [node name="DirtPillarWide" parent="NavigationRegion3D/SwampArea" unique_id=2051397190 node_paths=PackedStringArray("water") instance=ExtResource("4_h2aik")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15.6, 24, 16.099998)
@@ -1453,8 +1453,10 @@ transform = Transform3D(1.547, 0, 0, 0, 1.547, 0, 0, 0, 1.547, 82.85, 1, -44.92)
 [node name="Tree17" parent="NavigationRegion3D/ForestRegion" unique_id=2116844383 instance=ExtResource("22_koyeq")]
 transform = Transform3D(2.0632017, 0, 1.1911901, 0, 2.3823802, 0, -1.1911901, 0, 2.0632017, 51.909996, 1, -21.714998)
 
-[node name="ForestGuardian" parent="NavigationRegion3D/ForestRegion" unique_id=348014229 instance=ExtResource("32_05jqx")]
+[node name="ForestGuardian" parent="NavigationRegion3D/ForestRegion" unique_id=348014229 node_paths=PackedStringArray("target") instance=ExtResource("32_05jqx")]
 transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 71.75552, 1, -11.165336)
+target = NodePath("../../../Player")
+auto_start = true
 
 [node name="Tree19" parent="NavigationRegion3D/ForestRegion" unique_id=980414194 instance=ExtResource("22_koyeq")]
 transform = Transform3D(1.905904, 0, 5.9604645e-08, 0, 1.9059042, 0, -5.9604645e-08, 0, 1.905904, 58.580658, 1, -13.462192)
@@ -1467,10 +1469,6 @@ transform = Transform3D(1.3207915, 0, 4.1306016e-08, 0, 1.3207916, 0, -4.1306016
 
 [node name="Tree22" parent="NavigationRegion3D/ForestRegion" unique_id=1586849391 instance=ExtResource("22_koyeq")]
 transform = Transform3D(2.8588562, 0, 8.940697e-08, 0, 2.8588562, 0, -8.940697e-08, 0, 2.8588562, 84.78684, 1, -51.008503)
-
-[node name="SnapperEnemy" parent="NavigationRegion3D/ForestRegion" unique_id=1009641960 node_paths=PackedStringArray("target") instance=ExtResource("35_spf4h")]
-transform = Transform3D(-0.25881904, 0, -0.9659258, 0, 1, 0, 0.9659258, 0, -0.25881904, 65.9, 1, -5)
-target = NodePath("../../../Player")
 
 [node name="SnapperEnemy2" parent="NavigationRegion3D/ForestRegion" unique_id=1589953134 node_paths=PackedStringArray("target") instance=ExtResource("35_spf4h")]
 transform = Transform3D(-0.8660254, 0, -0.50000006, 0, 1, 0, 0.50000006, 0, -0.8660254, 55, 1, 8)
@@ -1492,32 +1490,12 @@ target = NodePath("../../../Player")
 transform = Transform3D(-0.8660254, 0, 0.50000006, 0, 1, 0, -0.50000006, 0, -0.8660254, 83.72679, 1, -34.926796)
 target = NodePath("../../../Player")
 
-[node name="SnapperEnemy7" parent="NavigationRegion3D/ForestRegion" unique_id=907131603 node_paths=PackedStringArray("target") instance=ExtResource("35_spf4h")]
-transform = Transform3D(0.25881907, 0, -0.9659258, 0, 1, 0, 0.9659258, 0, 0.25881907, 71.74118, 1, -24.965925)
-target = NodePath("../../../Player")
-
-[node name="SnapperEnemy8" parent="NavigationRegion3D/ForestRegion" unique_id=1818636046 node_paths=PackedStringArray("target") instance=ExtResource("35_spf4h")]
-transform = Transform3D(-0.7071068, 0, -0.70710677, 0, 1, 0, 0.70710677, 0, -0.7071068, 69.49974, 1, -14.012572)
-target = NodePath("../../../Player")
-
-[node name="SnapperEnemy11" parent="NavigationRegion3D/ForestRegion" unique_id=232698322 node_paths=PackedStringArray("target") instance=ExtResource("35_spf4h")]
-transform = Transform3D(-0.25881907, 0, -0.9659258, 0, 1, 0, 0.9659258, 0, -0.25881907, 75.8637, 1, -17.548107)
-target = NodePath("../../../Player")
-
-[node name="SnapperEnemy9" parent="NavigationRegion3D/ForestRegion" unique_id=559253444 node_paths=PackedStringArray("target") instance=ExtResource("35_spf4h")]
-transform = Transform3D(0.25881907, 0, -0.9659259, 0, 1, 0, 0.9659259, 0, 0.25881907, 62.28725, 1, -24.194912)
-target = NodePath("../../../Player")
-
 [node name="SnapperEnemy10" parent="NavigationRegion3D/ForestRegion" unique_id=1273959390 node_paths=PackedStringArray("target") instance=ExtResource("35_spf4h")]
 transform = Transform3D(0.25881907, 0, -0.9659259, 0, 1, 0, 0.9659259, 0, 0.25881907, 67.68529, 1, -34.958797)
 target = NodePath("../../../Player")
 
 [node name="SnapperEnemy12" parent="NavigationRegion3D/ForestRegion" unique_id=132716760 node_paths=PackedStringArray("target") instance=ExtResource("35_spf4h")]
-transform = Transform3D(0.25881907, 0, -0.9659259, 0, 1, 0, 0.9659259, 0, 0.25881907, 89.74928, 1, -6.7067103)
-target = NodePath("../../../Player")
-
-[node name="SnapperEnemy14" parent="NavigationRegion3D/ForestRegion" unique_id=469794986 node_paths=PackedStringArray("target") instance=ExtResource("35_spf4h")]
-transform = Transform3D(0.25881907, 0, -0.9659259, 0, 1, 0, 0.9659259, 0, 0.25881907, 77.192245, 1, -3.3420625)
+transform = Transform3D(-0.99951845, 0, 0.031032234, 0, 1, 0, -0.031032234, 0, -0.99951845, 93.2823, 10.951984, -3.9381285)
 target = NodePath("../../../Player")
 
 [node name="SnapperEnemy13" parent="NavigationRegion3D/ForestRegion" unique_id=1046099389 node_paths=PackedStringArray("target") instance=ExtResource("35_spf4h")]

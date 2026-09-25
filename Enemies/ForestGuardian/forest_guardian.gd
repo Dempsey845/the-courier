@@ -4,84 +4,99 @@ extends Node3D
 signal health_changed(current_health: int, max_health: int)
 signal phase_changed(phase: int)
 signal defeated
+signal attack_telegraphed(attack: Attack)
 
-enum State {
-	INACTIVE,
-	IDLE,
-	TELEGRAPH,
-	ATTACK,
-	RECOVERY,
-	PHASE_TRANSITION,
-	DEAD
-}
+const AIR_SCENE: PackedScene = preload("res://Enemies/ForestGuardian/forest_guardian_projectile.tscn")
+const FRUIT_SCENE: PackedScene = preload("res://Enemies/ForestGuardian/forest_guardian_fruit.tscn")
 
-enum Attack {
-	FRUIT_DROP,
-	AIR_PUFF,
-	ROOT_STRIKE
-}
+enum State { INACTIVE, IDLE, TELEGRAPH, ATTACK, RECOVERY, PHASE_TRANSITION, DEAD }
+enum Attack { FRUIT_DROP, AIR_PUFF, ROOT_STRIKE }
 
 @export var max_health := 100
+@export var target: Node3D
+@export var auto_start := false
 @export var idle_duration := 1.5
 @export var telegraph_duration := 0.8
-@export var attack_duration := 1.2
+@export var attack_duration := 1.5
 @export var recovery_duration := 1.0
 @export var phase_transition_duration := 2.0
+@export var fruit_count := 3
+@export var fruit_height := 9.0
+@export var fruit_spread := 2.0
+@export var fruit_damage := 1
+@export var air_damage := 1
+@export var air_speed := 13.0
+@export var root_damage := 1
+@export var root_active_time := 1.0
 
 var health: int
 var phase := 1
 var state := State.INACTIVE
 var current_attack := Attack.FRUIT_DROP
-
 var state_time := 0.0
 var attack_index := 0
+var attack_elapsed := 0.0
+var shots_fired := 0
+var projectiles: Array[ForestGuardianProjectile] = []
+var warning_markers: Array[MeshInstance3D] = []
+var fruit_positions: Array[Vector3] = []
+var roots: Array[RootSpikeHitbox] = []
 
 
 func _ready() -> void:
 	health = max_health
+	for point_name in ["SpikePoint", "SpikePoint2", "SpikePoint3", "SpikePoint4"]:
+		var root := get_node_or_null(NodePath(point_name + "/TreeSpike")) as RootSpikeHitbox
+		if root == null:
+			continue
+		roots.append(root)
+		root.visible = false
+		root.monitoring = false
+		root.active = false
+	if auto_start:
+		start_battle()
 
 
 func _process(delta: float) -> void:
 	if state == State.INACTIVE or state == State.DEAD:
 		return
 
-	state_time -= delta
+	if Input.is_action_just_pressed("attack"):
+		take_damage(10)
 
+	state_time -= delta
+	if state == State.ATTACK:
+		attack_elapsed += delta
+		if current_attack == Attack.FRUIT_DROP:
+			_fire_scheduled_fruit()
+		elif current_attack == Attack.AIR_PUFF:
+			_fire_scheduled_air()
+		elif current_attack == Attack.ROOT_STRIKE and attack_elapsed >= root_active_time:
+			_retract_roots()
 	if state_time > 0.0:
 		return
-
 	match state:
 		State.IDLE:
 			current_attack = _choose_next_attack()
 			_change_state(State.TELEGRAPH)
-
 		State.TELEGRAPH:
 			_change_state(State.ATTACK)
-
 		State.ATTACK:
 			_change_state(State.RECOVERY)
-
-		State.RECOVERY:
-			_change_state(State.IDLE)
-
-		State.PHASE_TRANSITION:
+		State.RECOVERY, State.PHASE_TRANSITION:
 			_change_state(State.IDLE)
 
 
 func start_battle() -> void:
-	if state != State.INACTIVE:
-		return
-
-	_change_state(State.IDLE)
+	if state == State.INACTIVE:
+		_change_state(State.IDLE)
 
 
 func take_damage(amount: int) -> void:
 	if amount <= 0 or state == State.INACTIVE or state == State.DEAD:
 		return
-
-	health = max(health - amount, 0)
+	health = maxi(health - amount, 0)
 	health_changed.emit(health, max_health)
-
 	if health == 0:
 		_change_state(State.DEAD)
 	elif phase == 1 and health <= max_health * 0.5:
@@ -92,76 +107,149 @@ func take_damage(amount: int) -> void:
 
 
 func _choose_next_attack() -> Attack:
-	var attacks: Array[Attack]
-
-	if phase == 1:
-		attacks = [Attack.FRUIT_DROP, Attack.AIR_PUFF]
-	else:
+	var attacks: Array[Attack] = [Attack.FRUIT_DROP, Attack.AIR_PUFF]
+	if phase == 2:
 		attacks = [Attack.ROOT_STRIKE, Attack.FRUIT_DROP, Attack.AIR_PUFF]
-
-	var chosen_attack := attacks[attack_index % attacks.size()]
+	var chosen := attacks[attack_index % attacks.size()]
 	attack_index += 1
-	return chosen_attack
+	return chosen
 
 
-func _change_state(new_state: State) -> void:
-	state = new_state
-
+func _change_state(next_state: State) -> void:
+	_clear_warnings()
+	if state == State.ATTACK or next_state == State.PHASE_TRANSITION or next_state == State.DEAD:
+		_retract_roots()
+	state = next_state
 	match state:
 		State.IDLE:
 			state_time = idle_duration
-
 		State.TELEGRAPH:
 			state_time = telegraph_duration
-			_telegraph_attack(current_attack)
-
+			_telegraph_attack()
 		State.ATTACK:
 			state_time = attack_duration
-			_perform_attack(current_attack)
-
+			attack_elapsed = 0.0
+			shots_fired = 0
+			_perform_attack()
 		State.RECOVERY:
 			state_time = recovery_duration
-
 		State.PHASE_TRANSITION:
 			state_time = phase_transition_duration
-			_on_phase_two_started()
-
 		State.DEAD:
+			for projectile in projectiles:
+				if is_instance_valid(projectile):
+					projectile.queue_free()
 			defeated.emit()
-			_on_defeated()
 
 
-func _telegraph_attack(_attack: Attack) -> void:
-	pass
+func _get_target() -> Node3D:
+	if is_instance_valid(target):
+		return target
+	var players := get_tree().get_nodes_in_group("player")
+	if not players.is_empty() and players[0] is Node3D:
+		return players[0] as Node3D
+	return null
 
 
-func _perform_attack(attack: Attack) -> void:
-	match attack:
+func _telegraph_attack() -> void:
+	attack_telegraphed.emit(current_attack)
+	if current_attack != Attack.FRUIT_DROP:
+		return
+	fruit_positions.clear()
+	var player := _get_target()
+	if player == null:
+		return
+	for i in range(maxi(fruit_count, 1) + (2 if phase == 2 else 0)):
+		var offset := Vector3(randf_range(-fruit_spread, fruit_spread), 0.0, randf_range(-fruit_spread, fruit_spread))
+		var landing := player.global_position + offset
+		fruit_positions.append(landing)
+		var marker := MeshInstance3D.new()
+		var disc := CylinderMesh.new()
+		disc.top_radius = 0.6
+		disc.bottom_radius = 0.6
+		disc.height = 0.03
+		marker.mesh = disc
+		var mat := StandardMaterial3D.new()
+		mat.albedo_color = Color(1.0, 0.2, 0.1, 0.6)
+		mat.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA
+		mat.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED
+		marker.material_override = mat
+		get_tree().current_scene.add_child(marker)
+		marker.global_position = landing + Vector3.UP * 0.04
+		warning_markers.append(marker)
+
+
+func _perform_attack() -> void:
+	match current_attack:
 		Attack.FRUIT_DROP:
-			_attack_fruit_drop()
-
+			_fire_scheduled_fruit()
 		Attack.AIR_PUFF:
-			_attack_air_puff()
-
+			_fire_scheduled_air()
 		Attack.ROOT_STRIKE:
-			_attack_root_strike()
+			for root in roots:
+				root.visible = true
+				root.damage = root_damage
+				root.begin_strike()
+				var animation := root.get_node_or_null("AnimationPlayer") as AnimationPlayer
+				if animation:
+					animation.play("Enter")
 
 
-func _attack_fruit_drop() -> void:
-	pass
+func _fire_scheduled_fruit() -> void:
+	if fruit_positions.is_empty():
+		return
+	var interval := attack_duration / float(fruit_positions.size())
+	while shots_fired < fruit_positions.size() and attack_elapsed >= shots_fired * interval:
+		var landing := fruit_positions[shots_fired]
+		var fruit := _spawn_projectile(FRUIT_SCENE, 0.5, fruit_damage)
+		fruit.global_position = landing + Vector3.UP * fruit_height
+		fruit.velocity = Vector3.DOWN * 2.0
+		fruit.grav = 20.0
+		fruit.ground_y = landing.y
+		shots_fired += 1
 
 
-func _attack_air_puff() -> void:
-	pass
+func _fire_scheduled_air() -> void:
+	var player := _get_target()
+	if player == null:
+		return
+	var total := 2 if phase == 1 else 4
+	var interval := attack_duration / float(total)
+	while shots_fired < total and attack_elapsed >= shots_fired * interval:
+		var puff := _spawn_projectile(AIR_SCENE, 0.48, air_damage)
+		var origin := global_position + global_basis * Vector3(0, 6.0, 2.4)
+		puff.global_position = origin
+		var direction := (player.global_position + Vector3.UP - origin).normalized()
+		puff.velocity = direction * air_speed
+		shots_fired += 1
 
 
-func _attack_root_strike() -> void:
-	pass
+func _spawn_projectile(scene: PackedScene, radius: float, damage: int) -> ForestGuardianProjectile:
+	var projectile := scene.instantiate() as ForestGuardianProjectile
+	get_tree().current_scene.add_child(projectile)
+	projectile.setup(radius, damage)
+	projectiles.append(projectile)
+	return projectile
 
 
-func _on_phase_two_started() -> void:
-	pass
+func _retract_roots() -> void:
+	for root in roots:
+		root.end_strike()
+		if root.visible:
+			var animation := root.get_node_or_null("AnimationPlayer") as AnimationPlayer
+			if animation:
+				animation.play("Exit")
+				# Hide only after the exit animation finishes.
+				get_tree().create_timer(0.8).timeout.connect(_hide_root.bind(root, animation))
 
 
-func _on_defeated() -> void:
-	pass
+func _hide_root(root: Area3D, animation: AnimationPlayer) -> void:
+	if is_instance_valid(root) and is_instance_valid(animation) and animation.current_animation == "Exit":
+		root.visible = false
+
+
+func _clear_warnings() -> void:
+	for marker in warning_markers:
+		if is_instance_valid(marker):
+			marker.queue_free()
+	warning_markers.clear()
