@@ -34,7 +34,7 @@
 [ext_resource type="PackedScene" uid="uid://seiucmoyymay" path="res://World/Environment/Foliage/bush.tscn" id="30_3ql07"]
 [ext_resource type="Script" uid="uid://bmpi2qgjq8pdg" path="res://World/zone_area.gd" id="31_s5a7k"]
 [ext_resource type="PackedScene" uid="uid://c255fa1gv5vfc" path="res://World/Environment/Foliage/flower.tscn" id="31_w08tj"]
-[ext_resource type="PackedScene" uid="uid://c1stxvnbhbhei" path="res://World/forest_guardian.tscn" id="32_05jqx"]
+[ext_resource type="PackedScene" uid="uid://c1stxvnbhbhei" path="res://Enemies/ForestGuardian/forest_guardian.tscn" id="32_05jqx"]
 [ext_resource type="PackedScene" uid="uid://cnxvt8i3eaqk4" path="res://World/Environment/Foliage/grass.tscn" id="32_spf4h"]
 [ext_resource type="PackedScene" uid="uid://6aiuwb2feg0x" path="res://World/Areas/EnchantedForest/bakery.tscn" id="34_w08tj"]
 [ext_resource type="PackedScene" uid="uid://cniwu7eyr0832" path="res://Enemies/Snapper/snapper_enemy.tscn" id="35_spf4h"]

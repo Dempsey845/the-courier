@@ -23,7 +23,7 @@ resource_name = "Enter"
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("TreeSpike2:scale")
+tracks/0/path = NodePath("RootSpikeVisual:scale")
 tracks/0/interp = 2
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -86,7 +86,7 @@ tracks/1/keys = {
 tracks/2/type = "value"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("TreeSpike2:scale")
+tracks/2/path = NodePath("RootSpikeVisual:scale")
 tracks/2/interp = 2
 tracks/2/loop_wrap = true
 tracks/2/keys = {
@@ -101,7 +101,7 @@ length = 0.001
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("TreeSpike2:scale")
+tracks/0/path = NodePath("RootSpikeVisual:scale")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -142,13 +142,13 @@ _data = {
 &"RESET": SubResource("Animation_a0vaq")
 }
 
-[node name="TreeSpike" type="Area3D" unique_id=471837814]
+[node name="RootSpike" type="Area3D" unique_id=471837814]
 transform = Transform3D(1, 0, 0, 0, 0.98768836, -0.15643448, 0, 0.15643448, 0.98768836, 0, 0, 0)
 
-[node name="TreeSpike2" parent="." unique_id=101438320 instance=ExtResource("1_5e5xw")]
+[node name="RootSpikeVisual" parent="." unique_id=101438320 instance=ExtResource("1_5e5xw")]
 transform = Transform3D(0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 0, 0, 0)
 
-[node name="TreeSpike" parent="TreeSpike2" index="0" unique_id=195398751]
+[node name="TreeSpike" parent="RootSpikeVisual" index="0" unique_id=195398751]
 surface_material_override/0 = SubResource("ShaderMaterial_rsmm3")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1774915248]
@@ -159,4 +159,4 @@ shape = SubResource("CylinderShape3D_xrivr")
 libraries/ = SubResource("AnimationLibrary_rsmm3")
 autoplay = &"Enter"
 
-[editable path="TreeSpike2"]
+[editable path="RootSpikeVisual"]
