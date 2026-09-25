@@ -14,7 +14,13 @@ enum Attack { FRUIT_DROP, AIR_PUFF, ROOT_STRIKE }
 
 @export var max_health := 100
 @export var target: Node3D
-@export var auto_start := false
+@export_group("Circular Boss Arena")
+@export var arena_radius := 10.0
+@export var orbit_radius := 8.0
+@export var camera_distance := 17.0
+@export var camera_height := 5.0
+@export var camera_look_height := 4.5
+@export var camera_follow_speed := 6.0
 @export var idle_duration := 1.5
 @export var telegraph_duration := 0.8
 @export var attack_duration := 1.5
@@ -41,10 +47,18 @@ var projectiles: Array[ForestGuardianProjectile] = []
 var warning_markers: Array[MeshInstance3D] = []
 var fruit_positions: Array[Vector3] = []
 var roots: Array[RootSpikeHitbox] = []
+var arena_player: Player
+@onready var arena_area: Area3D = $ArenaArea
+@onready var arena_shape: CollisionShape3D = $ArenaArea/CollisionShape3D
+@onready var boss_camera: Camera3D = $BossCamera
 
 
 func _ready() -> void:
 	health = max_health
+	var trigger_shape := arena_shape.shape.duplicate() as SphereShape3D
+	trigger_shape.radius = arena_radius - 1.0
+	arena_shape.shape = trigger_shape
+	arena_area.body_entered.connect(_on_arena_body_entered)
 	for point_name in ["SpikePoint", "SpikePoint2", "SpikePoint3", "SpikePoint4"]:
 		var root := get_node_or_null(NodePath(point_name + "/TreeSpike")) as RootSpikeHitbox
 		if root == null:
@@ -53,13 +67,29 @@ func _ready() -> void:
 		root.visible = false
 		root.monitoring = false
 		root.active = false
-	if auto_start:
-		start_battle()
+	_check_initial_arena_overlap.call_deferred()
+	boss_camera.top_level = true
 
 
 func _process(delta: float) -> void:
+	if is_instance_valid(arena_player):
+		_update_boss_camera(delta)
 	if state == State.INACTIVE or state == State.DEAD:
 		return
+
+	var doing_root_attack := (
+		state == State.TELEGRAPH or state == State.ATTACK
+	) and current_attack == Attack.ROOT_STRIKE
+
+	if not doing_root_attack:
+		var player := _get_target()
+		if is_instance_valid(player):
+			var direction := player.global_position - global_position
+			direction.y = 0.0
+
+			if direction.length_squared() > 0.001:
+				var target_angle := atan2(direction.x, direction.z)
+				rotation.y = lerp_angle(rotation.y, target_angle, 4.0 * delta)
 
 	if Input.is_action_just_pressed("attack"):
 		take_damage(10)
@@ -136,6 +166,9 @@ func _change_state(next_state: State) -> void:
 		State.PHASE_TRANSITION:
 			state_time = phase_transition_duration
 		State.DEAD:
+			if is_instance_valid(arena_player):
+				arena_player.exit_boss_arena()
+				arena_player = null
 			for projectile in projectiles:
 				if is_instance_valid(projectile):
 					projectile.queue_free()
@@ -204,7 +237,7 @@ func _fire_scheduled_fruit() -> void:
 		var fruit := _spawn_projectile(FRUIT_SCENE, 0.5, fruit_damage)
 		fruit.global_position = landing + Vector3.UP * fruit_height
 		fruit.velocity = Vector3.DOWN * 2.0
-		fruit.grav = 20.0
+		fruit.gravity = 20.0
 		fruit.ground_y = landing.y
 		shots_fired += 1
 
@@ -253,3 +286,58 @@ func _clear_warnings() -> void:
 		if is_instance_valid(marker):
 			marker.queue_free()
 	warning_markers.clear()
+
+
+func _check_initial_arena_overlap() -> void:
+	await get_tree().physics_frame
+	for body in arena_area.get_overlapping_bodies():
+		_on_arena_body_entered(body)
+
+
+func _on_arena_body_entered(body: Node3D) -> void:
+	if state == State.DEAD or arena_player != null or not body is Player:
+		return
+
+	var player := body as Player
+	var distance := Vector2(player.global_position.x - global_position.x, player.global_position.z - global_position.z).length()
+	if distance > arena_radius:
+		return
+	arena_player = player
+	target = player
+	var old_camera := player.current_camera
+	if not is_instance_valid(old_camera):
+		old_camera = player.camera
+
+	boss_camera.global_transform = old_camera.global_transform
+	player.enter_boss_arena(global_position, distance, boss_camera)
+	start_battle()
+
+
+func _update_boss_camera(delta: float) -> void:
+	var radial := arena_player.global_position - global_position
+	radial.y = 0.0
+	if radial.length_squared() < 0.001:
+		radial = Vector3.FORWARD
+
+	var desired_position := (
+		global_position
+		+ radial.normalized() * camera_distance
+		+ Vector3.UP * camera_height
+	)
+	var blend := clampf(delta * camera_follow_speed, 0.0, 1.0)
+
+	boss_camera.global_position = boss_camera.global_position.lerp(
+		desired_position, blend
+	)
+
+	var look_target := global_position + Vector3.UP * camera_look_height
+	var desired_basis := Basis.looking_at(
+		(look_target - boss_camera.global_position).normalized(),
+		Vector3.UP
+	)
+	boss_camera.global_basis = Basis(
+		boss_camera.global_basis.get_rotation_quaternion().slerp(
+			desired_basis.get_rotation_quaternion(),
+			blend
+		)
+	)

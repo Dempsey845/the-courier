@@ -16,6 +16,12 @@ signal landed
 
 var slow_movement_enabled: bool = false
 
+var boss_arena_center: Vector3 = Vector3.ZERO
+var boss_orbit_radius: float = 0.0
+var boss_arena_active: bool = false
+var _camera_before_boss: Camera3D
+
+
 @export_category("Camera")
 @export var current_camera: Camera3D
 
@@ -98,6 +104,8 @@ func _physics_process(delta: float) -> void:
 			decelerate_to_still(delta)
 
 	move_and_slide()
+	if boss_arena_active:
+		_constrain_to_boss_orbit()
 
 	if not was_on_floor and is_on_floor():
 		landed.emit()
@@ -180,6 +188,10 @@ func handle_movement(delta: float) -> void:
 		"move_back"
 	)
 
+	if boss_arena_active:
+		_handle_boss_orbit_movement(input.x, delta)
+		return
+
 	# Flatten the camera directions so movement remains horizontal.
 	var camera_forward: Vector3 = -current_camera.global_basis.z
 	var camera_right: Vector3 = current_camera.global_basis.x
@@ -240,6 +252,98 @@ func handle_movement(delta: float) -> void:
 
 	velocity.x = horizontal_velocity.x
 	velocity.z = horizontal_velocity.z
+
+func enter_boss_arena(center: Vector3, orbit_radius: float, boss_camera: Camera3D) -> void:
+	if boss_arena_active:
+		return
+	boss_arena_center = center
+	boss_orbit_radius = orbit_radius
+	boss_arena_active = true
+	_camera_before_boss = current_camera if is_instance_valid(current_camera) else camera
+	current_camera = boss_camera
+	boss_camera.make_current()
+	_constrain_to_boss_orbit()
+	velocity.x = 0.0
+	velocity.z = 0.0
+
+
+func exit_boss_arena() -> void:
+	if not boss_arena_active:
+		return
+
+	boss_arena_active = false
+	boss_orbit_radius = 0.0
+	velocity.x = 0.0
+	velocity.z = 0.0
+
+	var normal_camera := _camera_before_boss
+	if not is_instance_valid(normal_camera):
+		normal_camera = camera
+
+	var outgoing_camera := get_viewport().get_camera_3d()
+	current_camera = normal_camera
+	_camera_before_boss = null
+
+	var transition_camera := Camera3D.new()
+	transition_camera.top_level = true
+	get_tree().current_scene.add_child(transition_camera)
+
+	transition_camera.global_transform = outgoing_camera.global_transform
+	transition_camera.fov = outgoing_camera.fov
+	transition_camera.make_current()
+
+	var start_transform := transition_camera.global_transform
+	var start_fov := transition_camera.fov
+
+	var tween := create_tween()
+	tween.set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
+	tween.tween_method(
+		func(weight: float) -> void:
+			transition_camera.global_transform = start_transform.interpolate_with(
+				normal_camera.global_transform, weight
+			)
+			transition_camera.fov = lerpf(start_fov, normal_camera.fov, weight),
+		0.0, 1.0, 0.7
+	)
+	tween.finished.connect(
+		func() -> void:
+			normal_camera.make_current()
+			transition_camera.queue_free()
+	)
+
+
+func _handle_boss_orbit_movement(axis: float, delta: float) -> void:
+	var radial := global_position - boss_arena_center
+	radial.y = 0.0
+	if radial.length_squared() < 0.001:
+		radial = Vector3.FORWARD
+	radial = radial.normalized()
+	var tangent := Vector3(radial.z, 0.0, -radial.x)
+	var desired := tangent * axis * (slow_move_speed if slow_movement_enabled else move_speed)
+	var horizontal := Vector3(velocity.x, 0.0, velocity.z)
+	var rate := (acceleration if absf(axis) > 0.01 else deceleration) if is_on_floor() else air_acceleration
+	horizontal = horizontal.move_toward(desired, rate * delta)
+	velocity.x = horizontal.x
+	velocity.z = horizontal.z
+	if horizontal.length_squared() > 0.01:
+		model.rotation.y = lerp_angle(model.rotation.y, atan2(horizontal.x, horizontal.z), rotation_speed * delta)
+
+
+func _constrain_to_boss_orbit() -> void:
+	var offset := global_position - boss_arena_center
+	offset.y = 0.0
+	if offset.length_squared() < 0.001:
+		offset = Vector3.FORWARD
+	var position_on_orbit := boss_arena_center + offset.normalized() * boss_orbit_radius
+	position_on_orbit.y = global_position.y
+	global_position = position_on_orbit
+	# Remove radial speed so collisions and knockback cannot push outside the orbit.
+	var radial := offset.normalized()
+	var horizontal := Vector3(velocity.x, 0.0, velocity.z)
+	horizontal -= radial * horizontal.dot(radial)
+	velocity.x = horizontal.x
+	velocity.z = horizontal.z
+
 
 func apply_fan_force(delta: float) -> void:
 	if not in_fan:

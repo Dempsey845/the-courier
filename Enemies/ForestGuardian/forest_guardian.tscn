@@ -5,8 +5,19 @@
 [ext_resource type="PackedScene" uid="uid://d215syjefqyyg" path="res://Enemies/ForestGuardian/GuardianFace.glb" id="2_cnqif"]
 [ext_resource type="PackedScene" uid="uid://d128q3a0imf8r" path="res://Enemies/ForestGuardian/root_spike.tscn" id="3_cnqif"]
 
+[sub_resource type="SphereShape3D" id="SphereShape3D_arena"]
+radius = 10.0
+
 [node name="ForestGuardian" type="Node3D" unique_id=348014229]
 script = ExtResource("1_uyyo7")
+
+[node name="ArenaArea" type="Area3D" parent="." unique_id=1243175020]
+collision_mask = 4
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="ArenaArea" unique_id=686180354]
+shape = SubResource("SphereShape3D_arena")
+
+[node name="BossCamera" type="Camera3D" parent="." unique_id=1765141771]
 
 [node name="Tree18" parent="." unique_id=1093363344 instance=ExtResource("1_6pxtk")]
 transform = Transform3D(2.8588562, 0, 0, 0, 2.8588564, 0, 0, 0, 2.8588562, 0, 0, 0)
