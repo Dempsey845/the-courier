@@ -11,6 +11,11 @@ var is_landing: bool = false
 var is_dead: bool = false
 var just_taken_damage: bool = false
 
+const HOLD_BLEND_PATH := "parameters/HoldBlend/blend_amount"
+const THROW_SHOT_PATH := "parameters/ThrowShot/request"
+
+var hold_tween: Tween
+
 
 func _ready() -> void:
 	state_machine = animation_tree.get(
@@ -19,10 +24,11 @@ func _ready() -> void:
 
 	player.jump.connect(_on_player_jump)
 	player.landed.connect(_on_player_landed)
+	player.hold_started.connect(_on_player_hold)
+	player.throw_attempt.connect(_on_player_throw_attempt)
 
 	var player_hurtbox: Hurtbox = player.get_node("Hurtbox")
 	var player_health: Health = player.get_node("Health")
-	
 
 	player_hurtbox.hit.connect(func(hitbox: Hitbox):
 		if player_health.dead or !just_taken_damage:
@@ -137,3 +143,50 @@ func _on_player_jump() -> void:
 func _on_player_landed() -> void:
 	is_landing = true
 	travel_to("Land")
+
+func start_holding() -> void:
+	if is_dead:
+		return
+
+	_tween_hold_to(1.0)
+
+
+func throw_held_item() -> bool:
+	if is_dead:
+		return false
+
+	var hold_amount: float = animation_tree.get(HOLD_BLEND_PATH)
+	if hold_amount < 0.99:
+		return false
+
+	animation_tree.set(
+		THROW_SHOT_PATH,
+		AnimationNodeOneShot.ONE_SHOT_REQUEST_FIRE
+	)
+
+	animation_tree.set(HOLD_BLEND_PATH, 0.0)
+
+	return true
+
+
+func _tween_hold_to(target: float) -> void:
+	if hold_tween and hold_tween.is_running():
+		hold_tween.kill()
+
+	var current: float = animation_tree.get(HOLD_BLEND_PATH)
+	hold_tween = create_tween()
+	hold_tween.set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
+	hold_tween.tween_method(
+		func(value: float) -> void:
+			animation_tree.set(HOLD_BLEND_PATH, value),
+		current,
+		target,
+		0.4
+	)
+
+func _on_player_hold():
+	start_holding()
+
+func _on_player_throw_attempt():
+	if throw_held_item():
+		player.trigger_successful_throw()

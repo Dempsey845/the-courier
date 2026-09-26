@@ -5,6 +5,8 @@ signal jump
 signal jump_cut
 signal hit_jump
 signal landed
+signal hold_started
+signal throw_attempt
 
 @export_category("Movement")
 @export var move_speed: float = 7.0
@@ -63,6 +65,8 @@ var fan_direction: Vector3 = Vector3.UP
 
 @onready var landing_ray: RayCast3D = $LandingShadowRay
 
+var is_holding: bool = false
+
 func _ready() -> void:
 	await get_tree().process_frame
 
@@ -79,6 +83,10 @@ func _ready() -> void:
 		player_in_dialogue = false
 		dialogue_npc = null
 	)
+
+func _process(_delta: float) -> void:
+	if is_holding and Input.is_action_just_pressed("attack"):
+		attempt_throw()
 
 func _physics_process(delta: float) -> void:
 	var was_on_floor: bool = is_on_floor()
@@ -478,3 +486,13 @@ func get_ground_position() -> Vector3:
 		return landing_ray.get_collision_point()
 	
 	return global_position
+
+func start_holding():
+	hold_started.emit()
+	is_holding = true
+
+func attempt_throw():
+	throw_attempt.emit()
+
+func trigger_successful_throw():
+	is_holding = false
