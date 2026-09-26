@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://klg4jkj7o70b"]
 
-[ext_resource type="Script" uid="uid://cfo3hdxsngimi" path="res://Enemies/ForestGuardian/forest_guardian_projectile.gd" id="1_script"]
+[ext_resource type="Script" uid="uid://lpwol5gmo0sk" path="res://Enemies/ForestGuardian/forest_guardian_fruit.gd" id="1_mvqdw"]
+[ext_resource type="PackedScene" uid="uid://x03f4042spc7" path="res://Systems/Controller/input_prompt.tscn" id="2_mvqdw"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_visual"]
 albedo_color = Color(0.9, 0.25, 0.12, 1)
@@ -14,10 +15,14 @@ height = 0.9
 [sub_resource type="SphereShape3D" id="SphereShape3D_hitbox"]
 radius = 0.45
 
+[sub_resource type="SphereShape3D" id="SphereShape3D_mvqdw"]
+radius = 1.9
+
 [node name="ForestGuardianFruit" type="Area3D" unique_id=1234301019]
 collision_layer = 128
-collision_mask = 16
-script = ExtResource("1_script")
+collision_mask = 17
+script = ExtResource("1_mvqdw")
+destroy_on_land = false
 
 [node name="Visual" type="MeshInstance3D" parent="." unique_id=1769445084]
 material_override = SubResource("StandardMaterial3D_visual")
@@ -25,3 +30,11 @@ mesh = SubResource("SphereMesh_visual")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=71838415]
 shape = SubResource("SphereShape3D_hitbox")
+
+[node name="InputPrompt" parent="." unique_id=930064518 instance=ExtResource("2_mvqdw")]
+monitoring = false
+
+[node name="CollisionShape3D" parent="InputPrompt" index="1" unique_id=239407888]
+shape = SubResource("SphereShape3D_mvqdw")
+
+[editable path="InputPrompt"]

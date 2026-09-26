@@ -54,7 +54,7 @@ var attack_index := 0
 var attack_elapsed := 0.0
 var shots_fired := 0
 var projectiles: Array[ForestGuardianProjectile] = []
-var warning_markers: Array[MeshInstance3D] = []
+var warning_markers: Array[LandingMarker] = []
 var fruit_positions: Array[Vector3] = []
 var roots: Array[RootSpikeHitbox] = []
 var arena_player: Player
@@ -241,6 +241,7 @@ func _fire_scheduled_fruit() -> void:
 	if fruit_positions.is_empty():
 		return
 	var interval := attack_duration / float(fruit_positions.size())
+	
 	while shots_fired < fruit_positions.size() and attack_elapsed >= shots_fired * interval:
 		var landing := fruit_positions[shots_fired]
 		var fruit := _spawn_projectile(FRUIT_SCENE, 0.5, fruit_damage)

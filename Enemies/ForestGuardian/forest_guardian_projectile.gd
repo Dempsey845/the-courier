@@ -1,9 +1,10 @@
 class_name ForestGuardianProjectile
 extends Hitbox
-## Configure each instance after adding it to the scene tree.
 
 @onready var visual: MeshInstance3D = $Visual
 @onready var hitbox: CollisionShape3D = $CollisionShape3D
+
+@export var destroy_on_land: bool = true
 
 var velocity := Vector3.ZERO
 var grav := 0.0
@@ -14,16 +15,18 @@ var ground_y := -INF
 
 func _ready() -> void:
 	area_entered.connect(_on_area_entered)
+	body_entered.connect(_on_body_entered)
 
 
 func setup(size: float, attack_damage: int) -> void:
 	radius = size
 	damage = attack_damage
-	# Duplicate scene resources so different projectiles can have different sizes/colours.
+
 	var sphere := visual.mesh.duplicate() as SphereMesh
 	sphere.radius = size
 	sphere.height = size * 2.0
 	visual.mesh = sphere
+	
 	var shape := hitbox.shape.duplicate() as SphereShape3D
 	shape.radius = size
 	hitbox.shape = shape
@@ -34,10 +37,12 @@ func _physics_process(delta: float) -> void:
 	if lifetime <= 0.0:
 		queue_free()
 		return
+
+	if not active:
+		return
+
 	velocity.y -= grav * delta
 	global_position += velocity * delta
-	if ground_y > -INF and global_position.y <= ground_y + radius:
-		queue_free()
 
 
 func _on_area_entered(area: Area3D) -> void:
@@ -49,3 +54,17 @@ func _on_area_entered(area: Area3D) -> void:
 	if register_hit(hurtbox):
 		active = false
 		queue_free()
+
+func _on_body_entered(body: Node3D):
+	if body is Player or body is Enemy:
+		return
+	
+	active = false
+
+	if destroy_on_land:
+		queue_free()
+	else:
+		on_landed()
+
+func on_landed():
+	pass
