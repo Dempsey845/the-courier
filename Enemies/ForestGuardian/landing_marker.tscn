@@ -1,0 +1,77 @@
+[gd_scene format=3 uid="uid://yin8v2gv5aer"]
+
+[ext_resource type="Script" uid="uid://bnhmf6aot72fr" path="res://Enemies/ForestGuardian/landing_marker.gd" id="1_etmnb"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_warning"]
+transparency = 1
+shading_mode = 0
+albedo_color = Color(1, 0.2, 0.1, 0.6)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_disc"]
+top_radius = 0.6
+bottom_radius = 0.6
+height = 0.03
+
+[sub_resource type="Animation" id="Animation_3s48i"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_etmnb"]
+resource_name = "despawn"
+length = 0.3
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:scale")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.15, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector3(1, 1, 1), Vector3(1.1, 1.1, 1.1), Vector3(0, 0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_5pkcn"]
+resource_name = "spawn"
+length = 0.3
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:scale")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.15, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector3(0, 0, 0), Vector3(1.1, 1.1, 1.1), Vector3(1, 1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_b4y1j"]
+_data = {
+&"RESET": SubResource("Animation_3s48i"),
+&"despawn": SubResource("Animation_etmnb"),
+&"spawn": SubResource("Animation_5pkcn")
+}
+
+[node name="LandingMarker" type="MeshInstance3D" unique_id=1864526243]
+transform = Transform3D(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
+material_override = SubResource("StandardMaterial3D_warning")
+mesh = SubResource("CylinderMesh_disc")
+script = ExtResource("1_etmnb")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=551071320]
+libraries/ = SubResource("AnimationLibrary_b4y1j")
+autoplay = &"spawn"

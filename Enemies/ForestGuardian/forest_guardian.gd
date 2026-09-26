@@ -6,8 +6,9 @@ signal phase_changed(phase: int)
 signal defeated
 signal attack_telegraphed(attack: Attack)
 
-const AIR_SCENE: PackedScene = preload("res://Enemies/ForestGuardian/forest_guardian_projectile.tscn")
-const FRUIT_SCENE: PackedScene = preload("res://Enemies/ForestGuardian/forest_guardian_fruit.tscn")
+const AIR_SCENE: PackedScene = preload("uid://0a14w1khj3nq")
+const FRUIT_SCENE: PackedScene = preload("uid://klg4jkj7o70b")
+const LANDING_MARKER_SCENE: PackedScene = preload("uid://yin8v2gv5aer")
 
 enum State { INACTIVE, IDLE, TELEGRAPH, ATTACK, RECOVERY, PHASE_TRANSITION, DEAD }
 enum Attack { FRUIT_DROP, AIR_PUFF, ROOT_STRIKE }
@@ -214,17 +215,7 @@ func _telegraph_attack() -> void:
 		var landing := player.get_ground_position() + offset
 		fruit_positions.append(landing)
 
-		var marker := MeshInstance3D.new()
-		var disc := CylinderMesh.new()
-		disc.top_radius = 0.6
-		disc.bottom_radius = 0.6
-		disc.height = 0.03
-		marker.mesh = disc
-		var mat := StandardMaterial3D.new()
-		mat.albedo_color = Color(1.0, 0.2, 0.1, 0.6)
-		mat.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA
-		mat.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED
-		marker.material_override = mat
+		var marker := LANDING_MARKER_SCENE.instantiate() as LandingMarker
 		get_tree().current_scene.add_child(marker)
 		marker.global_position = landing + Vector3.UP * 0.04
 		warning_markers.append(marker)
@@ -302,7 +293,7 @@ func _hide_root(root: Area3D, animation: AnimationPlayer) -> void:
 func _clear_warnings() -> void:
 	for marker in warning_markers:
 		if is_instance_valid(marker):
-			marker.queue_free()
+			marker.despawn()
 	warning_markers.clear()
 
 
