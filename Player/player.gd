@@ -66,6 +66,7 @@ var fan_direction: Vector3 = Vector3.UP
 @onready var landing_ray: RayCast3D = $LandingShadowRay
 
 var is_holding: bool = false
+var is_throwing: bool = false
 
 func _ready() -> void:
 	await get_tree().process_frame
@@ -85,7 +86,7 @@ func _ready() -> void:
 	)
 
 func _process(_delta: float) -> void:
-	if is_holding and Input.is_action_just_pressed("attack"):
+	if is_holding and not is_throwing and Input.is_action_just_pressed("attack"):
 		attempt_throw()
 
 func _physics_process(delta: float) -> void:
@@ -490,9 +491,45 @@ func get_ground_position() -> Vector3:
 func start_holding():
 	hold_started.emit()
 	is_holding = true
+	
+func attempt_throw() -> void:
+	if is_throwing or not is_holding:
+		return
 
-func attempt_throw():
+	is_throwing = true
+	var previous_can_move := can_move
+	var previous_jump_enabled := jump_enabled
+
+	can_move = false
+	jump_enabled = false
+	jump_buffer_timer = 0.0
+	velocity.x = 0.0
+	velocity.z = 0.0
+
+	# Face the boss at the centre of the arena.
+	var direction := to_local(boss_arena_center)
+	direction.y = 0.0
+
+	var start_angle := model.rotation.y
+	var target_angle := atan2(direction.x, direction.z)
+
+	var tween := create_tween()
+	tween.tween_method(
+		func(weight: float) -> void:
+			model.rotation.y = lerp_angle(start_angle, target_angle, weight),
+		0.0,
+		1.0,
+		0.25
+	)
+	await tween.finished
+
 	throw_attempt.emit()
+
+	await get_tree().create_timer(0.5).timeout
+
+	can_move = previous_can_move
+	jump_enabled = previous_jump_enabled
+	is_throwing = false
 
 func trigger_successful_throw():
 	is_holding = false
