@@ -61,6 +61,8 @@ var in_fan: bool = false
 var fan_strength: float = 0.0
 var fan_direction: Vector3 = Vector3.UP
 
+@onready var landing_ray: RayCast3D = $LandingShadowRay
+
 func _ready() -> void:
 	await get_tree().process_frame
 
@@ -468,3 +470,11 @@ func exit_fan() -> void:
 func update_fan_direction(direction: Vector3) -> void:
 	if in_fan:
 		fan_direction = direction.normalized()
+
+func get_ground_position() -> Vector3:
+	landing_ray.force_raycast_update()
+
+	if landing_ray.is_colliding():
+		return landing_ray.get_collision_point()
+	
+	return global_position

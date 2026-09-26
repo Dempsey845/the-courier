@@ -14,6 +14,7 @@ enum Attack { FRUIT_DROP, AIR_PUFF, ROOT_STRIKE }
 
 @export var max_health := 100
 @export var target: Node3D
+
 @export_group("Circular Boss Arena")
 @export var arena_radius := 10.0
 @export var orbit_radius := 8.0
@@ -21,17 +22,25 @@ enum Attack { FRUIT_DROP, AIR_PUFF, ROOT_STRIKE }
 @export var camera_height := 5.0
 @export var camera_look_height := 4.5
 @export var camera_follow_speed := 6.0
+
+@export_group("State Durations")
 @export var idle_duration := 1.5
 @export var telegraph_duration := 0.8
 @export var attack_duration := 1.5
 @export var recovery_duration := 1.0
 @export var phase_transition_duration := 2.0
+
+@export_category("Fruit Drop")
 @export var fruit_count := 3
 @export var fruit_height := 9.0
 @export var fruit_spread := 2.0
 @export var fruit_damage := 1
+
+@export_category("Air Puff")
 @export var air_damage := 1
 @export var air_speed := 13.0
+
+@export_category("Root Strike")
 @export var root_damage := 1
 @export var root_active_time := 1.0
 
@@ -48,6 +57,7 @@ var warning_markers: Array[MeshInstance3D] = []
 var fruit_positions: Array[Vector3] = []
 var roots: Array[RootSpikeHitbox] = []
 var arena_player: Player
+
 @onready var arena_area: Area3D = $ArenaArea
 @onready var arena_shape: CollisionShape3D = $ArenaArea/CollisionShape3D
 @onready var boss_camera: Camera3D = $BossCamera
@@ -55,18 +65,22 @@ var arena_player: Player
 
 func _ready() -> void:
 	health = max_health
+
 	var trigger_shape := arena_shape.shape.duplicate() as SphereShape3D
 	trigger_shape.radius = arena_radius - 1.0
 	arena_shape.shape = trigger_shape
 	arena_area.body_entered.connect(_on_arena_body_entered)
+
 	for point_name in ["SpikePoint", "SpikePoint2", "SpikePoint3", "SpikePoint4"]:
 		var root := get_node_or_null(NodePath(point_name + "/TreeSpike")) as RootSpikeHitbox
 		if root == null:
 			continue
+
 		roots.append(root)
 		root.visible = false
 		root.monitoring = false
 		root.active = false
+
 	_check_initial_arena_overlap.call_deferred()
 	boss_camera.top_level = true
 
@@ -188,14 +202,18 @@ func _telegraph_attack() -> void:
 	attack_telegraphed.emit(current_attack)
 	if current_attack != Attack.FRUIT_DROP:
 		return
+
 	fruit_positions.clear()
-	var player := _get_target()
+
+	var player := _get_target() as Player
 	if player == null:
 		return
+
 	for i in range(maxi(fruit_count, 1) + (2 if phase == 2 else 0)):
 		var offset := Vector3(randf_range(-fruit_spread, fruit_spread), 0.0, randf_range(-fruit_spread, fruit_spread))
-		var landing := player.global_position + offset
+		var landing := player.get_ground_position() + offset
 		fruit_positions.append(landing)
+
 		var marker := MeshInstance3D.new()
 		var disc := CylinderMesh.new()
 		disc.top_radius = 0.6
@@ -237,7 +255,7 @@ func _fire_scheduled_fruit() -> void:
 		var fruit := _spawn_projectile(FRUIT_SCENE, 0.5, fruit_damage)
 		fruit.global_position = landing + Vector3.UP * fruit_height
 		fruit.velocity = Vector3.DOWN * 2.0
-		fruit.gravity = 20.0
+		fruit.grav = 20.0
 		fruit.ground_y = landing.y
 		shots_fired += 1
 
