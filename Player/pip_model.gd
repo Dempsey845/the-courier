@@ -4,6 +4,7 @@ extends Node3D
 @export var movement_blend_speed: float = 8.0
 
 @onready var animation_tree: AnimationTree = $AnimationTree
+@onready var hold_point: Marker3D = %HoldPoint
 
 var state_machine: AnimationNodeStateMachinePlayback
 var current_movement_blend: float = 0.0
@@ -15,7 +16,7 @@ const HOLD_BLEND_PATH := "parameters/HoldBlend/blend_amount"
 const THROW_SHOT_PATH := "parameters/ThrowShot/request"
 
 var hold_tween: Tween
-
+var current_hold_object: Node3D
 
 func _ready() -> void:
 	state_machine = animation_tree.get(
@@ -144,9 +145,18 @@ func _on_player_landed() -> void:
 	is_landing = true
 	travel_to("Land")
 
-func start_holding() -> void:
+func start_holding(hold_object: Node3D) -> void:
 	if is_dead:
 		return
+
+	if current_hold_object:
+		current_hold_object.queue_free()
+		current_hold_object = null
+
+	hold_object.reparent(hold_point)
+	hold_object.position = Vector3.ZERO
+
+	current_hold_object = hold_object
 
 	_tween_hold_to(1.0)
 
@@ -168,6 +178,18 @@ func throw_held_item() -> bool:
 
 	return true
 
+func throw_current_held_object():
+	if !is_instance_valid(current_hold_object):
+		player.is_holding = false
+		return
+	
+	if current_hold_object.has_method("throw_pickup"):
+		current_hold_object.throw_pickup()
+	else:
+		current_hold_object.queue_free()
+		
+	current_hold_object = null
+	player.trigger_successful_throw()
 
 func _tween_hold_to(target: float) -> void:
 	if hold_tween and hold_tween.is_running():
@@ -184,9 +206,8 @@ func _tween_hold_to(target: float) -> void:
 		0.4
 	)
 
-func _on_player_hold():
-	start_holding()
+func _on_player_hold(hold_object: Node3D):
+	start_holding(hold_object)
 
 func _on_player_throw_attempt():
-	if throw_held_item():
-		player.trigger_successful_throw()
+	throw_held_item()

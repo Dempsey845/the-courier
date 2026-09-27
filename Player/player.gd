@@ -5,7 +5,7 @@ signal jump
 signal jump_cut
 signal hit_jump
 signal landed
-signal hold_started
+signal hold_started(hold_object: Node3D)
 signal throw_attempt
 
 @export_category("Movement")
@@ -488,8 +488,8 @@ func get_ground_position() -> Vector3:
 	
 	return global_position
 
-func start_holding():
-	hold_started.emit()
+func start_holding(hold_object: Node3D):
+	hold_started.emit(hold_object)
 	is_holding = true
 	
 func attempt_throw() -> void:

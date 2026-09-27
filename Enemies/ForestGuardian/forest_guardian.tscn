@@ -4,9 +4,15 @@
 [ext_resource type="Script" uid="uid://cd4mp27bubutq" path="res://Enemies/ForestGuardian/forest_guardian.gd" id="1_uyyo7"]
 [ext_resource type="PackedScene" uid="uid://d215syjefqyyg" path="res://Enemies/ForestGuardian/GuardianFace.glb" id="2_cnqif"]
 [ext_resource type="PackedScene" uid="uid://d128q3a0imf8r" path="res://Enemies/ForestGuardian/root_spike.tscn" id="3_cnqif"]
+[ext_resource type="Script" uid="uid://dswhdacq2khkk" path="res://Components/hurtbox.gd" id="5_o5gyo"]
+[ext_resource type="Script" uid="uid://dn5b8er116luc" path="res://Components/health.gd" id="6_mjxf1"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_arena"]
 radius = 10.0
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_xrivr"]
+radius = 2.0
+height = 14.5
 
 [node name="ForestGuardian" type="Node3D" unique_id=348014229]
 script = ExtResource("1_uyyo7")
@@ -23,7 +29,7 @@ shape = SubResource("SphereShape3D_arena")
 transform = Transform3D(2.8588562, 0, 0, 0, 2.8588564, 0, 0, 0, 2.8588562, 0, 0, 0)
 
 [node name="GuardianFace2" parent="." unique_id=1073475866 instance=ExtResource("2_cnqif")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 7.274396, 1.8627081)
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 7.274396, 2.0120158)
 
 [node name="SpikePoint" type="Marker3D" parent="." unique_id=265738127]
 
@@ -46,3 +52,19 @@ transform = Transform3D(-0.9999999, 0, 4.3711385e-08, 0, 1, 0, -4.3711385e-08, 0
 
 [node name="TreeSpike" parent="SpikePoint4" unique_id=819665516 instance=ExtResource("3_cnqif")]
 transform = Transform3D(1, 0, 0, 0, 0.9876883, -0.15643446, 0, 0.15643446, 0.9876883, 0, 0, 0)
+
+[node name="Hurtbox" type="Area3D" parent="." unique_id=128663388 node_paths=PackedStringArray("health")]
+collision_layer = 32
+collision_mask = 64
+script = ExtResource("5_o5gyo")
+health = NodePath("Health")
+metadata/_custom_type_script = "uid://dswhdacq2khkk"
+
+[node name="Health" type="Node" parent="Hurtbox" unique_id=1523041646]
+script = ExtResource("6_mjxf1")
+max_health = 10
+metadata/_custom_type_script = "uid://dn5b8er116luc"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Hurtbox" unique_id=244786428]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5.25, 0)
+shape = SubResource("CapsuleShape3D_xrivr")

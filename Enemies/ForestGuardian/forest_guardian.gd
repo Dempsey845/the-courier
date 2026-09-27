@@ -13,7 +13,6 @@ const LANDING_MARKER_SCENE: PackedScene = preload("uid://yin8v2gv5aer")
 enum State { INACTIVE, IDLE, TELEGRAPH, ATTACK, RECOVERY, PHASE_TRANSITION, DEAD }
 enum Attack { FRUIT_DROP, AIR_PUFF, ROOT_STRIKE }
 
-@export var max_health := 100
 @export var target: Node3D
 
 @export_group("Circular Boss Arena")
@@ -45,7 +44,6 @@ enum Attack { FRUIT_DROP, AIR_PUFF, ROOT_STRIKE }
 @export var root_damage := 1
 @export var root_active_time := 1.0
 
-var health: int
 var phase := 1
 var state := State.INACTIVE
 var current_attack := Attack.FRUIT_DROP
@@ -62,11 +60,9 @@ var arena_player: Player
 @onready var arena_area: Area3D = $ArenaArea
 @onready var arena_shape: CollisionShape3D = $ArenaArea/CollisionShape3D
 @onready var boss_camera: Camera3D = $BossCamera
-
+@onready var health: Health = $Hurtbox/Health
 
 func _ready() -> void:
-	health = max_health
-
 	var trigger_shape := arena_shape.shape.duplicate() as SphereShape3D
 	trigger_shape.radius = arena_radius - 1.0
 	arena_shape.shape = trigger_shape
@@ -84,6 +80,8 @@ func _ready() -> void:
 
 	_check_initial_arena_overlap.call_deferred()
 	boss_camera.top_level = true
+
+	health.damage_taken.connect(_on_health_damage_taken)
 
 
 func _process(delta: float) -> void:
@@ -105,9 +103,6 @@ func _process(delta: float) -> void:
 			if direction.length_squared() > 0.001:
 				var target_angle := atan2(direction.x, direction.z)
 				rotation.y = lerp_angle(rotation.y, target_angle, 4.0 * delta)
-
-	if Input.is_action_just_pressed("attack"):
-		take_damage(10)
 
 	state_time -= delta
 	if state == State.ATTACK:
@@ -137,14 +132,15 @@ func start_battle() -> void:
 		_change_state(State.IDLE)
 
 
-func take_damage(amount: int) -> void:
-	if amount <= 0 or state == State.INACTIVE or state == State.DEAD:
+func _on_health_damage_taken(damage_amount: int, new_health: int):
+	if damage_amount <= 0 or state == State.INACTIVE or state == State.DEAD:
 		return
-	health = maxi(health - amount, 0)
-	health_changed.emit(health, max_health)
-	if health == 0:
+
+	health_changed.emit(new_health, health.max_health)
+
+	if new_health == 0:
 		_change_state(State.DEAD)
-	elif phase == 1 and health <= max_health * 0.5:
+	elif phase == 1 and new_health <= health.max_health * 0.5:
 		phase = 2
 		attack_index = 0
 		phase_changed.emit(phase)
@@ -249,6 +245,7 @@ func _fire_scheduled_fruit() -> void:
 		fruit.velocity = Vector3.DOWN * 2.0
 		fruit.grav = 20.0
 		fruit.ground_y = landing.y
+		fruit.guardian = self
 		shots_fired += 1
 
 
