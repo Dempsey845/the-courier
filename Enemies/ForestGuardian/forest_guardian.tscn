@@ -1,8 +1,8 @@
 [gd_scene format=3 uid="uid://c1stxvnbhbhei"]
 
-[ext_resource type="PackedScene" uid="uid://cjtuq4am582u0" path="res://World/Environment/Bodies/tree.tscn" id="1_6pxtk"]
 [ext_resource type="Script" uid="uid://cd4mp27bubutq" path="res://Enemies/ForestGuardian/forest_guardian.gd" id="1_uyyo7"]
 [ext_resource type="PackedScene" uid="uid://d215syjefqyyg" path="res://Enemies/ForestGuardian/GuardianFace.glb" id="2_cnqif"]
+[ext_resource type="PackedScene" uid="uid://bqsmcr6pjp52a" path="res://Enemies/ForestGuardian/forest_guardian_tree.tscn" id="2_o5gyo"]
 [ext_resource type="PackedScene" uid="uid://d128q3a0imf8r" path="res://Enemies/ForestGuardian/root_spike.tscn" id="3_cnqif"]
 [ext_resource type="Script" uid="uid://dswhdacq2khkk" path="res://Components/hurtbox.gd" id="5_o5gyo"]
 [ext_resource type="Script" uid="uid://dn5b8er116luc" path="res://Components/health.gd" id="6_mjxf1"]
@@ -25,7 +25,7 @@ shape = SubResource("SphereShape3D_arena")
 
 [node name="BossCamera" type="Camera3D" parent="." unique_id=1765141771]
 
-[node name="Tree18" parent="." unique_id=1093363344 instance=ExtResource("1_6pxtk")]
+[node name="ForestGuardianTree" parent="." unique_id=1093363344 instance=ExtResource("2_o5gyo")]
 transform = Transform3D(2.8588562, 0, 0, 0, 2.8588564, 0, 0, 0, 2.8588562, 0, 0, 0)
 
 [node name="GuardianFace2" parent="." unique_id=1073475866 instance=ExtResource("2_cnqif")]
@@ -62,7 +62,7 @@ metadata/_custom_type_script = "uid://dswhdacq2khkk"
 
 [node name="Health" type="Node" parent="Hurtbox" unique_id=1523041646]
 script = ExtResource("6_mjxf1")
-max_health = 10
+max_health = 20
 metadata/_custom_type_script = "uid://dn5b8er116luc"
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Hurtbox" unique_id=244786428]

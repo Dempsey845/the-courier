@@ -61,6 +61,7 @@ var arena_player: Player
 @onready var arena_shape: CollisionShape3D = $ArenaArea/CollisionShape3D
 @onready var boss_camera: Camera3D = $BossCamera
 @onready var health: Health = $Hurtbox/Health
+@onready var forest_guardian_tree: ForestGuardianTree = $ForestGuardianTree
 
 func _ready() -> void:
 	var trigger_shape := arena_shape.shape.duplicate() as SphereShape3D
@@ -216,7 +217,6 @@ func _telegraph_attack() -> void:
 		marker.global_position = landing + Vector3.UP * 0.04
 		warning_markers.append(marker)
 
-
 func _perform_attack() -> void:
 	match current_attack:
 		Attack.FRUIT_DROP:
@@ -236,6 +236,9 @@ func _perform_attack() -> void:
 func _fire_scheduled_fruit() -> void:
 	if fruit_positions.is_empty():
 		return
+
+	forest_guardian_tree.trigger_rustle()
+
 	var interval := attack_duration / float(fruit_positions.size())
 	
 	while shots_fired < fruit_positions.size() and attack_elapsed >= shots_fired * interval:
