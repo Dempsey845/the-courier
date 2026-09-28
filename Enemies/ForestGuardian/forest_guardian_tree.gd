@@ -2,6 +2,7 @@ class_name ForestGuardianTree
 extends StaticBody3D
 
 @onready var tree: MeshInstance3D = %Tree
+@onready var face_animation_player: AnimationPlayer = %FaceAnimationPlayer
 
 var leaf_material: ShaderMaterial
 var rustle_tween: Tween
@@ -23,3 +24,12 @@ func trigger_rustle() -> void:
 
 func _set_rustle_strength(value: float) -> void:
 	leaf_material.set_shader_parameter("rustle_strength", value)
+
+func start_puff():
+	face_animation_player.play("start_puff")
+	
+func end_puff():
+	face_animation_player.play_backwards("start_puff")
+
+func puff():
+	face_animation_player.play("puff")

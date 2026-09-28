@@ -164,31 +164,48 @@ func _choose_next_attack() -> Attack:
 
 func _change_state(next_state: State) -> void:
 	_clear_warnings()
+
+	if state == State.ATTACK and current_attack == Attack.AIR_PUFF:
+		forest_guardian_tree.end_puff()
+
 	if state == State.ATTACK or next_state == State.PHASE_TRANSITION or next_state == State.DEAD:
 		_retract_roots()
+
 	state = next_state
+
 	match state:
 		State.IDLE:
 			state_time = idle_duration
+
 		State.TELEGRAPH:
 			state_time = telegraph_duration
+
+			if current_attack == Attack.AIR_PUFF:
+				forest_guardian_tree.start_puff()
+
 			_telegraph_attack()
+
 		State.ATTACK:
 			state_time = attack_duration
 			attack_elapsed = 0.0
 			shots_fired = 0
 			_perform_attack()
+
 		State.RECOVERY:
 			state_time = recovery_duration
+
 		State.PHASE_TRANSITION:
 			state_time = phase_transition_duration
+
 		State.DEAD:
 			if is_instance_valid(arena_player):
 				arena_player.exit_boss_arena()
 				arena_player = null
+
 			for projectile in projectiles:
 				if is_instance_valid(projectile):
 					projectile.queue_free()
+
 			defeated.emit()
 
 
@@ -272,6 +289,7 @@ func _fire_scheduled_air() -> void:
 	var interval := attack_duration / float(total)
 
 	while shots_fired < total and attack_elapsed >= shots_fired * interval:
+		forest_guardian_tree.puff()
 		_animate_tree(Vector3(1.16, 0.87, 1.16), 0.07, 0.22)
 
 		var puff := _spawn_projectile(AIR_SCENE, 0.48, air_damage)
