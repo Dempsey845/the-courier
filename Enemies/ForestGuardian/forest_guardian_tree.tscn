@@ -3,6 +3,7 @@
 [ext_resource type="PackedScene" uid="uid://cjtuq4am582u0" path="res://World/Environment/Bodies/tree.tscn" id="1_we3ws"]
 [ext_resource type="Script" uid="uid://bgbg4eayrogbn" path="res://Enemies/ForestGuardian/forest_guardian_tree.gd" id="2_dxmj4"]
 [ext_resource type="Shader" uid="uid://c178texgk6aoq" path="res://Enemies/ForestGuardian/tree_rustle.gdshader" id="2_hrffq"]
+[ext_resource type="PackedScene" uid="uid://d215syjefqyyg" path="res://Enemies/ForestGuardian/GuardianFace.glb" id="4_t8yox"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_we3ws"]
 render_priority = 0
@@ -26,3 +27,6 @@ script = ExtResource("2_dxmj4")
 [node name="Tree" parent="Tree2" parent_id_path=PackedInt32Array(1855673330) index="0" unique_id=1121941094]
 unique_name_in_owner = true
 surface_material_override/1 = SubResource("ShaderMaterial_we3ws")
+
+[node name="GuardianFace2" parent="Tree2/Tree" index="0" unique_id=1073475866 instance=ExtResource("4_t8yox")]
+transform = Transform3D(0.1668451, 0, 0, 0, 0.1668451, 0, 0, 0, 0.1668451, 0, 2.5908225, 0.706638)

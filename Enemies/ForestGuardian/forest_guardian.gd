@@ -57,6 +57,9 @@ var fruit_positions: Array[Vector3] = []
 var roots: Array[RootSpikeHitbox] = []
 var arena_player: Player
 
+var tree_scale_tween: Tween
+var tree_original_scale: Vector3
+
 @onready var arena_area: Area3D = $ArenaArea
 @onready var arena_shape: CollisionShape3D = $ArenaArea/CollisionShape3D
 @onready var boss_camera: Camera3D = $BossCamera
@@ -83,6 +86,8 @@ func _ready() -> void:
 	boss_camera.top_level = true
 
 	health.damage_taken.connect(_on_health_damage_taken)
+
+	tree_original_scale = forest_guardian_tree.tree.scale
 
 
 func _process(delta: float) -> void:
@@ -217,17 +222,25 @@ func _telegraph_attack() -> void:
 		marker.global_position = landing + Vector3.UP * 0.04
 		warning_markers.append(marker)
 
+	forest_guardian_tree.trigger_rustle()
+
 func _perform_attack() -> void:
 	match current_attack:
 		Attack.FRUIT_DROP:
+			_animate_tree(Vector3(1.12, 0.82, 1.12), 0.12, 0.35)
 			_fire_scheduled_fruit()
+
 		Attack.AIR_PUFF:
 			_fire_scheduled_air()
+
 		Attack.ROOT_STRIKE:
+			_animate_tree(Vector3(1.25, 0.72, 1.25), 0.16, 0.45)
+
 			for root in roots:
 				root.visible = true
 				root.damage = root_damage
 				root.begin_strike()
+
 				var animation := root.get_node_or_null("AnimationPlayer") as AnimationPlayer
 				if animation:
 					animation.play("Enter")
@@ -236,8 +249,6 @@ func _perform_attack() -> void:
 func _fire_scheduled_fruit() -> void:
 	if fruit_positions.is_empty():
 		return
-
-	forest_guardian_tree.trigger_rustle()
 
 	var interval := attack_duration / float(fruit_positions.size())
 	
@@ -256,13 +267,21 @@ func _fire_scheduled_air() -> void:
 	var player := _get_target()
 	if player == null:
 		return
+
 	var total := 2 if phase == 1 else 4
 	var interval := attack_duration / float(total)
+
 	while shots_fired < total and attack_elapsed >= shots_fired * interval:
+		_animate_tree(Vector3(1.16, 0.87, 1.16), 0.07, 0.22)
+
 		var puff := _spawn_projectile(AIR_SCENE, 0.48, air_damage)
 		var origin := global_position + global_basis * Vector3(0, 6.0, 2.4)
 		puff.global_position = origin
-		var direction := (player.global_position + Vector3.UP - origin).normalized()
+
+		var direction := (
+			player.global_position + Vector3.UP - origin
+		).normalized()
+
 		puff.velocity = direction * air_speed
 		shots_fired += 1
 
@@ -351,3 +370,25 @@ func _update_boss_camera(delta: float) -> void:
 			blend
 		)
 	)
+
+func _animate_tree(squashed_scale: Vector3, windup: float, release: float) -> void:
+	if tree_scale_tween and tree_scale_tween.is_running():
+		tree_scale_tween.kill()
+
+	tree_scale_tween = create_tween()
+
+	forest_guardian_tree.tree.scale = tree_original_scale
+
+	tree_scale_tween.tween_property(
+		forest_guardian_tree.tree,
+		"scale",
+		tree_original_scale * squashed_scale,
+		windup
+	).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN)
+
+	tree_scale_tween.tween_property(
+		forest_guardian_tree.tree,
+		"scale",
+		tree_original_scale,
+		release
+	).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
