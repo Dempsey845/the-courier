@@ -1,15 +1,7 @@
 [gd_scene format=3 uid="uid://bl4h4eaj6vlr5"]
 
 [ext_resource type="Script" uid="uid://x8jdenb0wlll" path="res://Enemies/ForestGuardian/fruit_pickup.gd" id="1_wgb23"]
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_fajhv"]
-albedo_color = Color(0.9, 0.25, 0.12, 1)
-emission_enabled = true
-emission = Color(0.315, 0.0875, 0.042, 1)
-
-[sub_resource type="SphereMesh" id="SphereMesh_wgb23"]
-radius = 0.45
-height = 0.9
+[ext_resource type="PackedScene" uid="uid://bcd67aqxr0msb" path="res://Enemies/ForestGuardian/Apple.glb" id="2_frj56"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_xrivr"]
 
@@ -19,9 +11,7 @@ collision_mask = 32
 script = ExtResource("1_wgb23")
 metadata/_custom_type_script = "uid://deroukfpp2mia"
 
-[node name="Visual" type="MeshInstance3D" parent="." unique_id=130567910]
-material_override = SubResource("StandardMaterial3D_fajhv")
-mesh = SubResource("SphereMesh_wgb23")
-
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=855365245]
 shape = SubResource("SphereShape3D_xrivr")
+
+[node name="Visual" parent="." unique_id=1575292704 instance=ExtResource("2_frj56")]

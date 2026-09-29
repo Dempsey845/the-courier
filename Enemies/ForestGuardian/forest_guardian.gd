@@ -271,7 +271,7 @@ func _fire_scheduled_fruit() -> void:
 	
 	while shots_fired < fruit_positions.size() and attack_elapsed >= shots_fired * interval:
 		var landing := fruit_positions[shots_fired]
-		var fruit := _spawn_projectile(FRUIT_SCENE, 0.5, fruit_damage)
+		var fruit := _spawn_projectile(FRUIT_SCENE, fruit_damage)
 		fruit.global_position = landing + Vector3.UP * fruit_height
 		fruit.velocity = Vector3.DOWN * 2.0
 		fruit.grav = 20.0
@@ -292,7 +292,7 @@ func _fire_scheduled_air() -> void:
 		forest_guardian_tree.puff()
 		_animate_tree(Vector3(1.16, 0.87, 1.16), 0.07, 0.22)
 
-		var puff := _spawn_projectile(AIR_SCENE, 0.48, air_damage)
+		var puff := _spawn_projectile(AIR_SCENE, air_damage)
 		var origin := global_position + global_basis * Vector3(0, 6.0, 2.4)
 		puff.global_position = origin
 
@@ -304,10 +304,10 @@ func _fire_scheduled_air() -> void:
 		shots_fired += 1
 
 
-func _spawn_projectile(scene: PackedScene, radius: float, damage: int) -> ForestGuardianProjectile:
+func _spawn_projectile(scene: PackedScene, damage: int) -> ForestGuardianProjectile:
 	var projectile := scene.instantiate() as ForestGuardianProjectile
 	get_tree().current_scene.add_child(projectile)
-	projectile.setup(radius, damage)
+	projectile.setup(damage)
 	projectiles.append(projectile)
 	return projectile
 

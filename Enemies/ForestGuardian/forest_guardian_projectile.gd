@@ -1,7 +1,6 @@
 class_name ForestGuardianProjectile
 extends Hitbox
 
-@onready var visual: MeshInstance3D = $Visual
 @onready var hitbox: CollisionShape3D = $CollisionShape3D
 
 @export var destroy_on_land: bool = true
@@ -9,7 +8,6 @@ extends Hitbox
 var velocity := Vector3.ZERO
 var grav := 0.0
 var lifetime := 5.0
-var radius := 0.45
 var ground_y := -INF
 
 
@@ -18,18 +16,8 @@ func _ready() -> void:
 	body_entered.connect(_on_body_entered)
 
 
-func setup(size: float, attack_damage: int) -> void:
-	radius = size
+func setup(attack_damage: int) -> void:
 	damage = attack_damage
-
-	var sphere := visual.mesh.duplicate() as SphereMesh
-	sphere.radius = size
-	sphere.height = size * 2.0
-	visual.mesh = sphere
-	
-	var shape := hitbox.shape.duplicate() as SphereShape3D
-	shape.radius = size
-	hitbox.shape = shape
 
 
 func _physics_process(delta: float) -> void:

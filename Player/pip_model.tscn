@@ -7,7 +7,7 @@
 [ext_resource type="Animation" uid="uid://buq74y8bixk5l" path="res://Player/Animations/hold.anim" id="5_5o0o3"]
 [ext_resource type="Animation" uid="uid://cux3wkhhtdyip" path="res://Player/Animations/throw.anim" id="6_cpqkc"]
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_5o0o3"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_e7dl7"]
 resource_local_to_scene = true
 render_priority = 0
 shader = ExtResource("3_e7dl7")
@@ -1328,7 +1328,7 @@ filters = [".", "Armature/Skeleton3D:arm.l", "Armature/Skeleton3D:arm.r", "Armat
 fadeout_time = 0.3
 
 [sub_resource type="AnimationNodeBlendTree" id="AnimationNodeBlendTree_xrivr"]
-graph_offset = Vector2(-261.70996, 332.4098)
+graph_offset = Vector2(-329.73746, 218.37933)
 nodes/output/position = Vector2(1800, 280)
 nodes/MovementStateMachine/node = SubResource("AnimationNodeStateMachine_hv07e")
 nodes/MovementStateMachine/position = Vector2(-600, 100)
@@ -1362,11 +1362,11 @@ transform = Transform3D(100, 0, 0, 0, -4.3711384e-06, 99.99999, 0, -99.99999, -4
 
 [node name="Skeleton3D" parent="Armature" index="0" unique_id=1981356338]
 transform = Transform3D(1.0000001, 0, 0, 0, 1.0000001, 3.5527137e-15, 0, -3.5527137e-15, 1.0000001, 0, 0, 0)
-bones/0/rotation = Quaternion(0.70229435, -0.08236157, 0.08236143, 0.7022932)
+bones/0/rotation = Quaternion(0.7017599, -0.08696575, 0.086960725, 0.7017178)
 bones/1/rotation = Quaternion(9.516366e-06, 4.099462e-06, -0.8112242, 0.5847353)
 bones/1/scale = Vector3(0.99999994, 0.99999994, 1)
 bones/2/position = Vector3(2.8838668e-10, 0.0020723885, -1.0812953e-16)
-bones/2/rotation = Quaternion(-0.01674006, 0.001240803, -0.06575626, 0.9976946)
+bones/2/rotation = Quaternion(-0.016792167, 0.0013563934, -0.06575513, 0.9976936)
 bones/2/scale = Vector3(1, 1, 1)
 bones/3/position = Vector3(4.3838676e-11, 0.0014552355, 1.3754577e-11)
 bones/3/rotation = Quaternion(0.029894287, 0.00057375623, -0.17464061, 0.98417825)
@@ -1375,27 +1375,27 @@ bones/4/position = Vector3(4.5680495e-10, 0.001789615, -1.7652131e-11)
 bones/4/rotation = Quaternion(-0.013596629, -0.00025290516, -0.018594116, 0.99973464)
 bones/4/scale = Vector3(1, 0.99999994, 0.99999994)
 bones/6/rotation = Quaternion(-7.736923e-12, 0, 0, 1)
-bones/7/rotation = Quaternion(-0.10791958, 0.014658447, -0.12472453, 0.9861959)
+bones/7/rotation = Quaternion(-0.10793322, 0.014656737, -0.124724865, 0.98619443)
 bones/9/rotation = Quaternion(-1.1142625e-07, 6.296289e-08, 0.79452187, 0.60723555)
 bones/10/position = Vector3(-2.8838668e-10, 0.0020723885, -1.0812953e-16)
-bones/10/rotation = Quaternion(-0.016456794, -0.002496431, 0.1540136, 0.9879285)
+bones/10/rotation = Quaternion(-0.016375268, -0.0023683691, 0.15401019, 0.9879308)
 bones/11/position = Vector3(-4.3838676e-11, 0.0014552355, 1.3754577e-11)
 bones/11/rotation = Quaternion(0.029805066, -0.00055678654, 0.18431765, 0.9824146)
 bones/11/scale = Vector3(1.0000001, 1, 0.99999994)
 bones/12/position = Vector3(-4.5680495e-10, 0.001789615, -1.7652131e-11)
 bones/12/rotation = Quaternion(-0.013596631, 0.00025290548, 0.018594114, 0.99973464)
 bones/12/scale = Vector3(1, 0.99999994, 0.99999994)
-bones/14/rotation = Quaternion(-0.3286186, 0.38811994, -0.5561537, 0.6573172)
+bones/14/rotation = Quaternion(-0.32862955, 0.3881103, -0.55616015, 0.65731186)
 bones/15/position = Vector3(9.458485e-11, 0.0029883252, -1.3614111e-10)
-bones/15/rotation = Quaternion(-0.15616806, 0.010346089, -0.09811917, 0.98279047)
+bones/15/rotation = Quaternion(-0.15617347, 0.010266094, -0.098340034, 0.9827684)
 bones/16/position = Vector3(1.5057068e-11, 0.0012365765, 3.4642114e-10)
 bones/16/rotation = Quaternion(-0.09460931, -8.0083176e-08, 0.017061861, 0.99536824)
 bones/16/scale = Vector3(1.0000001, 1.0000001, 0.99999994)
 bones/17/position = Vector3(-4.986289e-11, 0.0017214572, -1.8755544e-10)
 bones/17/rotation = Quaternion(0.0017958808, 1.8439247e-08, -0.7071045, 0.70710677)
-bones/19/rotation = Quaternion(-0.32864588, -0.3880962, 0.55616844, 0.65730506)
+bones/19/rotation = Quaternion(-0.32863694, -0.38810417, 0.5561631, 0.6573095)
 bones/20/position = Vector3(-9.458485e-11, 0.0029883252, -1.3614111e-10)
-bones/20/rotation = Quaternion(-0.15618217, -0.010137123, 0.098696105, 0.98273265)
+bones/20/rotation = Quaternion(-0.15617864, -0.010189494, 0.09855152, 0.9827472)
 bones/21/position = Vector3(-1.5057068e-11, 0.0012365765, 3.4642114e-10)
 bones/21/rotation = Quaternion(-0.09460931, 8.008071e-08, -0.017061861, 0.99536824)
 bones/21/scale = Vector3(1.0000001, 1.0000001, 0.99999994)
@@ -1404,22 +1404,22 @@ bones/22/rotation = Quaternion(0.0017958808, -1.8439247e-08, 0.7071045, 0.707106
 
 [node name="Sphere" parent="Armature/Skeleton3D" index="0" unique_id=1331975240 node_paths=PackedStringArray("player_model")]
 transform = Transform3D(1, 0, 0, 0, 1, -1.0658143e-14, 0, 1.0658143e-14, 1, 0, 0, 0)
-material_overlay = SubResource("ShaderMaterial_5o0o3")
+material_overlay = SubResource("ShaderMaterial_e7dl7")
 script = ExtResource("4_wisk6")
 player_model = NodePath("../../..")
 
 [node name="Sphere_001" parent="Armature/Skeleton3D" index="1" unique_id=1625803200]
 transform = Transform3D(1, 0, 0, 0, 1, -1.0658143e-14, 0, 1.0658143e-14, 1, 0, 0, 0)
-material_overlay = SubResource("ShaderMaterial_5o0o3")
+material_overlay = SubResource("ShaderMaterial_e7dl7")
 
 [node name="BoneAttachment3D" type="BoneAttachment3D" parent="Armature/Skeleton3D" index="2" unique_id=1324469768]
-transform = Transform3D(-0.9378478, -0.34704638, -1.6565435e-05, 9.769568e-05, -0.00021628663, -0.99999976, 0.3470464, -0.9378477, 0.00023679808, -0.004094481, -6.123155e-07, 0.0056657586)
+transform = Transform3D(-0.9423132, -0.33473226, -4.9570575e-05, 0.00020746008, -0.00043590926, -0.9999997, 0.33473232, -0.9423131, 0.00048016384, -0.004078082, -1.3125282e-06, 0.0056122057)
 bone_name = "hand.r"
 bone_idx = 12
 
 [node name="HoldPoint" type="Marker3D" parent="Armature/Skeleton3D/BoneAttachment3D" index="0" unique_id=622838152]
 unique_name_in_owner = true
-transform = Transform3D(0.008066456, -0.00035473722, 0.0058997013, 0.00048966426, 0.009987767, -6.895658e-05, -0.0058900397, 0.00034451176, 0.008073957, -0.0024493542, 0.0045572976, 0.00037310086)
+transform = Transform3D(0.007307183, 0.0021311562, 0.00648562, 0.006709722, -0.0004901048, -0.007398619, -0.0012588992, 0.00975797, -0.0017880746, -0.003171572, 0.004852229, -0.00261016)
 
 [node name="AnimationPlayer" parent="." index="1" unique_id=2045654450]
 libraries/ = SubResource("AnimationLibrary_ih8eg")

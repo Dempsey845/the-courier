@@ -157,6 +157,7 @@ func start_holding(hold_object: Node3D) -> void:
 
 	hold_object.reparent(hold_point)
 	hold_object.position = Vector3.ZERO
+	hold_object.rotation = Vector3.ZERO
 
 	current_hold_object = hold_object
 
