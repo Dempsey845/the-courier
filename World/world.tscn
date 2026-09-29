@@ -1559,6 +1559,7 @@ transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 90, 
 [node name="CSGCombiner3D2" type="CSGCombiner3D" parent="NavigationRegion3D/ForestRegion" unique_id=497005768]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 65, 0, -27)
 use_collision = true
+collision_layer = 3
 
 [node name="CSGCylinder3D" type="CSGCylinder3D" parent="NavigationRegion3D/ForestRegion/CSGCombiner3D2" unique_id=2133055800]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, -40.38716, 8)

@@ -1,0 +1,153 @@
+[gd_scene format=3 uid="uid://cxtocqs0io7u4"]
+
+[sub_resource type="Gradient" id="Gradient_smash"]
+offsets = PackedFloat32Array(0, 0.16, 0.55, 1)
+colors = PackedColorArray(1, 1, 1, 0.85, 0.93, 0.99, 1, 0.8, 0.72, 0.9, 1, 0.35, 0.72, 0.9, 1, 0)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture_smash"]
+gradient = SubResource("Gradient_smash")
+
+[sub_resource type="ParticleProcessMaterial" id="Process_burst"]
+emission_shape = 1
+emission_sphere_radius = 0.1
+direction = Vector3(0, 1, 0)
+spread = 180.0
+initial_velocity_min = 2.2
+initial_velocity_max = 4.1
+gravity = Vector3(0, 0, 0)
+scale_min = 0.65
+scale_max = 1.25
+color_ramp = SubResource("GradientTexture_smash")
+
+[sub_resource type="StandardMaterial3D" id="Material_burst"]
+transparency = 1
+shading_mode = 0
+vertex_color_use_as_albedo = true
+
+[sub_resource type="SphereMesh" id="Mesh_burst"]
+material = SubResource("Material_burst")
+radius = 0.14
+height = 0.28
+radial_segments = 8
+rings = 4
+
+[sub_resource type="ParticleProcessMaterial" id="Process_cloud"]
+emission_shape = 1
+emission_sphere_radius = 0.12
+direction = Vector3(0, 1, 0)
+spread = 180.0
+initial_velocity_min = 0.6
+initial_velocity_max = 1.5
+gravity = Vector3(0, 0, 0)
+scale_min = 1.3
+scale_max = 2.2
+color_ramp = SubResource("GradientTexture_smash")
+
+[sub_resource type="StandardMaterial3D" id="Material_cloud"]
+transparency = 1
+shading_mode = 0
+vertex_color_use_as_albedo = true
+albedo_color = Color(0.75, 0.91, 1, 0.25)
+
+[sub_resource type="SphereMesh" id="Mesh_cloud"]
+material = SubResource("Material_cloud")
+radius = 0.2
+height = 0.4
+radial_segments = 8
+rings = 4
+
+[sub_resource type="Animation" id="Animation_1obdm"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("SoftCloud:emitting")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:emitting")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+
+[sub_resource type="Animation" id="Animation_mxwk1"]
+resource_name = "enter"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("SoftCloud:emitting")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0.06666667),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:emitting")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.06666667),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/2/type = "method"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath(".")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(1),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"queue_free"
+}]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_2sxxe"]
+_data = {
+&"RESET": SubResource("Animation_1obdm"),
+&"enter": SubResource("Animation_mxwk1")
+}
+
+[node name="AirPuffSmash" type="GPUParticles3D" unique_id=128116396]
+emitting = false
+amount = 30
+lifetime = 0.42
+one_shot = true
+explosiveness = 1.0
+process_material = SubResource("Process_burst")
+draw_pass_1 = SubResource("Mesh_burst")
+
+[node name="SoftCloud" type="GPUParticles3D" parent="." unique_id=535645539]
+emitting = false
+amount = 14
+lifetime = 0.55
+one_shot = true
+explosiveness = 1.0
+process_material = SubResource("Process_cloud")
+draw_pass_1 = SubResource("Mesh_cloud")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=959641011]
+libraries/ = SubResource("AnimationLibrary_2sxxe")
+autoplay = &"enter"

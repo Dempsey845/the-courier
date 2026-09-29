@@ -1,7 +1,7 @@
 extends Hitbox
 
 @export var throw_speed: float = 12.0
-@export var throw_arc_height: float = 2.0
+@export var throw_arc_height: float = 5.0
 
 var is_being_thrown: bool = false
 var current_target: Node3D
@@ -9,6 +9,8 @@ var current_target: Node3D
 var throw_start: Vector3
 var throw_duration: float
 var throw_elapsed: float = 0.0
+
+var smash_effect_scene: PackedScene = preload("uid://id1fa02v4ooq")
 
 
 func _ready() -> void:
@@ -54,4 +56,7 @@ func throw_pickup() -> void:
 
 
 func _on_hit_hurtbox(_hurtbox: Hurtbox) -> void:
+	var smash_effect = smash_effect_scene.instantiate()
+	get_tree().current_scene.add_child(smash_effect)
+	smash_effect.global_position = global_position
 	queue_free()

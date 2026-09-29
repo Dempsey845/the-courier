@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://klg4jkj7o70b"]
 
 [ext_resource type="Script" uid="uid://lpwol5gmo0sk" path="res://Enemies/ForestGuardian/forest_guardian_fruit.gd" id="1_mvqdw"]
+[ext_resource type="PackedScene" uid="uid://id1fa02v4ooq" path="res://Enemies/ForestGuardian/apple_smash_effect.tscn" id="2_kx3bx"]
 [ext_resource type="PackedScene" uid="uid://x03f4042spc7" path="res://Systems/Controller/input_prompt.tscn" id="2_mvqdw"]
 [ext_resource type="PackedScene" uid="uid://bcd67aqxr0msb" path="res://Enemies/ForestGuardian/Apple.glb" id="3_3mer6"]
 
@@ -15,6 +16,7 @@ collision_layer = 128
 collision_mask = 17
 script = ExtResource("1_mvqdw")
 destroy_on_land = false
+hit_effect_scene = ExtResource("2_kx3bx")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=71838415]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.096672475, 0)
