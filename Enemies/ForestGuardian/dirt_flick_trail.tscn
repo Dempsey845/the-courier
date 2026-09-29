@@ -1,0 +1,40 @@
+[gd_scene format=3 uid="uid://bsiwjgkoj1q5p"]
+
+[sub_resource type="Gradient" id="DirtColors"]
+offsets = PackedFloat32Array(0, 0.35, 0.72, 1)
+colors = PackedColorArray(0.31, 0.19, 0.1, 0, 0.44, 0.28, 0.15, 1, 0.32, 0.19, 0.1, 1, 0.32, 0.19, 0.1, 0)
+
+[sub_resource type="GradientTexture1D" id="DirtColorRamp"]
+gradient = SubResource("DirtColors")
+
+[sub_resource type="ParticleProcessMaterial" id="DirtMotion"]
+direction = Vector3(0, 1, 0)
+spread = 55.0
+initial_velocity_min = 2.2
+initial_velocity_max = 4.0
+angular_velocity_min = -160.0
+angular_velocity_max = 160.0
+gravity = Vector3(0, -11, 0)
+scale_min = 2.0
+scale_max = 3.0
+color_ramp = SubResource("DirtColorRamp")
+
+[sub_resource type="StandardMaterial3D" id="DirtMaterial"]
+resource_name = "Matte dirt"
+vertex_color_use_as_albedo = true
+albedo_color = Color(0.83, 0.72, 0.57, 1)
+
+[sub_resource type="SphereMesh" id="DirtClump"]
+resource_name = "Low poly dirt clump"
+material = SubResource("DirtMaterial")
+radius = 0.055
+height = 0.105
+radial_segments = 6
+rings = 3
+
+[node name="DirtFlickTrail" type="GPUParticles3D" unique_id=1105865816]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.08, 0)
+lifetime = 0.65
+visibility_aabb = AABB(-2, -1, -2, 4, 4, 4)
+process_material = SubResource("DirtMotion")
+draw_pass_1 = SubResource("DirtClump")

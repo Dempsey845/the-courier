@@ -1,27 +1,52 @@
 [gd_scene format=3 uid="uid://0a14w1khj3nq"]
 
 [ext_resource type="Script" uid="uid://cfo3hdxsngimi" path="res://Enemies/ForestGuardian/forest_guardian_projectile.gd" id="1_script"]
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_visual"]
-albedo_color = Color(0.7, 0.92, 0.9, 1)
-emission_enabled = true
-emission = Color(0.245, 0.322, 0.315, 1)
-
-[sub_resource type="SphereMesh" id="SphereMesh_visual"]
-radius = 0.45
-height = 0.9
+[ext_resource type="PackedScene" uid="uid://dxbjjr67hdp3t" path="res://Enemies/ForestGuardian/air_puff_trail.tscn" id="3_55ch8"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_hitbox"]
 radius = 0.45
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_4mkp5"]
+transparency = 1
+shading_mode = 0
+vertex_color_use_as_albedo = true
+albedo_color = Color(0.88, 0.97, 1, 1)
+
+[sub_resource type="SphereMesh" id="SphereMesh_xrivr"]
+material = SubResource("StandardMaterial3D_4mkp5")
+radius = 0.39
+height = 0.78
+radial_segments = 24
+rings = 12
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_shell"]
+transparency = 1
+cull_mode = 2
+shading_mode = 0
+albedo_color = Color(0.58, 0.84, 1, 0.18)
+
+[sub_resource type="SphereMesh" id="SphereMesh_shell"]
+material = SubResource("StandardMaterial3D_shell")
+radius = 0.52
+height = 1.04
+radial_segments = 24
+rings = 12
 
 [node name="ForestGuardianProjectile" type="Area3D" unique_id=1592919034]
 collision_layer = 128
 collision_mask = 16
 script = ExtResource("1_script")
 
-[node name="Visual" type="MeshInstance3D" parent="." unique_id=1870775195]
-material_override = SubResource("StandardMaterial3D_visual")
-mesh = SubResource("SphereMesh_visual")
-
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1547463035]
 shape = SubResource("SphereShape3D_hitbox")
+
+[node name="AirPuffTrail" parent="." unique_id=161051446 instance=ExtResource("3_55ch8")]
+amount = 80
+lifetime = 0.55
+visibility_aabb = AABB(-3, -3, -3, 6, 6, 6)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=412162976]
+mesh = SubResource("SphereMesh_xrivr")
+
+[node name="OuterAir" type="MeshInstance3D" parent="." unique_id=587797544]
+mesh = SubResource("SphereMesh_shell")
