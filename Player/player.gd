@@ -7,6 +7,8 @@ signal hit_jump
 signal landed
 signal hold_started(hold_object: Node3D)
 signal throw_attempt
+signal drop_attempt
+signal throw_successful
 
 @export_category("Movement")
 @export var move_speed: float = 7.0
@@ -55,6 +57,8 @@ var can_move: bool = true
 var jump_enabled: bool = true
 
 var launched_by_force: bool = false
+
+var is_dead: bool = false
 
 @export_category("Fan")
 @export var max_fan_speed: float = 12.0
@@ -109,7 +113,7 @@ func _physics_process(delta: float) -> void:
 	if player_in_dialogue:
 		look_at_dialogue_npc(delta)
 	elif knockback_timer <= 0.0:
-		if can_move:
+		if can_move and !is_dead:
 			handle_movement(delta)
 		else:
 			decelerate_to_still(delta)
@@ -531,5 +535,9 @@ func attempt_throw() -> void:
 	jump_enabled = previous_jump_enabled
 	is_throwing = false
 
+func attempt_drop():
+	drop_attempt.emit()
+
 func trigger_successful_throw():
 	is_holding = false
+	throw_successful.emit()

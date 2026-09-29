@@ -111,6 +111,9 @@ func _on_input_device_change(
 
 
 func _force_detection():
+	if not monitoring:
+		return
+		
 	var overlapping_bodies = get_overlapping_bodies()
 	for body in overlapping_bodies:
 		_on_body_entered(body)

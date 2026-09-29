@@ -8,6 +8,8 @@ signal protection_ended
 
 @onready var protection_timer: Timer = $ProtectionTimer
 
+@onready var player: Player = get_parent()
+
 func _ready() -> void:
 	health.damage_taken.connect(_on_damage_taken)
 
@@ -17,7 +19,9 @@ func _ready() -> void:
 	)
 
 	health.death.connect(func():
-		get_parent().stop_moving()
+		player.is_dead = true
+		player.stop_moving()
+		player.attempt_drop()
 	)
 
 func _on_damage_taken(_damage_amount, _new_health):

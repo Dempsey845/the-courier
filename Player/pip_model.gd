@@ -27,6 +27,7 @@ func _ready() -> void:
 	player.landed.connect(_on_player_landed)
 	player.hold_started.connect(_on_player_hold)
 	player.throw_attempt.connect(_on_player_throw_attempt)
+	player.drop_attempt.connect(_on_player_drop_attempt)
 
 	var player_hurtbox: Hurtbox = player.get_node("Hurtbox")
 	var player_health: Health = player.get_node("Health")
@@ -55,6 +56,7 @@ func _ready() -> void:
 
 	health.death.connect(func():
 		travel_to("Death")
+		_tween_hold_to(0.0)
 		is_dead = true
 	)
 
@@ -211,3 +213,8 @@ func _on_player_hold(hold_object: Node3D):
 
 func _on_player_throw_attempt():
 	throw_held_item()
+
+func _on_player_drop_attempt():
+	if current_hold_object:
+		current_hold_object.queue_free()
+		player.is_holding = false
