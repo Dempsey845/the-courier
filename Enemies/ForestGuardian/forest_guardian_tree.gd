@@ -1,8 +1,9 @@
 class_name ForestGuardianTree
-extends StaticBody3D
+extends AnimatableBody3D 
 
 @onready var tree: MeshInstance3D = %Tree
 @onready var face_animation_player: AnimationPlayer = %FaceAnimationPlayer
+@onready var animation_player: AnimationPlayer = $AnimationPlayer
 
 var leaf_material: ShaderMaterial
 var rustle_tween: Tween
@@ -33,3 +34,6 @@ func end_puff():
 
 func puff():
 	face_animation_player.play("puff")
+
+func play_death_animation():
+	animation_player.play("death")

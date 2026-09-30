@@ -144,7 +144,7 @@ func _on_health_damage_taken(damage_amount: int, new_health: int):
 
 	health_changed.emit(new_health, health.max_health)
 
-	if new_health == 0:
+	if new_health <= 0:
 		_change_state(State.DEAD)
 	elif phase == 1 and new_health <= health.max_health * 0.5:
 		phase = 2
@@ -165,7 +165,7 @@ func _choose_next_attack() -> Attack:
 func _change_state(next_state: State) -> void:
 	_clear_warnings()
 
-	if state == State.ATTACK and current_attack == Attack.AIR_PUFF:
+	if (state == State.ATTACK or state == State.TELEGRAPH) and current_attack == Attack.AIR_PUFF:
 		forest_guardian_tree.end_puff()
 
 	if state == State.ATTACK or next_state == State.PHASE_TRANSITION or next_state == State.DEAD:
@@ -198,15 +198,20 @@ func _change_state(next_state: State) -> void:
 			state_time = phase_transition_duration
 
 		State.DEAD:
-			if is_instance_valid(arena_player):
-				arena_player.exit_boss_arena()
-				arena_player = null
-
 			for projectile in projectiles:
 				if is_instance_valid(projectile):
 					projectile.queue_free()
 
 			defeated.emit()
+
+			forest_guardian_tree.play_death_animation()
+
+			await forest_guardian_tree.animation_player.animation_finished
+
+			if is_instance_valid(arena_player):
+				arena_player.exit_boss_arena()
+				arena_player = null
+
 
 
 func _get_target() -> Node3D:

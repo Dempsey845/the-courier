@@ -25,7 +25,6 @@ shape = SubResource("SphereShape3D_arena")
 [node name="BossCamera" type="Camera3D" parent="." unique_id=1765141771]
 
 [node name="ForestGuardianTree" parent="." unique_id=1093363344 instance=ExtResource("2_o5gyo")]
-transform = Transform3D(2.8588562, 0, 0, 0, 2.8588564, 0, 0, 0, 2.8588562, 0, 0, 0)
 
 [node name="SpikePoint" type="Marker3D" parent="." unique_id=265738127]
 
@@ -58,7 +57,7 @@ metadata/_custom_type_script = "uid://dswhdacq2khkk"
 
 [node name="Health" type="Node" parent="Hurtbox" unique_id=1523041646]
 script = ExtResource("6_mjxf1")
-max_health = 15
+max_health = 5
 metadata/_custom_type_script = "uid://dn5b8er116luc"
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Hurtbox" unique_id=244786428]

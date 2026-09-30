@@ -854,7 +854,7 @@ color_ramp = SubResource("Gradient_0wqet")
 seamless = true
 in_3d_space = true
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_05jqx"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_s5cut"]
 resource_local_to_scene = true
 render_priority = 0
 shader = SubResource("Shader_5gpxd")
@@ -901,9 +901,9 @@ shader_parameter/ripple_strength = 0.08
 shader_parameter/ripple_width = 0.2
 shader_parameter/ripple_frequency = 12.0
 
-[sub_resource type="PlaneMesh" id="PlaneMesh_s5cut"]
+[sub_resource type="PlaneMesh" id="PlaneMesh_it66m"]
 resource_local_to_scene = true
-material = SubResource("ShaderMaterial_05jqx")
+material = SubResource("ShaderMaterial_s5cut")
 size = Vector2(45, 45)
 subdivide_width = 450
 subdivide_depth = 450
@@ -1298,7 +1298,7 @@ transform = Transform3D(0.49609634, 0.060223475, -0.788083, -0.13249165, 0.90199
 
 [node name="MushroomSwampEffect" parent="NavigationRegion3D/SwampArea" unique_id=963275507 instance=ExtResource("3_oe8m4")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 24.600002, 0)
-mesh = SubResource("PlaneMesh_s5cut")
+mesh = SubResource("PlaneMesh_it66m")
 
 [node name="DirtPillarWide" parent="NavigationRegion3D/SwampArea" unique_id=2051397190 node_paths=PackedStringArray("water") instance=ExtResource("4_h2aik")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15.6, 24, 16.099998)
@@ -1418,8 +1418,8 @@ material_override = SubResource("ShaderMaterial_84yts")
 use_collision = true
 
 [node name="CSGBox3D" type="CSGBox3D" parent="NavigationRegion3D/SwampArea/CSGCombiner3D2" unique_id=497769013]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -120.100006, 0.19999695)
-size = Vector3(50, 290.2, 49.600002)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -13, 0.19999695)
+size = Vector3(50, 76, 49.600002)
 
 [node name="CSGBox3D2" type="CSGBox3D" parent="NavigationRegion3D/SwampArea/CSGCombiner3D2" unique_id=1070495913]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 24.5, 0)
@@ -1495,9 +1495,6 @@ transform = Transform3D(-0.91923887, 0, -0.91923875, 0, 1.3, 0, 0.91923875, 0, -
 
 [node name="Bush4" parent="NavigationRegion3D/ForestRegion/Bushes" unique_id=1965730960 instance=ExtResource("30_3ql07")]
 transform = Transform3D(1.3, 0, -1.1920929e-07, 0, 1.3, 0, 1.1920929e-07, 0, 1.3, 79.435165, 1, -39.264774)
-
-[node name="Bush5" parent="NavigationRegion3D/ForestRegion/Bushes" unique_id=1010839704 instance=ExtResource("30_3ql07")]
-transform = Transform3D(6.238449e-08, 0, 1.3, 0, 1.3, 0, -1.3, 0, 6.238449e-08, 65.99867, 1.000001, -8.853829)
 
 [node name="Grass" type="Node3D" parent="NavigationRegion3D/ForestRegion" unique_id=202615383]
 metadata/_edit_lock_ = true
