@@ -856,7 +856,7 @@ color_ramp = SubResource("Gradient_0wqet")
 seamless = true
 in_3d_space = true
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_it66m"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_wm6hh"]
 resource_local_to_scene = true
 render_priority = 0
 shader = SubResource("Shader_5gpxd")
@@ -903,9 +903,9 @@ shader_parameter/ripple_strength = 0.08
 shader_parameter/ripple_width = 0.2
 shader_parameter/ripple_frequency = 12.0
 
-[sub_resource type="PlaneMesh" id="PlaneMesh_wm6hh"]
+[sub_resource type="PlaneMesh" id="PlaneMesh_8kjm2"]
 resource_local_to_scene = true
-material = SubResource("ShaderMaterial_it66m")
+material = SubResource("ShaderMaterial_wm6hh")
 size = Vector2(45, 45)
 subdivide_width = 450
 subdivide_depth = 450
@@ -1303,7 +1303,7 @@ transform = Transform3D(0.49609634, 0.060223475, -0.788083, -0.13249165, 0.90199
 
 [node name="MushroomSwampEffect" parent="NavigationRegion3D/SwampArea" unique_id=963275507 instance=ExtResource("3_oe8m4")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 24.600002, 0)
-mesh = SubResource("PlaneMesh_wm6hh")
+mesh = SubResource("PlaneMesh_8kjm2")
 
 [node name="DirtPillarWide" parent="NavigationRegion3D/SwampArea" unique_id=2051397190 node_paths=PackedStringArray("water") instance=ExtResource("4_h2aik")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15.6, 24, 16.099998)

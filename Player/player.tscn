@@ -16,7 +16,6 @@
 [ext_resource type="Script" uid="uid://deroukfpp2mia" path="res://Components/hitbox.gd" id="8_od3ui"]
 [ext_resource type="Script" uid="uid://dswhdacq2khkk" path="res://Components/hurtbox.gd" id="11_5htga"]
 [ext_resource type="Script" uid="uid://cjmnw0iybayd6" path="res://Player/Health/health_ui.gd" id="12_gu6f8"]
-[ext_resource type="Texture2D" uid="uid://c3sc721e3r236" path="res://Player/health_wood_background.png" id="12_p5o4e"]
 [ext_resource type="PackedScene" uid="uid://wih3m4bc8dy4" path="res://Player/Health/health_droplet.tscn" id="13_p5o4e"]
 [ext_resource type="Shader" uid="uid://mswekxtpio3m" path="res://Player/portal_ui.gdshader" id="19_o28un"]
 [ext_resource type="Script" uid="uid://8fgppubyskta" path="res://Player/portal_transition_ui.gd" id="20_n471f"]
@@ -304,7 +303,6 @@ offset_left = -143.83838
 offset_top = -44.5
 offset_right = 143.83841
 offset_bottom = 44.5
-texture = ExtResource("12_p5o4e")
 expand_mode = 2
 stretch_mode = 5
 

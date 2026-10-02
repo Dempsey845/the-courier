@@ -1,0 +1,26 @@
+[gd_scene format=3 uid="uid://cymv5m38i6qgf"]
+
+[ext_resource type="PackedScene" uid="uid://cu2uf65t5kfp6" path="res://Player/Health/HealthPickup.glb" id="1_a68vb"]
+[ext_resource type="Shader" uid="uid://cheghrwa28ne6" path="res://Player/Health/health_pickup.gdshader" id="2_gwwbo"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_c3rvr"]
+render_priority = 0
+shader = ExtResource("2_gwwbo")
+shader_parameter/gold_color = Color(1, 0.68, 0.015, 1)
+shader_parameter/bright_color = Color(1, 0.9, 0.12, 1)
+shader_parameter/orange_color = Color(0.95, 0.38, 0.005, 1)
+shader_parameter/rim_color = Color(1, 0.87, 0.25, 1)
+shader_parameter/outline_color = Color(0.22, 0.095, 0.005, 1)
+shader_parameter/highlight_color = Color(1, 0.97, 0.65, 1)
+shader_parameter/rim_start = 0.62
+shader_parameter/outline_start = 0.91
+shader_parameter/highlight_strength = 0.9
+shader_parameter/shading_steps = 5.0
+shader_parameter/main_highlight_direction = Vector3(-0.45, 0.55, 0.7)
+shader_parameter/small_highlight_direction = Vector3(0.65, 0.15, 0.75)
+
+[node name="HealthPickupVisual" unique_id=339091663 instance=ExtResource("1_a68vb")]
+
+[node name="Pickup" parent="." index="0" unique_id=764345918]
+cast_shadow = 0
+surface_material_override/0 = SubResource("ShaderMaterial_c3rvr")
