@@ -55,6 +55,9 @@ enum State {
 @export_category("Death")
 @export var death_duration: float = 3.0
 @export var remove_on_death: bool = true
+@export var can_drop_health_pickup: bool = true
+## One-in-N chance of dropping health pickup. Higher values mean rarer drops.
+@export_range(1, 1000, 1) var health_drop_rarity: int = 3
 
 
 @onready var navigation_agent: NavigationAgent3D = $NavigationAgent3D
@@ -75,6 +78,8 @@ var wait_remaining: float = 0.0
 var death_remaining: float = 0.0
 
 var index: int
+
+const health_pickup_scene: PackedScene = preload("uid://blmvufm2ggddn")
 
 
 func _ready() -> void:
@@ -383,6 +388,11 @@ func update_scatter(delta: float) -> void:
 func die() -> void:
 	if current_state == State.DEATH:
 		return
+
+	if can_drop_health_pickup and randi_range(1, health_drop_rarity) == 1:
+		var health_pickup = health_pickup_scene.instantiate()
+		get_tree().current_scene.add_child(health_pickup)
+		health_pickup.global_position = global_position + Vector3.UP
 
 	death_remaining = death_duration
 

@@ -18,6 +18,7 @@ attack_cooldown = 10.0
 wait_after_attack = true
 scatter_on_hit = false
 remove_on_death = false
+can_drop_health_pickup = false
 
 [node name="PuffcapDeathManager" type="Node" parent="." index="0" unique_id=1817584547 node_paths=PackedStringArray("puffcap_collider")]
 script = ExtResource("2_hk2o2")

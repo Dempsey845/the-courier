@@ -44,7 +44,6 @@
 [ext_resource type="PackedScene" uid="uid://cwyd6pgq7feqp" path="res://World/bridge.tscn" id="40_yxuth"]
 [ext_resource type="Script" uid="uid://deroukfpp2mia" path="res://Components/hitbox.gd" id="42_s5cut"]
 [ext_resource type="PackedScene" uid="uid://chib6ugkjm6tq" path="res://NPC/Baker/baker_npc.tscn" id="43_it66m"]
-[ext_resource type="PackedScene" uid="uid://blmvufm2ggddn" path="res://Player/Health/health_pickup.tscn" id="45_8kjm2"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_syi77"]
 shader = ExtResource("5_3ql07")
@@ -1772,12 +1771,3 @@ shape = SubResource("BoxShape3D_13qdw")
 
 [node name="BakerNPC" parent="." unique_id=340322566 instance=ExtResource("43_it66m")]
 transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 91.22068, 14.371755, -17)
-
-[node name="HealthPickup" parent="." unique_id=99718330 instance=ExtResource("45_8kjm2")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 45, 1, -16)
-
-[node name="HealthPickup2" parent="." unique_id=1556171256 instance=ExtResource("45_8kjm2")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 49, 1, -10)
-
-[node name="HealthPickup3" parent="." unique_id=485745527 instance=ExtResource("45_8kjm2")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 47, 1, -13)
