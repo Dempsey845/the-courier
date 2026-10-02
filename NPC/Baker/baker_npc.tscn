@@ -1,0 +1,30 @@
+[gd_scene format=3 uid="uid://chib6ugkjm6tq"]
+
+[ext_resource type="PackedScene" uid="uid://bmi57avorlix8" path="res://NPC/npc.tscn" id="1_8sqh5"]
+[ext_resource type="PackedScene" uid="uid://33ddossu7kv7" path="res://NPC/Baker/baker_visual.tscn" id="2_532aw"]
+[ext_resource type="Resource" uid="uid://bxc41uapwm3s6" path="res://Systems/Dialogue/Wisp/wisp_dialogue.res" id="2_nbsx1"]
+[ext_resource type="Texture2D" uid="uid://dxpkkq3eiyyft" path="res://NPC/Baker/Baker_ShroomHead.png" id="3_2x48m"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_xrivr"]
+radius = 2.4834096
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_xrivr"]
+height = 2.3061523
+
+[node name="BakerNPC" unique_id=870401761 instance=ExtResource("1_8sqh5")]
+
+[node name="DialogueController" parent="." index="0" unique_id=1124534431]
+dialogue = ExtResource("2_nbsx1")
+icon_texture = ExtResource("3_2x48m")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="InteractZone" parent_id_path=PackedInt32Array(362051573) index="0" unique_id=370453511]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.42050195, 0)
+shape = SubResource("SphereShape3D_xrivr")
+
+[node name="BakerVisual" parent="." index="3" unique_id=1307616677 instance=ExtResource("2_532aw")]
+
+[node name="StaticBody3D" type="StaticBody3D" parent="." index="4" unique_id=1409638104]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D" index="0" unique_id=1002869492]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.1466069, 0)
+shape = SubResource("CapsuleShape3D_xrivr")

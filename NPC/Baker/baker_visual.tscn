@@ -1,0 +1,32 @@
+[gd_scene format=3 uid="uid://33ddossu7kv7"]
+
+[ext_resource type="PackedScene" uid="uid://cifxvjagofs8s" path="res://NPC/Baker/Baker.glb" id="1_vx0pi"]
+[ext_resource type="Shader" uid="uid://diein7yogyxnn" path="res://Shaders/outline.gdshader" id="2_dowti"]
+[ext_resource type="PackedScene" uid="uid://b237wtkbfb1jv" path="res://NPC/Baker/Spoon.glb" id="3_dowti"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_v7ykb"]
+render_priority = 0
+shader = ExtResource("2_dowti")
+shader_parameter/outline_color = Color(0.05, 0.03, 0.1, 1)
+shader_parameter/outline_thickness = 0.02
+
+[node name="BakerVisual" unique_id=1307616677 instance=ExtResource("1_vx0pi")]
+
+[node name="Skeleton3D" parent="Armature" parent_id_path=PackedInt32Array(1323329577) index="0" unique_id=1706885535]
+bones/1/scale = Vector3(1.0032961, 1.0032961, 1.0032961)
+bones/5/rotation = Quaternion(0.31767467, 3.970408e-08, -1.3634182e-07, 0.94819975)
+bones/7/rotation = Quaternion(-0.46562114, 0.28738803, 0.038664322, 0.8361281)
+
+[node name="Baker" parent="Armature/Skeleton3D" index="0" unique_id=1042898397]
+material_overlay = SubResource("ShaderMaterial_v7ykb")
+
+[node name="BoneAttachment3D" type="BoneAttachment3D" parent="Armature/Skeleton3D" index="1" unique_id=354452656]
+transform = Transform3D(0.18723126, -0.58605653, -0.7883415, -0.52250344, -0.7390025, 0.42528307, -0.83182615, 0.33228484, -0.44458082, -0.46128988, 0.87297994, 4.055962e-08)
+bone_name = "Forearm.R"
+bone_idx = 7
+
+[node name="Spoon2" parent="Armature/Skeleton3D/BoneAttachment3D" index="0" unique_id=1849449761 instance=ExtResource("3_dowti")]
+transform = Transform3D(0.73879987, -0.64303815, 0.20168485, -0.43554866, -0.6839638, -0.58522725, 0.51426864, 0.34452218, -0.78538674, -0.2408666, 0.3870263, 0.02916038)
+
+[node name="AnimationPlayer" parent="." index="1" unique_id=1861230779]
+autoplay = &"Idle"
