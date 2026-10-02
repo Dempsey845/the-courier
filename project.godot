@@ -22,6 +22,7 @@ WorldEnemies="*uid://b1o3sontcatfx"
 WorldCollectibles="*uid://bcdb3sbvjlxos"
 ControllerManager="*uid://c3af2nrvgarby"
 BeamTransitionCanvasLayer="*uid://dond6uq6w7y2w"
+GraphicsManager="*uid://d1cpu4kmq1tlf"
 
 [display]
 

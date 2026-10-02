@@ -1218,7 +1218,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -25, 0.6999998, 1)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -60.9, 0.6999998, 1)
 
 [node name="CloudPlatform14" parent="NavigationRegion3D/RuinsArea/RuinClouds" unique_id=1993678761 instance=ExtResource("4_dg1ng")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -125.044044, 0.6999998, 1)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -125.04404, 0.6999998, 1)
 
 [node name="CloudPlatform15" parent="NavigationRegion3D/RuinsArea/RuinClouds" unique_id=1792139605 instance=ExtResource("4_dg1ng")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -133.38644, 0.6999998, 1)

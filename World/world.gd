@@ -1,7 +1,5 @@
 extends Node3D
 
-@export var scale_3d: float = 1.0
-
 @export var player: Player
 
 var portal_transition: PortalTransitionUI
@@ -9,8 +7,6 @@ var portal_transition: PortalTransitionUI
 var world_scene: PackedScene = preload("uid://bj3ripvo7qsjp")
 
 func _ready() -> void:
-	get_viewport().scaling_3d_scale = scale_3d
-
 	DataManager.current_world_type = DataManager.WorldType.World
 
 	match DataManager.previous_world_type:
