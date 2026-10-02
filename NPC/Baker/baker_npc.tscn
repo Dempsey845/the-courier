@@ -21,6 +21,9 @@ icon_texture = ExtResource("3_2x48m")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.42050195, 0)
 shape = SubResource("SphereShape3D_xrivr")
 
+[node name="InputPrompt" parent="." index="2" unique_id=930064518]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5495291, 0)
+
 [node name="BakerVisual" parent="." index="3" unique_id=1307616677 instance=ExtResource("2_532aw")]
 
 [node name="StaticBody3D" type="StaticBody3D" parent="." index="4" unique_id=1409638104]

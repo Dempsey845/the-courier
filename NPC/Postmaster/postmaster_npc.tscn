@@ -1,0 +1,36 @@
+[gd_scene format=3 uid="uid://3axbhsaq1byx"]
+
+[ext_resource type="PackedScene" uid="uid://bmi57avorlix8" path="res://NPC/npc.tscn" id="1_c7502"]
+[ext_resource type="Resource" uid="uid://bxc41uapwm3s6" path="res://Systems/Dialogue/Wisp/wisp_dialogue.res" id="2_07pdi"]
+[ext_resource type="PackedScene" uid="uid://gucxh6i2hbke" path="res://NPC/Postmaster/Postmaster.glb" id="2_fyw2f"]
+[ext_resource type="Texture2D" uid="uid://dn7401cg4ni60" path="res://NPC/Postmaster/Postmaster_Letter.png" id="3_iwq5s"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_xrivr"]
+radius = 2.1337843
+
+[node name="PostmasterNPC" unique_id=870401761 instance=ExtResource("1_c7502")]
+
+[node name="DialogueController" parent="." index="0" unique_id=1124534431]
+dialogue = ExtResource("2_07pdi")
+icon_texture = ExtResource("3_iwq5s")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="InteractZone" parent_id_path=PackedInt32Array(362051573) index="0" unique_id=1945955347]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.1863856, 1.0815761)
+shape = SubResource("SphereShape3D_xrivr")
+
+[node name="InputPrompt" parent="." index="2" unique_id=930064518]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.8237109, 0)
+
+[node name="Postmaster" parent="." index="3" unique_id=1926951186 instance=ExtResource("2_fyw2f")]
+
+[node name="Skeleton3D" parent="Postmaster/Armature" parent_id_path=PackedInt32Array(1926951186, 1663139270) index="0" unique_id=1930477182]
+bones/2/rotation = Quaternion(-0.0050443523, 0.015945693, -0.9532981, 0.30156788)
+bones/3/rotation = Quaternion(0.030289233, 0.00014075472, -0.045048013, 0.99852556)
+bones/5/rotation = Quaternion(-0.007563648, -0.014714619, 0.93630916, 0.35078695)
+bones/6/rotation = Quaternion(0.029903632, -0.0020524138, 0.04743723, 0.9984245)
+bones/8/rotation = Quaternion(0.7029373, 0.07903299, 0.70472497, -0.05473404)
+
+[node name="AnimationPlayer" parent="Postmaster" index="1" unique_id=1295439548]
+autoplay = &"Idle"
+
+[editable path="Postmaster"]

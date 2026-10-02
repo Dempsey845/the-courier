@@ -20,6 +20,7 @@
 [ext_resource type="PackedScene" uid="uid://b4yyn7ah5o6it" path="res://Systems/Dialogue/dialogue_ui.tscn" id="7_yf0ba"]
 [ext_resource type="PackedScene" uid="uid://cl1wysfuxby3q" path="res://NPC/Wisp/wisp_npc.tscn" id="8_eidgh"]
 [ext_resource type="PackedScene" uid="uid://ciw84m3tiix01" path="res://World/Environment/Bodies/puffcap_base.tscn" id="8_oeat8"]
+[ext_resource type="PackedScene" uid="uid://3axbhsaq1byx" path="res://NPC/Postmaster/postmaster_npc.tscn" id="8_wm6hh"]
 [ext_resource type="PackedScene" uid="uid://fmmropord2sc" path="res://World/Environment/Bodies/frog_base.tscn" id="10_5xkvv"]
 [ext_resource type="Script" uid="uid://uaatf3j3db7p" path="res://Systems/enemy_spawner.gd" id="11_3ql07"]
 [ext_resource type="PackedScene" uid="uid://g6qjr8aewopi" path="res://World/Areas/Swamp/lillypad.tscn" id="11_lo5ox"]
@@ -1015,6 +1016,9 @@ metadata/_edit_lock_ = true
 [node name="PostHut2" parent="NavigationRegion3D/StartArea" unique_id=687635857 instance=ExtResource("28_jf64p")]
 transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 12.6958275, 1.4721116, -19)
 
+[node name="PostmasterNPC" parent="NavigationRegion3D/StartArea/PostHut2" unique_id=870401761 instance=ExtResource("8_wm6hh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3, 0, 1.8194046)
+
 [node name="Bushes" type="Node3D" parent="NavigationRegion3D/StartArea" unique_id=1206473855]
 
 [node name="Bush" parent="NavigationRegion3D/StartArea/Bushes" unique_id=1209637584 instance=ExtResource("30_3ql07")]
@@ -1718,7 +1722,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.4000001, 13.599999, -25.4)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -41, 0.8638724, -28)
 target = NodePath("../Player")
 
-[node name="WispNPC" parent="." unique_id=870401761 instance=ExtResource("8_eidgh")]
+[node name="WispNPC" parent="." unique_id=2086994239 instance=ExtResource("8_eidgh")]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -175, 11, -18.6)
 
 [node name="WaterPlane" type="MeshInstance3D" parent="." unique_id=1970470784 node_paths=PackedStringArray("target")]
