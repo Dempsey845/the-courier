@@ -1466,11 +1466,20 @@ target = NodePath("../../../Player")
 [node name="RockFormations" type="Node3D" parent="NavigationRegion3D/ForestRegion" unique_id=1517898898]
 metadata/_edit_lock_ = true
 
+[node name="RockPillar" parent="NavigationRegion3D/ForestRegion/RockFormations" unique_id=487909765 instance=ExtResource("6_awrha")]
+transform = Transform3D(1.4142135, 0, 1.4142135, 0, 2, 0, -1.4142135, 0, 1.4142135, 76.35998, 1, 9.40877)
+
+[node name="RockPillar2" parent="NavigationRegion3D/ForestRegion/RockFormations" unique_id=706351960 instance=ExtResource("6_awrha")]
+transform = Transform3D(1.4142135, 0, 1.4142135, 0, 2, 0, -1.4142135, 0, 1.4142135, 76.996376, 2.1029882, 8.772372)
+
 [node name="RockFormation" parent="NavigationRegion3D/ForestRegion/RockFormations" unique_id=535785373 instance=ExtResource("36_or3hn")]
 transform = Transform3D(0.70710677, 0, 0.70710677, 0, 1, 0, -0.70710677, 0, 0.70710677, 44.950233, 5.974244, -40.249897)
 
 [node name="RockFormation2" parent="NavigationRegion3D/ForestRegion/RockFormations" unique_id=1391283456 instance=ExtResource("36_or3hn")]
-transform = Transform3D(-0.49999997, 0, -0.8660253, 0, 1, 0, 0.8660253, 0, -0.49999997, 93.27824, 5.974244, 0.68650305)
+transform = Transform3D(-0.49999997, 0, -0.8660253, 0, 1, 0, 0.8660253, 0, -0.49999997, 92.79633, 5.974244, 0.10826552)
+
+[node name="RockFormation3" parent="NavigationRegion3D/ForestRegion/RockFormations" unique_id=351459023 instance=ExtResource("36_or3hn")]
+transform = Transform3D(-0.37615198, 0, -0.6139297, 0, 0.7200001, 0, 0.6139297, 0, -0.37615198, 84.42008, 2.974244, 10.1813965)
 
 [node name="RockFormationTall" parent="NavigationRegion3D/ForestRegion/RockFormations" unique_id=89727439 instance=ExtResource("37_6gebr")]
 transform = Transform3D(0.8660254, 0, 0.5, 0, 1, 0, -0.5, 0, 0.8660254, 64.53865, 1, 13.645905)
@@ -1614,7 +1623,7 @@ transform = Transform3D(-2.3841858e-08, 0, 1.3440001, 0, 1.3440001, 0, -1.344000
 transform = Transform3D(-0.48384002, 0, 0.83803546, 0, 0.96768004, 0, -0.83803546, 0, -0.48384002, 72.896866, 1, 14.606165)
 
 [node name="Tree7" parent="NavigationRegion3D/ForestRegion/Trees" unique_id=543637110 instance=ExtResource("22_koyeq")]
-transform = Transform3D(-0.72576004, 0, 1.2570531, 0, 1.4515201, 0, -1.2570531, 0, -0.72576004, 81.53651, 1, 14.087586)
+transform = Transform3D(-0.72576004, 0, 1.2570531, 0, 1.4515201, 0, -1.2570531, 0, -0.72576004, 77.53651, 1, 16.087585)
 
 [node name="Tree8" parent="NavigationRegion3D/ForestRegion/Trees" unique_id=715728277 instance=ExtResource("22_koyeq")]
 transform = Transform3D(1.9918586, 0, 1.1500001, 0, 2.3000002, 0, -1.1500001, 0, 1.9918586, 81.71744, 1, -32.64071)

@@ -57,7 +57,7 @@ metadata/_custom_type_script = "uid://dswhdacq2khkk"
 
 [node name="Health" type="Node" parent="Hurtbox" unique_id=1523041646]
 script = ExtResource("6_mjxf1")
-max_health = 5
+max_health = 15
 metadata/_custom_type_script = "uid://dn5b8er116luc"
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Hurtbox" unique_id=244786428]
