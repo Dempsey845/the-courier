@@ -1,0 +1,38 @@
+[gd_scene load_steps=7 format=3]
+
+[ext_resource type="Script" path="res://Enemies/EmberKeeper/ember_cinder.gd" id="1"]
+[ext_resource type="PackedScene" path="res://Systems/Controller/input_prompt.tscn" id="2"]
+[sub_resource type="SphereShape3D" id="hit"]
+radius = 0.35
+[sub_resource type="SphereShape3D" id="reach"]
+radius = 2.0
+[sub_resource type="StandardMaterial3D" id="stone"]
+albedo_color = Color(0.11, 0.32, 0.30, 1)
+roughness = 0.85
+emission_enabled = true
+emission = Color(0.05, 0.65, 0.53, 1)
+emission_energy_multiplier = 0.6
+[sub_resource type="SphereMesh" id="mesh"]
+material = SubResource("stone")
+radius = 0.34
+height = 0.65
+radial_segments = 10
+rings = 5
+[node name="CooledCinder" type="Area3D"]
+collision_layer = 64
+collision_mask = 32
+monitoring = false
+script = ExtResource("1")
+source = "ember_cinder"
+active = false
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+position = Vector3(0, 0.32, 0)
+shape = SubResource("hit")
+[node name="Visual" type="MeshInstance3D" parent="."]
+position = Vector3(0, 0.32, 0)
+mesh = SubResource("mesh")
+[node name="InputPrompt" parent="." instance=ExtResource("2")]
+position = Vector3(0, 0.8, 0)
+[node name="CollisionShape3D" parent="InputPrompt" index="1"]
+shape = SubResource("reach")
+[editable path="InputPrompt"]

@@ -1,0 +1,140 @@
+[gd_scene format=3 uid="uid://cltgk8w1fn4sn"]
+
+[ext_resource type="Script" uid="uid://macluuyx8g23" path="res://Enemies/EmberKeeper/ember_keeper.gd" id="1"]
+[ext_resource type="PackedScene" uid="uid://b77im055bibmf" path="res://Enemies/EmberKeeper/kiln_keeper.glb" id="2"]
+[ext_resource type="Script" uid="uid://56730ut5gqmf" path="res://Enemies/EmberKeeper/ember_core_hurtbox.gd" id="3"]
+[ext_resource type="Script" uid="uid://dn5b8er116luc" path="res://Components/health.gd" id="4"]
+
+[sub_resource type="CylinderShape3D" id="arena"]
+height = 4.0
+radius = 7.8
+
+[sub_resource type="SphereShape3D" id="core"]
+radius = 1.15
+
+[sub_resource type="StyleBoxFlat" id="panel"]
+bg_color = Color(0.065, 0.055, 0.04, 0.94)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.55, 0.36, 0.13, 1)
+corner_radius_top_left = 12
+corner_radius_top_right = 12
+corner_radius_bottom_right = 12
+corner_radius_bottom_left = 12
+
+[sub_resource type="StyleBoxFlat" id="empty"]
+bg_color = Color(0.2, 0.16, 0.1, 1)
+
+[sub_resource type="StyleBoxFlat" id="fill"]
+bg_color = Color(0.95, 0.39, 0.1, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
+[node name="EmberKeeper" type="Node3D" unique_id=1404002102]
+script = ExtResource("1")
+camera_distance = 12.0
+camera_height = 5.0
+
+[node name="Visual" parent="." unique_id=210975494 instance=ExtResource("2")]
+
+[node name="ArenaArea" type="Area3D" parent="." unique_id=426162509]
+collision_layer = 0
+collision_mask = 4
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="ArenaArea" unique_id=778044384]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+shape = SubResource("arena")
+
+[node name="BossCamera" type="Camera3D" parent="." unique_id=1311928300]
+fov = 65.0
+near = 0.1
+
+[node name="Hurtbox" type="Area3D" parent="." unique_id=640108318 node_paths=PackedStringArray("health")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.8, 0)
+collision_layer = 32
+collision_mask = 64
+script = ExtResource("3")
+health = NodePath("Health")
+
+[node name="Health" type="Node" parent="Hurtbox" unique_id=880122313]
+script = ExtResource("4")
+max_health = 6
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Hurtbox" unique_id=1690403807]
+shape = SubResource("core")
+
+[node name="CoreLight" type="OmniLight3D" parent="." unique_id=1588331677]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 1.5)
+light_color = Color(1, 0.36, 0.05, 1)
+light_energy = 1.2
+
+[node name="Effects" type="Node3D" parent="." unique_id=1110814816]
+
+[node name="Pickups" type="Node3D" parent="." unique_id=1777827950]
+
+[node name="HUD" type="CanvasLayer" parent="." unique_id=837869963]
+layer = 5
+
+[node name="Panel" type="PanelContainer" parent="HUD" unique_id=1500642639]
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -287.0
+offset_top = 11.0
+offset_right = 288.0
+offset_bottom = 91.0
+grow_horizontal = 2
+mouse_filter = 2
+theme_override_styles/panel = SubResource("panel")
+
+[node name="Margin" type="MarginContainer" parent="HUD/Panel" unique_id=201849646]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/margin_left = 18
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 18
+theme_override_constants/margin_bottom = 12
+
+[node name="Rows" type="VBoxContainer" parent="HUD/Panel/Margin" unique_id=2118276179]
+layout_mode = 2
+mouse_filter = 2
+
+[node name="Title" type="Label" parent="HUD/Panel/Margin/Rows" unique_id=400887298]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.83, 0.47, 1)
+theme_override_font_sizes/font_size = 22
+text = "KILN KEEPER"
+horizontal_alignment = 1
+
+[node name="HealthBar" type="ProgressBar" parent="HUD/Panel/Margin/Rows" unique_id=1204704081]
+custom_minimum_size = Vector2(0, 14)
+layout_mode = 2
+theme_override_styles/background = SubResource("empty")
+theme_override_styles/fill = SubResource("fill")
+max_value = 6.0
+value = 6.0
+show_percentage = false
+
+[node name="Hint" type="Label" parent="HUD/Panel/Margin/Rows" unique_id=1058432061]
+visible = false
+layout_mode = 2
+theme_override_font_sizes/font_size = 17
+text = "Dodge, cool, return."
+horizontal_alignment = 1
+autowrap_mode = 2
+
+[node name="Retry" type="Button" parent="HUD" unique_id=1836723556]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -160.0
+offset_top = -25.0
+offset_right = 160.0
+offset_bottom = 25.0
+text = "Retry Kiln Keeper"

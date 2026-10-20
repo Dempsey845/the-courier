@@ -5,6 +5,8 @@ signal checkpoint_reached(marker: Marker3D)
 
 @export var interaction_distance := 3.2
 
+@onready var player: Player = $Player
+
 var solved := false
 var states: Array[int] = [0, 0, 0]
 var busy := false
@@ -14,6 +16,13 @@ const SOLUTION: Array[int] = [2, 0, 1]
 func _ready() -> void:
 	checkpoint = $Markers/PlayerSpawn
 	$Checkpoints/FarBank.body_entered.connect(_on_checkpoint)
+	$Markers/BossSpawn/EmberKeeper.defeated.connect(_on_ember_keeper_defeated)
+	if get_tree().has_meta("ember_keeper_retry"):
+		get_tree().remove_meta("ember_keeper_retry")
+		set_puzzle_solved()
+		player.position = Vector3(0, 0.3, -66.5)
+		checkpoint = $Markers/BossSpawn
+		checkpoint_reached.emit(checkpoint)
 
 func interact_nearest(from: Vector3) -> bool:
 	var nearest := -1
@@ -72,3 +81,8 @@ func _on_checkpoint(body: Node3D) -> void:
 	if body is Player:
 		checkpoint = $Markers/FarBankRespawn
 		checkpoint_reached.emit(checkpoint)
+
+func _on_ember_keeper_defeated() -> void:
+	$BossDoor/CollisionShape3D.set_deferred("disabled", true)
+	var tween := create_tween()
+	tween.tween_property($BossDoor, "position:y", 8.5, 1.6).set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_IN_OUT)

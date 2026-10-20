@@ -10,6 +10,8 @@
 [ext_resource type="PackedScene" uid="uid://bjahowk36y25d" path="res://NPC/Wisp/depetrification_device.tscn" id="7_jl0vj"]
 [ext_resource type="PackedScene" uid="uid://ce0bx6o8uq262" path="res://NPC/Wisp/flame_wisp_npc.tscn" id="8_a78ae"]
 [ext_resource type="PackedScene" uid="uid://x03f4042spc7" path="res://Systems/Controller/input_prompt.tscn" id="9_pillar_prompt"]
+[ext_resource type="Shader" uid="uid://cl0i4nn534r2d" path="res://World/Environment/Bodies/portal.gdshader" id="11_jwvlq"]
+[ext_resource type="PackedScene" uid="uid://cltgk8w1fn4sn" path="res://Enemies/EmberKeeper/ember_keeper.tscn" id="12_ember_keeper"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ujge6"]
 albedo_color = Color(0.17, 0.19, 0.13, 1)
@@ -893,6 +895,31 @@ _surfaces = [{
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_1d13y"]
 size = Vector3(0.8, 5, 3.8)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_koyeq"]
+render_priority = 0
+shader = ExtResource("11_jwvlq")
+shader_parameter/inner_color = Color(2.5027991e-06, 0.39848542, 0.93424505, 1)
+shader_parameter/energy_color = Color(0.43564615, 0.544676, 0.9981225, 1)
+shader_parameter/highlight_color = Color(0.78763735, 0.8846902, 1, 1)
+shader_parameter/transition_progress = 1.0
+shader_parameter/portal_radius = 0.46
+shader_parameter/edge_softness = 0.04
+shader_parameter/rim_width = 0.11
+shader_parameter/oval_width = 1.0
+shader_parameter/oval_height = 1.0
+shader_parameter/animation_speed = 1.0
+shader_parameter/swirl_strength = 4.0
+shader_parameter/distortion_strength = 0.035
+shader_parameter/interaction_distortion = 0.045
+shader_parameter/interaction_ring_width = 0.025
+shader_parameter/interaction_brightness = 3.0
+shader_parameter/brightness = 2.5
+shader_parameter/detail_scale = 8.0
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_esrq4"]
+material = SubResource("ShaderMaterial_koyeq")
+size = Vector2(12, 12)
 
 [node name="EmberVault" type="Node3D" unique_id=2147233105]
 script = ExtResource("1_imn5o")
@@ -2180,7 +2207,9 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20, 0.15, -47)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.6, 0)
 
 [node name="BossSpawn" type="Marker3D" parent="Markers" unique_id=804521840]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.15, -76)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.15, -73)
+
+[node name="EmberKeeper" parent="Markers/BossSpawn" unique_id=616245064 instance=ExtResource("12_ember_keeper")]
 
 [node name="NPC" type="Marker3D" parent="Markers" unique_id=2142715772]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3, 0, -96)
@@ -2527,6 +2556,14 @@ material_override = SubResource("StandardMaterial3D_vkfsd")
 mesh = ExtResource("2_5swrh")
 
 [node name="Player" parent="." unique_id=67220391 instance=ExtResource("4_uoy8j")]
+
+[node name="Portal" type="MeshInstance3D" parent="." unique_id=448333518]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 7.9, 0)
+mesh = SubResource("PlaneMesh_esrq4")
+
+[node name="Portal2" type="MeshInstance3D" parent="." unique_id=211366165]
+transform = Transform3D(0.7, 0, 0, 0, -3.059797e-08, 0.7, 0, -0.7, -3.059797e-08, 0, 3.9, -103.4)
+mesh = SubResource("PlaneMesh_esrq4")
 
 [connection signal="pressed" from="Puzzle/Pillar0/InputPrompt" to="." method="rotate_pillar" binds= [0]]
 [connection signal="pressed" from="Puzzle/Pillar1/InputPrompt" to="." method="rotate_pillar" binds= [1]]
